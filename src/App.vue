@@ -44,7 +44,7 @@
                   </q-item-section>
 
                   <q-item-section style="font-size: medium;">
-                    Home
+                    MANTENIMIENTO
                   </q-item-section>
                 </q-item>
               </router-link>
@@ -56,7 +56,7 @@
                   </q-item-section>
 
                   <q-item-section style="font-size: medium;">
-                    Perfil
+                    COSTOS
                   </q-item-section>
                 </q-item>
               </router-link>
@@ -66,22 +66,43 @@
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
                   <q-item-section style="font-size: medium;">
-                    Editar usuario
+                    PEDIDOS
                   </q-item-section>
                 </q-item>
               </router-link>
 
               <router-link to="/register" style="text-decoration: none;">
-                <q-item clickable v-ripple class="bg-teal-8 text-white">
+                <q-item clickable v-ripple class="bg-teal-8 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
                   <q-item-section style="font-size: medium;">
-                    Registrar usuario
+                    TRANSFROMACION
                   </q-item-section>
                 </q-item>
               </router-link>
 
+              <router-link to="/register" style="text-decoration: none;">
+                <q-item clickable v-ripple class="bg-teal-8 text-white q-mb-sm">
+                  <q-item-section avatar>
+                    <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
+                  </q-item-section>
+                  <q-item-section style="font-size: medium;">
+                    INVENTARIO
+                  </q-item-section>
+                </q-item>
+              </router-link>
+
+              <router-link to="/register" style="text-decoration: none;">
+                <q-item clickable v-ripple class="bg-teal-8 text-white q-mb-sm">
+                  <q-item-section avatar>
+                    <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
+                  </q-item-section>
+                  <q-item-section style="font-size: medium;">
+                    REPORTES
+                  </q-item-section>
+                </q-item>
+              </router-link>
             </q-list>
           </q-scroll-area>
 
@@ -95,7 +116,6 @@
             </div>
           </q-img>
         </q-drawer>
-
 
         <q-page-container>
           <q-page padding>

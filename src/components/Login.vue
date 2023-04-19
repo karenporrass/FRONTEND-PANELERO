@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="fullscreen">
         <div id="imagen-fondo" >
             <div class="row" id="contendor-imagen2">
                 <div class="col-1"></div>
@@ -66,7 +66,7 @@ function pasarHome() {
 
 #contenedor-col2 {
     background-color: white;
-    margin-top: 120px;
+    margin-top: 15px;
     color: white;
     margin-bottom: 30px;
     display: flex;

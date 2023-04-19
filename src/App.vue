@@ -2,7 +2,7 @@
 <template>
   <div>
     <div>
-      <q-layout view="hHh lpr fFf" container class="shadow-2 fullscreen">
+      <q-layout view="hhh lpR lff" container class="shadow-2 fullscreen">
         <q-header elevated class="bg-teal-10">
           <q-toolbar>
             <q-btn flat @click="toggleLeftDrawer" round dense icon="menu"><q-toolbar-title>MENU</q-toolbar-title></q-btn>
@@ -123,7 +123,7 @@
           </q-page>
         </q-page-container>
 
-        <q-footer bordered class="bg-teal-10 text-white">
+        <q-footer elevated class="bg-dark text-white">
           <q-toolbar>
             <q-toolbar-title class="text-center" style="font-size: 14px;">
               <div> Copyright © 2023 Sandy y Karen</div>

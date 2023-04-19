@@ -25,7 +25,7 @@ import App from './App.vue'
 import { createApp } from 'vue'
 import { Quasar } from 'quasar'
 import {createRouter, createWebHashHistory} from 'vue-router'
-// import {routes} from "../routes/routes.js"
+import {routes} from "../routes/routes.js"
 import { createPinia } from "pinia"
 const app = createApp(App)
 
@@ -35,13 +35,13 @@ app.use(Quasar, {
     plugins: {}, 
 })
 
-// const router = createRouter({
-//     history: createWebHashHistory(),
-//     routes
-// })
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes
+})
 
 
 app.use(pinia)
 
-// app.use(router)
+app.use(router)
 app.mount('#app')

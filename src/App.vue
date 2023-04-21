@@ -111,7 +111,7 @@
             </q-list>
           </q-scroll-area>
 
-          <q-img class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
+          <q-img class="absolute-top" src="https://img.freepik.com/foto-gratis/foto-pequena-palmera-serenoa-repens-que-crece-sombra_181624-10193.jpg?w=740&t=st=1682119825~exp=1682120425~hmac=a9dd3a5be68c5c3641e5e6162b1a1eacf64dcf7fd9b49e133d0636e81c1697b1" style="height: 150px">
             <div class="absolute-bottom bg-transparent">
               <q-avatar size="56px" class="q-mb-sm">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">

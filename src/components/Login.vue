@@ -14,14 +14,14 @@
                         <p id="text-ingresar"><strong>INGRESAR</strong></p>
                         <q-icon id="icon" name="account_circle" />
                         <p id="p-usuario"><strong>USUARIO</strong> </p>
-                        <q-input id="input-usuario" filled v-model="text" label="DIGITE SU USUARIO" stack-label
+                        <q-input id="input-usuario" filled v-model="name" label="DIGITE SU USUARIO" stack-label
                             :dense="dense" /><br>
                         <p id="p-contraseña"><strong>CONTRASEÑA</strong></p>
-                        <q-input id="input-contraseña" filled v-model="text" label="DIGITE SU CONTRASEÑA" stack-label
+                        <q-input id="input-contraseña" filled v-model="attentionLine" label="DIGITE SU CONTRASEÑA" stack-label
                             :dense="dense" /><br>
                         <p id="p-olvido">¿Olvido su contraseña?</p>
                         <div id="div-boton">
-                        <q-btn @click="pasarHome()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
+                        <q-btn @click="addEps()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
                         </div>
                     </div>
                 </div>
@@ -36,16 +36,73 @@
 
 <script setup>
 import { ref } from "vue";
-import {useRouter} from "vue-router"
-
-let router= useRouter();
+import axios from "axios"
+// import {useRouter} from "vue-router"
+// let router= useRouter();
 let dense = ref(false)
+let name = ref()
+let attentionLine = ref()
 
-function pasarHome() {
-    router.push("/home")
+const addEps = async()=>{
+    console.log("holas");
+    try {
+        const eps = await axios.post("http://localhost:4500/eps",{
+            name:name.value,
+            attentionLine:attentionLine.value,
+           
+        })
+        console.log(eps);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
+// function pasarHome() {
+
+
+//     router.push("/home")
+// }
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style>
 #imagen-fondo {

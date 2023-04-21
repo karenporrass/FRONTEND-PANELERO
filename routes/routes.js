@@ -10,5 +10,5 @@ export const routes=[
     {path:"/", component:Login},
     {path:"/home", component:Home},
     {path:"/pedidos", component:pedidos},
-    {path:"/pedidosDos", component:pedidosDos}
+    {path:"/pedidosDos", component:pedidosDos},
 ]

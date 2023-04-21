@@ -66,9 +66,9 @@ function pasarHome() {
 
 #contenedor-col2 {
     background-color: white;
-    margin-top: 15px;
+    margin-top: 45px;
     color: white;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     display: flex;
     border-radius: 10px;
     border: 1px solid black;

@@ -21,7 +21,7 @@
                             :dense="dense" /><br>
                         <p id="p-olvido">¿Olvido su contraseña?</p>
                         <div id="div-boton">
-                        <q-btn @click="addEps()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
+                        <q-btn @click="addEps(),pasarHome()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
                         </div>
                     </div>
                 </div>
@@ -37,8 +37,8 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios"
-// import {useRouter} from "vue-router"
-// let router= useRouter();
+import {useRouter} from "vue-router"
+let router= useRouter();
 let dense = ref(false)
 let name = ref()
 let attentionLine = ref()
@@ -57,11 +57,11 @@ const addEps = async()=>{
     }
 }
 
-// function pasarHome() {
+function pasarHome() {
 
 
-//     router.push("/home")
-// }
+    router.push("/home")
+}
 
 </script>
 
@@ -192,7 +192,7 @@ const addEps = async()=>{
 #div-boton {
     width: 29%;
     margin: 0px auto;
-    margin-top: 30px;
+    margin-top: 0px;
 }
 
 #boton-ingresar {

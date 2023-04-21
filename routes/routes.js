@@ -7,6 +7,4 @@ import Home from "../src/components/Home.vue"
 export const routes=[
     {path:"/", component:Login},
     {path:"/home", component:Home},
-
-
 ]

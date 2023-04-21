@@ -21,7 +21,7 @@
                             :dense="dense" /><br>
                         <p id="p-olvido">¿Olvido su contraseña?</p>
                         <div id="div-boton">
-                        <q-btn @click="addEps()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
+                        <q-btn @click="addEps(), pasarHome()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
                         </div>
                     </div>
                 </div>
@@ -37,8 +37,8 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios"
-// import {useRouter} from "vue-router"
-// let router= useRouter();
+import {useRouter} from "vue-router"
+let router= useRouter();
 let dense = ref(false)
 let name = ref()
 let attentionLine = ref()
@@ -46,10 +46,9 @@ let attentionLine = ref()
 const addEps = async()=>{
     console.log("holas");
     try {
-        const eps = await axios.post("http://localhost:4500/eps",{
+        const eps = await axios.post("http://localhost:3500/eps",{
             name:name.value,
-            attentionLine:attentionLine.value,
-           
+            attentionLine:attentionLine.value 
         })
         console.log(eps);
     } catch (error) {
@@ -57,11 +56,11 @@ const addEps = async()=>{
     }
 }
 
-// function pasarHome() {
+function pasarHome() {
 
 
-//     router.push("/home")
-// }
+    router.push("/homeCosts")
+}
 
 </script>
 

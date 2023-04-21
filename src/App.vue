@@ -3,7 +3,7 @@
   <div>
     <div>
       <q-layout view="hhh lpR lff" container class="shadow-2 fullscreen">
-        <q-header elevated class="bg-teal-10">
+        <q-header elevated class="bg-green-10">
           <q-toolbar>
             <q-btn flat @click="toggleLeftDrawer" round dense icon="menu"><q-toolbar-title>MENU</q-toolbar-title></q-btn>
             <q-space></q-space>
@@ -38,7 +38,7 @@
           <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
             <q-list padding>
               <router-link to="/home" style="text-decoration: none;">
-                <q-item clickable v-ripple class="bg-teal-8 text-white q-mb-sm">
+                <q-item clickable v-ripple class="bg-green-10 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-house-user" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -49,8 +49,8 @@
                 </q-item>
               </router-link>
 
-              <router-link to="/profile" style="text-decoration: none;">
-                <q-item clickable v-ripple class="bg-teal-8 text-white q-mb-sm">
+              <router-link to="/homeCosts" style="text-decoration: none;">
+                <q-item clickable v-ripple class="bg-green-10 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-user" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -61,7 +61,7 @@
                 </q-item>
               </router-link>
               <router-link to="/edit" style="text-decoration: none;">
-                <q-item clickable v-ripple class="bg-teal-8 text-white q-mb-sm">
+                <q-item clickable v-ripple class="bg-green-10 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -72,7 +72,7 @@
               </router-link>
 
               <router-link to="/register" style="text-decoration: none;">
-                <q-item clickable v-ripple class="bg-teal-8 text-white q-mb-sm">
+                <q-item clickable v-ripple class="bg-green-10 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -83,7 +83,7 @@
               </router-link>
 
               <router-link to="/register" style="text-decoration: none;">
-                <q-item clickable v-ripple class="bg-teal-8 text-white q-mb-sm">
+                <q-item clickable v-ripple class="bg-green-10 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -94,7 +94,7 @@
               </router-link>
 
               <router-link to="/register" style="text-decoration: none;">
-                <q-item clickable v-ripple class="bg-teal-8 text-white q-mb-sm">
+                <q-item clickable v-ripple class="bg-green-10 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>

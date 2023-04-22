@@ -19,7 +19,7 @@
                     </q-card-section>
                     <q-separator class="bg-green-10 " />
                     <q-card-actions vertical align="center">
-                        <q-btn flat class="text-subtitle1">Pagos</q-btn>
+                      <router-link to="/pagos" > <q-btn flat class="text-subtitle1 text-dark" style="text-decoration: none;">Pagos</q-btn></router-link> 
                     </q-card-actions>
                 </q-card>
             </div>

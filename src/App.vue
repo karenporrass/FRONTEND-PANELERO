@@ -51,7 +51,7 @@
                 </q-item>
               </router-link>
 
-              <router-link to="/HomeCostos" style="text-decoration: none;">
+              <router-link to="/homeCostos" style="text-decoration: none;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-user" style="font-size: 20px;"></i>
@@ -76,7 +76,6 @@
               </router-link>
               
 
-              <router-link to="/register" style="text-decoration: none;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
@@ -85,9 +84,7 @@
                     TRANSFROMACION
                   </q-item-section>
                 </q-item>
-              </router-link>
-
-              <router-link to="/register" style="text-decoration: none;">
+              
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
@@ -96,9 +93,7 @@
                     INVENTARIO
                   </q-item-section>
                 </q-item>
-              </router-link>
-
-              <router-link to="/register" style="text-decoration: none;">
+             
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
@@ -107,7 +102,7 @@
                     REPORTES
                   </q-item-section>
                 </q-item>
-              </router-link>
+             
             </q-list>
           </q-scroll-area>
 
@@ -117,7 +112,7 @@
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">
               </q-avatar>
               <div class="text-weight-bolder text-h6">Karen y Sandy</div>
-              <text-subtitle2>Super usuario</text-subtitle2>
+              <div class="text-subtitle2">Super usuario</div>
             </div>
           </q-img>
         </q-drawer>

@@ -34,13 +34,9 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="number" v-model="document" label="Digite el cantidad del gasto"></q-input>
-                    <q-input  filled type="text" v-model="document" label="Digite el nombre del gasto"></q-input>
-                  <q-input filled type="text" v-model="rol" label="Escoga la finca"></q-input>
-                  <q-input  filled type="text" v-model="concept" label="Digite el descripcion"></q-input>
-                  <q-input  filled type="text" v-model="methodPay" label="Escoga el metodo de pago"></q-input>
-                  <q-input filled type="number" v-model="time" label="Digite el valor del gasto"></q-input>
-                  <q-input  filled type="number" v-model="total" label="Total"></q-input>
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre de la etapa"></q-input>
+                    <q-input  filled type="text" v-model="description" label="Digite una descripcion"></q-input>
+                  
 
                   <div>
                     <br />
@@ -62,13 +58,9 @@ let pagination = ref({
       })
       let columns = ref([
   {name: 'index',label: 'CANTIDAD',field: 'index',align: 'center'},
-  {name: 'name',required: true,label: 'NOMBRE DEL GASTO',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'FINCA', field: 'calories',align: 'center', sortable: true },
-  { name: 'fat', label: 'DESCRIPCION', field: 'fat', sortable: true ,align: 'center'},
-  { name: 'carbs', label: 'FECHA', field: 'carbs',align: 'center' },
-  { name: 'protein', label: 'METODO DE PAGO', field: 'protein',align: 'center' },
-  { name: 'sodium', label: 'VALOR DEL GASTO', field: 'sodium',align: 'center' },
-  { name: 'calcium', label: 'TOTAL', field: 'calcium',align: 'center',sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
+  {name: 'name',required: true,label: 'NOMBRE DE LA ETAPA',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
+  { name: 'calories', align: 'center', label: 'DESCRIPCION', field: 'calories',align: 'center', sortable: true },
+  
 ])
 
  let rows= ref( [

@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">PAGOS</div>
+                <div style="font-size:xx-large;" class="text-weight-bolder">GASTOS MENSUALES</div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -11,11 +11,11 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo pago</q-btn>
+                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo gasto</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
-          <!-- TABLE INFO -->
+        <!-- TABLE INFO -->
        <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10 ">
@@ -34,12 +34,13 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                  <q-input  filled type="number" v-model="document" label="Digite el numero de documento"></q-input>
-                  <q-input filled type="text" v-model="rol" label="Digite el rol"></q-input>
-                  <q-input  filled type="text" v-model="concept" label="Digite el concepto"></q-input>
-                  <q-input  filled type="text" v-model="methodPay" label="Escoga el meotodo de pago"></q-input>
-                  <q-input filled type="number" v-model="time" label="Digite el tiempo a pagar"></q-input>
-                  <q-input  filled type="number" v-model="total" label="Total a pagar"></q-input>
+                    <q-input  filled type="number" v-model="document" label="Digite el cantidad del gasto"></q-input>
+                    <q-input  filled type="text" v-model="document" label="Digite el nombre del gasto"></q-input>
+                  <q-input filled type="text" v-model="rol" label="Escoga la finca"></q-input>
+                  <q-input  filled type="text" v-model="concept" label="Digite el descripcion"></q-input>
+                  <q-input  filled type="text" v-model="methodPay" label="Escoga el metodo de pago"></q-input>
+                  <q-input filled type="number" v-model="time" label="Digite el valor del gasto"></q-input>
+                  <q-input  filled type="number" v-model="total" label="Total"></q-input>
 
                   <div>
                     <br />
@@ -59,15 +60,15 @@ let prompt = ref(false)
 let pagination = ref({
         rowsPerPage: 0
       })
-let columns = ref([
-  {name: 'index',label: '#',field: 'index'},
-  {name: 'name',required: true,label: 'NUMERO DE DOCUMENTO',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'ROL', field: 'calories',align: 'center', sortable: true },
-  { name: 'fat', label: 'CONCEPTO', field: 'fat', sortable: true ,align: 'center'},
-  { name: 'carbs', label: 'FECHA PAGO', field: 'carbs',align: 'center' },
+      let columns = ref([
+  {name: 'index',label: 'CANTIDAD',field: 'index',align: 'center'},
+  {name: 'name',required: true,label: 'NOMBRE DEL GASTO',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
+  { name: 'calories', align: 'center', label: 'FINCA', field: 'calories',align: 'center', sortable: true },
+  { name: 'fat', label: 'DESCRIPCION', field: 'fat', sortable: true ,align: 'center'},
+  { name: 'carbs', label: 'FECHA', field: 'carbs',align: 'center' },
   { name: 'protein', label: 'METODO DE PAGO', field: 'protein',align: 'center' },
-  { name: 'sodium', label: 'TIEMPO A PAGAR', field: 'sodium',align: 'center' },
-  { name: 'calcium', label: 'TOTAL A PAGAR', field: 'calcium',align: 'center',sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
+  { name: 'sodium', label: 'VALOR DEL GASTO', field: 'sodium',align: 'center' },
+  { name: 'calcium', label: 'TOTAL', field: 'calcium',align: 'center',sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
 ])
 
  let rows= ref( [

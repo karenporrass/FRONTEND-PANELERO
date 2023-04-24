@@ -12,29 +12,31 @@
         <div class="row q-mt-xl">
             <div class="col-2"></div>
             <div class="col-2 ">
-                <q-card class="my-card q-mr-xl shadow-8 "
+                <q-card class="my-card  shadow-8 "
                     style="border: solid; border-color: darkgreen; border-radius: 15px;">
                     <q-card-section>
                         <div class="text-center"> <i class="fa-solid fa-money-bill" style="font-size: 50px;"></i> </div>
                     </q-card-section>
                     <q-separator class="bg-green-10 " />
-                    <q-card-actions vertical align="center">
-                      <router-link to="/pagos" > <q-btn flat class="text-subtitle1 text-dark" style="text-decoration: none;">Pagos</q-btn></router-link> 
-                    </q-card-actions>
+                    <router-link to="/pagos" style="text-decoration: none;" > <q-card-actions vertical align="center">
+                      <q-btn flat class="text-subtitle1 text-dark" >Pagos</q-btn>
+                    </q-card-actions></router-link>
                 </q-card>
             </div>
             <div class="col-1"></div>
 
             <div class="col-2 text-center">
-                <q-card class="my-card q-mr-xl shadow-8"
+                <q-card class="my-card  shadow-8"
                     style="border: solid; border-color: darkgreen; border-radius: 15px;">
                     <q-card-section>
                         <div class="text-center"><i class="fa-solid fa-money-bill" style="font-size: 50px;"></i></div>
                     </q-card-section>
                     <q-separator class="bg-green-10" />
-                    <q-card-actions vertical align="center" class="q-pt-none">
-                        <q-btn flat class="text-subtitle1">Gastos Mensuales </q-btn>
+                    <router-link to="/gastosMensuales" style="text-decoration: none;" class="text-dark" >
+                   <q-card-actions vertical align="center" class="q-pt-none">
+                         <q-btn flat class="text-subtitle1">Gastos Mensuales </q-btn>
                     </q-card-actions>
+                </router-link>
                 </q-card>
             </div>
             <div class="col-1"></div>
@@ -44,9 +46,11 @@
                         <div class="text-center"><i class="fa-solid fa-money-bill" style="font-size: 50px;"></i></div>
                     </q-card-section>
                     <q-separator class="bg-green-10" />
-                    <q-card-actions vertical align="center">
+                    <router-link to="/gastosOcasionales" style="text-decoration: none;" class="text-dark" >
+                     <q-card-actions vertical align="center">
                         <q-btn flat class="text-subtitle1">Gastos ocasionales </q-btn>
                     </q-card-actions>
+                    </router-link>
                 </q-card>
             </div>
             <div class="col-2"></div>

@@ -63,7 +63,7 @@
                 </q-item>
               </router-link>
                                
-              <router-link @click="MenuAPedidos()" to="/pedidos" style="text-decoration: none; color:white;">
+              <router-link @click="MenuAPedidos()" to="/homePedidos" style="text-decoration: none; color:white;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
                 
                   <q-item-section avatar>

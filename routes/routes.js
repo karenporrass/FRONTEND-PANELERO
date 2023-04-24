@@ -30,6 +30,6 @@ export const routes=[
     {path: "/registroFincas", component: farmRegistry},
     {path: "/etapas", component: stages},
     {path: "/soporte", component: support},
-    {path: "tipoEmpaques", component: typePackaging},
-    {path: "lotes", component:lots}
+    {path: "/tipoEmpaques", component: typePackaging},
+    {path: "/lotes", component:lots}
 ]

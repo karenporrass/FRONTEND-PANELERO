@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">COSTOS</div>
+                <div  class="text-weight-bolder text-h4">COSTOS</div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -11,7 +11,7 @@
 
         <div class="row q-mt-xl">
             <div class="col-2"></div>
-            <div class="col-2 ">
+            <div class="col-2 q-mt-xl ">
                 <q-card class="my-card  shadow-8 "
                     style="border: solid; border-color: darkgreen; border-radius: 15px;">
                     <q-card-section>
@@ -25,7 +25,7 @@
             </div>
             <div class="col-1"></div>
 
-            <div class="col-2 text-center">
+            <div class="col-2 text-center  q-mt-xl ">
                 <q-card class="my-card  shadow-8"
                     style="border: solid; border-color: darkgreen; border-radius: 15px;">
                     <q-card-section>
@@ -40,7 +40,7 @@
                 </q-card>
             </div>
             <div class="col-1"></div>
-            <div class="col-2 text-center">
+            <div class="col-2 text-center  q-mt-xl ">
                 <q-card class="my-card  shadow-8 " style="border: solid; border-color: darkgreen; border-radius: 15px;">
                     <q-card-section>
                         <div class="text-center"><i class="fa-solid fa-money-bill" style="font-size: 50px;"></i></div>

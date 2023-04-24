@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">GASTOS OCASINALES</div>
+                <div  class="text-weight-bolder text-h4">GASTOS OCASINALES</div>
             </div>
             <div class="col-1"></div>
         </div>

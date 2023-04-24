@@ -2,14 +2,14 @@
     <div>
         <div class="row">
             <div class="col-4"></div>
-            <div class="col-4 q-mt-xl q-mb-sm text-center text-h3">
+            <div class="col-4 q-mt-lg q-mb-sm text-center text-h3">
                 MÓDULOS
             </div>
             <div class="col-4"></div>
         </div>
         <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
 
-        <div class="row" style="padding-top: 110px;">
+        <div class="row q-mt-xl" >
             <div class="col-2"></div>
             <div class="col-2">
                 <q-card class="my-card" style="border-style:solid; border-color: green; border-radius: 10px;">

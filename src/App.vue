@@ -53,6 +53,7 @@
               
               <router-link to="/homeMantenimiento" style="text-decoration: none;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+
                   <q-item-section avatar>
                     <i class="fa-solid fa-house-user" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -66,6 +67,7 @@
 
               <router-link to="/homeCostos" style="text-decoration: none;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+
                   <q-item-section avatar>
                     <i class="fa-solid fa-user" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -75,10 +77,10 @@
                   </q-item-section>
                 </q-item>
               </router-link>
-                               
+                            
               <router-link @click="MenuAPedidos()" to="/homePedidos" style="text-decoration: none; color:white;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
-                
+              
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -90,6 +92,7 @@
               
 
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -99,6 +102,7 @@
                 </q-item>
               
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -106,8 +110,10 @@
                     INVENTARIO
                   </q-item-section>
                 </q-item>
-             
+
+    
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -115,7 +121,7 @@
                     REPORTES
                   </q-item-section>
                 </q-item>
-             
+        
             </q-list>
           </q-scroll-area>
 

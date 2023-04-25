@@ -54,17 +54,10 @@
                 </q-card>
             </div>
             <div class="col-2"></div>
-
         </div>
-
-
-
-
-
-
     </div>
 </template>
-  
+
 <script setup>
 
 </script>

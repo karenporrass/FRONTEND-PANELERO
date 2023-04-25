@@ -1,3 +1,4 @@
+
 //INITIAL
 import Login from '../src/components/Login.vue'
 import Home from '../src/components/Home.vue'
@@ -23,6 +24,7 @@ import paymentType from '../src/components/Maintenance/PaymentType.vue'
 import stages from '../src/components/Maintenance/Stages.vue'
 import support from '../src/components/Maintenance/Support.vue'
 import typePackaging from '../src/components/Maintenance/TypePackaging.vue'
+
 
 export const routes=[
     {path:"/", component:Login},

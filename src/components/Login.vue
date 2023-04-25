@@ -21,7 +21,9 @@
                             :dense="dense" /><br>
                         <p id="p-olvido">¿Olvido su contraseña?</p>
                         <div id="div-boton">
+
                         <q-btn @click="addEps(),pasarHome()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
+
                         </div>
                     </div>
                 </div>
@@ -46,10 +48,9 @@ let attentionLine = ref()
 const addEps = async()=>{
     console.log("holas");
     try {
-        const eps = await axios.post("http://localhost:4500/eps",{
+        const eps = await axios.post("http://localhost:3500/eps",{
             name:name.value,
-            attentionLine:attentionLine.value,
-           
+            attentionLine:attentionLine.value 
         })
         console.log(eps);
     } catch (error) {
@@ -58,9 +59,8 @@ const addEps = async()=>{
 }
 
 function pasarHome() {
-
-
     router.push("/home")
+
 }
 
 </script>

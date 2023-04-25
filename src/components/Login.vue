@@ -21,7 +21,9 @@
                             :dense="dense" /><br>
                         <p id="p-olvido">¿Olvido su contraseña?</p>
                         <div id="div-boton">
-                        <q-btn @click="addEps(), pasarHome()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
+
+                        <q-btn @click="addEps(),pasarHome()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
+
                         </div>
                     </div>
                 </div>
@@ -57,9 +59,8 @@ const addEps = async()=>{
 }
 
 function pasarHome() {
+    router.push("/home")
 
-
-    router.push("/homeCosts")
 }
 
 </script>
@@ -122,9 +123,9 @@ function pasarHome() {
 
 #contenedor-col2 {
     background-color: white;
-    margin-top: 15px;
+    margin-top: 45px;
     color: white;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     display: flex;
     border-radius: 10px;
     border: 1px solid black;
@@ -191,7 +192,7 @@ function pasarHome() {
 #div-boton {
     width: 29%;
     margin: 0px auto;
-    margin-top: 30px;
+    margin-top: 0px;
 }
 
 #boton-ingresar {

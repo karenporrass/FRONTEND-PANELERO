@@ -10,12 +10,19 @@ import pays from '../src/components/Costs/Pays.vue'
 import mounthlyExpenses from '../src/components/Costs/MonthlyExpenses.vue'
 import occasionalExpenses from '../src/components/Costs/OccasionalExpenses.vue'
 //MAINTENANCE
-import people from '../src/components/Maintenance/People.vue'
+import people from '../src/components/Maintenance/CreatePeople.vue'
+import typeDocument from '../src/components/Maintenance/DocumentType.vue'
+import eps from '../src/components/Maintenance/Eps.vue'
 import farmRegistry from '../src/components/Maintenance/FarmRegistry.vue'
+import homeMaintenance from '../src/components/Maintenance/HomeMaintenance.vue'
+import labors from '../src/components/Maintenance/Labors.vue'
+import lots from '../src/components/Maintenance/Lots.vue'
+import measurementUnits from '../src/components/Maintenance/MeasurementUnits.vue'
+import paymentMethod from '../src/components/Maintenance/PaymentMethod.vue'
+import paymentType from '../src/components/Maintenance/PaymentType.vue'
 import stages from '../src/components/Maintenance/Stages.vue'
 import support from '../src/components/Maintenance/Support.vue'
 import typePackaging from '../src/components/Maintenance/TypePackaging.vue'
-import lots from '../src/components/Maintenance/Lots.vue'
 
 export const routes=[
     {path:"/", component:Login},
@@ -23,13 +30,20 @@ export const routes=[
     {path:"/homePedidos", component:orders},
     {path:"/pedidosDos", component:tablesOrders},
     {path:"/homeCostos", component: homeCosts},
+    {path:"/personas", component:people},
+    {path:"/tipoDoc", component:typeDocument},
+    {path:"/eps", component:eps},
+    {path: "/fincas", component: farmRegistry},
+    {path:"/homeMantenimiento", component: homeMaintenance},
+    {path:"/labores", component: labors},
+    {path: "/lotes", component:lots},
+    {path: "/unidadesMedida", component:measurementUnits},
+    {path: "/metodosPago", component:paymentMethod},
+    {path: "/tiposPago", component:paymentType},
     {path:"/pagos", component: pays},
     {path:"/gastosMensuales", component: mounthlyExpenses},
     {path:"/gastosOcasionales", component: occasionalExpenses},
-    {path:"/personas", component:people},
-    {path: "/registroFincas", component: farmRegistry},
     {path: "/etapas", component: stages},
     {path: "/soporte", component: support},
     {path: "/tipoEmpaques", component: typePackaging},
-    {path: "/lotes", component:lots}
 ]

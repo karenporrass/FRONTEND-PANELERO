@@ -51,6 +51,7 @@
                 </q-item>
               </router-link>
               
+              <router-link to="/homeMantenimiento" style="text-decoration: none;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
                   <q-item-section avatar>
                     <i class="fa-solid fa-house-user" style="font-size: 20px;"></i>
@@ -60,6 +61,8 @@
                     MANTENIMIENTO
                   </q-item-section>
                 </q-item>
+              </router-link>
+
 
               <router-link to="/homeCostos" style="text-decoration: none;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">

@@ -95,6 +95,7 @@
                 </q-item> 
               </router-link>
 
+
     
               
 
@@ -124,10 +125,8 @@
                   </q-item>
                 </router-link>
 
-
+                <router-link  to="/reports" style="text-decoration: none; color:white;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
-
-
                 <q-item-section avatar style=" min-width: 1px;">
                   <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                 </q-item-section>
@@ -135,6 +134,7 @@
                   REPORTES
                 </q-item-section>
               </q-item>
+              </router-link>
 
             </q-list>
           </q-scroll-area>

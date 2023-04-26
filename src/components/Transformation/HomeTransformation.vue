@@ -9,7 +9,7 @@
         </div>
         <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
 
-        <div class="row bg-red" style="margin-top: 240px;">
+        <div class="row" style="margin-top: 240px;">
             <div class="col-2"></div>
             <div class="col-xl-2 col-sm-2">
                 <q-card class="my-card" style="border-style:solid; border-color: green; border-radius: 10px;">
@@ -21,7 +21,7 @@
                     <q-separator class="bg-green-10" style="height: 2px;" />
                     <router-link to="/" style="text-decoration: none; color: black;">
                         <q-card-section class="q-pt-none">
-                            <div class="text-center q-mt-md" style="padding: 12px;">
+                            <div class="text-center q-mt-md q-my-md">
                                 PROCESO DIARIO
                             </div>
                         </q-card-section>
@@ -41,7 +41,7 @@
                     <q-separator class="bg-green-10" style="height: 2px;" />
                     <router-link to="/" style="text-decoration: none; color: black;">
                         <q-card-section class="q-pt-none">
-                            <div class="text-center q-mt-md" style="padding: 1.5px;">
+                            <div class="text-center q-mt-md">
                                 MATERIA PRIMA TRANSFORMADA
                             </div>
                         </q-card-section>
@@ -59,7 +59,7 @@
                     <q-separator class="bg-green-10" style="height: 2px;" />
                     <router-link to="/" style="text-decoration: none; color: black;">
                         <q-card-section class="q-pt-none">
-                            <div class="text-center q-mt-md" style="padding: 12px;">
+                            <div class="text-center q-mt-md q-my-md" >
                                 EMPACADOS
                             </div>
                         </q-card-section>

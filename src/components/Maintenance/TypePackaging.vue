@@ -11,19 +11,19 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de empaque</q-btn>
+                <q-btn class="bg-green-10 text-white" @click="prompt = true, getTypePackaing()">Crear nuevo tipo de empaque</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
         <!-- TABLE INFO -->
-       <!-- <div class="row q-mt-md">
+       <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10 ">
                 <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" />
             </div>
             <div class="col-1"></div>
-        </div>  -->
+        </div> 
 
         <q-dialog v-model="prompt">
             <q-card >
@@ -34,9 +34,9 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <q-input  type="number" v-model="maxWeight" label="Peso maximo"></q-input>
-                  <q-input  type="numeber" v-model="units" label="Digite las unidades por caja"></q-input>
+                    <q-input filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
+                  <q-input filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
+                  <q-input filled type="number" v-model="units" label="Digite las unidades por caja"></q-input>
                   
 
                   <div>
@@ -52,37 +52,50 @@
 </template>
   
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import axios from 'axios';
 
 let prompt = ref(false)
 let name = ref("")
 let maxWeight = ref()
 let units = ref()
-// let pagination = ref({
-//         rowsPerPage: 0
-//       })
-// let columns = ref([
-//   {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
-//   {name: 'weight',required: true,label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
-//   { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
-// ])
+let pagination = ref({
+        rowsPerPage: 0
+      })
+let columns = ref([
+  {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
+  {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
+  { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
+])
 
-// let rows= ref( [])
+let rows = ref([])
 
 const postTypePackaing = async ()=>{
   try {
     const packaing = await axios.post(`http://localhost:3500/tipoEmpaque`,{
       name: name.value,
-      maxWeight: maxWeight.value,
+      maxWeigth: maxWeight.value,
       unitsPerBox: units.value
     })
+    getTypePackaing()
     console.log(packaing);
-    rows.value=packaing.data
   } catch (error) {
     console.log(error);
   }
 }
+const getTypePackaing = async ()=>{
+  try {
+    const packa = await axios.get(`http://localhost:3500/tipoEmpaque`)
+    console.log(packa);
+    rows.value=packa.data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+onMounted(()=>{
+  getTypePackaing()
+})
 
 
 

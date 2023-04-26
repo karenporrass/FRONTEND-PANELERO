@@ -25,9 +25,13 @@ import paymentType from '../src/components/Maintenance/PaymentType.vue'
 import stages from '../src/components/Maintenance/Stages.vue'
 import support from '../src/components/Maintenance/Support.vue'
 import typePackaging from '../src/components/Maintenance/TypePackaging.vue'
+
 // inventory
 import Inventory from '../src/components/Inventory/homeInventory.vue'
 
+
+//TRANSFORMATION
+import HomeTranformation from '../src/components/Transformation/HomeTransformation.vue'
 
 
 export const routes=[
@@ -53,4 +57,5 @@ export const routes=[
     {path: "/etapas", component: stages},
     {path: "/soporte", component: support},
     {path: "/tipoEmpaques", component: typePackaging},
+    {path: "/homeTransformacion", component: HomeTranformation},
 ]

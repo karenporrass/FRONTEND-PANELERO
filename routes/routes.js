@@ -32,6 +32,9 @@ import Inventory from '../src/components/Inventory/homeInventory.vue'
 
 //TRANSFORMATION
 import HomeTranformation from '../src/components/Transformation/HomeTransformation.vue'
+import DailyProcess from '../src/components/Transformation/DailyProcess.vue'
+import TransformedRawMaterial from '../src/components/Transformation/TransformedRawMaterial.vue'
+import Packed from '../src/components/Transformation/Packed.vue'
 
 
 export const routes=[
@@ -58,4 +61,8 @@ export const routes=[
     {path: "/soporte", component: support},
     {path: "/tipoEmpaques", component: typePackaging},
     {path: "/homeTransformacion", component: HomeTranformation},
+    {path: "/procesoDiario", component: DailyProcess},
+    {path: "/materiaTransformada", component:TransformedRawMaterial},
+    {path: "/empacado", component: Packed},
+
 ]

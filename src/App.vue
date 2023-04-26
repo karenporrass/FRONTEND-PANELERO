@@ -106,7 +106,7 @@
                   <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                 </q-item-section>
                 <q-item-section style="font-size: medium;">
-                  TRANSFROMACION
+                  TRANSFORMACIÓN
                 </q-item-section>
               </q-item>
               </router-link>

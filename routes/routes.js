@@ -4,6 +4,7 @@ import Login from '../src/components/Login.vue'
 import Home from '../src/components/Home.vue'
 //ORDERS
 import orders from '../src/components/orders/Orders.vue'
+
 import tablesOrders from '../src/components/orders/TablesOrders.vue'
 //COSTS
 import homeCosts from '../src/components/Costs/HomeCosts.vue'
@@ -24,6 +25,11 @@ import paymentType from '../src/components/Maintenance/PaymentType.vue'
 import stages from '../src/components/Maintenance/Stages.vue'
 import support from '../src/components/Maintenance/Support.vue'
 import typePackaging from '../src/components/Maintenance/TypePackaging.vue'
+
+// inventory
+import Inventory from '../src/components/Inventory/homeInventory.vue'
+
+
 //TRANSFORMATION
 import HomeTranformation from '../src/components/Transformation/HomeTransformation.vue'
 
@@ -32,6 +38,7 @@ export const routes=[
     {path:"/", component:Login},
     {path:"/home", component:Home},
     {path:"/homePedidos", component:orders},
+    {path:"/homeInventory", component:Inventory},
     {path:"/pedidosDos", component:tablesOrders},
     {path:"/homeCostos", component: homeCosts},
     {path:"/personas", component:people},

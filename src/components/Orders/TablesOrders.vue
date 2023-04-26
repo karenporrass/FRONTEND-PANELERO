@@ -48,93 +48,57 @@
 
 
    <!-- modal crear  -->
-   <div  class="q-pa-md q-gutter-sm" >
-              <q-dialog v-model="abrirCrear" persistent >
-                <q-card id="modalCrear" class="card bg-light">
-                  <div  class="q-pa-md" style=" margin-left: 15px; color: black">
-                    <q-form style="padding: 30px" class="q-gutter-md">
-                      <h4>Crear Pedido</h4>
+  
+   <div class="row q-mt-md">
+            <div class="col-1"></div>
+            <div class="col-10 ">
+                <!-- <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
+                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" /> -->
+            </div>
+            <div class="col-1"></div>
+        </div> 
 
+        <q-dialog v-model="abrirCrear">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
 
+                <div style="display: flex;">
 
-                      <!-- inputs  -->
-                      <div style="display: flex;">
+                <div id="inputs">
+                  <q-input  filled type="number" v-model="document" label="Digite el numero de documento"></q-input>
+                  <q-input  filled type="text" v-model="document" label="Nombre"></q-input>
+                  <q-input filled type="text" v-model="rol" label="Telefono"></q-input>
+                  <q-input  filled type="text" v-model="concept" label="Dirección"></q-input>
+                  <q-select filled v-model="TipoPanela" :options="options" label="Escoga el tipo de panela" />
+                </div>
 
-                        <div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                    </div>
+                <div id="inputs">
+                  <q-select filled v-model="FormaPanela" :options="options2" label="Escoga la forma de la panela" />
+                  <q-input  filled type="number" v-model="total" label="Cantidad"></q-input>
+                  <q-select filled v-model="TipoEmpaque" :options="options3" label="Escoga el tipo de empaque" />
+                  <q-input  filled type="text" v-model="total" label="Comprobante"></q-input>
+                  <q-input  filled type="text" v-model="total" label="Abono"></q-input>
+                </div>
 
-                      <div>
-                        <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
-                      <q-input filled type="text" label="Premio" v-model="premio" />
-                      </div>
-                      </div>
+                </div>
 
-                      <!-- termina div de inputs  -->
-                    </div>
-                    
-                    </q-form>
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
-                  <q-card-actions align="right" class="text-primary">
-                    <q-btn flat label="Cancel" v-close-popup />
-                    <q-btn flat label="Guardar" v-close-popup />
-                  </q-card-actions>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
+   
 
-                </q-card></q-dialog>
-              
-    </div>
     
 
 
@@ -148,6 +112,24 @@
 import { ref } from "vue";
 
 let abrirCrear=ref(false)
+
+let TipoPanela=ref(null)
+let FormaPanela=ref(null)
+let TipoEmpaque=ref(null)
+
+      let options= [
+        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+      ]
+
+      let options2= [
+        'Google', 'Facebook', 'casa', 'Apple', 'Oracle'
+      ]   
+      
+      let options3= [
+        'agua', 'Facebook', 'casa', 'Apple', 'Oracle'
+      ] 
+
+
 
 let columns = ref([
   {
@@ -189,86 +171,7 @@ let rows = ref([
     calcium: '8%',
     iron: '1%'
   },
-  {
-    name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: '6%',
-    iron: '7%'
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: '3%',
-    iron: '8%'
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: '7%',
-    iron: '16%'
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-    iron: '0%'
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-    iron: '2%'
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-    iron: '45%'
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-    iron: '22%'
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
-    iron: '6%'
-  }
+ 
 ])
 
 
@@ -297,10 +200,12 @@ let rows = ref([
   margin-top: 1px;
 }
 
-.q-input{
-  width: 400px;
-  margin-bottom: 20px;
+#inputs{
+  width: 250px;
+  margin-bottom: 10px;
+  
 }
+
 
 
 </style>

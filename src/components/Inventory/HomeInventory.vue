@@ -38,7 +38,10 @@
                                 new_releases
                             </span></div>
                     </q-card-section>
+
                     <q-separator class="bg-green-10"  />
+
+
                     <router-link to="/gastosMensuales" style="text-decoration: none;" class="text-dark">
                         <q-card-actions vertical align="center">
                             <q-btn flat class="text-subtitle1">Marcas </q-btn>

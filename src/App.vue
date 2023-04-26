@@ -5,8 +5,10 @@
       <q-layout view="hhh lpR lff" container class="shadow-2 fullscreen">
         <q-header elevated class="bg-green-10">
           <q-toolbar>
-            <q-btn v-show="TituloPedidos==false" flat @click="toggleLeftDrawer" round dense icon="menu"><q-toolbar-title>MENU</q-toolbar-title></q-btn>
-            <q-btn v-show="TituloPedidos==true" flat @click="toggleLeftDrawer" round dense icon="menu"><q-toolbar-title>PEDIDOS</q-toolbar-title></q-btn>
+            <q-btn v-show="TituloPedidos == false" flat @click="toggleLeftDrawer" round dense
+              icon="menu"><q-toolbar-title>MENU</q-toolbar-title></q-btn>
+            <q-btn v-show="TituloPedidos == true" flat @click="toggleLeftDrawer" round dense
+              icon="menu"><q-toolbar-title>PEDIDOS</q-toolbar-title></q-btn>
 
             <q-space></q-space>
             <q-btn flat icon="fa-regular fa-user" class="q-mr-sm" />
@@ -16,16 +18,17 @@
                 <div class="row no-wrap q-pa-md">
                   <div class="col-6 column items-center">
                     <q-avatar size="72px">
-                      <img src="https://www.kindpng.com/picc/m/163-1636340_user-avatar-icon-avatar-transparent-user-icon-png.png">
+                      <img
+                        src="https://www.kindpng.com/picc/m/163-1636340_user-avatar-icon-avatar-transparent-user-icon-png.png">
                     </q-avatar>
 
                     <q-btn color="teal-8" label="Logout" push size="sm" v-close-popup />
                   </div>
-                  
+
                   <div class="col-6">
                     <div class="text-h6 q-mt-sm">Pepita Perez</div>
-                    <q-toggle  label="Use Mobile Data" />
-                    <q-toggle  label="Bluetooth" />
+                    <q-toggle label="Use Mobile Data" />
+                    <q-toggle label="Bluetooth" />
                   </div>
 
 
@@ -50,7 +53,7 @@
                   </q-item-section>
                 </q-item>
               </router-link>
-              
+
               <router-link to="/homeMantenimiento" style="text-decoration: none;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
 
@@ -69,7 +72,9 @@
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
 
                   <q-item-section avatar>
-                    <i class="fa-solid fa-user" style="font-size: 20px;"></i>
+                    <span class="material-symbols-outlined" style="font-size: 28px;">
+                      monetization_on
+                    </span>
                   </q-item-section>
 
                   <q-item-section style="font-size: medium;">
@@ -77,55 +82,60 @@
                   </q-item-section>
                 </q-item>
               </router-link>
-                            
-              <router-link @click="MenuAPedidos()" to="/homePedidos" style="text-decoration: none; color:white;">
-                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
-              
-                  <q-item-section avatar>
-                    <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
-                  </q-item-section>
-                  <q-item-section  style="font-size: medium;">
-                    PEDIDOS
-                  </q-item-section>
-                </q-item> 
-              </router-link>
-              
 
+              <router-link @click="MenuAPedidos()" to="/homePedidos" style="text-decoration: none; color:white;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
 
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
                   <q-item-section style="font-size: medium;">
-                    TRANSFROMACION
+                    PEDIDOS
                   </q-item-section>
                 </q-item>
-              
+              </router-link>
+
+
+              <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+
+                <q-item-section avatar>
+                  <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
+                </q-item-section>
+                <q-item-section style="font-size: medium;">
+                  TRANSFROMACION
+                </q-item-section>
+              </q-item>
+              <router-link @click="MenuInventory()" to="/homeInventory" style="text-decoration: none; color:white;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
 
                   <q-item-section avatar>
-                    <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
+                    <span class="material-symbols-outlined" style="font-size: 25px;">
+                      inventory
+                    </span>
                   </q-item-section>
                   <q-item-section style="font-size: medium;">
                     INVENTARIO
                   </q-item-section>
                 </q-item>
+              </router-link>
 
-    
-                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
 
-                  <q-item-section avatar>
-                    <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
-                  </q-item-section>
-                  <q-item-section style="font-size: medium;">
-                    REPORTES
-                  </q-item-section>
-                </q-item>
-        
+              <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+
+                <q-item-section avatar>
+                  <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
+                </q-item-section>
+                <q-item-section style="font-size: medium;">
+                  REPORTES
+                </q-item-section>
+              </q-item>
+
             </q-list>
           </q-scroll-area>
 
-          <q-img class="absolute-top" src="https://img.freepik.com/foto-gratis/foto-pequena-palmera-serenoa-repens-que-crece-sombra_181624-10193.jpg?w=740&t=st=1682119825~exp=1682120425~hmac=a9dd3a5be68c5c3641e5e6162b1a1eacf64dcf7fd9b49e133d0636e81c1697b1" style="height: 150px">
+          <q-img class="absolute-top"
+            src="https://img.freepik.com/foto-gratis/foto-pequena-palmera-serenoa-repens-que-crece-sombra_181624-10193.jpg?w=740&t=st=1682119825~exp=1682120425~hmac=a9dd3a5be68c5c3641e5e6162b1a1eacf64dcf7fd9b49e133d0636e81c1697b1"
+            style="height: 150px">
             <div class="absolute-bottom bg-transparent">
               <q-avatar size="56px" class="q-mb-sm">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">
@@ -157,16 +167,22 @@
 <script setup>
 import { ref } from 'vue'
 
-    const leftDrawerOpen = ref(false)
-    let TituloPedidos= ref(false)
-    
-    function MenuAPedidos(){
-      TituloPedidos=true}
+const leftDrawerOpen = ref(false)
+let TituloPedidos = ref(false)
+let TituloInventory = ref(false)
 
-    function toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-  
+function MenuAPedidos() {
+  TituloPedidos = true
+}
+
+function MenuInventory() {
+  TituloInventory = true
+}
+
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
+
 
 </script>
 

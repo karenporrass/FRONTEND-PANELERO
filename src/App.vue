@@ -101,6 +101,8 @@
                   </q-item-section>
                 </q-item>
               
+                
+
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
 
                   <q-item-section avatar>
@@ -110,8 +112,8 @@
                     INVENTARIO
                   </q-item-section>
                 </q-item>
-
-    
+              
+              <router-link  to="/reports" style="text-decoration: none; color:white;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
 
                   <q-item-section avatar>
@@ -121,7 +123,10 @@
                     REPORTES
                   </q-item-section>
                 </q-item>
-        
+              </router-link>
+
+
+              
             </q-list>
           </q-scroll-area>
 

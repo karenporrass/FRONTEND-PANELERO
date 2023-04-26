@@ -24,7 +24,8 @@ import paymentType from '../src/components/Maintenance/PaymentType.vue'
 import stages from '../src/components/Maintenance/Stages.vue'
 import support from '../src/components/Maintenance/Support.vue'
 import typePackaging from '../src/components/Maintenance/TypePackaging.vue'
-
+// reports
+import report from '../src/components/r_eports/r_eports.vue'
 
 export const routes=[
     {path:"/", component:Login},
@@ -48,4 +49,6 @@ export const routes=[
     {path: "/etapas", component: stages},
     {path: "/soporte", component: support},
     {path: "/tipoEmpaques", component: typePackaging},
+    {path: "/reports", component: report},
+
 ]

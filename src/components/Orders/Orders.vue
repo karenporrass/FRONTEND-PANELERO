@@ -65,6 +65,7 @@
 #carrito{
     font-size: 100px;
     align-content: center;
+  
 }
 #card{
     
@@ -73,6 +74,9 @@
     height:200px;
     text-align: center;
     margin-top:100px ;
+    border: solid; 
+    border-color: darkgreen; 
+    border-radius: 15px;
     
 }
 #letraAbajo{

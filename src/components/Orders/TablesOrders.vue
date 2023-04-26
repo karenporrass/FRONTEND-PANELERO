@@ -66,7 +66,7 @@
                       <q-input filled type="text" label="Premio" v-model="premio" />
                       </div>
                       <div style="display: flex;">
-                      <p id="pCrear">N° Doc:</p>
+                      <p id="pCrear">N° cedula:</p>
                       <q-input filled type="text" label="Premio" v-model="premio" />
                       </div>
                       <div style="display: flex;">
@@ -298,8 +298,9 @@ let rows = ref([
 }
 
 .q-input{
-  width: 400px;
-  margin-bottom: 20px;
+  width: 350px;
+  margin-bottom: 10px;
+
 }
 
 

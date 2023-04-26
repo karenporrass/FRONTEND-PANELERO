@@ -45,8 +45,8 @@
 
               <router-link to="/home" style="text-decoration: none;">
                 <q-item clickable class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
-                  <q-item-section avatar class="q-ml-md">
-                    <i class="fa-solid fa-house-user" style="font-size: 20px;"></i>
+                  <q-item-section avatar style="min-width: 1px; ">
+                    <i class="fa-solid fa-house-user" style="font-size: 20px; "></i>
                   </q-item-section>
                   <q-item-section style="font-size: medium;">
                     HOME
@@ -56,7 +56,8 @@
 
               <router-link to="/homeMantenimiento" style="text-decoration: none;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
-                  <q-item-section avatar>
+
+                  <q-item-section avatar style="  min-width: 1px; ">
                     <i class="fa-solid fa-house-user" style="font-size: 20px;"></i>
                   </q-item-section>
                   <q-item-section style="font-size: medium;">
@@ -67,7 +68,10 @@
 
               <router-link to="/homeCostos" style="text-decoration: none;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
-                  <q-item-section avatar>
+
+
+
+                  <q-item-section avatar style=" min-width: 1px;">
                     <span class="material-symbols-outlined" style="font-size: 28px;">
                       monetization_on
                     </span>
@@ -80,7 +84,9 @@
 
               <router-link @click="MenuAPedidos()" to="/homePedidos" style="text-decoration: none; color:white;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
-                  <q-item-section avatar>
+
+
+                  <q-item-section avatar style=" min-width: 1px;">
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
                   <q-item-section  style="font-size: medium;">
@@ -89,9 +95,14 @@
                 </q-item> 
               </router-link>
 
+    
+              
+
               <router-link to="/homeTransformacion" style="text-decoration: none; color:white;">
+
               <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
-                <q-item-section avatar>
+
+                <q-item-section avatar style=" min-width: 1px;">
                   <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                 </q-item-section>
                 <q-item-section style="font-size: medium;">
@@ -114,11 +125,10 @@
                 </router-link>
 
 
-    
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
 
 
-                <q-item-section avatar>
+                <q-item-section avatar style=" min-width: 1px;">
                   <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                 </q-item-section>
                 <q-item-section style="font-size: medium;">

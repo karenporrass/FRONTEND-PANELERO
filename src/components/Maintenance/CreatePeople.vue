@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">TIPO DE EMPAQUES</div>
+                <div style="font-size:xx-large;" class="text-weight-bolder"> USUARIOS </div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -11,7 +11,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de empaque</q-btn>
+                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo usuario</q-btn>
             </div>
             <div class="col-1"></div>
         </div>

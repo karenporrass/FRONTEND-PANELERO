@@ -7,7 +7,7 @@
             </div>
             <div class="col-1"></div>
         </div>
-        <q-separator inset class="q-mt-md  bg-green-10" style="height: 2px; margin-left: 100px; margin-right: 100px;" />
+        <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
 
         <div class="row q-mt-xl">
             <div class="col-2"></div>

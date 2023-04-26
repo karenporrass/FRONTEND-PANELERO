@@ -1,76 +1,81 @@
 <template>
-    <div>
-        <div class="row q-mt-md">
-            <div class="col-1"></div>
-            <div class="col-10  text-center">
-                <div  class="text-weight-bolder text-h4">PAGOS</div>
-            </div>
-            <div class="col-1"></div>
+  <div>
+    <div class="row q-mt-md">
+      <div class="col-1"></div>
+      <div class="col-10  text-center">
+        <div class="text-weight-bolder text-h4">PAGOS</div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
+    <div class="row ">
+      <div class="col-1"></div>
+      <div class="col-10 ">
+        <div>
+          <p style="font-size: 20px; " ><span style="font-size: 50px; " class="material-icons-outlined">
+              arrow_right
+            </span> PEDIDOS CLIENTES</p>
         </div>
-        <q-separator class="q-my-md  bg-green-10" style="height: 2px; margin-left: 100px; margin-right: 100px;" />
-        <div class="row ">
-            <div class="col-1"></div>
-            <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo pago</q-btn>
+        <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo pago</q-btn>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <!-- TABLE INFO -->
+    <div class="row q-mt-md">
+      <div class="col-1"></div>
+      <div class="col-10 ">
+        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll
+          v-model:pagination="pagination" :rows-per-page-options="[0]" />
+      </div>
+      <div class="col-1"></div>
+    </div>
+
+    <q-dialog v-model="prompt">
+      <q-card>
+        <q-card-section class="bg-green-10">
+          <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+            DILIGENCIA LA INFORMACIÓN
+          </h5>
+        </q-card-section>
+        <div class="q-pa-md ">
+          <div>
+            <q-input filled type="number" v-model="document" label="Digite el numero de documento"></q-input>
+            <q-input filled type="text" v-model="rol" label="Digite el rol"></q-input>
+            <q-input filled type="text" v-model="concept" label="Digite el concepto"></q-input>
+            <q-input filled type="text" v-model="methodPay" label="Escoga el meotodo de pago"></q-input>
+            <q-input filled type="number" v-model="time" label="Digite el tiempo a pagar"></q-input>
+            <q-input filled type="number" v-model="total" label="Total a pagar"></q-input>
+
+            <div>
+              <br />
+              <q-btn label="guardar" class="text-white bg-green-10" />
+              <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
-            <div class="col-1"></div>
+          </div>
         </div>
-          <!-- TABLE INFO -->
-       <div class="row q-mt-md">
-            <div class="col-1"></div>
-            <div class="col-10 ">
-                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" />
-            </div>
-            <div class="col-1"></div>
-        </div> 
-
-        <q-dialog v-model="prompt">
-            <q-card >
-              <q-card-section class="bg-green-10">
-                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
-                  DILIGENCIA LA INFORMACIÓN
-                </h5>
-              </q-card-section>
-              <div class="q-pa-md " >
-                <div>
-                  <q-input  filled type="number" v-model="document" label="Digite el numero de documento"></q-input>
-                  <q-input filled type="text" v-model="rol" label="Digite el rol"></q-input>
-                  <q-input  filled type="text" v-model="concept" label="Digite el concepto"></q-input>
-                  <q-input  filled type="text" v-model="methodPay" label="Escoga el meotodo de pago"></q-input>
-                  <q-input filled type="number" v-model="time" label="Digite el tiempo a pagar"></q-input>
-                  <q-input  filled type="number" v-model="total" label="Total a pagar"></q-input>
-
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
-                </div>
-              </div>
-            </q-card>
-          </q-dialog>
-    </div> 
+      </q-card>
+    </q-dialog>
+  </div>
 </template>
   
 <script setup>
-import {ref} from "vue"
+import { ref } from "vue"
 let prompt = ref(false)
 let pagination = ref({
-        rowsPerPage: 0
-      })
+  rowsPerPage: 0
+})
 let columns = ref([
-  {name: 'index',label: '#',field: 'index'},
-  {name: 'name',required: true,label: 'NUMERO DE DOCUMENTO',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'ROL', field: 'calories',align: 'center', sortable: true },
-  { name: 'fat', label: 'CONCEPTO', field: 'fat', sortable: true ,align: 'center'},
-  { name: 'carbs', label: 'FECHA PAGO', field: 'carbs',align: 'center' },
-  { name: 'protein', label: 'METODO DE PAGO', field: 'protein',align: 'center' },
-  { name: 'sodium', label: 'TIEMPO A PAGAR', field: 'sodium',align: 'center' },
-  { name: 'calcium', label: 'TOTAL A PAGAR', field: 'calcium',align: 'center',sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
+  { name: 'index', label: '#', field: 'index' },
+  { name: 'name', required: true, label: 'NUMERO DE DOCUMENTO', align: 'center', field: row => row.name, format: val => `${val}`, sortable: true },
+  { name: 'calories', align: 'center', label: 'ROL', field: 'calories', align: 'center', sortable: true },
+  { name: 'fat', label: 'CONCEPTO', field: 'fat', sortable: true, align: 'center' },
+  { name: 'carbs', label: 'FECHA PAGO', field: 'carbs', align: 'center' },
+  { name: 'protein', label: 'METODO DE PAGO', field: 'protein', align: 'center' },
+  { name: 'sodium', label: 'TIEMPO A PAGAR', field: 'sodium', align: 'center' },
+  { name: 'calcium', label: 'TOTAL A PAGAR', field: 'calcium', align: 'center', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
 ])
 
- let rows= ref( [
+let rows = ref([
   {
     name: 'Frozen Yogurt',
     calories: 159,

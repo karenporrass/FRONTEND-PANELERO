@@ -12,7 +12,7 @@
         <div class="row q-mt-xl">
             <div class="col-2"></div>
             <div class="col-2 q-mt-xl ">
-                <q-card class="my-card  shadow-8 " style="border: solid; border-color: darkgreen; border-radius: 15px;">
+                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 15px;">
                     <q-card-section>
                         <div style="margin: 0px auto; width: 20%; ">
                             <span class="material-symbols-outlined" style="font-size: 50px; color: black; font-weight:bold;">
@@ -20,7 +20,7 @@
                         </span></div>
                         
                     </q-card-section>
-                    <q-separator class="bg-green-10 " />
+                    <q-separator class="bg-green-10 " style="height: 2px;" />
 
     
 
@@ -32,11 +32,11 @@
             <div class="col-1"></div>
 
             <div class="col-2 text-center  q-mt-xl ">
-                <q-card class="my-card  shadow-8" style="border: solid; border-color: darkgreen; border-radius: 15px;">
+                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 15px;">
                     <q-card-section>
                         <div class="text-center"><i class="fa-solid fa-money-bill" style="font-size: 50px;"></i></div>
                     </q-card-section>
-                    <q-separator class="bg-green-10" />
+                    <q-separator class="bg-green-10" style="height: 2px;"/>
 
                  
 
@@ -49,11 +49,11 @@
             </div>
             <div class="col-1"></div>
             <div class="col-2 text-center  q-mt-xl ">
-                <q-card class="my-card  shadow-8 " style="border: solid; border-color: darkgreen; border-radius: 15px;">
+                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 15px;">
                     <q-card-section>
                         <div class="text-center"><i class="fa-solid fa-money-bill" style="font-size: 50px;"></i></div>
                     </q-card-section>
-                    <q-separator class="bg-green-10" />
+                    <q-separator class="bg-green-10" style="height: 2px;" />
 
                   
                     <router-link to="/gastosOcasionales" style="text-decoration: none;" class="text-dark" >

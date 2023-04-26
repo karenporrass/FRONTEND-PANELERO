@@ -25,16 +25,23 @@ import paymentType from '../src/components/Maintenance/PaymentType.vue'
 import stages from '../src/components/Maintenance/Stages.vue'
 import support from '../src/components/Maintenance/Support.vue'
 import typePackaging from '../src/components/Maintenance/TypePackaging.vue'
-
+// reports
+import report from '../src/components/r_eports/r_eports.vue'
 // inventory
 import Inventory from '../src/components/Inventory/homeInventory.vue'
+
 import vault from '../src/components/Inventory/vault.vue'
 import brands from '../src/components/Inventory/brands.vue'
 import category from '../src/components/Inventory/category.vue'
 import product from '../src/components/Inventory/product.vue'
 
+
 //TRANSFORMATION
 import HomeTranformation from '../src/components/Transformation/HomeTransformation.vue'
+import DailyProcess from '../src/components/Transformation/DailyProcess.vue'
+import TransformedRawMaterial from '../src/components/Transformation/TransformedRawMaterial.vue'
+import Packed from '../src/components/Transformation/Packed.vue'
+
 
 
 export const routes=[
@@ -64,5 +71,9 @@ export const routes=[
     {path: "/etapas", component: stages},
     {path: "/soporte", component: support},
     {path: "/tipoEmpaques", component: typePackaging},
+    {path: "/reports", component: report},
     {path: "/homeTransformacion", component: HomeTranformation},
+    {path: "/procesoDiario", component: DailyProcess},
+    {path: "/materiaTransformada", component:TransformedRawMaterial},
+    {path: "/empacado", component: Packed},
 ]

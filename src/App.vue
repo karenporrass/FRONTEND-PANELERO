@@ -42,12 +42,12 @@
         <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="c">
           <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
             <q-list class="column items-center" style="padding-top: 40px;">
+
               <router-link to="/home" style="text-decoration: none;">
                 <q-item clickable class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
                   <q-item-section avatar style="min-width: 1px; ">
                     <i class="fa-solid fa-house-user" style="font-size: 20px; "></i>
                   </q-item-section>
-
                   <q-item-section style="font-size: medium;">
                     HOME
                   </q-item-section>
@@ -60,34 +60,32 @@
                   <q-item-section avatar style="  min-width: 1px; ">
                     <i class="fa-solid fa-house-user" style="font-size: 20px;"></i>
                   </q-item-section>
-
                   <q-item-section style="font-size: medium;">
                     MANTENIMIENTO
                   </q-item-section>
                 </q-item>
               </router-link>
 
-
               <router-link to="/homeCostos" style="text-decoration: none;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
+
+
 
                   <q-item-section avatar style=" min-width: 1px;">
                     <span class="material-symbols-outlined" style="font-size: 28px;">
                       monetization_on
                     </span>
                   </q-item-section>
-
                   <q-item-section style="font-size: medium;">
                     COSTOS
                   </q-item-section>
                 </q-item>
               </router-link>
 
-
-                            
               <router-link @click="MenuAPedidos()" to="/homePedidos" style="text-decoration: none; color:white;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
-              
+
+
                   <q-item-section avatar style=" min-width: 1px;">
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
@@ -96,7 +94,9 @@
                   </q-item-section>
                 </q-item> 
               </router-link>
-              
+
+
+    
               
 
               <router-link to="/homeTransformacion" style="text-decoration: none; color:white;">
@@ -107,37 +107,26 @@
                   <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                 </q-item-section>
                 <q-item-section style="font-size: medium;">
-                  TRANSFROMACION
+                  TRANSFORMACIÓN
                 </q-item-section>
               </q-item>
               </router-link>
+                
+                <router-link @click="MenuInventory()" to="/homeInventory" style="text-decoration: none; color:white;">
+                  <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
+                    <q-item-section avatar>
+                      <span class="material-symbols-outlined" style="font-size: 25px;">
+                        inventory
+                      </span>
+                    </q-item-section>
+                    <q-item-section style="font-size: medium;">
+                      INVENTARIO
+                    </q-item-section>
+                  </q-item>
+                </router-link>
 
-
-
-
-          
-                 
-              <router-link @click="MenuInventory()" to="/homeInventory" style="text-decoration: none; color:white;">
-
+                <router-link  to="/reports" style="text-decoration: none; color:white;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
-
-                  <q-item-section avatar style=" min-width: 1px;">
-                    <span class="material-symbols-outlined" style="font-size: 25px;">
-                      inventory
-                    </span>
-                  </q-item-section>
-                  <q-item-section style="font-size: medium;">
-                    INVENTARIO
-                  </q-item-section>
-                </q-item>
-              </router-link>
-
-
-
-    
-                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
-
-
                 <q-item-section avatar style=" min-width: 1px;">
                   <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                 </q-item-section>
@@ -145,6 +134,7 @@
                   REPORTES
                 </q-item-section>
               </q-item>
+              </router-link>
 
             </q-list>
           </q-scroll-area>

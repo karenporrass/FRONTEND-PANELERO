@@ -21,8 +21,8 @@
                     <q-separator class="bg-green-10" style="height: 2px;" />
 
                     <router-link to="/personas" style="text-decoration: none; color: black;">
-                        <q-card-section class="q-pt-none">
-                            <div class="text-center q-mt-md" >
+                        <q-card-section>
+                            <div class="text-center" >
                                 PERSONAS
                             </div>
                         </q-card-section>
@@ -39,8 +39,8 @@
                     </q-card-section>
                     <q-separator class="bg-green-10" style="height: 2px;" />
                     <router-link to="/labores" style="text-decoration: none; color: black;">
-                        <q-card-section class="q-pt-none">
-                            <div class="text-center q-mt-md">
+                        <q-card-section>
+                            <div class="text-center">
                                 LABORES
                             </div>
                         </q-card-section>
@@ -57,8 +57,8 @@
                     </q-card-section>
                     <q-separator class="bg-green-10" style="height: 2px;" />
                     <router-link to="/metodosPago" style="text-decoration: none; color: black;">
-                        <q-card-section class="q-pt-none">
-                            <div class="text-center q-mt-md">
+                        <q-card-section>
+                            <div class="text-center">
                                 MÉTODO DE PAGO
                             </div>
                         </q-card-section>
@@ -75,8 +75,8 @@
                     </q-card-section>
                     <q-separator class="bg-green-10" style="height: 2px;" />
                     <router-link to="/tiposPago" style="text-decoration: none; color: black;">
-                        <q-card-section class="q-pt-none">
-                            <div class="text-center q-mt-md">
+                        <q-card-section>
+                            <div class="text-center">
                                 TIPO DE PAGO
                             </div>
                         </q-card-section>
@@ -102,8 +102,8 @@
                     </q-card-section>
                     <q-separator class="bg-green-10" style="height: 2px;" />
                     <router-link to="/unidadesMedida" style="text-decoration: none; color: black;">
-                        <q-card-section class="q-pt-none">
-                            <div class="text-center q-mt-md">
+                        <q-card-section>
+                            <div class="text-center">
                                 UNIDADES DE MEDIDA
                             </div>
                         </q-card-section>
@@ -119,8 +119,8 @@
                     </q-card-section>
                     <q-separator class="bg-green-10" style="height: 2px;" />
                     <router-link to="/eps" style="text-decoration: none; color: black;">
-                        <q-card-section class="q-pt-none">
-                            <div class="text-center q-mt-md">
+                        <q-card-section>
+                            <div class="text-center">
                                 EPS
                             </div>
                         </q-card-section>
@@ -136,8 +136,8 @@
                     </q-card-section>
                     <q-separator class="bg-green-10" style="height: 2px;" />
                     <router-link to="/tipoDoc" style="text-decoration: none; color: black;">
-                        <q-card-section class="q-pt-none">
-                            <div class="text-center q-mt-md">
+                        <q-card-section>
+                            <div class="text-center">
                                 TIPO DE DOCUMENTO
                             </div>
                         </q-card-section>
@@ -154,8 +154,8 @@
                     </q-card-section>
                     <q-separator class="bg-green-10" style="height: 2px;" />
                     <router-link to="/lotes" style="text-decoration: none; color: black;">
-                        <q-card-section class="q-pt-none">
-                            <div class="text-center q-mt-md">
+                        <q-card-section>
+                            <div class="text-center">
                                 LOTES
                             </div>
                         </q-card-section>

@@ -16,14 +16,14 @@
             <div class="col-1"></div>
         </div>
         <!-- TABLE INFO -->
-       <div class="row q-mt-md">
+       <!-- <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10 ">
                 <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" />
             </div>
             <div class="col-1"></div>
-        </div> 
+        </div>  -->
 
         <q-dialog v-model="prompt">
             <q-card >
@@ -34,14 +34,14 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <q-input filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
-                  <q-input  filled type="numeber" v-model="units" label="Digite las unidades por caja"></q-input>
+                    <q-input type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
+                  <q-input  type="number" v-model="maxWeight" label="Peso maximo"></q-input>
+                  <q-input  type="numeber" v-model="units" label="Digite las unidades por caja"></q-input>
                   
 
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postTypePackaing()" />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -52,65 +52,38 @@
 </template>
   
 <script setup>
-import {ref} from "vue"
+import {ref} from 'vue'
+import axios from 'axios';
+
 let prompt = ref(false)
-let pagination = ref({
-        rowsPerPage: 0
-      })
-      let columns = ref([
-  {name: 'index',label: 'NOMBRE EMPAQUE',field: 'index',align: 'center'},
-  {name: 'name',required: true,label: 'PESO MAXIMO lb',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'UNIDADES POR CAJA', field: 'calories',align: 'center', sortable: true },
-  
-])
+let name = ref("")
+let maxWeight = ref()
+let units = ref()
+// let pagination = ref({
+//         rowsPerPage: 0
+//       })
+// let columns = ref([
+//   {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
+//   {name: 'weight',required: true,label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
+//   { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
+// ])
 
- 
-let rows= ref( [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
+// let rows= ref( [])
+
+const postTypePackaing = async ()=>{
+  try {
+    const packaing = await axios.post(`http://localhost:3500/tipoEmpaque`,{
+      name: name.value,
+      maxWeight: maxWeight.value,
+      unitsPerBox: units.value
+    })
+    console.log(packaing);
+    rows.value=packaing.data
+  } catch (error) {
+    console.log(error);
   }
-])
+}
 
-rows.value.forEach((row, index) => {
-  row.index = index
-})
 
 
 </script>

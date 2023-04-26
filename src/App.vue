@@ -2,7 +2,7 @@
 <template>
   <div>
     <div>vgyfgygugyu
-      <q-layout view="hhh lpR lff" container class="shadow-2 fullscreen">
+      <q-layout view="hHh lpR fFf" container class="shadow-2 fullscreen">
         <q-header elevated class="bg-green-10">
           <q-toolbar>
             <q-btn v-show="TituloPedidos==false" flat @click="toggleLeftDrawer" round dense icon="menu"><q-toolbar-title>MENU</q-toolbar-title></q-btn>
@@ -36,12 +36,12 @@
 
           </q-toolbar>
         </q-header>
-        <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="">
+        <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="c">
           <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
-            <q-list padding>
+            <q-list class="column items-center" style="padding-top: 40px;">
               <router-link to="/home" style="text-decoration: none;">
-                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
-                  <q-item-section avatar>
+                <q-item clickable class="bg-green-9 text-white q-mb-sm" style="border-radius: 10px; width: 230px;">
+                  <q-item-section avatar class="q-ml-md">
                     <i class="fa-solid fa-house-user" style="font-size: 20px;"></i>
                   </q-item-section>
 
@@ -52,7 +52,7 @@
               </router-link>
               
               <router-link to="/homeMantenimiento" style="text-decoration: none;">
-                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm" style="border-radius: 10px; width: 230px;">
 
                   <q-item-section avatar>
                     <i class="fa-solid fa-house-user" style="font-size: 20px;"></i>
@@ -66,7 +66,7 @@
 
 
               <router-link to="/homeCostos" style="text-decoration: none;">
-                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm" style="border-radius: 10px; width: 230px;">
 
                   <q-item-section avatar>
                     <i class="fa-solid fa-user" style="font-size: 20px;"></i>
@@ -79,7 +79,7 @@
               </router-link>
                             
               <router-link @click="MenuAPedidos()" to="/homePedidos" style="text-decoration: none; color:white;">
-                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm" style="border-radius: 10px; width: 230px;">
               
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
@@ -90,18 +90,19 @@
                 </q-item> 
               </router-link>
               
-
-                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+              <router-link to="/homeTransformacion" style="text-decoration: none;">
+                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm" style="border-radius: 10px; width: 230px;">
 
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                   </q-item-section>
                   <q-item-section style="font-size: medium;">
-                    TRANSFROMACION
+                    TRANSFROMACIÓN
                   </q-item-section>
                 </q-item>
+                </router-link>
               
-                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm" style="border-radius: 10px; width: 230px;">
 
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
@@ -112,7 +113,7 @@
                 </q-item>
 
     
-                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm">
+                <q-item clickable v-ripple class="bg-green-9 text-white q-mb-sm" style="border-radius: 10px; width: 230px;">
 
                   <q-item-section avatar>
                     <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>

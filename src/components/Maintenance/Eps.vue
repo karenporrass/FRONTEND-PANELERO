@@ -34,9 +34,8 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <q-input filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
-                  <q-input  filled type="numeber" v-model="units" label="Digite las unidades por caja"></q-input>
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre de la eps"></q-input>
+                  <q-input filled type="number" v-model="attentionLine" label="Digite la linea de atencion"></q-input>
                   
 
                   <div>
@@ -52,65 +51,53 @@
 </template>
   
 <script setup>
-import {ref} from "vue"
+import {ref, onMounted} from 'vue'
+import axios from 'axios';
+
 let prompt = ref(false)
+let name = ref("")
+let attentionLine = ref()
+
 let pagination = ref({
         rowsPerPage: 0
       })
-      let columns = ref([
-  {name: 'index',label: 'NOMBRE EMPAQUE',field: 'index',align: 'center'},
-  {name: 'name',required: true,label: 'PESO MAXIMO lb',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'UNIDADES POR CAJA', field: 'calories',align: 'center', sortable: true },
-  
+let columns = ref([
+{ name: 'index', label: '#',field: 'index'},
+  {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
+  {name: 'attentionline',label: 'PESO MAXIMO lb',align: 'center',field: row => row.attentionLine,format: val => `${val}`,sortable: true}
 ])
 
- 
-let rows= ref( [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-  }
-])
-
-rows.value.forEach((row, index) => {
+let rows = ref([])
+rows.forEach((row, index) => {
   row.index = index
 })
+
+const postEps = async ()=>{
+  try {
+    const eps = await axios.post(`http://localhost:3500/eps`,{
+      name: name.value,
+      attentionLine: attentionLine.value
+    })
+    getEps()
+    console.log(packaing);
+  } catch (error) {
+    console.log(error);
+  }
+}
+const getEps = async ()=>{
+  try {
+    const eps = await axios.get(`http://localhost:3500/eps`)
+    console.log(eps);
+    rows.value=eps.data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+onMounted(()=>{
+  getEps()
+})
+
 
 
 </script>

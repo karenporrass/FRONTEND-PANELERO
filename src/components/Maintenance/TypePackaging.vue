@@ -63,12 +63,16 @@ let pagination = ref({
         rowsPerPage: 0
       })
 let columns = ref([
+{ name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
   {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
   { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
 ])
 
 let rows = ref([])
+rows.forEach((row, index) => {
+  row.index = index
+})
 
 const postTypePackaing = async ()=>{
   try {

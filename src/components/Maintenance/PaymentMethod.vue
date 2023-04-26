@@ -52,65 +52,55 @@
 </template>
   
 <script setup>
-import {ref} from "vue"
+import {ref, onMounted} from 'vue'
+import axios from 'axios';
+
 let prompt = ref(false)
+let name = ref("")
+let maxWeight = ref()
+let units = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
-      let columns = ref([
-  {name: 'index',label: 'NOMBRE EMPAQUE',field: 'index',align: 'center'},
-  {name: 'name',required: true,label: 'PESO MAXIMO lb',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'UNIDADES POR CAJA', field: 'calories',align: 'center', sortable: true },
-  
+let columns = ref([
+{ name: 'index', label: '#',field: 'index'},
+  {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
+  {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
+  { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
 ])
 
- 
-let rows= ref( [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-  }
-])
-
-rows.value.forEach((row, index) => {
+let rows = ref([])
+rows.forEach((row, index) => {
   row.index = index
 })
+
+const postTypePackaing = async ()=>{
+  try {
+    const packaing = await axios.post(`http://localhost:3500/tipoEmpaque`,{
+      name: name.value,
+      maxWeigth: maxWeight.value,
+      unitsPerBox: units.value
+    })
+    getTypePackaing()
+    console.log(packaing);
+  } catch (error) {
+    console.log(error);
+  }
+}
+const getTypePackaing = async ()=>{
+  try {
+    const packa = await axios.get(`http://localhost:3500/tipoEmpaque`)
+    console.log(packa);
+    rows.value=packa.data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+onMounted(()=>{
+  getTypePackaing()
+})
+
 
 
 </script>

@@ -28,7 +28,10 @@ import typePackaging from '../src/components/Maintenance/TypePackaging.vue'
 
 // inventory
 import Inventory from '../src/components/Inventory/homeInventory.vue'
-
+import vault from '../src/components/Inventory/vault.vue'
+import brands from '../src/components/Inventory/brands.vue'
+import category from '../src/components/Inventory/category.vue'
+import product from '../src/components/Inventory/product.vue'
 
 //TRANSFORMATION
 import HomeTranformation from '../src/components/Transformation/HomeTransformation.vue'
@@ -38,7 +41,11 @@ export const routes=[
     {path:"/", component:Login},
     {path:"/home", component:Home},
     {path:"/homePedidos", component:orders},
-    {path:"/homeInventory", component:Inventory},
+    {path:"/homeInventory", component:Inventory}, 
+    {path:"/vault", component:vault},
+    {path:"/brands", component:brands},
+    {path:"/category", component:category},
+    {path:"/product", component:product },
     {path:"/pedidosDos", component:tablesOrders},
     {path:"/homeCostos", component: homeCosts},
     {path:"/personas", component:people},

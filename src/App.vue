@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <div>vgyfgygugyu
+    <div>
       <q-layout view="hHh lpR fFf" container class="shadow-2 fullscreen">
         <q-header elevated class="bg-green-10">
           <q-toolbar>

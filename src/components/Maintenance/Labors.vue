@@ -34,9 +34,9 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <q-input filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
-                  <q-input  filled type="numeber" v-model="units" label="Digite las unidades por caja"></q-input>
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre de la labor"></q-input>
+                  <q-input filled type="text" v-model="area" label="Digite el area "></q-input>
+                  <q-input  filled type="number" v-model="dailyPayment" label="Digite el pago diario"></q-input>
                   
 
                   <div>
@@ -57,16 +57,16 @@ import axios from 'axios';
 
 let prompt = ref(false)
 let name = ref("")
-let maxWeight = ref()
-let units = ref()
+let area = ref("")
+let dailyPayment = ref("")
 let pagination = ref({
         rowsPerPage: 0
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
-  {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
-  {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
-  { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
+  {name: 'name',label: 'NOMBRE LABOR',field: 'name',align: 'center'},
+  {name: 'area',label: 'AREA A EJERCER',align: 'center',field: row => row.area,format: val => `${val}`,sortable: true},
+  { name: 'dailyPayment', align: 'center', label: 'PAGO DIARIO', field: 'dailyPayment',align: 'center', sortable: true },
 ])
 
 let rows = ref([])
@@ -74,11 +74,11 @@ rows.forEach((row, index) => {
   row.index = index
 })
 
-const postTypePackaing = async ()=>{
+const postLabors = async ()=>{
   try {
-    const packaing = await axios.post(`http://localhost:3500/tipoEmpaque`,{
+    const labors = await axios.post(`http://localhost:3500/tipoEmpaque`,{
       name: name.value,
-      maxWeigth: maxWeight.value,
+      area: area.value,
       unitsPerBox: units.value
     })
     getTypePackaing()

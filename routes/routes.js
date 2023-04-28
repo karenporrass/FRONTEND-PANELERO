@@ -12,7 +12,7 @@ import pays from '../src/components/Costs/Pays.vue'
 import mounthlyExpenses from '../src/components/Costs/MonthlyExpenses.vue'
 import occasionalExpenses from '../src/components/Costs/OccasionalExpenses.vue'
 //MAINTENANCE
-import people from '../src/components/Maintenance/CreatePeople.vue'
+import users from '../src/components/Maintenance/CreateUsers.vue'
 import typeDocument from '../src/components/Maintenance/TypeDocument.vue'
 import eps from '../src/components/Maintenance/Eps.vue'
 import farmRegistry from '../src/components/Maintenance/FarmRegistry.vue'
@@ -45,8 +45,8 @@ export const routes=[
     {path:"/homeInventory", component:Inventory},
     {path:"/pedidosDos", component:tablesOrders},
     {path:"/homeCostos", component: homeCosts},
-    {path:"/personas", component:people},
-    {path:"/tipoDoc", component:typeDocument},
+    {path:"/personas", component:users},
+    {path:"/tipoDocumento", component:typeDocument},
     {path:"/eps", component:eps},
     {path: "/fincas", component: farmRegistry},
     {path:"/homeMantenimiento", component: homeMaintenance},

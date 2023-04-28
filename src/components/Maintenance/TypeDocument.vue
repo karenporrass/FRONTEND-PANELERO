@@ -11,7 +11,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de documento</q-btn>
+                <q-btn class=" text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de documento</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -34,7 +34,7 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                <q-input  filled type="text" v-model="name" label="Digite el nombre del tipo de documento"></q-input>
+                <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre del tipo de documento"></q-input>
                   <q-input filled type="number" v-model="acronym" label="Digite el acronimo a las siglas"></q-input>
                  
                   <div>
@@ -66,7 +66,7 @@ let columns = ref([
 ])
 
 let rows = ref([])
-rows.forEach((row, index) => {
+rows.value.forEach((row, index) => {
   row.index = index
 })
 

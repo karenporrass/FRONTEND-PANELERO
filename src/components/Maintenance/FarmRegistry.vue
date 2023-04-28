@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">REGISTRO FINCAS</div>
+                <div style="font-size:xx-large;" class="text-weight-bolder">FINCAS</div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -11,7 +11,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nueva finca</q-btn>
+                <q-btn class=" text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nueva finca</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -34,8 +34,8 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="number" v-model="registrationNumber" label="Digite el numero de matricula"></q-input>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre de la finca"></q-input>
+                    <q-input class="q-mb-md"  filled type="number" v-model="registrationNumber" label="Digite el numero de matricula"></q-input>
+                    <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre de la finca"></q-input>
                   <q-input filled type="text" v-model="extent" label="Digite en metros las extencion de terreno"></q-input>
                   <div>
                     <br />
@@ -63,40 +63,40 @@ let pagination = ref({
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE DE LA FINCA',field: 'name',align: 'center'},
-  {name: 'registrationNumber',label: 'NUMERO DE MATRICULA',align: 'center',field: row => row.extent,format: val => `${val}`,sortable: true},
+  {name: 'registrationNumber',label: 'NUMERO DE MATRICULA',align: 'center',field: row => row.registrationNumber,format: val => `${val}`,sortable: true},
   { name: 'extent', align: 'center', label: 'EXTENCION M', field: 'extent',align: 'center', sortable: true },
 ])
 
 let rows = ref([])
-rows.forEach((row, index) => {
+rows.value.forEach((row, index) => {
   row.index = index
 })
 
 const postFarmRegistry = async ()=>{
   try {
-    const packaing = await axios.post(`http://localhost:3500/registroFinca`,{
+    const farm = await axios.post(`http://localhost:3500/registroFinca`,{
       name: name.value,
       registrationNumber: registrationNumber.value,
      extent: extent.value
     })
     getFarmRegistry()
-    console.log(packaing);
+    console.log(farm);
   } catch (error) {
     console.log(error);
   }
 }
 const getFarmRegistry = async ()=>{
   try {
-    const packa = await axios.get(`http://localhost:3500/registroFinca`)
-    console.log(packa);
-    rows.value=packa.data
+    const farm = await axios.get(`http://localhost:3500/registroFinca`)
+    console.log(farm);
+    rows.value=farm.data
   } catch (error) {
     console.log(error);
   }
 }
 
 onMounted(()=>{
-  getTypePackaing()
+  getFarmRegistry()
 })
 
 

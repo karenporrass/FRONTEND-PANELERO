@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">TIPO DE EMPAQUES</div>
+                <div style="font-size:xx-large;" class="text-weight-bolder">LABORES</div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -11,7 +11,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de empaque</q-btn>
+                <q-btn class="bg-green-10 text-white text-capitalize"  @click="prompt = true">Crear nueva labor</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -34,11 +34,10 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre de la labor"></q-input>
-                  <q-input filled type="text" v-model="area" label="Digite el area "></q-input>
+                    <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la labor"></q-input>
+                  <q-input class="q-mb-md" filled type="text" v-model="area" label="Digite el area "></q-input>
                   <q-input  filled type="number" v-model="dailyPayment" label="Digite el pago diario"></q-input>
-                  
-
+            
                   <div>
                     <br />
                     <q-btn  label="guardar" class="text-white bg-green-10" @click="postLabors()" />
@@ -70,7 +69,7 @@ let columns = ref([
 ])
 
 let rows = ref([])
-rows.forEach((row, index) => {
+rows.value.forEach((row, index) => {
   row.index = index
 })
 

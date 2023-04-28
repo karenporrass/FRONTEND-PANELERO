@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">TIPO DE EMPAQUES</div>
+                <div style="font-size:xx-large;" class="text-weight-bolder"> EMPAQUES</div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -11,7 +11,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true, getTypePackaing()">Crear nuevo tipo de empaque</q-btn>
+                <q-btn class=" text-capitalize bg-green-10 text-white" @click="prompt = true, getTypePackaing()">Crear nuevo tipo de empaque</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -34,8 +34,8 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <q-input filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
+                    <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
+                  <q-input class="q-mb-md" filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
                   <q-input filled type="number" v-model="units" label="Digite las unidades por caja"></q-input>
                   
 
@@ -65,12 +65,12 @@ let pagination = ref({
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
-  {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
+  {name: 'weight',label: 'PESO MAXIMO ',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
   { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
 ])
 
 let rows = ref([])
-rows.forEach((row, index) => {
+rows.value.forEach((row, index) => {
   row.index = index
 })
 

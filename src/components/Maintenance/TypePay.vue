@@ -11,7 +11,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de empaque</q-btn>
+                <q-btn class=" text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de pago</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -58,13 +58,11 @@ let pagination = ref({
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
-  {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
-  {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
-  { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
+  {name: 'name',label: 'NOMBRE TIPO PAGO',field: 'name',align: 'center'},
 ])
 
 let rows = ref([])
-rows.forEach((row, index) => {
+rows.value.forEach((row, index) => {
   row.index = index
 })
 

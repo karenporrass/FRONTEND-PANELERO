@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">TIPO DE EMPAQUES</div>
+                <div style="font-size:xx-large;" class="text-weight-bolder">METODOS DE PAGO</div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -11,7 +11,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de empaque</q-btn>
+                <q-btn class="text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo metodo de pago</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -38,7 +38,7 @@
                   
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postPayment()"  />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -59,11 +59,11 @@ let pagination = ref({
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
-  {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'}
+  {name: 'name',label: 'NOMBRE METODO',field: 'name',align: 'center'}
 ])
 
 let rows = ref([])
-rows.forEach((row, index) => {
+rows.value.forEach((row, index) => {
   row.index = index
 })
 
@@ -80,7 +80,7 @@ const postPayment = async ()=>{
 }
 const getPayment = async ()=>{
   try {
-    const payment = await axios.get(`http://localhost:3500/tipoEmpaque`)
+    const payment = await axios.get(`http://localhost:3500/metodoPago`)
     console.log(payment);
     rows.value=payment.data
   } catch (error) {

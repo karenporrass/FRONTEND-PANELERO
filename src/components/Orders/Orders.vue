@@ -25,11 +25,11 @@
             
            
 
-            <q-separator light/>
+            <q-separator class="bg-green-10" />
 
             <q-card-actions >
                 <div id="letraAbajo">
-                    <router-link style="text-decoration:  none; color: black;" to="/pedidosDos"><p>Pedidos</p></router-link>
+                    <router-link style="text-decoration:  none; color: black;" to="/pedidosDos"><p id="pe">Pedidos</p></router-link>
                 </div>
                
             </q-card-actions>
@@ -68,7 +68,7 @@
   
 }
 #card{
-    
+
     margin:0px auto;
     width: 20%;
     height:200px;

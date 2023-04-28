@@ -1,5 +1,3 @@
-
-
 {
   "name": "frontend-panelero",
   "private": true,
@@ -12,7 +10,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.2",
-    "axios": "^1.3.6",
+    "axios": "^1.4.0",
     "pinia": "^2.0.34",
     "quasar": "^2.11.10",
     "vue": "^3.2.47",

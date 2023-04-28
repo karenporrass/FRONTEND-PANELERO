@@ -34,14 +34,11 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <q-input filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
-                  <q-input  filled type="numeber" v-model="units" label="Digite las unidades por caja"></q-input>
-                  
-
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre de la unidad de medida"></q-input>
+                  <q-input filled type="text" v-model="format" label="Digite el formato"></q-input>
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postUnits()" />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -57,16 +54,14 @@ import axios from 'axios';
 
 let prompt = ref(false)
 let name = ref("")
-let maxWeight = ref()
-let units = ref()
+let format = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
-  {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
-  {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
-  { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
+  {name: 'name',label: 'NOMBRE DE LA UNIDAD DE MEDIDAD',field: 'name',align: 'center'},
+  {name: 'weight',label: 'FORMATO',align: 'center',field: row => row.format,format: val => `${val}`,sortable: true},
 ])
 
 let rows = ref([])
@@ -74,31 +69,30 @@ rows.forEach((row, index) => {
   row.index = index
 })
 
-const postTypePackaing = async ()=>{
+const postUnits = async ()=>{
   try {
-    const packaing = await axios.post(`http://localhost:3500/tipoEmpaque`,{
+    const unit = await axios.post(`http://localhost:3500/unidadesMedida`,{
       name: name.value,
-      maxWeigth: maxWeight.value,
-      unitsPerBox: units.value
+      format: format.value,
     })
-    getTypePackaing()
-    console.log(packaing);
+    getUnits()
+    console.log(unit);
   } catch (error) {
     console.log(error);
   }
 }
-const getTypePackaing = async ()=>{
+const getUnits = async ()=>{
   try {
-    const packa = await axios.get(`http://localhost:3500/tipoEmpaque`)
-    console.log(packa);
-    rows.value=packa.data
+    const units = await axios.get(`http://localhost:3500/unidadesMedida`)
+    console.log(units);
+    rows.value=units.data
   } catch (error) {
     console.log(error);
   }
 }
 
 onMounted(()=>{
-  getTypePackaing()
+  getUnits()
 })
 
 

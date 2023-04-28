@@ -34,12 +34,12 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="text" v-model="document" label="Digite el nombre del lote"></q-input>
-                    <q-input  filled type="number" v-model="document" label="Digite la extencion del lote"></q-input>
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre del lote"></q-input>
+                    <q-input  filled type="number" v-model="extent" label="Digite la extencion del lote"></q-input>
 
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postLots()" />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -55,47 +55,44 @@ import axios from 'axios';
 
 let prompt = ref(false)
 let name = ref("")
-let maxWeight = ref()
-let units = ref()
+let extent= ref()
 let pagination = ref({
         rowsPerPage: 0
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
-  {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
-  { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
+  {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.extent,format: val => `${val}`,sortable: true},
 ])
 
 let rows = ref([])
 rows.forEach((row, index) => {
   row.index = index
 })
-const postTypePackaing = async ()=>{
+const postLots= async ()=>{
   try {
-    const packaing = await axios.post(`http://localhost:3500/tipoEmpaque`,{
+    const lots = await axios.post(`http://localhost:3500/lotes`,{
       name: name.value,
-      maxWeigth: maxWeight.value,
-      unitsPerBox: units.value
+      extent: extent.value
     })
-    getTypePackaing()
-    console.log(packaing);
+    getLots()
+    console.log(lots);
   } catch (error) {
     console.log(error);
   }
 }
-const getTypePackaing = async ()=>{
+const getLots = async ()=>{
   try {
-    const packa = await axios.get(`http://localhost:3500/tipoEmpaque`)
-    console.log(packa);
-    rows.value=packa.data
+    const lots = await axios.get(`http://localhost:3500/lotes`)
+    console.log(lots);
+    rows.value=lots.data
   } catch (error) {
     console.log(error);
   }
 }
 
 onMounted(()=>{
-  getTypePackaing()
+  getLots()
 })
 
 

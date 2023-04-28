@@ -24,17 +24,14 @@
       <div class="col-10 ">
         <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
 
-
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" size="xs" color="primary"></q-btn>
-                <q-btn round icon="edit" size="xs" color="primary"></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
               </div>
             </q-td>
-
           </template>
-
 
         </q-table>
       </div>
@@ -43,21 +40,23 @@
 
     <q-dialog v-model="prompt">
       <q-card>
-        <q-card-section class="bg-green-10">
+        <q-card-section class="bg-green-10 q-px-lg">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
             DILIGENCIA LA INFORMACIÓN
           </h5>
         </q-card-section>
         <div class="q-pa-md ">
           <div>
-            <q-input filled type="text" v-model="name" label="Digite el cantidad del gasto"></q-input>
-            <q-input filled type="text" v-model="description" label="Digite el nombre del gasto"></q-input>
-            <q-input filled type="number" v-model="hours" label="Escoga la finca"></q-input>
-            <q-select filled v-model="labor" use-input use-chips multiple input-debounce="0" @new-value="createValue"
-              :options="filterOptions" @filter="filterFn" style="width: 250px" />
-            <q-input filled type="text" v-model="people" label="Digite el descripcion"></q-input>
-            <q-input filled type="number" v-model="lot" label="Escoga el metodo de pago"></q-input>
-            <div>
+            <q-input filled class="q-mb-md" type="text" v-model="name" label="Digite el nombre del proceso"></q-input>
+            <q-input filled class="q-mb-md" type="text" v-model="description" label="Digite una descripción del proceso"></q-input>
+            <q-input filled class="q-mb-md" type="number" v-model="hours" label="Digite cuántas horas tomó el proceso"></q-input>
+            <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0" @new-value="createValue"
+              :options="filterOptions" @filter="filterFn" style="width: 350px" label="Seleccione la labor" />
+              <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0" @new-value="createValue"
+              :options="filterOptions" @filter="filterFn" style="width: 350px" label="Seleccione las personas" />
+              <q-select filled class="q-mb-md" v-model="farm" :options="options" label="Seleccione la finca" />
+              <q-select filled class="q-mb-xs" v-model="lot" :options="options" label="Seleccione el lote" />
+            <div class="q-pb-sm">
               <br />
               <q-btn label="guardar" class="text-white bg-green-10" />
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
@@ -78,6 +77,10 @@ let hours = ref()
 let people = ref()
 let lot = ref()
 let labor = ref()
+let farm= ref()
+let options= [
+        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+      ]
 
 
 let columns = ref([
@@ -86,6 +89,7 @@ let columns = ref([
   { name: 'description', align: 'center', label: 'DESCRIPCIÓN', field: 'description', align: 'center', sortable: true },
   { name: 'hours', label: 'HORAS', field: 'hours', align: 'center', sortable: true },
   { name: 'people', label: 'PERSONAS', field: 'people', align: 'center' },
+  { name: 'farm', label: 'FINCA', field: 'farms', align: 'center' },
   { name: 'lot', label: 'LOTE', field: 'lot', align: 'center' },
   { name: 'date', label: 'FECHA', field: 'date', align: 'center' },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center' },
@@ -94,24 +98,6 @@ let columns = ref([
 
 let rows = ref([
 
-  {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: '3%',
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: '7%',
-  },
   {
     name: 'Jelly bean',
     calories: 375,

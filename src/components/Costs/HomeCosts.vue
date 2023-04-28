@@ -34,7 +34,9 @@
             <div class="col-2 text-center  q-mt-xl ">
                 <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 15px;">
                     <q-card-section>
-                        <div class="text-center"><i class="fa-solid fa-money-bill" style="font-size: 50px;"></i></div>
+                        <div class="text-center"><span class="material-symbols-outlined" style="font-size: 50px; color: black; font-weight:bold;">
+credit_score
+</span></div>
                     </q-card-section>
                     <q-separator class="bg-green-10" style="height: 2px;"/>
 
@@ -51,7 +53,9 @@
             <div class="col-2 text-center  q-mt-xl ">
                 <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 15px;">
                     <q-card-section>
-                        <div class="text-center"><i class="fa-solid fa-money-bill" style="font-size: 50px;"></i></div>
+                        <div class="text-center"><span class="material-symbols-outlined" style="font-size: 50px; color: black; font-weight:bold;">
+                            other_admission
+</span></div>
                     </q-card-section>
                     <q-separator class="bg-green-10" style="height: 2px;" />
 

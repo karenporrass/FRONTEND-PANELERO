@@ -42,6 +42,8 @@
             <q-input filled type="number" v-model="document" label="Digite el numero de documento"></q-input>
             <q-input filled type="text" v-model="rol" label="Digite el rol"></q-input>
             <q-input filled type="text" v-model="concept" label="Digite el concepto"></q-input>
+            <q-input filled type="text" v-model="date" label="Digite la fecha"></q-input>
+            
             <q-input filled type="text" v-model="methodPay" label="Escoga el meotodo de pago"></q-input>
             <q-input filled type="number" v-model="time" label="Digite el tiempo a pagar"></q-input>
             <q-input filled type="number" v-model="total" label="Total a pagar"></q-input>
@@ -59,119 +61,79 @@
 </template>
   
 <script setup>
-import { ref } from "vue"
+import {ref, onMounted} from 'vue'
+import axios from 'axios';
 let prompt = ref(false)
 let pagination = ref({
   rowsPerPage: 0
 })
 let columns = ref([
-  { name: 'index', label: '#', field: 'index' },
-  { name: 'name', required: true, label: 'NUMERO DE DOCUMENTO', align: 'center', field: row => row.name, format: val => `${val}`, sortable: true },
-  { name: 'calories', align: 'center', label: 'ROL', field: 'calories', align: 'center', sortable: true },
-  { name: 'fat', label: 'CONCEPTO', field: 'fat', sortable: true, align: 'center' },
-  { name: 'carbs', label: 'FECHA PAGO', field: 'carbs', align: 'center' },
-  { name: 'protein', label: 'METODO DE PAGO', field: 'protein', align: 'center' },
-  { name: 'sodium', label: 'TIEMPO A PAGAR', field: 'sodium', align: 'center' },
-  { name: 'calcium', label: 'TOTAL A PAGAR', field: 'calcium', align: 'center', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
+  { name: 'DNI', required: true, label: 'NUMERO DE DOCUMENTO', align: 'center', field: 
+"DNI"},
+  { name: 'Rol', align: 'center', label: 'ROL',  align: 'center', field: 
+"rol"  },
+  { name: 'concept', label: 'CONCEPTO', sortable: true, align: 'center', field: 
+"concept" },
+  { name: 'date', label: 'FECHA PAGO', align: 'center', field: 
+"date" },
+  { name: 'Method', label: 'METODO DE PAGO',  align: 'center', field: 
+"Method" },
+  { name: 'time', label: 'TIEMPO A PAGAR',  align: 'center', field: 
+"time" },
+  { name: 'total', label: 'TOTAL A PAGAR',  align: 'center', field: 
+"total"}
 ])
+
+let document  = ref()
+let rol = ref()
+let concept = ref()
+let methodPay = ref()
+let time = ref()
+let total = ref()
+let date = ref()
 
 let rows = ref([
   {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
+    DNI: 1,  rol: 1, concept: 1, date: 1, Method: 1, time: 1, total: 1,
   },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
-
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: '6%',
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: '3%',
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: '7%',
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
-  }
+  
 ])
 
-rows.value.forEach((row, index) => {
-  row.index = index
+
+const postPays = async ()=>{
+  try {
+    const pays = await axios.post(`http://localhost:3500/payments`,{
+      DNI:document,
+rol:rol,
+concept:concept,
+MethodmethodPay,
+date :date,
+total:total,
+time: time
+     
+    
+     
+    })
+    getTypePays()
+    console.log(pays);
+  } catch (error) {
+    console.log(error);
+  }
+}
+const getpayments = async ()=>{
+  try {
+    const packa = await axios.get(`http://localhost:3500/payments`)
+    console.log(packa);
+    rows.value=packa.data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+onMounted(()=>{
+  getpayments()
 })
+
 
 
 </script>

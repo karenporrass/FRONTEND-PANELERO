@@ -34,5 +34,12 @@ let slide = ref(1)
 </script>
 
 
+<style>
+.q-layout-padding {
+    padding: 0px;
+}
+</style>
+
+
  
 

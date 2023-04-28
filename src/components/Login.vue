@@ -14,20 +14,19 @@
                         <p id="text-ingresar"><strong>INGRESAR</strong></p>
                         <q-icon id="icon" name="account_circle" />
                         <p id="p-usuario"><strong>USUARIO</strong> </p>
-                        <q-input id="input-usuario" filled v-model="name" label="DIGITE SU USUARIO" stack-label
+                        <q-input id="input-usuario" filled v-model="user" label="DIGITE SU USUARIO" stack-label
                             :dense="dense" /><br>
                         <p id="p-contraseña"><strong>CONTRASEÑA</strong></p>
-                        <q-input id="input-contraseña" filled v-model="attentionLine" label="DIGITE SU CONTRASEÑA" stack-label
+                        <q-input id="input-contraseña" filled v-model="password" label="DIGITE SU CONTRASEÑA" stack-label
                             :dense="dense" /><br>
                         <p id="p-olvido">¿Olvido su contraseña?</p>
                         <div id="div-boton">
-
-                        <q-btn @click="addEps(),pasarHome()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
-
+                        <q-btn @click="addUser(),pasarHome()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
                         </div>
                     </div>
                 </div>
                 <div class="col-1"></div>
+
             </div>
         </div>
         <!-- termina div que contiene todo -->
@@ -42,17 +41,18 @@ import axios from "axios"
 import {useRouter} from "vue-router"
 let router= useRouter();
 let dense = ref(false)
-let name = ref()
-let attentionLine = ref()
+let user = ref()
+let password = ref()
 
-const addEps = async()=>{
-    console.log("holas");
+const addUser = async()=>{
     try {
-        const eps = await axios.post("http://localhost:3500/eps",{
-            name:name.value,
-            attentionLine:attentionLine.value  
+
+        const newuser = await axios.post("http://localhost:3500/",{
+            user:user.value,
+            password:password.value 
+
         })
-        console.log(eps);
+        console.log(newuser);
     } catch (error) {
         console.log(error);
     }
@@ -64,39 +64,6 @@ function pasarHome() {
 }
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,123 +1,103 @@
 <template>
-    <div>
-        <div class="row q-mt-md">
-            <div class="col-1"></div>
-            <div class="col-10  text-center">
-                <div  class="text-weight-bolder text-h4">PROCESO DIARIO</div>
-            </div>
-            <div class="col-1"></div>
-        </div>
-        <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
-        <div class="row ">
-            <div class="col-1"></div>
-            <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo gasto</q-btn>
-            </div>
-            <div class="col-1"></div>
-        </div>
-        <!-- TABLE INFO -->
-       <div class="row q-mt-md">
-            <div class="col-1"></div>
-            <div class="col-10 ">
-                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" />
-            </div>
-            <div class="col-1"></div>
-        </div> 
+  <div>
+    <div class="row q-mt-md">
+      <div class="col-1"></div>
+      <div class="col-10  text-center">
+        <div class="text-weight-bolder text-h4">PROCESO DIARIO</div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
+    <div class="row ">
+      <div class="col-1"></div>
+      <div class="col-10 ">
+        <q-btn class="bg-green-10 text-white" @click="prompt = true"><span class="material-symbols-outlined q-mr-sm"
+            style="font-size: 20px;">
+            add_circle
+          </span> Crear nuevo proceso diario</q-btn>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <!-- TABLE INFO -->
+    <div class="row q-mt-md">
+      <div class="col-1"></div>
+      <div class="col-10 ">
+        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
 
-        <q-dialog v-model="prompt">
-            <q-card >
-              <q-card-section class="bg-green-10">
-                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
-                  DILIGENCIA LA INFORMACIÓN
-                </h5>
-              </q-card-section>
-              <div class="q-pa-md " >
-                <div>
-                    <q-input  filled type="number" v-model="document" label="Digite el cantidad del gasto"></q-input>
-                    <q-input  filled type="text" v-model="document" label="Digite el nombre del gasto"></q-input>
-                  <q-input filled type="text" v-model="rol" label="Escoga la finca"></q-input>
-                  <q-input  filled type="text" v-model="concept" label="Digite el descripcion"></q-input>
-                  <q-input  filled type="text" v-model="methodPay" label="Escoga el metodo de pago"></q-input>
-                  <q-input filled type="number" v-model="time" label="Digite el valor del gasto"></q-input>
-                  <q-input  filled type="number" v-model="total" label="Total"></q-input>
-
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
-                </div>
+          <template v-slot:body-cell-options="props">
+            <q-td :props="props">
+              <div>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
               </div>
-            </q-card>
-          </q-dialog>
-    </div> 
+            </q-td>
+          </template>
+
+        </q-table>
+      </div>
+      <div class="col-1"></div>
+    </div>
+
+    <q-dialog v-model="prompt">
+      <q-card>
+        <q-card-section class="bg-green-10 q-px-lg">
+          <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+            DILIGENCIA LA INFORMACIÓN
+          </h5>
+        </q-card-section>
+        <div class="q-pa-md ">
+          <div>
+            <q-input filled class="q-mb-md" type="text" v-model="name" label="Digite el nombre del proceso"></q-input>
+            <q-input filled class="q-mb-md" type="text" v-model="description" label="Digite una descripción del proceso"></q-input>
+            <q-input filled class="q-mb-md" type="number" v-model="hours" label="Digite cuántas horas tomó el proceso"></q-input>
+            <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0" @new-value="createValue"
+              :options="filterOptions" @filter="filterFn" style="width: 350px" label="Seleccione la labor" />
+              <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0" @new-value="createValue"
+              :options="filterOptions" @filter="filterFn" style="width: 350px" label="Seleccione las personas" />
+              <q-select filled class="q-mb-md" v-model="farm" :options="options" label="Seleccione la finca" />
+              <q-select filled class="q-mb-xs" v-model="lot" :options="options" label="Seleccione el lote" />
+            <div class="q-pb-sm">
+              <br />
+              <q-btn label="guardar" class="text-white bg-green-10" />
+              <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+            </div>
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
+  </div>
 </template>
   
 <script setup>
-import {ref} from "vue"
+import { ref } from "vue"
 let prompt = ref(false)
-let pagination = ref({
-        rowsPerPage: 0
-      })
-      let columns = ref([
-  {name: 'index',label: 'CANTIDAD',field: 'index',align: 'center'},
-  {name: 'name',required: true,label: 'NOMBRE DEL GASTO',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'FINCA', field: 'calories',align: 'center', sortable: true },
-  { name: 'fat', label: 'DESCRIPCION', field: 'fat', sortable: true ,align: 'center'},
-  { name: 'carbs', label: 'FECHA', field: 'carbs',align: 'center' },
-  { name: 'protein', label: 'METODO DE PAGO', field: 'protein',align: 'center' },
-  { name: 'sodium', label: 'VALOR DEL GASTO', field: 'sodium',align: 'center' },
-  { name: 'calcium', label: 'TOTAL', field: 'calcium',align: 'center',sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
+let name = ref("")
+let description = ref("")
+let hours = ref()
+let people = ref()
+let lot = ref()
+let labor = ref()
+let farm= ref()
+let options= [
+        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+      ]
+
+
+let columns = ref([
+  { name: 'index', label: 'N°', field: 'index', align: 'center' },
+  { name: 'name', label: 'NOMBRE', align: 'center', field: row => row.name, format: val => `${val}`, sortable: true },
+  { name: 'description', align: 'center', label: 'DESCRIPCIÓN', field: 'description', align: 'center', sortable: true },
+  { name: 'hours', label: 'HORAS', field: 'hours', align: 'center', sortable: true },
+  { name: 'people', label: 'PERSONAS', field: 'people', align: 'center' },
+  { name: 'farm', label: 'FINCA', field: 'farms', align: 'center' },
+  { name: 'lot', label: 'LOTE', field: 'lot', align: 'center' },
+  { name: 'date', label: 'FECHA', field: 'date', align: 'center' },
+  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center' },
+
 ])
 
- let rows= ref( [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
+let rows = ref([
 
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: '6%',
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: '3%',
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: '7%',
-  },
   {
     name: 'Jelly bean',
     calories: 375,
@@ -168,6 +148,40 @@ let pagination = ref({
 rows.value.forEach((row, index) => {
   row.index = index
 })
+
+
+const stringOptions = [
+  'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+]
+    const filterOptions = ref(stringOptions)
+
+      function createValue (val, done){
+        if (val.length > 0) {
+          if (!stringOptions.includes(val)) {
+            stringOptions.push(val)
+          }
+          done(val, 'toggle')
+        }
+      }
+
+      function filterFn (val, update){
+        update(() => {
+          if (val === '') {
+            filterOptions.value = stringOptions
+          }
+          else {
+            const needle = val.toLowerCase()
+            filterOptions.value = stringOptions.filter(
+              v => v.toLowerCase().indexOf(needle) > -1
+            )
+          }
+        })
+      }
+    
+
+
+
+
 
 
 </script>

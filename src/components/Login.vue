@@ -50,7 +50,7 @@ const addEps = async()=>{
     try {
         const eps = await axios.post("http://localhost:3500/eps",{
             name:name.value,
-            attentionLine:attentionLine.value 
+            attentionLine:attentionLine.value  
         })
         console.log(eps);
     } catch (error) {

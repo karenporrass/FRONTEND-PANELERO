@@ -35,10 +35,6 @@
               <div class="q-pa-md " >
                 <div>
                     <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <q-input filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
-                  <q-input  filled type="numeber" v-model="units" label="Digite las unidades por caja"></q-input>
-                  
-
                   <div>
                     <br />
                     <q-btn  label="guardar" class="text-white bg-green-10"  />
@@ -57,8 +53,6 @@ import axios from 'axios';
 
 let prompt = ref(false)
 let name = ref("")
-let maxWeight = ref()
-let units = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
@@ -74,33 +68,29 @@ rows.forEach((row, index) => {
   row.index = index
 })
 
-const postTypePackaing = async ()=>{
+const postTypePay = async ()=>{
   try {
-    const packaing = await axios.post(`http://localhost:3500/tipoEmpaque`,{
+    const pay = await axios.post(`http://localhost:3500/tipoPago`,{
       name: name.value,
-      maxWeigth: maxWeight.value,
-      unitsPerBox: units.value
     })
-    getTypePackaing()
-    console.log(packaing);
+    getTypePay()
+    console.log(pay);
   } catch (error) {
     console.log(error);
   }
 }
-const getTypePackaing = async ()=>{
+const getTypePay = async ()=>{
   try {
-    const packa = await axios.get(`http://localhost:3500/tipoEmpaque`)
-    console.log(packa);
-    rows.value=packa.data
+    const pay = await axios.get(`http://localhost:3500/tipoPago`)
+    console.log(pay);
+    rows.value=pay.data
   } catch (error) {
     console.log(error);
   }
 }
 
 onMounted(()=>{
-  getTypePackaing()
+  getTypePay()
 })
-
-
 
 </script>

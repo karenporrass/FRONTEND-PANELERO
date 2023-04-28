@@ -41,7 +41,7 @@
 
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postLabors()" />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -76,29 +76,29 @@ rows.forEach((row, index) => {
 
 const postLabors = async ()=>{
   try {
-    const labors = await axios.post(`http://localhost:3500/tipoEmpaque`,{
+    const labors = await axios.post(`http://localhost:3500/tipoLabor`,{
       name: name.value,
       area: area.value,
-      unitsPerBox: units.value
+      dailyPayment: dailyPayment.value
     })
-    getTypePackaing()
-    console.log(packaing);
+    getLabors()
+    console.log(labors);
   } catch (error) {
     console.log(error);
   }
 }
-const getTypePackaing = async ()=>{
+const getLabors = async ()=>{
   try {
-    const packa = await axios.get(`http://localhost:3500/tipoEmpaque`)
-    console.log(packa);
-    rows.value=packa.data
+    const labors = await axios.get(`http://localhost:3500/tipoLabor`)
+    console.log(labors);
+    rows.value=labors.data
   } catch (error) {
     console.log(error);
   }
 }
 
 onMounted(()=>{
-  getTypePackaing()
+  getLabors()
 })
 
 

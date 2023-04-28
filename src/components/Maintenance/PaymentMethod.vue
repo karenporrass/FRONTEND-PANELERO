@@ -34,11 +34,8 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <q-input filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
-                  <q-input  filled type="numeber" v-model="units" label="Digite las unidades por caja"></q-input>
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre del tipo de pago"></q-input>
                   
-
                   <div>
                     <br />
                     <q-btn  label="guardar" class="text-white bg-green-10"  />
@@ -57,16 +54,12 @@ import axios from 'axios';
 
 let prompt = ref(false)
 let name = ref("")
-let maxWeight = ref()
-let units = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
-  {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
-  {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
-  { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
+  {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'}
 ])
 
 let rows = ref([])
@@ -74,31 +67,29 @@ rows.forEach((row, index) => {
   row.index = index
 })
 
-const postTypePackaing = async ()=>{
+const postPayment = async ()=>{
   try {
-    const packaing = await axios.post(`http://localhost:3500/tipoEmpaque`,{
-      name: name.value,
-      maxWeigth: maxWeight.value,
-      unitsPerBox: units.value
+    const payment = await axios.post(`http://localhost:3500/metodoPago`,{
+      name: name.value
     })
-    getTypePackaing()
-    console.log(packaing);
+    getPayment()
+    console.log(payment);
   } catch (error) {
     console.log(error);
   }
 }
-const getTypePackaing = async ()=>{
+const getPayment = async ()=>{
   try {
-    const packa = await axios.get(`http://localhost:3500/tipoEmpaque`)
-    console.log(packa);
-    rows.value=packa.data
+    const payment = await axios.get(`http://localhost:3500/tipoEmpaque`)
+    console.log(payment);
+    rows.value=payment.data
   } catch (error) {
     console.log(error);
   }
 }
 
 onMounted(()=>{
-  getTypePackaing()
+  getPayment()
 })
 
 

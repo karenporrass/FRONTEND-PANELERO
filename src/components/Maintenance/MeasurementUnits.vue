@@ -34,14 +34,11 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <q-input filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
-                  <q-input  filled type="numeber" v-model="units" label="Digite las unidades por caja"></q-input>
-                  
-
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre de la unidad de medida"></q-input>
+                  <q-input filled type="text" v-model="format" label="Digite el formato"></q-input>
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postUnits()" />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -52,65 +49,52 @@
 </template>
   
 <script setup>
-import {ref} from "vue"
+import {ref, onMounted} from 'vue'
+import axios from 'axios';
+
 let prompt = ref(false)
+let name = ref("")
+let format = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
-      let columns = ref([
-  {name: 'index',label: 'NOMBRE EMPAQUE',field: 'index',align: 'center'},
-  {name: 'name',required: true,label: 'PESO MAXIMO lb',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'UNIDADES POR CAJA', field: 'calories',align: 'center', sortable: true },
-  
+let columns = ref([
+{ name: 'index', label: '#',field: 'index'},
+  {name: 'name',label: 'NOMBRE DE LA UNIDAD DE MEDIDAD',field: 'name',align: 'center'},
+  {name: 'weight',label: 'FORMATO',align: 'center',field: row => row.format,format: val => `${val}`,sortable: true},
 ])
 
- 
-let rows= ref( [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-  }
-])
-
-rows.value.forEach((row, index) => {
+let rows = ref([])
+rows.forEach((row, index) => {
   row.index = index
 })
+
+const postUnits = async ()=>{
+  try {
+    const unit = await axios.post(`http://localhost:3500/unidadesMedida`,{
+      name: name.value,
+      format: format.value,
+    })
+    getUnits()
+    console.log(unit);
+  } catch (error) {
+    console.log(error);
+  }
+}
+const getUnits = async ()=>{
+  try {
+    const units = await axios.get(`http://localhost:3500/unidadesMedida`)
+    console.log(units);
+    rows.value=units.data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+onMounted(()=>{
+  getUnits()
+})
+
 
 
 </script>

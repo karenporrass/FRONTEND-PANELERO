@@ -38,10 +38,7 @@
 
             <div class="col-2 q-mt-xl ">
                 <q-card class="my-card  shadow-8 q-py-lg  ">
-
-
-
-                    style="border: solid; border-color: darkgreen; border-radius: 15px;">
+                  
                     <q-card-section>
                         <div class="text-center"><span class="material-symbols-outlined" style="font-size: 50px;">
                                 new_releases
@@ -50,6 +47,9 @@
                     </q-card-section>
                     <q-separator class="bg-green-10" style="height: 2px;" />
                     <router-link to="/brands" style="text-decoration: none;" class="text-dark">
+
+                 
+
                         <q-card-actions vertical align="center">
                             <q-btn flat class="text-subtitle1">Marcas </q-btn>
                         </q-card-actions>

@@ -34,12 +34,12 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="number" v-model="document" label="Digite el numero de matricula"></q-input>
-                    <q-input  filled type="text" v-model="document" label="Digite el nombre de la finca"></q-input>
-                  <q-input filled type="text" v-model="rol" label="Digite en metros las extencion de terreno"></q-input>
+                    <q-input  filled type="number" v-model="registrationNumber" label="Digite el numero de matricula"></q-input>
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre de la finca"></q-input>
+                  <q-input filled type="text" v-model="extent" label="Digite en metros las extencion de terreno"></q-input>
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postFarmRegistry()"  />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -50,64 +50,53 @@
 </template>
   
 <script setup>
-import {ref} from "vue"
+import {ref, onMounted} from 'vue'
+import axios from 'axios';
+
 let prompt = ref(false)
+let name = ref("")
+let registrationNumber = ref("")
+let extent = ref("")
 let pagination = ref({
         rowsPerPage: 0
       })
-      let columns = ref([
-  {name: 'index',label: 'NUMERO MATRICULA',field: 'index',align: 'center'},
-  {name: 'name',required: true,label: 'NOMBRE',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'EXTENCION', field: 'calories',align: 'center', sortable: true },
-  
+let columns = ref([
+{ name: 'index', label: '#',field: 'index'},
+  {name: 'name',label: 'NOMBRE DE LA FINCA',field: 'name',align: 'center'},
+  {name: 'registrationNumber',label: 'NUMERO DE MATRICULA',align: 'center',field: row => row.extent,format: val => `${val}`,sortable: true},
+  { name: 'extent', align: 'center', label: 'EXTENCION M', field: 'extent',align: 'center', sortable: true },
 ])
 
- let rows= ref( [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-  }
-])
-
-rows.value.forEach((row, index) => {
+let rows = ref([])
+rows.forEach((row, index) => {
   row.index = index
+})
+
+const postFarmRegistry = async ()=>{
+  try {
+    const packaing = await axios.post(`http://localhost:3500/registroFinca`,{
+      name: name.value,
+      registrationNumber: registrationNumber.value,
+     extent: extent.value
+    })
+    getFarmRegistry()
+    console.log(packaing);
+  } catch (error) {
+    console.log(error);
+  }
+}
+const getFarmRegistry = async ()=>{
+  try {
+    const packa = await axios.get(`http://localhost:3500/registroFinca`)
+    console.log(packa);
+    rows.value=packa.data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+onMounted(()=>{
+  getTypePackaing()
 })
 
 

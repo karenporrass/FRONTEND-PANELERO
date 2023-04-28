@@ -120,7 +120,7 @@ time: time
     console.log(error);
   }
 }
-const getpayments = async ()=>{
+const getTypePays = async ()=>{
   try {
     const packa = await axios.get(`http://localhost:3500/payments`)
     console.log(packa);
@@ -131,7 +131,7 @@ const getpayments = async ()=>{
 }
 
 onMounted(()=>{
-  getpayments()
+  getTypePays()
 })
 
 

@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-1"> <h2>hola</h2></div>
+                <div class="col-1"></div>
             </div>
         </div>
         <!-- termina div que contiene todo -->

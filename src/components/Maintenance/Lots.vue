@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">REGISTRO LOTES</div>
+                <div style="font-size:xx-large;" class="text-weight-bolder">LOTES</div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -11,7 +11,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nueva lote</q-btn>
+                <q-btn class="text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo lote</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -20,7 +20,17 @@
             <div class="col-1"></div>
             <div class="col-10 ">
                 <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" />
+                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
+                    <template v-slot:body-cell-options="props" >
+            <q-td :props="props">
+              <div >
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+              </div>
+            </q-td>
+            
+          </template>
+        </q-table>
             </div>
             <div class="col-1"></div>
         </div> 
@@ -34,7 +44,7 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre del lote"></q-input>
+                    <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del lote"></q-input>
                     <q-input  filled type="number" v-model="extent" label="Digite la extencion del lote"></q-input>
 
                   <div>
@@ -61,12 +71,16 @@ let pagination = ref({
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
-  {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
-  {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.extent,format: val => `${val}`,sortable: true},
+  {name: 'name',label: 'NOMBRE LOTE',field: 'name',align: 'center'},
+  {name: 'weight',label: 'EXTENCION',align: 'center',field: row => row.extent,format: val => `${val}`,sortable: true},
+  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
+
 ])
 
-let rows = ref([])
-rows.forEach((row, index) => {
+let rows = ref([
+{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
+])
+rows.value.forEach((row, index) => {
   row.index = index
 })
 const postLots= async ()=>{

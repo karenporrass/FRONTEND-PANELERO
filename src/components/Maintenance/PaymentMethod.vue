@@ -34,11 +34,8 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <q-input filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
-                  <q-input  filled type="numeber" v-model="units" label="Digite las unidades por caja"></q-input>
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre del tipo de pago"></q-input>
                   
-
                   <div>
                     <br />
                     <q-btn  label="guardar" class="text-white bg-green-10"  />
@@ -52,65 +49,49 @@
 </template>
   
 <script setup>
-import {ref} from "vue"
+import {ref, onMounted} from 'vue'
+import axios from 'axios';
+
 let prompt = ref(false)
+let name = ref("")
 let pagination = ref({
         rowsPerPage: 0
       })
-      let columns = ref([
-  {name: 'index',label: 'NOMBRE EMPAQUE',field: 'index',align: 'center'},
-  {name: 'name',required: true,label: 'PESO MAXIMO lb',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'UNIDADES POR CAJA', field: 'calories',align: 'center', sortable: true },
-  
+let columns = ref([
+{ name: 'index', label: '#',field: 'index'},
+  {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'}
 ])
 
- 
-let rows= ref( [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-  }
-])
-
-rows.value.forEach((row, index) => {
+let rows = ref([])
+rows.forEach((row, index) => {
   row.index = index
 })
+
+const postPayment = async ()=>{
+  try {
+    const payment = await axios.post(`http://localhost:3500/metodoPago`,{
+      name: name.value
+    })
+    getPayment()
+    console.log(payment);
+  } catch (error) {
+    console.log(error);
+  }
+}
+const getPayment = async ()=>{
+  try {
+    const payment = await axios.get(`http://localhost:3500/tipoEmpaque`)
+    console.log(payment);
+    rows.value=payment.data
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+onMounted(()=>{
+  getPayment()
+})
+
 
 
 </script>

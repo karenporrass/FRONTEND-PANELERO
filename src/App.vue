@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <div>vgyfgygugyu
+    <div>
       <q-layout view="hHh lpR fFf" container class="shadow-2 fullscreen">
         <q-header elevated class="bg-green-10">
           <q-toolbar>
@@ -107,7 +107,7 @@
                   <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
                 </q-item-section>
                 <q-item-section style="font-size: medium;">
-                  TRANSFROMACION
+                  TRANSFORMACIÓN
                 </q-item-section>
               </q-item>
               </router-link>

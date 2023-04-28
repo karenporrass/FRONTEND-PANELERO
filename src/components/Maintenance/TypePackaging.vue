@@ -25,8 +25,8 @@
             <template v-slot:body-cell-options="props" >
             <q-td :props="props">
               <div >
-                <q-btn round icon="edit" size="xs" color="primary" ></q-btn>
-                <q-btn round icon="edit" size="xs" color="primary"></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
               </div>
             </q-td>
             
@@ -46,8 +46,8 @@
         </q-card-section>
         <div class="q-pa-md ">
           <div>
-            <q-input filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-            <q-input filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
+            <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
+            <q-input class="q-mb-md" filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
             <q-input filled type="number" v-model="units" label="Digite las unidades por caja"></q-input>
 
             <div>

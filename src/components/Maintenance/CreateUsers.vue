@@ -20,7 +20,17 @@
             <div class="col-1"></div>
             <div class="col-10 ">
                 <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" />
+                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
+                    <template v-slot:body-cell-options="props" >
+            <q-td :props="props">
+              <div >
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+              </div>
+            </q-td>
+            
+          </template>
+        </q-table>
             </div>
             <div class="col-1"></div>
         </div> 
@@ -66,9 +76,13 @@ let columns = ref([
   {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
   {name: 'weight',label: 'PESO MAXIMO lb',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
   { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
+  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
+
 ])
 
-let rows = ref([])
+let rows = ref([
+{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
+])
 
 const postTypePackaing = async ()=>{
   try {

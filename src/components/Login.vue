@@ -21,9 +21,7 @@
                             :dense="dense" /><br>
                         <p id="p-olvido">¿Olvido su contraseña?</p>
                         <div id="div-boton">
-
-                        <q-btn @click="addUser(), pasarHome()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
-
+                        <q-btn @click="addUser(),pasarHome()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
                         </div>
                     </div>
                 </div>
@@ -64,39 +62,6 @@ function pasarHome() {
 }
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -42,7 +42,6 @@
             <q-input filled type="number" v-model="document" label="Digite el numero de documento"></q-input>
             <q-input filled type="text" v-model="rol" label="Digite el rol"></q-input>
             <q-input filled type="text" v-model="concept" label="Digite el concepto"></q-input>
-            <q-input filled type="text" v-model="date" label="Digite la fecha"></q-input>
             
             <q-input filled type="text" v-model="methodPay" label="Escoga el meotodo de pago"></q-input>
             <q-input filled type="number" v-model="time" label="Digite el tiempo a pagar"></q-input>
@@ -50,7 +49,7 @@
 
             <div>
               <br />
-              <q-btn label="guardar" class="text-white bg-green-10" @click="getTypePays()" />
+              <q-btn label="guardar" class="text-white bg-green-10" @click="postPays()" />
               <q-btn class="q-ml-md" label="cerrar" v-close-popup  />
             </div>
           </div>
@@ -70,16 +69,16 @@ let pagination = ref({
 let columns = ref([
   { name: 'DNI', required: true, label: 'NUMERO DE DOCUMENTO', align: 'center', field: 
 "DNI"},
-  { name: 'Rol', align: 'center', label: 'ROL',  align: 'center', field: 
-"rol"  },
-  { name: 'concept', label: 'CONCEPTO', sortable: true, align: 'center', field: 
-"concept" },
+  { name: 'ROL', align: 'center', label: 'ROL',  align: 'center', field: 
+"ROL"  },
+  { name: 'CONCEPT', label: 'CONCEPTO', sortable: true, align: 'center', field: 
+"CONCEPT" },
   { name: 'date', label: 'FECHA PAGO', align: 'center', field: 
-"date" },
-  { name: 'Method', label: 'METODO DE PAGO',  align: 'center', field: 
-"Method" },
-  { name: 'time', label: 'TIEMPO A PAGAR',  align: 'center', field: 
-"time" },
+"Date" },
+  { name: 'PAYMENT_METHOD', label: 'METODO DE PAGO',  align: 'center', field: 
+"PAYMENT_METHOD" },
+  { name: 'TIME_TO_PAY', label: 'TIEMPO A PAGAR',  align: 'center', field: 
+"TIME_TO_PAY" },
   { name: 'total', label: 'TOTAL A PAGAR',  align: 'center', field: 
 "total"}
 ])
@@ -90,31 +89,32 @@ let concept = ref()
 let methodPay = ref()
 let time = ref()
 let total = ref()
-let date = ref()
 
 let rows = ref([
   {
-    DNI: 1,  rol: 1, concept: 1, date: 1, Method: 1, time: 1, total: 1,
+    DNI: 1,  ROL: 1, CONCEPT: 1,  PAYMENT_METHOD: 1,  TIME_TO_PAY: 1, total: 1,
   },
   
 ])
 
+rows.value.forEach((row, index) => {
+  row.index = index
+})
+
+
 
 const postPays = async ()=>{
   try {
-    const pays = await axios.post(`http://localhost:3500/payments`,{
-      DNI:document,
-rol:rol,
-concept:concept,
-MethodmethodPay,
-date :date,
-total:total,
-time: time
-     
-    
+    const pays = await axios.post(`http://localhost:4500/payments/post`,{
+      DNI:document.value,
+      ROL:rol.value,
+      CONCEPT:concept.value,
+PAYMENT_METHOD: methodPay.value,
+Date: Date,
+TIME_TO_PAY: time.value
      
     })
-    getTypePays()
+     getTypePays()
     console.log(pays);
   } catch (error) {
     console.log(error);
@@ -122,7 +122,7 @@ time: time
 }
 const getTypePays = async ()=>{
   try {
-    const packa = await axios.get(`http://localhost:3500/payments`)
+    const packa = await axios.get(`http://localhost:4500/payments/get`)
     console.log(packa);
     rows.value=packa.data
   } catch (error) {

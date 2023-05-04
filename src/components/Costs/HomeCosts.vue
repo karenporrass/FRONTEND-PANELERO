@@ -72,6 +72,3 @@ credit_score
     </div>
 </template>
 
-<script setup>
-
-</script>

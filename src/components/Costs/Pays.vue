@@ -22,40 +22,49 @@
     </div>
     <!-- TABLE INFO -->
     <div class="row q-mt-md">
-      <div class="col-1"></div>
-      <div class="col-10 ">
-        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll
-          v-model:pagination="pagination" :rows-per-page-options="[0]" />
-      </div>
-      <div class="col-1"></div>
-    </div>
-
-    <q-dialog v-model="prompt">
-      <q-card>
-        <q-card-section class="bg-green-10">
-          <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
-            DILIGENCIA LA INFORMACIÓN
-          </h5>
-        </q-card-section>
-        <div class="q-pa-md ">
-          <div>
-            <q-input filled type="number" v-model="document" label="Digite el numero de documento"></q-input>
-            <q-input filled type="text" v-model="rol" label="Digite el rol"></q-input>
-            <q-input filled type="text" v-model="concept" label="Digite el concepto"></q-input>
+            <div class="col-1"></div>
+            <div class="col-10 ">
+                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
+                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
+                    <template v-slot:body-cell-options="props" >
+            <q-td :props="props">
+              <div >
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+              </div>
+            </q-td>
             
-            <q-input filled type="text" v-model="methodPay" label="Escoga el meotodo de pago"></q-input>
-            <q-input filled type="number" v-model="time" label="Digite el tiempo a pagar"></q-input>
-            <q-input filled type="number" v-model="total" label="Total a pagar"></q-input>
-
-            <div>
-              <br />
-              <q-btn label="guardar" class="text-white bg-green-10" @click="postPays()" />
-              <q-btn class="q-ml-md" label="cerrar" v-close-popup  />
+          </template>
+        </q-table>
             </div>
-          </div>
-        </div>
-      </q-card>
-    </q-dialog>
+            <div class="col-1"></div>
+        </div> 
+
+        <q-dialog v-model="prompt">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                    <q-input  filled type="text" v-model="document" label="DNI"></q-input>
+                  <q-input filled type="text" v-model="rol" label="ROL"></q-input>
+                  <q-input  filled type="text" v-model="concept" label="Concepto"></q-input>
+                  <q-input  filled type="text" v-model="methodPay" label="Metodo de pago"></q-input>
+                  <q-input  filled type="number" v-model="time" label="tiempo a pagar"></q-input>
+                  <q-input  filled type="number" v-model="total" label="Total"></q-input>
+
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postPays()" />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
   </div>
 </template>
   
@@ -128,6 +137,7 @@ const getTypePays = async ()=>{
   } catch (error) {
     console.log(error);
   }
+  console.log("ok");
 }
 
 onMounted(()=>{
@@ -137,3 +147,10 @@ onMounted(()=>{
 
 
 </script>
+
+<style scoped>
+.q-input{
+  margin-bottom: 20px;
+}
+
+</style>

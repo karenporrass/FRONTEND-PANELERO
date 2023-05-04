@@ -50,8 +50,8 @@
 
             <div>
               <br />
-              <q-btn label="guardar" class="text-white bg-green-10" />
-              <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+              <q-btn label="guardar" class="text-white bg-green-10" @click="getTypePays()" />
+              <q-btn class="q-ml-md" label="cerrar" v-close-popup  />
             </div>
           </div>
         </div>

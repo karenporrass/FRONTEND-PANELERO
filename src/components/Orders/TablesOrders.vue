@@ -120,15 +120,15 @@ let TipoEmpaque=ref(null)
 
 
       let options= [
-        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+        'Blanca', 'Negra'
       ]
 
       let options2= [
-        'Google', 'Facebook', 'casa', 'Apple', 'Oracle'
+        'Bloque Rectangular', 'Cono', 'Cono Trunco','Granulada'
       ]   
       
       let options3= [
-        'agua', 'Facebook', 'casa', 'Apple', 'Oracle'
+        'Bolsas Termoencogibles Para Panela', 'Bolsa Con Ventana Impresa', 'Empaque flowpack', 'Bolsa doypack con zipper '
       ] 
 
 

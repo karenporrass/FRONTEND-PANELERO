@@ -1,168 +1,115 @@
 <template>
-    <div>
-        <div class="row q-mt-md">
-            <div class="col-1"></div>
-            <div class="col-10  text-center">
-                <div  class="text-weight-bolder text-h4">GASTOS MENSUALES</div>
-            </div>
-            <div class="col-1"></div>
+  <div>
+    <div class="row q-mt-md">
+      <div class="col-1"></div>
+      <div class="col-10  text-center">
+        <div class="text-weight-bolder text-h4">Gastos mensuales</div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
+    <div class="row ">
+      <div class="col-1"></div>
+      <div class="col-10 ">
+        <div style="display: flex;">
+          <router-link to="/homeCostos" style="text-decoration: none;" class="text-dark">
+            <p style="font-size: 20px; "><span style="font-size: 50px; " class="material-icons-outlined">
+                arrow_right
+              </span> Costos</p>
+          </router-link>
+          <p style="font-size: 20px; "><span style="font-size: 50px; " class="material-icons-outlined">
+              arrow_right
+            </span> Gastos mensuales</p>
         </div>
-        <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
-        <div class="row ">
-            <div class="col-1"></div>
-            <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo gasto</q-btn>
-            </div>
-            <div class="col-1"></div>
-        </div>
-        <!-- TABLE INFO -->
-       <div class="row q-mt-md">
-            <div class="col-1"></div>
-            <div class="col-10 ">
-                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" />
-            </div>
-            <div class="col-1"></div>
-        </div> 
-
-        <q-dialog v-model="prompt">
-            <q-card >
-              <q-card-section class="bg-green-10">
-                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
-                  DILIGENCIA LA INFORMACIÓN
-                </h5>
-              </q-card-section>
-              <div class="q-pa-md " >
-                <div>
-                    <q-input  filled type="number" v-model="document" label="Digite el cantidad del gasto"></q-input>
-                    <q-input  filled type="text" v-model="document" label="Digite el nombre del gasto"></q-input>
-                  <q-input filled type="text" v-model="rol" label="Escoga la finca"></q-input>
-                  <q-input  filled type="text" v-model="concept" label="Digite el descripcion"></q-input>
-                  <q-input  filled type="text" v-model="methodPay" label="Escoga el metodo de pago"></q-input>
-                  <q-input filled type="number" v-model="time" label="Digite el valor del gasto"></q-input>
-                  <q-input  filled type="number" v-model="total" label="Total"></q-input>
-
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
-                </div>
+        <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo pago</q-btn>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <!-- TABLE INFO -->
+    <div class="row q-mt-md">
+      <div class="col-1"></div>
+      <div class="col-10 ">
+        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll
+          v-model:pagination="pagination" :rows-per-page-options="[0]">
+          <template v-slot:body-cell-options="props">
+            <q-td :props="props">
+              <div>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
               </div>
-            </q-card>
-          </q-dialog>
-    </div> 
+            </q-td>
+
+          </template>
+        </q-table>
+      </div>
+      <div class="col-1"></div>
+    </div>
+
+    <q-dialog v-model="prompt">
+      <q-card>
+        <q-card-section class="bg-green-10">
+          <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+            DILIGENCIA LA INFORMACIÓN
+          </h5>
+        </q-card-section>
+        <div class="q-pa-md ">
+          <div>
+
+            <q-input filled type="text" v-model="nameSpent" label="Digite el nombre del gasto"></q-input>
+            <q-input filled type="text" v-model="finca" label="Escoga la finca"></q-input>
+            <q-input filled type="text" v-model="descrip" label="Digite la descripcion"></q-input>
+            <q-input filled type="text" v-model="Method" label="Escoga el metodo de pago"></q-input>
+            <q-input filled type="number" v-model="valor" label="tiempo a pagar"></q-input>
+            <q-input filled type="number" v-model="total" label="Total"></q-input>
+
+            <div>
+              <br />
+              <q-btn label="guardar" class="text-white bg-green-10" @click="monthlyExpensesPost(), clear()" />
+              <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+            </div>
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
+  </div>
 </template>
   
 <script setup>
-import {ref} from "vue"
+import { ref, onMounted } from 'vue'
+import axios from 'axios';
+
+
+
 let prompt = ref(false)
+let nameSpent = ref()
+let finca = ref()
+let descrip = ref()
+let Method = ref()
+let valor = ref() 
+let total = ref()
+
+
+
 let pagination = ref({
-        rowsPerPage: 0
-      })
-      let columns = ref([
-  {name: 'index',label: 'CANTIDAD',field: 'index',align: 'center'},
-  {name: 'name',required: true,label: 'NOMBRE DEL GASTO',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'FINCA', field: 'calories',align: 'center', sortable: true },
-  { name: 'fat', label: 'DESCRIPCION', field: 'fat', sortable: true ,align: 'center'},
-  { name: 'carbs', label: 'FECHA', field: 'carbs',align: 'center' },
-  { name: 'protein', label: 'METODO DE PAGO', field: 'protein',align: 'center' },
-  { name: 'sodium', label: 'VALOR DEL GASTO', field: 'sodium',align: 'center' },
-  { name: 'calcium', label: 'TOTAL', field: 'calcium',align: 'center',sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
-])
+  rowsPerPage: 0
+})
+let columns = ref([
+{name: 'Name_spent',label: 'Nombre del gasto',field: 'Name_spent',align: 'center'},
+  { name: 'finca', align: 'center', label: 'FINCA', field: 'Finca',align: 'center' },
+  { name: 'Description', label: 'DESCRIPCION', field: 'Description' ,align: 'center'},
+  { name: 'Date', label: 'FECHA', field: 'Date',align: 'center' },
+  { name: 'PAYMENT_METHOD', label: 'METODO DE PAGO', field: 'PAYMENT_METHOD',align: 'center' },
+  { name: 'costValue', label: 'VALOR DEL GASTO', field: 'costValue',align: 'center' },
+  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
+])  
 
- let rows= ref( [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
 
-  },
+
+let rows = ref([
   {
-    name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: '6%',
+    Name_spent: 1,  Finca: 1, Description: 1, Date:1,  PAYMENT_METHOD: 1, costValue: 1,
   },
-  {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: '3%',
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: '7%',
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
-  }
+  
 ])
 
 rows.value.forEach((row, index) => {
@@ -170,4 +117,71 @@ rows.value.forEach((row, index) => {
 })
 
 
+
+const monthlyExpensesPost = async () => {
+  try {
+    const Expenses = await axios.post(`http://localhost:4500/monthlyExpenses/post`, {
+
+
+
+Name_spent:nameSpent.value,
+Finca:finca.value,
+Description:descrip.value,
+PAYMENT_METHOD: Method.value,
+Date: Date,
+costValue: valor.value,
+
+    })
+    getTypeExpenses()
+    console.log(Expenses);
+  } catch (error) {
+    console.log(error);
+  }
+ 
+}
+const getTypeExpenses = async () => {
+  try {
+    const packa = await axios.get(`http://localhost:4500/monthlyExpenses/get`)
+    console.log(packa);
+    rows.value = packa.data
+  } catch (error) {
+    console.log(error);
+  }
+  console.log("ok");
+}
+
+onMounted(() => {
+  getTypeExpenses()
+})
+
+
+function clear() {
+  nameSpent.value = ""
+finca.value = ""
+descrip.value = ""
+Method.value = ""
+valor.value = ""
+total.value =""
+}
+
 </script>
+
+<style scoped>
+.q-input {
+  margin-bottom: 20px;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

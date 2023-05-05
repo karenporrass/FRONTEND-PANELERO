@@ -95,10 +95,6 @@
                 </q-item> 
               </router-link>
 
-
-    
-              
-
               <router-link to="/homeTransformacion" style="text-decoration: none; color:white;">
 
               <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
@@ -146,7 +142,7 @@
               <q-avatar size="56px" class="q-mb-sm">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">
               </q-avatar>
-              <div class="text-weight-bolder text-h6">Angel</div>
+              <div class="text-weight-bolder text-h6">¡Karen y Sandyyyy!</div>
               <div class="text-subtitle2">Super usuario</div>
             </div>
           </q-img>

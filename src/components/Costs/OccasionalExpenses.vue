@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div  class="text-weight-bolder text-h4">GASTOS OCASINALES</div>
+                <div  class="text-weight-bolder text-h4">GASTOS OCASIONALES</div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -12,7 +12,16 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo gasto</q-btn>
+              <div style="display: flex;">
+          <router-link to="/homeCostos" style="text-decoration: none;" class="text-dark" >
+          <p style="font-size: 20px; " ><span style="font-size: 50px; " class="material-icons-outlined">
+              arrow_right
+            </span> Costos</p> </router-link>
+            <p style="font-size: 20px; " ><span style="font-size: 50px; " class="material-icons-outlined">
+              arrow_right
+            </span> Gastos Ocacionales </p>
+        </div>
+                <q-btn class="bg-green-10 text-white"  @click="prompt = true">Crear nuevo gasto</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -49,8 +58,8 @@
                   <q-input filled type="text" v-model="nameSpent" label="Nombre del gasto"></q-input>
                   <q-input  filled type="text" v-model="finca" label="Finca"></q-input>
                   <q-input  filled type="text" v-model="descrip" label="Descripcion"></q-input>
-                  <q-input  filled type="number" v-model="date" label="Fecha"></q-input>
-                  <q-input  filled type="number" v-model="Method" label="Metodo de pago"></q-input>
+           
+                  <q-input  filled type="text" v-model="Method" label="Metodo de pago"></q-input>
                   <q-input  filled type="number" v-model="valor" label="Valor del gasto"></q-input>
                   <q-input  filled type="number" v-model="total" label="Total"></q-input>
 
@@ -67,7 +76,8 @@
 </template>
   
 <script setup>
-import {ref} from "vue"
+import {ref, onMounted} from "vue"
+import axios from 'axios';
 let prompt = ref(false)
 let pagination = ref({
         rowsPerPage: 0
@@ -76,24 +86,25 @@ let columns = ref([
   {name: 'Name_spent',label: 'Nombre del gasto',field: 'Name_spent',align: 'center'},
   { name: 'finca', align: 'center', label: 'FINCA', field: 'Finca',align: 'center' },
   { name: 'Description', label: 'DESCRIPCION', field: 'Description' ,align: 'center'},
-  { name: 'DATE', label: 'FECHA', field: 'DATE',align: 'center' },
+  { name: 'Date', label: 'FECHA', field: 'Date',align: 'center' },
   { name: 'PAYMENT_METHOD', label: 'METODO DE PAGO', field: 'PAYMENT_METHOD',align: 'center' },
   { name: 'costValue', label: 'VALOR DEL GASTO', field: 'costValue',align: 'center' },
-  
-])
+  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
+])  
+
 
 
 let nameSpent = ref()
 let finca = ref()
 let descrip = ref()
-let date = ref()
+
 let Method = ref()
-let valor = ref()
+let valor = ref() 
 let total = ref()
 
 let rows = ref([
   {
-    Name_spent: 1,  Finca: 1, Description: 1,  DATE: 1,  PAYMENT_METHOD: 1, costValue: 1,
+    Name_spent: 1,  Finca: 1, Description: 1,   PAYMENT_METHOD: 1, costValue: 1,
   },
   
 ])
@@ -112,6 +123,7 @@ const OcaccionalPays = async ()=>{
       Description:descrip.value,
 PAYMENT_METHOD: Method.value,
 Date: Date,
+
 costValue: valor.value
      
     })
@@ -120,6 +132,7 @@ costValue: valor.value
   } catch (error) {
     console.log(error);
   }
+  clear()
 }
 
 const getTypeOcaccional = async ()=>{
@@ -138,6 +151,14 @@ onMounted(()=>{
 })
 
 
+function clear() {
+  nameSpent.value = ""
+finca.value = ""
+descrip.value = ""
+Method.value = ""
+valor.value = ""
+total.value =""
+}
 
 </script>
 

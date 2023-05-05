@@ -62,20 +62,21 @@
           <div style="display: flex;">
 
               <div id="inputs">
-                <q-input  filled class="q-mb-md" type="number" v-model="Document" label="Digite el numero de documento"></q-input>
-                <q-input  filled class="q-mb-md" type="text" v-model="Nombre" label="Nombre"></q-input>
-                <q-input filled  class="q-mb-md" type="text" v-model="Telefono" label="Telefono"></q-input>
-                <q-input  filled class="q-mb-md" type="text" v-model="Dirección" label="Dirección"></q-input>
-                <q-select filled class="q-mb-md" v-model="TipoPanela" :options="options" label="Escoga el tipo de panela" />
+                <q-input  filled class="q-mb-md" type="number" v-model="documento" label="Digite el numero de documento"></q-input>
+                <q-input  filled class="q-mb-md" type="text"   v-model="nombre" label="Nombre"></q-input>
+                <q-input  filled class="q-mb-md" type="text"   v-model="telefono" label="Telefono"></q-input>
+                <q-input  filled class="q-mb-md" type="text"   v-model="direccion" label="Dirección"></q-input>
+                <q-input  filled class="q-mb-md" type="number" v-model="saldopendiente" label="Saldo Pendiente"></q-input>
+                <q-select filled class="q-mb-md" v-model="tipoPanela" :options="options" label="Escoga el tipo de panela" />
               </div>
 
               <div id="inputs">
-                <q-select filled class="q-mb-md" v-model="FormaPanela" :options="options2" label="Escoga la forma de la panela" />
-                <q-input  filled class="q-mb-md" type="number" v-model="Cantidad" label="Cantidad"></q-input>
-                <q-select filled class="q-mb-md" v-model="TipoEmpaque" :options="options3" label="Escoga el tipo de empaque" />
-                <q-input  filled class="q-mb-md" type="text" v-model="Comprobante" label="Comprobante"></q-input>
-                <q-input  filled class="q-mb-md" type="text" v-model="Abono" label="Abono"></q-input>
-                <q-input  filled class="q-mb-md" type="number" v-model="ValorTotal" label="Valor Total"></q-input>
+                <q-select filled class="q-mb-md"               v-model="formaPanela" :options="options2" label="Escoga la forma de la panela" />
+                <q-input  filled class="q-mb-md" type="number" v-model="cantidad" label="Cantidad"></q-input>
+                <q-select filled class="q-mb-md"               v-model="tipoEmpaque" :options="options3" label="Escoga el tipo de empaque" />
+                <q-input  filled class="q-mb-md" type="text"   v-model="comprobantePago" label="Comprobante"></q-input>
+                <q-input  filled class="q-mb-md" type="text"   v-model="abono" label="Abono"></q-input>
+                <q-input  filled class="q-mb-md" type="number" v-model="valorTotal" label="Valor Total"></q-input>
               </div>
 
           </div>
@@ -83,7 +84,7 @@
           
           <div id="botones">
                     <br />
-                    <q-btn @click="addOrder()" label="guardar" class="text-white bg-green-10"  />
+                    <q-btn @click="orderPost()" label="guardar" class="text-white bg-green-10"  />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
 
@@ -99,24 +100,27 @@
 
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted} from "vue";
+
 import axios from "axios";
 
+
 let abrirCrear=ref(false)
-let TipoPanela=ref(null)
-let FormaPanela=ref(null)
-let TipoEmpaque=ref(null)
 
 
- let Documento=ref() 
- let Telefono=ref()
- let Cantidad= ref()
- let ComprobantePago=ref()
- let SaldoPendiente=ref() 
- let Nombre= ref()
- let Direccion=ref() 
- let Abono= ref()
- let ValorTotal=ref()
+let tipoPanela=ref()
+let formaPanela=ref()
+let tipoEmpaque=ref()
+ let documento=ref() 
+ let telefono=ref()
+ let cantidad= ref()
+ let comprobantePago=ref()
+ let nombre= ref()
+ let direccion=ref() 
+ let abono= ref()
+ let valorTotal=ref()
+ let saldopendiente=ref()
+ 
 
 
       let options= [
@@ -135,15 +139,16 @@ let TipoEmpaque=ref(null)
 
 let columns = ref([
   { name: 'index', label: 'N°', field: 'index', align: 'center' },
-  { name:'Documento', align:'center', label: 'Documento', field: 'Documento' },
-  { name: 'name', label: 'NOMBRE', align: 'center', field: row => row.name, format: val => `${val}`, sortable: true },
-  { name:'Telefono', align:'center', label: 'Telefono', field: 'Telefono' },
-  { name:'Cantidad', align:'center', label: 'Cantidad', field: 'Cantidad' },
-  { name:'ComprobantePago', align:'center', label: 'Comprobante De Pago', field: 'ComprobantePago' },
-  { name:'SaldoPendiente', align:'center', label: 'Saldo Pendiente', field: 'SaldoPendiente' },
-  { name:'Direccion', align:'center', label: 'Direccion', field: 'Direccion' },
-  { name:'Abono', align:'center', label: 'Abono', field: 'Abono' },
-  { name:'ValorTotal', align:'center', label: 'ValorTotal', field: 'ValorTotal' },
+  { name:'documento', align:'center', label: 'Documento', field: 'Documento' },
+  { name: 'date', label: 'Fecha', align: 'center', field: 'Date'  },
+  { name: 'name', label: 'Nombre', align: 'center', field: 'Nombre'  },
+  { name:'telefono', align:'center', label: 'Telefono', field: 'Telefono' },
+  { name:'cantidad', align:'center', label: 'Cantidad', field: 'Cantidad' },
+  { name:'comprobantePago', align:'center', label: 'Comprobante De Pago', field: 'ComprobantePago' },
+  { name:'saldoPendiente', align:'center', label: 'Saldo Pendiente', field: 'SaldoPendiente' },
+  { name:'direccion', align:'center', label: 'Direccion', field: 'Direccion' },
+  { name:'abono', align:'center', label: 'Abono', field: 'Abono' },
+  { name:'valorTotal', align:'center', label: 'ValorTotal', field: 'ValorTotal' },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center' },
 
 ])
@@ -151,62 +156,99 @@ let columns = ref([
 
 let rows = ref([
   {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
-    iron: '1%'
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
-    iron: '1%'
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
-    iron: '1%'
-  },
+    Documento: 1, Date: 1,Telefono: 1,TipoPanela: 1,Cantidad: 1,ComprobantePago: 1,SaldoPendiente: 1, Nombre: 1,Direccion: 1,FormaPanela: 1,TipoEmpaque: 1,Abono: 1,ValorTotal: 1
+  }
  
 ])
 rows.value.forEach((row, index) => {
   row.index = index
 })
 
-const addOrder = async()=>{
-    try {
-        const neworder = await axios.post("http://localhost:3500/pedidos",{
-            Documento: Documento.value,
-            Telefono: Telefono.value ,
-            TipoPanela: TipoPanela.value,
-            Cantidad: Cantidad.value,
-            ComprobantePago:ComprobantePago.value ,
-            SaldoPendiente: SaldoPendiente.value ,
-            Nombre: Nombre.value,
-            Direccion: Direccion.value,
-            FormaPanela:FormaPanela.value,
-            TipoEmpaque: TipoEmpaque.value,
-            Abono:Abono.value ,
-            ValorTotal: ValorTotal.value ,
-        })
-        console.log(neworder);
-    } catch (error) {
-        console.log(error);
-    }
+
+const orderPost = async ()=>{
+  try {
+    const order = await axios.post(`http://localhost:3500/pedido/post`,{
+      
+      Documento: documento.value,
+      Telefono: telefono.value ,
+      TipoPanela: tipoPanela.value,
+      Cantidad: cantidad.value,
+      ComprobantePago:comprobantePago.value ,
+      SaldoPendiente:saldopendiente.value ,
+      Nombre: nombre.value,
+      Direccion: direccion.value,
+      FormaPanela:formaPanela.value,
+      TipoEmpaque: tipoEmpaque.value,
+      Abono:abono.value ,
+      Date: Date,
+      ValorTotal: valorTotal.value ,
+      
+    })
+    orderGet()
+    console.log(order);
+    limpiar()
+  } catch (error) {
+    console.log(error);
+  }
 }
+const orderPut = async ()=>{
+  try {
+    const order = await axios.post(`http://localhost:3500/pedido/editar/{:id}`,{
+      
+      
+      Documento: documento.value,
+      Telefono: telefono.value ,
+      TipoPanela: tipoPanela.value,
+      Cantidad: cantidad.value,
+      ComprobantePago:comprobantePago.value ,
+      SaldoPendiente:saldopendiente.value ,
+      Nombre: nombre.value,
+      Direccion: direccion.value,
+      FormaPanela:formaPanela.value,
+      TipoEmpaque: tipoEmpaque.value,
+      Abono:abono.value ,
+      Date: Date,
+      ValorTotal: valorTotal.value ,
+      
+    })
+    orderGet()
+    console.log(order);
+    limpiar()
+  } catch (error) {
+    console.log(error);
+  }
+}
+const orderGet = async ()=>{
+  try {
+    const packa = await axios.get(`http://localhost:3500/pedido/listar`)
+    console.log(packa);
+    rows.value=packa.data
+  } catch (error) {
+    console.log(error);
+  }
+  console.log("ok");
+}
+
+onMounted(()=>{
+  orderGet()
+})
+
+
+function limpiar() {
+      documento.value=""
+      telefono.value =""
+      tipoPanela.value=""
+      cantidad.value=""
+      comprobantePago.value =""
+      saldopendiente.value =""
+      nombre.value=""
+      direccion.value=""
+      formaPanela.value=""
+      tipoEmpaque.value=""
+      abono.value=""
+      valorTotal.value =""
+}
+
 
 
 </script>

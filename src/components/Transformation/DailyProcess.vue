@@ -92,7 +92,7 @@ let options = [
 let columns = ref([
   { name: 'index', label: 'N°', field: 'index', align: 'center' },
   { name: 'name', label: 'NOMBRE', align: 'center', field: 'name', align: 'center'},
-  { name: 'description', align: 'center', label: 'DESCRIPCIÓN', field: 'description', align: 'center', sortable: true },
+  { name: 'description', align: 'center', label: 'DESCRIPCIÓN', field: 'description', align: 'center'},
   { name: 'hours', label: 'HORAS', field: 'hours', align: 'center', sortable: true },
   { name: 'people', label: 'PERSONAS', field: 'people', align: 'center' },
   { name: 'farm', label: 'FINCA', field: 'farms', align: 'center' },

@@ -19,26 +19,6 @@
             <q-btn @click="abrirCrear=true" id="butonAdd">Crear <q-icon name="add"></q-icon> </q-btn>
 
 
-            <div class="q-pa-md">
-    <q-option-group
-      v-model="separator"
-      inline
-      class="q-mb-md"
-      :options="[
-        
-      ]"
-    />
-
-    <q-table
-      flat bordered
-      :rows="rows"
-      :columns="columns"
-      :footer="footer"
-      row-key="name"
-      :separator="separator"
-    />
-  </div>
-
         </div>
 
         <div 
@@ -49,57 +29,68 @@
 
    <!-- modal crear  -->
   
-   <div class="row q-mt-md">
-            <div class="col-1"></div>
-            <div class="col-10 ">
-                <!-- <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" /> -->
-            </div>
-            <div class="col-1"></div>
-        </div> 
-
-        <q-dialog v-model="abrirCrear">
-            <q-card >
-              <q-card-section class="bg-green-10">
-                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
-                  DILIGENCIA LA INFORMACIÓN
-                </h5>
-              </q-card-section>
-              <div class="q-pa-md " >
-                <div>
-
-                <div style="display: flex;">
-
-                <div id="inputs">
-                  <q-input  filled type="number" v-model="document" label="Digite el numero de documento"></q-input>
-                  <q-input  filled type="text" v-model="document" label="Nombre"></q-input>
-                  <q-input filled type="text" v-model="rol" label="Telefono"></q-input>
-                  <q-input  filled type="text" v-model="concept" label="Dirección"></q-input>
-                  <q-select filled v-model="TipoPanela" :options="options" label="Escoga el tipo de panela" />
-                </div>
-
-                <div id="inputs">
-                  <q-select filled v-model="FormaPanela" :options="options2" label="Escoga la forma de la panela" />
-                  <q-input  filled type="number" v-model="total" label="Cantidad"></q-input>
-                  <q-select filled v-model="TipoEmpaque" :options="options3" label="Escoga el tipo de empaque" />
-                  <q-input  filled type="text" v-model="total" label="Comprobante"></q-input>
-                  <q-input  filled type="text" v-model="total" label="Abono"></q-input>
-                </div>
-
-                </div>
-
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
-                </div>
-              </div>
-            </q-card>
-          </q-dialog>
    
 
-    
+    <!-- TABLE INFO -->
+    <div class="row q-mt-md">
+      <div class="col-1"></div>
+      <div class="col-10 ">
+        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
+
+          <template v-slot:body-cell-options="props">
+            <q-td :props="props">
+              <div>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+              </div>
+            </q-td>
+          </template>
+
+        </q-table>
+      </div>
+      <div class="col-1"></div>
+    </div>
+
+    <q-dialog v-model="abrirCrear">
+      <q-card>
+        <q-card-section class="bg-green-10 q-px-lg">
+          <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+            DILIGENCIA LA INFORMACIÓN
+          </h5>
+        </q-card-section>
+        <div class="q-pa-md ">
+          <div style="display: flex;">
+
+              <div id="inputs">
+                <q-input  filled class="q-mb-md" type="number" v-model="documento" label="Digite el numero de documento"></q-input>
+                <q-input  filled class="q-mb-md" type="text"   v-model="nombre" label="Nombre"></q-input>
+                <q-input  filled class="q-mb-md" type="text"   v-model="telefono" label="Telefono"></q-input>
+                <q-input  filled class="q-mb-md" type="text"   v-model="direccion" label="Dirección"></q-input>
+                <q-input  filled class="q-mb-md" type="number" v-model="saldopendiente" label="Saldo Pendiente"></q-input>
+                <q-select filled class="q-mb-md" v-model="tipoPanela" :options="options" label="Escoga el tipo de panela" />
+              </div>
+
+              <div id="inputs">
+                <q-select filled class="q-mb-md"               v-model="formaPanela" :options="options2" label="Escoga la forma de la panela" />
+                <q-input  filled class="q-mb-md" type="number" v-model="cantidad" label="Cantidad"></q-input>
+                <q-select filled class="q-mb-md"               v-model="tipoEmpaque" :options="options3" label="Escoga el tipo de empaque" />
+                <q-input  filled class="q-mb-md" type="text"   v-model="comprobantePago" label="Comprobante"></q-input>
+                <q-input  filled class="q-mb-md" type="text"   v-model="abono" label="Abono"></q-input>
+                <q-input  filled class="q-mb-md" type="number" v-model="valorTotal" label="Valor Total"></q-input>
+              </div>
+
+          </div>
+
+          
+          <div id="botones">
+                    <br />
+                    <q-btn @click="orderPost()" label="guardar" class="text-white bg-green-10"  />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+
+        </div>
+      </q-card>
+    </q-dialog>
 
 
 
@@ -109,83 +100,162 @@
 
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted} from "vue";
+
+import axios from "axios";
+
 
 let abrirCrear=ref(false)
 
-let TipoPanela=ref(null)
-let FormaPanela=ref(null)
-let TipoEmpaque=ref(null)
+
+let tipoPanela=ref()
+let formaPanela=ref()
+let tipoEmpaque=ref()
+ let documento=ref() 
+ let telefono=ref()
+ let cantidad= ref()
+ let comprobantePago=ref()
+ let nombre= ref()
+ let direccion=ref() 
+ let abono= ref()
+ let valorTotal=ref()
+ let saldopendiente=ref()
+ 
+
 
       let options= [
-        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+        'Blanca', 'Negra'
       ]
 
       let options2= [
-        'Google', 'Facebook', 'casa', 'Apple', 'Oracle'
+        'Bloque Rectangular', 'Cono', 'Cono Trunco','Granulada'
       ]   
       
       let options3= [
-        'agua', 'Facebook', 'casa', 'Apple', 'Oracle'
+        'Bolsas Termoencogibles Para Panela', 'Bolsa Con Ventana Impresa', 'Empaque flowpack', 'Bolsa doypack con zipper '
       ] 
 
 
 
 let columns = ref([
-  {
-    name: 'name',
-    label: 'Names',
-    align: 'left',
-    field: row => row.name,
-    
-    
-  },
-  { name:'calories', align:'center', label: 'Calories', field: 'calories' },
-  { name:'fat', align:'center', label: 'Fat (g)', field: 'fat' },
-  { name:'carbs', align:'center', label: 'Carbs (g)', field: 'carbs' },
-  { name:'protein', align:'center', label: 'Protein (g)', field: 'protein' },
-  { name:'sodium', align:'center', label: 'Sodium (mg)', field: 'sodium' },
-  { name:'calcium', align:'center', label: 'Calcium (%)', field: 'calcium' },
-  { name:'iron', align:'center', label: 'Iron (%)', field: 'iron' }
+  { name: 'index', label: 'N°', field: 'index', align: 'center' },
+  { name:'documento', align:'center', label: 'Documento', field: 'Documento' },
+  { name: 'date', label: 'Fecha', align: 'center', field: 'Date'  },
+  { name: 'name', label: 'Nombre', align: 'center', field: 'Nombre'  },
+  { name:'telefono', align:'center', label: 'Telefono', field: 'Telefono' },
+  { name:'cantidad', align:'center', label: 'Cantidad', field: 'Cantidad' },
+  { name:'comprobantePago', align:'center', label: 'Comprobante De Pago', field: 'ComprobantePago' },
+  { name:'saldoPendiente', align:'center', label: 'Saldo Pendiente', field: 'SaldoPendiente' },
+  { name:'direccion', align:'center', label: 'Direccion', field: 'Direccion' },
+  { name:'abono', align:'center', label: 'Abono', field: 'Abono' },
+  { name:'valorTotal', align:'center', label: 'ValorTotal', field: 'ValorTotal' },
+  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center' },
+
 ])
 
 
 let rows = ref([
   {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
-    iron: '1%'
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
-    iron: '1%'
-  },
+    Documento: 1, Date: 1,Telefono: 1,TipoPanela: 1,Cantidad: 1,ComprobantePago: 1,SaldoPendiente: 1, Nombre: 1,Direccion: 1,FormaPanela: 1,TipoEmpaque: 1,Abono: 1,ValorTotal: 1
+  }
  
 ])
+rows.value.forEach((row, index) => {
+  row.index = index
+})
+
+
+const orderPost = async ()=>{
+  try {
+    const order = await axios.post(`http://localhost:3500/pedido/post`,{
+      
+      Documento: documento.value,
+      Telefono: telefono.value ,
+      TipoPanela: tipoPanela.value,
+      Cantidad: cantidad.value,
+      ComprobantePago:comprobantePago.value ,
+      SaldoPendiente:saldopendiente.value ,
+      Nombre: nombre.value,
+      Direccion: direccion.value,
+      FormaPanela:formaPanela.value,
+      TipoEmpaque: tipoEmpaque.value,
+      Abono:abono.value ,
+      Date: Date,
+      ValorTotal: valorTotal.value ,
+      
+    })
+    orderGet()
+    console.log(order);
+    limpiar()
+  } catch (error) {
+    console.log(error);
+  }
+}
+const orderPut = async ()=>{
+  try {
+    const order = await axios.post(`http://localhost:3500/pedido/editar/{:id}`,{
+      
+      
+      Documento: documento.value,
+      Telefono: telefono.value ,
+      TipoPanela: tipoPanela.value,
+      Cantidad: cantidad.value,
+      ComprobantePago:comprobantePago.value ,
+      SaldoPendiente:saldopendiente.value ,
+      Nombre: nombre.value,
+      Direccion: direccion.value,
+      FormaPanela:formaPanela.value,
+      TipoEmpaque: tipoEmpaque.value,
+      Abono:abono.value ,
+      Date: Date,
+      ValorTotal: valorTotal.value ,
+      
+    })
+    orderGet()
+    console.log(order);
+    limpiar()
+  } catch (error) {
+    console.log(error);
+  }
+}
+const orderGet = async ()=>{
+  try {
+    const packa = await axios.get(`http://localhost:3500/pedido/listar`)
+    console.log(packa);
+    rows.value=packa.data
+  } catch (error) {
+    console.log(error);
+  }
+  console.log("ok");
+}
+
+onMounted(()=>{
+  orderGet()
+})
+
+
+function limpiar() {
+      documento.value=""
+      telefono.value =""
+      tipoPanela.value=""
+      cantidad.value=""
+      comprobantePago.value =""
+      saldopendiente.value =""
+      nombre.value=""
+      direccion.value=""
+      formaPanela.value=""
+      tipoEmpaque.value=""
+      abono.value=""
+      valorTotal.value =""
+}
+
 
 
 </script>
 
 <style>
-
-#table{
-  margin-left: 50px;
-}
 #butonAdd{
   border-radius: 10px ;
-  float: right;
-  margin-left: 20px;
   color: white;
   background-color: green;
   
@@ -203,7 +273,10 @@ let rows = ref([
 #inputs{
   width: 250px;
   margin-bottom: 10px;
-  
+  margin-right: 40px;
+}
+#botones{
+  margin-left: 160px;
 }
 
 

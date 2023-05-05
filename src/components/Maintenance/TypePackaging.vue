@@ -12,7 +12,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class=" text-capitalize bg-green-10 text-white" @click="prompt = true, getTypePackaing()">Crear nuevo tipo de empaque</q-btn>
+                <q-btn class=" text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de empaque</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -82,13 +82,8 @@ let columns = ref([
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
-let rows = ref([
-  {name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
+let rows = ref([])
 
-rows.value.forEach((row, index) => {
-  row.index = index
-})
 
 const postTypePackaing = async () => {
   try {
@@ -105,9 +100,12 @@ const postTypePackaing = async () => {
 }
 const getTypePackaing = async () => {
   try {
-    const packa = await axios.get(`http://localhost:3500/tipoEmpaque`)
+    const packa = await axios.get(`http://localhost:3500/tipoEmpaque/${1}`)
     console.log(packa);
     rows.value = packa.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+})
   } catch (error) {
     console.log(error);
   }

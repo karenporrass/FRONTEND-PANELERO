@@ -5,10 +5,9 @@
       <q-layout view="hHh lpR fFf" container class="shadow-2 fullscreen">
         <q-header elevated class="bg-green-10">
           <q-toolbar>
-            <q-btn v-show="TituloPedidos == false" flat @click="toggleLeftDrawer" round dense
+            <q-btn  flat @click="toggleLeftDrawer" round dense
               icon="menu"><q-toolbar-title>MENU</q-toolbar-title></q-btn>
-            <q-btn v-show="TituloPedidos == true" flat @click="toggleLeftDrawer" round dense
-              icon="menu"><q-toolbar-title>PEDIDOS</q-toolbar-title></q-btn>
+            
 
             <q-space></q-space>
             <q-btn flat icon="fa-regular fa-user" class="q-mr-sm" />
@@ -87,17 +86,13 @@
 
 
                   <q-item-section avatar style=" min-width: 1px;">
-                    <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
+                    <i class="fa-solid fa-cart-shopping" style="font-size: 20px;"></i>
                   </q-item-section>
                   <q-item-section  style="font-size: medium;">
                     PEDIDOS
                   </q-item-section>
                 </q-item> 
               </router-link>
-
-
-    
-              
 
               <router-link to="/homeTransformacion" style="text-decoration: none; color:white;">
 
@@ -128,17 +123,19 @@
                 <router-link  to="/reports" style="text-decoration: none; color:white;">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
                 <q-item-section avatar style=" min-width: 1px;">
-                  <i class="fa-solid fa-user-pen" style="font-size: 20px;"></i>
+                  
+                  <span class="material-icons" style="font-size: 25px;">summarize</span>
+
                 </q-item-section>
                 <q-item-section style="font-size: medium;">
                   REPORTES
                 </q-item-section>
               </q-item>
               </router-link>
-
             </q-list>
           </q-scroll-area>
 
+          
           <q-img class="absolute-top"
             src="https://img.freepik.com/foto-gratis/foto-pequena-palmera-serenoa-repens-que-crece-sombra_181624-10193.jpg?w=740&t=st=1682119825~exp=1682120425~hmac=a9dd3a5be68c5c3641e5e6162b1a1eacf64dcf7fd9b49e133d0636e81c1697b1"
             style="height: 150px">
@@ -146,7 +143,7 @@
               <q-avatar size="56px" class="q-mb-sm">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">
               </q-avatar>
-              <div class="text-weight-bolder text-h6">Angel</div>
+              <div class="text-weight-bolder text-h6">¡Karen y Sandyyyy!</div>
               <div class="text-subtitle2">Super usuario</div>
             </div>
           </q-img>

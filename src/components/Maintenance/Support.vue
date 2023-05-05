@@ -44,7 +44,7 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input class="q-mb-md" filled type="number" v-model="email" label="Digite el email"></q-input>
+                    <q-input class="q-mb-md" filled type="text" v-model="emailUser" label="Digite el email"></q-input>
                     <q-input  filled type="text" v-model="coment" label="Digite el comentario"></q-input>
                   <div>
                     <br />
@@ -63,29 +63,24 @@ import {ref, onMounted} from 'vue'
 import axios from 'axios';
 
 let prompt = ref(false)
-let name = ref("")
-let coment = ref()
+let emailUser = ref("")
+let coment = ref("")
 let pagination = ref({
         rowsPerPage: 0
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
-  {name: 'name',label: 'NOMBRE USUARIO',field: 'name',align: 'center'},
+  {name: 'name',label: 'NOMBRE USUARIO',field: 'emailUser',align: 'center'},
   {name: 'coment',label: 'COMENTARIO',align: 'center',field: row => row.coment,format: val => `${val}`,sortable: true},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+let rows = ref([])
 
 const postSupport = async ()=>{
   try {
     const support = await axios.post(`http://localhost:3500/soporte`,{
-      name: name.value,
+      emailUser: emailUser.value,
       coment: coment.value
     })
     getSupport()
@@ -96,9 +91,13 @@ const postSupport = async ()=>{
 }
 const getSupport = async ()=>{
   try {
-    const support = await axios.get(`http://localhost:3500/soporte`)
+    const support = await axios.get(`http://localhost:3500/soporte/${1}`)
     console.log(support);
     rows.value=support.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+})
+
   } catch (error) {
     console.log(error);
   }

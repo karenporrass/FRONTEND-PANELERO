@@ -66,32 +66,25 @@ import axios from 'axios';
 
 let prompt = ref(false)
 let name = ref("")
-let descripcion = ref("")
+let description = ref("")
 let pagination = ref({
         rowsPerPage: 0
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE ETAPA',field: 'name',align: 'center'},
-  {name: 'description',label: 'DESCRIPCION',align: 'center',field: row => row.descripcion,format: val => `${val}`,sortable: true},
+  {name: 'description',label: 'DESCRIPCION',align: 'center',field: row => row.description,format: val => `${val}`,sortable: true},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
-
-rows.value.forEach((row, index) => {
-  row.index = index
-})
-
+let rows = ref([])
 
 const postStages = async ()=>{
   try {
     const stage = await axios.post(`http://localhost:3500/etapas`,{
       name: name.value,
-      descripcion: descripcion.value,
+      description: description.value,
     })
     getStages()
     console.log(stage);
@@ -101,9 +94,12 @@ const postStages = async ()=>{
 }
 const getStages = async ()=>{
   try {
-    const stage = await axios.get(`http://localhost:3500/etapas`)
+    const stage = await axios.get(`http://localhost:3500/etapas/${1}`)
     console.log(stage);
     rows.value=stage.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+})
   } catch (error) {
     console.log(error);
   }

@@ -76,12 +76,7 @@ let columns = ref([
 
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+let rows = ref([])
 
 const postUnits = async ()=>{
   try {
@@ -97,9 +92,12 @@ const postUnits = async ()=>{
 }
 const getUnits = async ()=>{
   try {
-    const units = await axios.get(`http://localhost:3500/unidadesMedida`)
+    const units = await axios.get(`http://localhost:3500/unidadesMedida/${1}`)
     console.log(units);
     rows.value=units.data
+    rows.value.forEach((row, index) => {
+  row.index = index+1
+})
   } catch (error) {
     console.log(error);
   }

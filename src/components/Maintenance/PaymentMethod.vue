@@ -73,12 +73,8 @@ let columns = ref([
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+let rows = ref([])
+
 
 const postPayment = async ()=>{
   try {
@@ -93,9 +89,12 @@ const postPayment = async ()=>{
 }
 const getPayment = async ()=>{
   try {
-    const payment = await axios.get(`http://localhost:3500/metodoPago`)
+    const payment = await axios.get(`http://localhost:3500/metodoPago/${1}`)
     console.log(payment);
     rows.value=payment.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+})
   } catch (error) {
     console.log(error);
   }

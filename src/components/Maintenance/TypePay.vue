@@ -47,7 +47,7 @@
                     <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postTypePay()" />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -73,12 +73,8 @@ let columns = ref([
 
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+let rows = ref([])
+
 
 const postTypePay = async ()=>{
   try {
@@ -93,9 +89,12 @@ const postTypePay = async ()=>{
 }
 const getTypePay = async ()=>{
   try {
-    const pay = await axios.get(`http://localhost:3500/tipoPago`)
+    const pay = await axios.get(`http://localhost:3500/tipoPago/${1}`)
     console.log(pay);
     rows.value=pay.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+})
   } catch (error) {
     console.log(error);
   }

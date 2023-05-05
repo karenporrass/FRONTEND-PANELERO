@@ -78,9 +78,7 @@ let columns = ref([
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
+let rows = ref([])
 rows.value.forEach((row, index) => {
   row.index = index
 })
@@ -99,9 +97,12 @@ const postEps = async ()=>{
 }
 const getEps = async ()=>{
   try {
-    const eps = await axios.get(`http://localhost:3500/eps`)
+    const eps = await axios.get(`http://localhost:3500/eps/${1}`)
     console.log(eps);
     rows.value=eps.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+})
   } catch (error) {
     console.log(error);
   }

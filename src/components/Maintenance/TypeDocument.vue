@@ -45,7 +45,7 @@
               <div class="q-pa-md " >
                 <div>
                 <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre del tipo de documento"></q-input>
-                  <q-input filled type="number" v-model="acronym" label="Digite el acronimo a las siglas"></q-input>
+                  <q-input filled type="text" v-model="acronym" label="Digite el acronimo a las siglas"></q-input>
                  
                   <div>
                     <br />
@@ -76,12 +76,8 @@ let columns = ref([
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+let rows = ref([])
+
 
 const postTypeDocument = async ()=>{
   try {
@@ -97,9 +93,12 @@ const postTypeDocument = async ()=>{
 }
 const getTypeDocument = async ()=>{
   try {
-    const document = await axios.get(`http://localhost:3500/tipoDocumento`)
+    const document = await axios.get(`http://localhost:3500/tipoDocumento/${1}`)
     console.log(document);
     rows.value=document.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+})
   } catch (error) {
     console.log(error);
   }

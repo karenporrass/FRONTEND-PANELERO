@@ -80,12 +80,7 @@ let columns = ref([
 
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+let rows = ref([])
 
 const postLabors = async ()=>{
   try {
@@ -102,9 +97,12 @@ const postLabors = async ()=>{
 }
 const getLabors = async ()=>{
   try {
-    const labors = await axios.get(`http://localhost:3500/tipoLabor`)
+    const labors = await axios.get(`http://localhost:3500/tipoLabor/${1}`)
     console.log(labors);
     rows.value=labors.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+})
   } catch (error) {
     console.log(error);
   }

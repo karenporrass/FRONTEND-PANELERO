@@ -11,8 +11,11 @@
     <div class="row ">
       <div class="col-1"></div>
       <div class="col-10 ">
-        <div>
+        <div style="display: flex;">
           <p style="font-size: 20px; " ><span style="font-size: 50px; " class="material-icons-outlined">
+              arrow_right
+            </span> Costos</p> 
+            <p style="font-size: 20px; " ><span style="font-size: 50px; " class="material-icons-outlined">
               arrow_right
             </span> PEDIDOS CLIENTES</p>
         </div>
@@ -89,7 +92,8 @@ let columns = ref([
   { name: 'TIME_TO_PAY', label: 'TIEMPO A PAGAR',  align: 'center', field: 
 "TIME_TO_PAY" },
   { name: 'total', label: 'TOTAL A PAGAR',  align: 'center', field: 
-"total"}
+"total"},
+{ name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
 let document  = ref()

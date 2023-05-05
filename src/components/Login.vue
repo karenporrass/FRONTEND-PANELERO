@@ -46,9 +46,11 @@ let password = ref()
 
 const addUser = async()=>{
     try {
-        const newuser = await axios.post("http://localhost:3500/",{
+
+        const newuser = await axios.post("mongodb://localhost:27017/panelero",{
             user:user.value,
             password:password.value 
+
         })
         console.log(newuser);
     } catch (error) {

@@ -22,151 +22,88 @@
     </div>
     <!-- TABLE INFO -->
     <div class="row q-mt-md">
-      <div class="col-1"></div>
-      <div class="col-10 ">
-        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll
-          v-model:pagination="pagination" :rows-per-page-options="[0]" />
-      </div>
-      <div class="col-1"></div>
-    </div>
-
-    <q-dialog v-model="prompt">
-      <q-card>
-        <q-card-section class="bg-green-10">
-          <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
-            DILIGENCIA LA INFORMACIÓN
-          </h5>
-        </q-card-section>
-        <div class="q-pa-md ">
-          <div>
-            <q-input filled type="number" v-model="document" label="Digite el numero de documento"></q-input>
-            <q-input filled type="text" v-model="rol" label="Digite el rol"></q-input>
-            <q-input filled type="text" v-model="concept" label="Digite el concepto"></q-input>
-            <q-input filled type="text" v-model="methodPay" label="Escoga el meotodo de pago"></q-input>
-            <q-input filled type="number" v-model="time" label="Digite el tiempo a pagar"></q-input>
-            <q-input filled type="number" v-model="total" label="Total a pagar"></q-input>
-
-            <div>
-              <br />
-              <q-btn label="guardar" class="text-white bg-green-10" />
-              <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+            <div class="col-1"></div>
+            <div class="col-10 ">
+                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
+                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
+                    <template v-slot:body-cell-options="props" >
+            <q-td :props="props">
+              <div >
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+              </div>
+            </q-td>
+            
+          </template>
+        </q-table>
             </div>
-          </div>
-        </div>
-      </q-card>
-    </q-dialog>
+            <div class="col-1"></div>
+        </div> 
+
+        <q-dialog v-model="prompt">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                    <q-input  filled type="text" v-model="document" label="DNI"></q-input>
+                  <q-input filled type="text" v-model="rol" label="ROL"></q-input>
+                  <q-input  filled type="text" v-model="concept" label="Concepto"></q-input>
+                  <q-input  filled type="text" v-model="methodPay" label="Metodo de pago"></q-input>
+                  <q-input  filled type="number" v-model="time" label="tiempo a pagar"></q-input>
+                  <q-input  filled type="number" v-model="total" label="Total"></q-input>
+
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postPays()" />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
   </div>
 </template>
   
 <script setup>
-import { ref } from "vue"
+import {ref, onMounted} from 'vue'
+import axios from 'axios';
 let prompt = ref(false)
 let pagination = ref({
   rowsPerPage: 0
 })
 let columns = ref([
-  { name: 'index', label: '#', field: 'index' },
-  { name: 'name', required: true, label: 'NUMERO DE DOCUMENTO', align: 'center', field: row => row.name, format: val => `${val}`, sortable: true },
-  { name: 'calories', align: 'center', label: 'ROL', field: 'calories', align: 'center', sortable: true },
-  { name: 'fat', label: 'CONCEPTO', field: 'fat', sortable: true, align: 'center' },
-  { name: 'carbs', label: 'FECHA PAGO', field: 'carbs', align: 'center' },
-  { name: 'protein', label: 'METODO DE PAGO', field: 'protein', align: 'center' },
-  { name: 'sodium', label: 'TIEMPO A PAGAR', field: 'sodium', align: 'center' },
-  { name: 'calcium', label: 'TOTAL A PAGAR', field: 'calcium', align: 'center', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
+  { name: 'DNI', required: true, label: 'NUMERO DE DOCUMENTO', align: 'center', field: 
+"DNI"},
+  { name: 'ROL', align: 'center', label: 'ROL',  align: 'center', field: 
+"ROL"  },
+  { name: 'CONCEPT', label: 'CONCEPTO', sortable: true, align: 'center', field: 
+"CONCEPT" },
+  { name: 'date', label: 'FECHA PAGO', align: 'center', field: 
+"Date" },
+  { name: 'PAYMENT_METHOD', label: 'METODO DE PAGO',  align: 'center', field: 
+"PAYMENT_METHOD" },
+  { name: 'TIME_TO_PAY', label: 'TIEMPO A PAGAR',  align: 'center', field: 
+"TIME_TO_PAY" },
+  { name: 'total', label: 'TOTAL A PAGAR',  align: 'center', field: 
+"total"}
 ])
+
+let document  = ref()
+let rol = ref()
+let concept = ref()
+let methodPay = ref()
+let time = ref()
+let total = ref()
 
 let rows = ref([
   {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
+    DNI: 1,  ROL: 1, CONCEPT: 1,  PAYMENT_METHOD: 1,  TIME_TO_PAY: 1, total: 1,
   },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
-
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: '6%',
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: '3%',
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: '7%',
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
-  }
+  
 ])
 
 rows.value.forEach((row, index) => {
@@ -174,4 +111,46 @@ rows.value.forEach((row, index) => {
 })
 
 
+
+const postPays = async ()=>{
+  try {
+    const pays = await axios.post(`http://localhost:4500/payments/post`,{
+      DNI:document.value,
+      ROL:rol.value,
+      CONCEPT:concept.value,
+PAYMENT_METHOD: methodPay.value,
+Date: Date,
+TIME_TO_PAY: time.value
+     
+    })
+     getTypePays()
+    console.log(pays);
+  } catch (error) {
+    console.log(error);
+  }
+}
+const getTypePays = async ()=>{
+  try {
+    const packa = await axios.get(`http://localhost:4500/payments/get`)
+    console.log(packa);
+    rows.value=packa.data
+  } catch (error) {
+    console.log(error);
+  }
+  console.log("ok");
+}
+
+onMounted(()=>{
+  getTypePays()
+})
+
+
+
 </script>
+
+<style scoped>
+.q-input{
+  margin-bottom: 20px;
+}
+
+</style>

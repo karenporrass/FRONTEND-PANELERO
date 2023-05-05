@@ -146,7 +146,7 @@
               <q-avatar size="56px" class="q-mb-sm">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">
               </q-avatar>
-              <div class="text-weight-bolder text-h6">Karen y Sandy</div>
+              <div class="text-weight-bolder text-h6">Angel</div>
               <div class="text-subtitle2">Super usuario</div>
             </div>
           </q-img>
@@ -161,7 +161,7 @@
         <q-footer elevated class="bg-dark text-white">
           <q-toolbar>
             <q-toolbar-title class="text-center" style="font-size: 14px;">
-              <div> Copyright © 2023 Sandy y Karen</div>
+              <div> Copyright © 2023 Angel</div>
             </q-toolbar-title>
           </q-toolbar>
         </q-footer>

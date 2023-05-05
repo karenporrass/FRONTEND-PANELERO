@@ -48,17 +48,21 @@
         <div class="q-pa-md ">
           <div>
             <q-input filled class="q-mb-md" type="text" v-model="name" label="Digite el nombre del proceso"></q-input>
-            <q-input filled class="q-mb-md" type="text" v-model="description" label="Digite una descripción del proceso"></q-input>
-            <q-input filled class="q-mb-md" type="number" v-model="hours" label="Digite cuántas horas tomó el proceso"></q-input>
-            <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0" @new-value="createValue"
-              :options="filterOptions" @filter="filterFn" style="width: 350px" label="Seleccione la labor" />
-              <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0" @new-value="createValue"
-              :options="filterOptions" @filter="filterFn" style="width: 350px" label="Seleccione las personas" />
-              <q-select filled class="q-mb-md" v-model="farm" :options="options" label="Seleccione la finca" />
-              <q-select filled class="q-mb-xs" v-model="lot" :options="options" label="Seleccione el lote" />
+            <q-input filled class="q-mb-md" type="text" v-model="description"
+              label="Digite una descripción del proceso"></q-input>
+            <q-input filled class="q-mb-md" type="number" v-model="hours"
+              label="Digite cuántas horas tomó el proceso"></q-input>
+            <!-- <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0"
+              @new-value="createValue" :options="filterOptions" @filter="filterFn" style="width: 350px"
+              label="Seleccione la labor" /> -->
+            <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0"
+              @new-value="createValue" :options="filterOptions" @filter="filterFn" style="width: 350px"
+              label="Seleccione las personas" />
+            <q-select filled class="q-mb-md" v-model="farm" :options="options" label="Seleccione la finca" />
+            <q-select filled class="q-mb-xs" v-model="lot" :options="options" label="Seleccione el lote" />
             <div class="q-pb-sm">
               <br />
-              <q-btn label="guardar" class="text-white bg-green-10" />
+              <q-btn label="guardar" class="text-white bg-green-10" @click="postDailyProcess()"/>
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
@@ -70,70 +74,34 @@
   
 <script setup>
 import { ref } from "vue"
+import axios from "axios";
+
 let prompt = ref(false)
 let name = ref("")
 let description = ref("")
 let hours = ref()
 let people = ref()
 let lot = ref()
-let labor = ref()
-let farm= ref()
-let options= [
-        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
-      ]
+// let labor = ref()
+let farm = ref()
+let options = [
+  'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+]
 
 
 let columns = ref([
   { name: 'index', label: 'N°', field: 'index', align: 'center' },
-  { name: 'name', label: 'NOMBRE', align: 'center', field: row => row.name, format: val => `${val}`, sortable: true },
-  { name: 'description', align: 'center', label: 'DESCRIPCIÓN', field: 'description', align: 'center', sortable: true },
+  { name: 'name', label: 'NOMBRE', align: 'center', field: 'name', align: 'center'},
+  { name: 'description', align: 'center', label: 'DESCRIPCIÓN', field: 'description', align: 'center'},
   { name: 'hours', label: 'HORAS', field: 'hours', align: 'center', sortable: true },
   { name: 'people', label: 'PERSONAS', field: 'people', align: 'center' },
   { name: 'farm', label: 'FINCA', field: 'farms', align: 'center' },
   { name: 'lot', label: 'LOTE', field: 'lot', align: 'center' },
-  { name: 'date', label: 'FECHA', field: 'date', align: 'center' },
+  // { name: 'date', label: 'FECHA', field: 'date', align: 'center' },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center' },
-
 ])
 
 let rows = ref([
-
-  {
-    name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-  },
   {
     name: 'KitKat',
     calories: 518,
@@ -149,39 +117,61 @@ rows.value.forEach((row, index) => {
   row.index = index
 })
 
-
 const stringOptions = [
   'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
 ]
-    const filterOptions = ref(stringOptions)
+const filterOptions = ref(stringOptions)
 
-      function createValue (val, done){
-        if (val.length > 0) {
-          if (!stringOptions.includes(val)) {
-            stringOptions.push(val)
-          }
-          done(val, 'toggle')
-        }
-      }
+function createValue(val, done) {
+  if (val.length > 0) {
+    if (!stringOptions.includes(val)) {
+      stringOptions.push(val)
+    }
+    done(val, 'toggle')
+  }
+}
 
-      function filterFn (val, update){
-        update(() => {
-          if (val === '') {
-            filterOptions.value = stringOptions
-          }
-          else {
-            const needle = val.toLowerCase()
-            filterOptions.value = stringOptions.filter(
-              v => v.toLowerCase().indexOf(needle) > -1
-            )
-          }
-        })
-      }
-    
+function filterFn(val, update) {
+  update(() => {
+    if (val === '') {
+      filterOptions.value = stringOptions
+    }
+    else {
+      const needle = val.toLowerCase()
+      filterOptions.value = stringOptions.filter(
+        v => v.toLowerCase().indexOf(needle) > -1
+      )
+    }
+  })
+}
 
+const postDailyProcess = async () => {
+  console.log(people.value);
+  try {
+    const daily = await axios.post(`http://localhost:3500/procesoDiario`, {
+      name: name.value,
+      description: description.value,
+      hours: hours.value,
+      people: people.value,
+      farm: farm.value,
+      lot: lot.value,
+    })
+    getDailyProcess()
+    console.log(daily);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-
-
+const getDailyProcess = async () => {
+  try {
+    const process = await axios.get(`http://localhost:3500/procesoDiario`)
+    console.log(process);
+    rows.value = process.data
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
 </script>

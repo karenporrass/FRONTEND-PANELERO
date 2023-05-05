@@ -40,7 +40,7 @@
         </q-header>
         <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="c">
           <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
-            <q-list class="column items-center" style="padding-top: 40px;">
+            <q-list class="column items-center" style="padding-top: 20px;">
 
               <router-link to="/home" style="text-decoration: none;">
                 <q-item clickable class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
@@ -171,16 +171,7 @@
 import { ref } from 'vue'
 
 const leftDrawerOpen = ref(false)
-let TituloPedidos = ref(false)
-let TituloInventory = ref(false)
 
-function MenuAPedidos() {
-  TituloPedidos = true
-}
-
-function MenuInventory() {
-  TituloInventory = true
-}
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value

@@ -52,9 +52,9 @@
               label="Digite una descripción del proceso"></q-input>
             <q-input filled class="q-mb-md" type="number" v-model="hours"
               label="Digite cuántas horas tomó el proceso"></q-input>
-            <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0"
+            <!-- <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0"
               @new-value="createValue" :options="filterOptions" @filter="filterFn" style="width: 350px"
-              label="Seleccione la labor" />
+              label="Seleccione la labor" /> -->
             <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0"
               @new-value="createValue" :options="filterOptions" @filter="filterFn" style="width: 350px"
               label="Seleccione las personas" />
@@ -82,7 +82,7 @@ let description = ref("")
 let hours = ref()
 let people = ref()
 let lot = ref()
-let labor = ref()
+// let labor = ref()
 let farm = ref()
 let options = [
   'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
@@ -146,6 +146,7 @@ function filterFn(val, update) {
 }
 
 const postDailyProcess = async () => {
+  console.log(people.value);
   try {
     const daily = await axios.post(`http://localhost:3500/procesoDiario`, {
       name: name.value,

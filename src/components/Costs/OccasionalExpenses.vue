@@ -68,6 +68,7 @@
   
 <script setup>
 import {ref} from "vue"
+import axios from 'axios';
 let prompt = ref(false)
 let pagination = ref({
         rowsPerPage: 0
@@ -79,8 +80,9 @@ let columns = ref([
   { name: 'DATE', label: 'FECHA', field: 'DATE',align: 'center' },
   { name: 'PAYMENT_METHOD', label: 'METODO DE PAGO', field: 'PAYMENT_METHOD',align: 'center' },
   { name: 'costValue', label: 'VALOR DEL GASTO', field: 'costValue',align: 'center' },
-  
-])
+  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
+])  
+
 
 
 let nameSpent = ref()
@@ -133,9 +135,9 @@ const getTypeOcaccional = async ()=>{
   console.log("ok");
 }
 
-onMounted(()=>{
-  getTypeOcaccional()
-})
+// onMounted(()=>{
+//   getTypeOcaccional()
+// })
 
 
 

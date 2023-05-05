@@ -12,9 +12,10 @@
       <div class="col-1"></div>
       <div class="col-10 ">
         <div style="display: flex;">
+          <router-link to="/homeCostos" style="text-decoration: none;" class="text-dark" >
           <p style="font-size: 20px; " ><span style="font-size: 50px; " class="material-icons-outlined">
               arrow_right
-            </span> Costos</p> 
+            </span> Costos</p> </router-link>
             <p style="font-size: 20px; " ><span style="font-size: 50px; " class="material-icons-outlined">
               arrow_right
             </span> PEDIDOS CLIENTES</p>

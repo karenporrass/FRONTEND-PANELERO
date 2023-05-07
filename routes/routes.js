@@ -56,7 +56,7 @@ export const routes=[
     {path:"/product", component:product },
     {path:"/pedidosDos", component:tablesOrders},
     {path:"/homeCostos", component: homeCosts},
-    {path:"/personas", component:users},
+    {path:"/usuarios", component:users},
     {path:"/tipoDocumento", component:typeDocument},
     {path:"/eps", component:eps},
     {path: "/fincas", component: farmRegistry},

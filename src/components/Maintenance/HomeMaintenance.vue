@@ -12,7 +12,7 @@
         <div class="row" style="margin-top: 60px;">
             <div class="col-2"></div>
             <div class="col-2 q-px-lg">
-                <router-link to="/personas" style="text-decoration: none; color: black;">
+                <router-link to="/usuarios" style="text-decoration: none; color: black;">
                 <q-card class="my-card" style="border-style:solid; border-color: green; border-radius: 10px;">
                     <q-card-section>
                         <div class="row column items-center">

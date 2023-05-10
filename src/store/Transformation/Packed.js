@@ -13,24 +13,6 @@ export const useDailyStore = defineStore('counter', () => {
       }
     }
 
-  
-    async function addDailyProcess(name, description, hours, people, labor, farm, lot, date){
-      try {
-        return await axios.post(`http://localhost:3500/procesoDiario`, {
-          name: name,
-          description: description,
-          hours: hours,
-          people: people,
-          labor: labor,
-          farm: farm,
-          lot: lot,
-          date: date,
-        })
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    
     async function active(id, estado){
       try {
         return await axios.put(`http://localhost:3500/procesoDiario/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
@@ -39,7 +21,25 @@ export const useDailyStore = defineStore('counter', () => {
         return error
       }
     }
-
   
-    return { listDaily, daily, active, addDailyProcess }
+    return { listDaily, daily, active }
   })
+
+
+  async function addPacked(names, lastNames,typeDocument, numberDocument, rol,cel, address, email) {
+    try {
+        return await axios.post(`http://localhost:3500/usuarios`,{
+         names: names,
+         lastNames: lastNames,
+         typeDocument: typeDocument,
+         numberDocument: numberDocument,
+         rol: rol,
+         cel: cel,
+         address: address,
+         email: email,
+         password: numberDocument
+        })
+      } catch (error) {
+        console.log(error);
+      }
+  }

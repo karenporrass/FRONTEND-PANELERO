@@ -14,7 +14,7 @@
         <q-btn class="bg-green-10 text-white" @click="prompt = true"><span class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px;">
             add_circle
-          </span> Crear nuevo proceso diario</q-btn>
+          </span> Crear nuevo empaque</q-btn>
       </div>
       <div class="col-1"></div>
     </div>
@@ -82,7 +82,7 @@ let options= [
         'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
       ]
 
-
+//f
 let columns = ref([
   { name: 'index', label: 'N°', field: 'index', align: 'center' },
   { name: 'name', label: 'NOMBRE', align: 'center', field: row => row.name, format: val => `${val}`, sortable: true },
@@ -96,58 +96,61 @@ let columns = ref([
 
 ])
 
-let rows = ref([
+let rows = ref([])
 
-  {
-    name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
+
+
+// get registros empaques
+async function getListDaily() {
+  const res = await useDaily.listDaily()
+  console.log(res);
+  if (res.status < 299) {
+    rows.value = res.data
+    rows.value.forEach((row, index) => {
+      row.index = index + 1
+    })
+  } else {
+    alert(res)
   }
-])
+}
+getListDaily()
 
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+//post empaques
+async function postDailyProcess() {
+  const res = await useDaily.addDailyProcess(
+    name.value, // se llama a las variables del modal
+    description.value,
+    hours.value,
+    people.value,
+    labor.value,
+    farm.value,
+    lot.value,
+    date.value,
+  )
+  console.log(res);
+}
+
+
+// activar y desactivar empaques 
+async function activarDesactivar(data) {
+  console.log(data);
+  let res = ""
+  if (data.state == 1) {
+    res = await useDaily.active(data._id, 0)
+    console.log(res);
+    getListDaily()
+  } else {
+    res = await useDaily.active(data._id, 1)
+    console.log(res);
+    getListDaily()
+  }
+}
+
+
+
+
+
+
 
 
 const stringOptions = [

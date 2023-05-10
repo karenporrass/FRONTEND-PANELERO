@@ -27,10 +27,14 @@
             <q-td :props="props">
               <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn v-if="props.row.state == 0" 
-                round size="xs" color="green-4"
-                  @click="activarDesactivar(props.row)">✅</q-btn>
-                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
           </template>
@@ -115,6 +119,8 @@ const filterOptions = ref(stringOptions)
 
 const useDaily = useDailyStore()
 
+
+// get registros proceso diario 
 async function getListDaily() {
   const res = await useDaily.listDaily()
   console.log(res);
@@ -129,7 +135,23 @@ async function getListDaily() {
 }
 getListDaily()
 
+//post proceso diario
+async function postDailyProcess() {
+  const res = await useDaily.addDailyProcess(
+    name.value, // se llama a las variables del modal
+    description.value,
+    hours.value,
+    people.value,
+    labor.value,
+    farm.value,
+    lot.value,
+    date.value,
+  )
+  console.log(res);
+}
 
+
+// activar y desactivar proceso diario 
 async function activarDesactivar(data) {
   console.log(data);
   let res = ""
@@ -169,39 +191,10 @@ function filterFn(val, update) {
   })
 }
 
-const postDailyProcess = async () => {
-  try {
-    const daily = await axios.post(`http://localhost:3500/procesoDiario`, {
-      name: name.value,
-      description: description.value,
-      hours: hours.value,
-      people: people.value,
-      labor: labor.value,
-      farm: farm.value,
-      lot: lot.value,
-      date: date.value,
-    })
-    getListDaily()
-  } catch (error) {
-    console.log(error);
-  }
-}
+onMounted(() => {
+  getListDaily()
+})
 
-/* const getDailyProcess = async () => {
-  try {
-    const process = await axios.get(`http://localhost:3500/procesoDiario/${1}`)
-    rows.value = process.data
-    rows.value.forEach((row, index) => {
-      row.index = index + 1
-    })
-  } catch (error) {
-    console.log(error);
-  }
-} */
-
-/* onMounted(()=>{
-  getDailyProcess()
-}) */
 </script>
 
 

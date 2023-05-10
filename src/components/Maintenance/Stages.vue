@@ -23,9 +23,11 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
+              <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
+                  @click="activarDesactivar(props.row)">✅</q-btn>
+                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
               </div>
             </q-td>
             
@@ -62,8 +64,8 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
-
+import {stagesStore} from "../../store/Maintenance/Stages.js"
+const stageStore = stagesStore()
 let prompt = ref(false)
 let name = ref("")
 let description = ref("")
@@ -81,27 +83,34 @@ let columns = ref([
 let rows = ref([])
 
 const postStages = async ()=>{
-  try {
-    const stage = await axios.post(`http://localhost:3500/etapas`,{
-      name: name.value,
-      description: description.value,
-    })
+    const stage = await stageStore.newStage( name.value, description.value )
     getStages()
     console.log(stage);
-  } catch (error) {
-    console.log(error);
-  }
 }
+
 const getStages = async ()=>{
-  try {
-    const stage = await axios.get(`http://localhost:3500/etapas/${1}`)
+    const stage = await stageStore.listStages()
     console.log(stage);
-    rows.value=stage.data
+    if (res.status < 299) {
+      rows.value=stage.data
     rows.value.forEach((row, index) => {
     row.index = index+1
-})
-  } catch (error) {
-    console.log(error);
+    })
+  } else {
+    alert(res)
+  }
+}
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await stageStore.active(data._id, 0)
+    console.log(res);
+    getStages()
+  } else {
+    res = await stageStore.active(data._id, 1)
+    console.log(res);
+    getStages()
   }
 }
 

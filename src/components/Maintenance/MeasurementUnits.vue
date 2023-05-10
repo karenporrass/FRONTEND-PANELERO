@@ -62,8 +62,8 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
-
+import {unitsStore} from "../../store/Maintenance/MeasurementUnits.js"
+const unitStore = unitsStore()
 let prompt = ref(false)
 let name = ref("")
 let format = ref()
@@ -81,27 +81,33 @@ let columns = ref([
 let rows = ref([])
 
 const postUnits = async ()=>{
-  try {
-    const unit = await axios.post(`http://localhost:3500/unidadesMedida`,{
-      name: name.value,
-      format: format.value,
-    })
+    const unit = await unitStore.newUnits(name.value, format.value)
     getUnits()
     console.log(unit);
-  } catch (error) {
-    console.log(error);
-  }
 }
 const getUnits = async ()=>{
-  try {
-    const units = await axios.get(`http://localhost:3500/unidadesMedida/${1}`)
+    const units = await unitStore.listUnits()
     console.log(units);
-    rows.value=units.data
+    if (units.status < 299) {
+      rows.value=units.data
     rows.value.forEach((row, index) => {
-  row.index = index+1
-})
-  } catch (error) {
-    console.log(error);
+    row.index = index+1
+  })
+  } else {
+    alert(units)
+  }
+}
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await unitStore.active(data._id, 0)
+    console.log(res);
+    getUnits()
+  } else {
+    res = await unitStore.active(data._id, 1)
+    console.log(res);
+    getUnits()
   }
 }
 

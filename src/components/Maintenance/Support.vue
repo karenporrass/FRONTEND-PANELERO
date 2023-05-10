@@ -23,9 +23,11 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
+              <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
+                  @click="activarDesactivar(props.row)">✅</q-btn>
+                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
               </div>
             </q-td>
             
@@ -60,8 +62,8 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
-
+import { supportStore } from "../../store/Maintenance/Support.js"
+const supportsStore = supportStore()
 let prompt = ref(false)
 let emailUser = ref("")
 let coment = ref("")
@@ -78,28 +80,35 @@ let columns = ref([
 let rows = ref([])
 
 const postSupport = async ()=>{
-  try {
-    const support = await axios.post(`http://localhost:3500/soporte`,{
-      emailUser: emailUser.value,
-      coment: coment.value
-    })
+    const support = await supportsStore.newSupport( emailUser.value,coment.value  )
     getSupport()
     console.log(support);
-  } catch (error) {
-    console.log(error);
-  }
 }
+
 const getSupport = async ()=>{
-  try {
-    const support = await axios.get(`http://localhost:3500/soporte/${1}`)
+ 
+    const support = await supportsStore.listSupport()
     console.log(support);
-    rows.value=support.data
+    if (res.status < 299) {
+      rows.value=support.data
     rows.value.forEach((row, index) => {
     row.index = index+1
-})
+  })
+  } else {
+    alert(res)
+  }
+}
 
-  } catch (error) {
-    console.log(error);
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await supportsStore.active(data._id, 0)
+    console.log(res);
+    getSupport()
+  } else {
+    res = await supportsStore.active(data._id, 1)
+    console.log(res);
+    getSupport()
   }
 }
 

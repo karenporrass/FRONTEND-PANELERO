@@ -23,9 +23,11 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
+              <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
+                  @click="activarDesactivar(props.row)">✅</q-btn>
+                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
               </div>
             </q-td>
             
@@ -60,8 +62,8 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
-
+import {paymentStore} from "../../store/Maintenance/PaymentMethod.js"
+const paymentStores = paymentStore()
 let prompt = ref(false)
 let name = ref("")
 let pagination = ref({
@@ -77,28 +79,38 @@ let rows = ref([])
 
 
 const postPayment = async ()=>{
-  try {
-    const payment = await axios.post(`http://localhost:3500/metodoPago`,{
-      name: name.value
-    })
+    const payment = await paymentStores.newPayment( name.value)
     getPayment()
     console.log(payment);
-  } catch (error) {
-    console.log(error);
-  }
 }
+
 const getPayment = async ()=>{
-  try {
-    const payment = await axios.get(`http://localhost:3500/metodoPago/${1}`)
+    const payment = await paymentStores.listPayments()
     console.log(payment);
-    rows.value=payment.data
+    if (res.status < 299) {
+      rows.value=payment.data
     rows.value.forEach((row, index) => {
     row.index = index+1
-})
-  } catch (error) {
-    console.log(error);
+    })
+  } else {
+    alert(res)
   }
 }
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await paymentStores.active(data._id, 0)
+    console.log(res);
+   getPayment()
+  } else {
+    res = await paymentStores.active(data._id, 1)
+    console.log(res);
+   getPayment()
+  }
+}
+
+
 
 onMounted(()=>{
   getPayment()

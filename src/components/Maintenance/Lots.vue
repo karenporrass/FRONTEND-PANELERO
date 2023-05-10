@@ -64,7 +64,7 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import {lotsStore} from "../../store/Maintenance/Lots.js"
-const lotsStore = lotsStore()
+const lotsStores = lotsStore()
 let prompt = ref(false)
 let name = ref("")
 let extent= ref()
@@ -82,13 +82,13 @@ let columns = ref([
 let rows = ref([])
 
 const postLots= async ()=>{
-    const lots = await lotsStore.newlots( name.value, extent.value)
+    const lots = await lotsStores.newlots( name.value, extent.value)
     getLots()
 
 }
 const getLots = async ()=>{
  
-    const lots = await lotsStore.listlots()
+    const lots = await lotsStores.listlots()
     if (lots.status < 299) {
     rows.value = lots.data
     rows.value.forEach((row, index) => {
@@ -102,11 +102,11 @@ const getLots = async ()=>{
 async function activarDesactivar(data) {
   let res = ""
   if (data.state == 1) {
-    res = await lotsStore.active(data._id, 0)
+    res = await lotsStores.active(data._id, 0)
     console.log(res);
    getLots()
   } else {
-    res = await lotsStore.active(data._id, 1)
+    res = await lotsStores.active(data._id, 1)
     console.log(res);
    getLots()
   }

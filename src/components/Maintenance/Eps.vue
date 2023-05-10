@@ -65,7 +65,7 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import {epsStore} from "../../store/Maintenance/Eps.js"
-const epsStore = epsStore()
+const epsStores = epsStore()
 let prompt = ref(false)
 let name = ref("")
 let attentionLine = ref()
@@ -87,7 +87,7 @@ rows.value.forEach((row, index) => {
 
 const postEps = async ()=>{
   try {
-    const eps = await epsStore.newEps( name.value,attentionLine.value)
+    const eps = await epsStores.newEps( name.value,attentionLine.value)
     getEps()
     console.log(eps);
   } catch (error) {
@@ -96,7 +96,7 @@ const postEps = async ()=>{
 }
 
 const getEps = async ()=>{
-    const eps = await epsStore.listEps()
+    const eps = await epsStores.listEps()
     console.log(eps);
     if (res.status < 299) {
     rows.value = res.data
@@ -112,11 +112,11 @@ const getEps = async ()=>{
 async function activarDesactivar(data) {
   let res = ""
   if (data.state == 1) {
-    res = await epsStore.active(data._id, 0)
+    res = await epsStores.active(data._id, 0)
     console.log(res);
     getEps()
   } else {
-    res = await epsStore.active(data._id, 1)
+    res = await epsStores.active(data._id, 1)
     console.log(res);
     getEps()
   }

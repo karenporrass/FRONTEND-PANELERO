@@ -23,9 +23,11 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
+              <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
+                  @click="activarDesactivar(props.row)">✅</q-btn>
+                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
               </div>
             </q-td>
             
@@ -61,8 +63,8 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
-
+import { documentStore} from "../../store/Maintenance/TypeDocument.js"
+const documentsStore = documentStore()
 let prompt = ref(false)
 let name = ref("")
 let acronym = ref("")
@@ -80,27 +82,34 @@ let rows = ref([])
 
 
 const postTypeDocument = async ()=>{
-  try {
-    const document = await axios.post(`http://localhost:3500/tipoDocumento`,{
-      name: name.value,
-      acronym: acronym.value
-    })
+    const document = await documentsStore.newDocument( name.value, acronym.value)
     getTypeDocument()
     console.log(document);
-  } catch (error) {
-    console.log(error);
-  }
 }
+
 const getTypeDocument = async ()=>{
-  try {
-    const document = await axios.get(`http://localhost:3500/tipoDocumento/${1}`)
+    const document = await documentsStore.listDocuments()
     console.log(document);
+    if (res.status < 299) {
     rows.value=document.data
     rows.value.forEach((row, index) => {
     row.index = index+1
-})
-  } catch (error) {
-    console.log(error);
+    })
+    } else {
+      alert(document)
+    }
+}
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await documentsStore.active(data._id, 0)
+    console.log(res);
+    getTypeDocument()
+  } else {
+    res = await documentsStore.active(data._id, 1)
+    console.log(res);
+    getTypeDocument()
   }
 }
 

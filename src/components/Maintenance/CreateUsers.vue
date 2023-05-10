@@ -68,7 +68,6 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-
 import {usersStore} from "../../store/Maintenance/CreateUsers.js"
 const userStore = usersStore()
 let prompt = ref(false)

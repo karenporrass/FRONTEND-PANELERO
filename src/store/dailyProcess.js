@@ -7,7 +7,7 @@ export const useDailyStore = defineStore('counter', () => {
     
     async function listDaily() {
       try {
-        return await axios.get("http://localhost:3500/procesoDiario/1")
+        return await axios.get("http://localhost:3500/procesoDiario")
       } catch (error) {
         console.log(error);
       }

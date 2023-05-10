@@ -54,7 +54,7 @@
                   <q-input filled type="text" v-model="email" label="Digite el email"></q-input>
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="postUser()"/>
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -119,7 +119,7 @@ const postUser= async ()=>{
 }
 const getUsers = async ()=>{
   try {
-    const users = await axios.get(`http://localhost:3500/users`)
+    const users = await axios.get(`http://localhost:3500/usuarios`)
     console.log(users);
     rows.value=users.data
   } catch (error) {

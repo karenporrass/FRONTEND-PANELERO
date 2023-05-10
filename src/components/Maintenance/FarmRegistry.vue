@@ -23,9 +23,11 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
+              <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
+                  @click="activarDesactivar(props.row)">✅</q-btn>
+                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
               </div>
             </q-td>
             
@@ -61,8 +63,8 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
-
+import {farmRegistryStore} from "../../store/Maintenance/FarmRegistry.js"
+const farmStore = farmRegistryStore()
 let prompt = ref(false)
 let name = ref("")
 let registrationNumber = ref("")
@@ -82,30 +84,39 @@ let columns = ref([
 let rows = ref([])
 
 const postFarmRegistry = async ()=>{
-  try {
-    const farm = await axios.post(`http://localhost:3500/registroFinca`,{
-      name: name.value,
-      registrationNumber: registrationNumber.value,
-     extent: extent.value
-    })
+
+    const farm = await farmStore.newFarm (name.value, registrationNumber.value,extent.value )
     getFarmRegistry()
     console.log(farm);
-  } catch (error) {
-    console.log(error);
-  }
+
+
 }
 const getFarmRegistry = async ()=>{
-  try {
-    const farm = await axios.get(`http://localhost:3500/registroFinca/${1}`)
-    console.log(farm);
-    rows.value=farm.data
+    const farm = await farmStore.listFarms()
+    if (farm.status < 299) {
+    rows.value = farm.data
     rows.value.forEach((row, index) => {
     row.index = index+1
 })
-  } catch (error) {
-    console.log(error);
+  } else {
+    alert(farm)
+  }
+
+}
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await farmStore.active(data._id, 0)
+    console.log(res);
+    getFarmRegistry()
+  } else {
+    res = await farmStore.active(data._id, 1)
+    console.log(res);
+    getFarmRegistry()
   }
 }
+
 
 onMounted(()=>{
   getFarmRegistry()

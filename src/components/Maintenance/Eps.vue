@@ -23,9 +23,11 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
+              <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
+                  @click="activarDesactivar(props.row)">✅</q-btn>
+                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
               </div>
             </q-td>
             
@@ -62,8 +64,8 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
-
+import {epsStore} from "../../store/Maintenance/Eps.js"
+const epsStore = epsStore()
 let prompt = ref(false)
 let name = ref("")
 let attentionLine = ref()
@@ -85,26 +87,38 @@ rows.value.forEach((row, index) => {
 
 const postEps = async ()=>{
   try {
-    const eps = await axios.post(`http://localhost:3500/eps`,{
-      name: name.value,
-      attentionLine: attentionLine.value
-    })
+    const eps = await epsStore.newEps( name.value,attentionLine.value)
     getEps()
     console.log(eps);
   } catch (error) {
     console.log(error);
   }
 }
+
 const getEps = async ()=>{
-  try {
-    const eps = await axios.get(`http://localhost:3500/eps/${1}`)
+    const eps = await epsStore.listEps()
     console.log(eps);
-    rows.value=eps.data
+    if (res.status < 299) {
+    rows.value = res.data
     rows.value.forEach((row, index) => {
     row.index = index+1
 })
-  } catch (error) {
-    console.log(error);
+  } else {
+    alert(res)
+  }
+}
+
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await epsStore.active(data._id, 0)
+    console.log(res);
+    getEps()
+  } else {
+    res = await epsStore.active(data._id, 1)
+    console.log(res);
+    getEps()
   }
 }
 

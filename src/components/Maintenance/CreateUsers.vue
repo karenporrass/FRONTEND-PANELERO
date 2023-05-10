@@ -68,7 +68,7 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
+
 import {usersStore} from "../../store/Maintenance/CreateUsers.js"
 const userStore = usersStore()
 let prompt = ref(false)
@@ -112,6 +112,7 @@ const postUser= async ()=>{
     address.value, 
     email.value )
     console.log(res);
+  getUsers()
 }
 
 async function activarDesactivar(data) {

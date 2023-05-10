@@ -27,7 +27,8 @@
             <q-td :props="props">
               <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
+                <q-btn v-if="props.row.state == 0" 
+                round size="xs" color="green-4"
                   @click="activarDesactivar(props.row)">✅</q-btn>
                 <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
               </div>
@@ -77,19 +78,6 @@ import { onMounted, ref } from "vue"
 import axios from "axios";
 import { useDailyStore } from "../../store/Transformation/dailyProcess.js"
 
-const useDaily = useDailyStore()
-
-async function getListDaily() {
-  const res = await useDaily.listDaily()
-  console.log(res);
-  if (res.status < 299) {
-    rows.value = res.data
-  } else {
-    alert(res)
-  }
-}
-
-getListDaily()
 
 let prompt = ref(false)
 let name = ref("")
@@ -118,15 +106,32 @@ let columns = ref([
   { name: 'options', label: 'OPCIONES', align: 'center' },
 ])
 
-let rows = ref([
-])
+let rows = ref([])
 
 const stringOptions = [
   'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
 ]
 const filterOptions = ref(stringOptions)
 
+const useDaily = useDailyStore()
+
+async function getListDaily() {
+  const res = await useDaily.listDaily()
+  console.log(res);
+  if (res.status < 299) {
+    rows.value = res.data
+    rows.value.forEach((row, index) => {
+      row.index = index + 1
+    })
+  } else {
+    alert(res)
+  }
+}
+getListDaily()
+
+
 async function activarDesactivar(data) {
+  console.log(data);
   let res = ""
   if (data.state == 1) {
     res = await useDaily.active(data._id, 0)
@@ -176,7 +181,7 @@ const postDailyProcess = async () => {
       lot: lot.value,
       date: date.value,
     })
-    getListDaily()    
+    getListDaily()
   } catch (error) {
     console.log(error);
   }

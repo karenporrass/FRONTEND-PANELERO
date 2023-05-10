@@ -102,9 +102,16 @@ let rows = ref([])
 
 
 const postUser= async ()=>{
-  const res = await userStore.newUsers(names.value, lastNames.value, typeDocument.value,
-  numberDocument.value, rol.value, cel.value, address.value, email.value )
-  console.log(res);
+  const res = await userStore.newUsers(
+    names.value, 
+    lastNames.value, 
+    typeDocument.value,
+    numberDocument.value, 
+    rol.value, 
+    cel.value, 
+    address.value, 
+    email.value )
+    console.log(res);
 }
 
 async function activarDesactivar(data) {

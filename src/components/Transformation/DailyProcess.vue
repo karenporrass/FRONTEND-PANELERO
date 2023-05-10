@@ -27,8 +27,9 @@
             <q-td :props="props">
               <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn v-if="props.row.state==0" round  size="xs" color="green-4" @click="activarDesactivar(props.row)">✅</q-btn>
-                <q-btn v-else round  size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
+                  @click="activarDesactivar(props.row)">✅</q-btn>
+                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
               </div>
             </q-td>
           </template>
@@ -74,16 +75,16 @@
 <script setup>
 import { onMounted, ref } from "vue"
 import axios from "axios";
-import {useDailyStore} from "../../store/dailyProcess.js"
+import { useDailyStore } from "../../store/dailyProcess.js"
 
 const useDaily = useDailyStore()
 
-async function getListDaily(){
+async function getListDaily() {
   const res = await useDaily.listDaily()
   console.log(res);
-  if(res.status <299){
-    rows.value=res.data
-  }else{
+  if (res.status < 299) {
+    rows.value = res.data
+  } else {
     alert(res)
   }
 }
@@ -120,26 +121,26 @@ let columns = ref([
 let rows = ref([
 ])
 
-async function activarDesactivar(data){
-  let res=""
-  if (data.state==1){
-    res =await useDaily.active(data._id, 0)
-    console.log(res);
-    getListDaily()
-  }else{
-    res = await useDaily.active(data._id, 1)
-    console.log(res);
-    getListDaily()
-  }
-
-  
-}
-
 const stringOptions = [
   'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
 ]
 const filterOptions = ref(stringOptions)
 
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await useDaily.active(data._id, 0)
+    console.log(res);
+    getListDaily()
+  } else {
+    res = await useDaily.active(data._id, 1)
+    console.log(res);
+    getListDaily()
+  }
+}
+
+
+//function de options en modal
 function createValue(val, done) {
   if (val.length > 0) {
     if (!stringOptions.includes(val)) {
@@ -175,8 +176,7 @@ const postDailyProcess = async () => {
       lot: lot.value,
       date: date.value,
     })
-    //getDailyProcess();
-    console.log(daily);
+    getListDaily()    
   } catch (error) {
     console.log(error);
   }

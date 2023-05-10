@@ -23,9 +23,11 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
+              <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
+                  @click="activarDesactivar(props.row)">✅</q-btn>
+                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
               </div>
             </q-td>
             
@@ -67,7 +69,8 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import axios from 'axios';
-
+import {usersStore} from "../../store/Maintenance/CreateUsers.js"
+const userStore = usersStore()
 let prompt = ref(false)
 let names = ref("")
 let lastNames = ref("")
@@ -99,32 +102,33 @@ let rows = ref([])
 
 
 const postUser= async ()=>{
-  try {
-    const newUser = await axios.post(`http://localhost:3500/usuarios`,{
-     names: names.value,
-     lastNames: lastNames.value,
-     typeDocument: typeDocument.value,
-     numberDocument: numberDocument.value,
-     rol: rol.value,
-     cel: cel.value,
-     address: address.value,
-     email: email.value,
-     password: numberDocument.value
-    })
+  const res = await userStore.newUsers(names.value, lastNames.value, typeDocument.value,
+  numberDocument.value, rol.value, cel.value, address.value, email.value )
+  console.log(res);
+}
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await userStore.active(data._id, 0)
+    console.log(res);
     getUsers()
-    console.log(newUser);
-  } catch (error) {
-    console.log(error);
+  } else {
+    res = await userStore.active(data._id, 1)
+    console.log(res);
+    getUsers()
   }
 }
-const getUsers = async ()=>{
-  try {
-    const users = await axios.get(`http://localhost:3500/usuarios`)
-    console.log(users);
-    rows.value=users.data
-  } catch (error) {
-    console.log(error);
+
+async function getUsers () {
+  const res = await userStore.listUsers()
+  console.log(res);
+  if (res.status < 299) {
+    rows.value = res.data
+  } else {
+    alert(res)
   }
+
 }
 
 onMounted(()=>{

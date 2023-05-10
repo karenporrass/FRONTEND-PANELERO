@@ -75,7 +75,7 @@
 <script setup>
 import { onMounted, ref } from "vue"
 import axios from "axios";
-import { useDailyStore } from "../../store/dailyProcess.js"
+import { useDailyStore } from "../../store/Transformation/dailyProcess.js"
 
 const useDaily = useDailyStore()
 

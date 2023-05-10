@@ -23,9 +23,11 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
+              <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
+                  @click="activarDesactivar(props.row)">✅</q-btn>
+                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
               </div>
             </q-td>
             
@@ -61,8 +63,8 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
-
+import {lotsStore} from "../../store/Maintenance/Lots.js"
+const lotsStore = lotsStore()
 let prompt = ref(false)
 let name = ref("")
 let extent= ref()
@@ -80,29 +82,36 @@ let columns = ref([
 let rows = ref([])
 
 const postLots= async ()=>{
-  try {
-    const lots = await axios.post(`http://localhost:3500/lotes`,{
-      name: name.value,
-      extent: extent.value
-    })
+    const lots = await lotsStore.newlots( name.value, extent.value)
     getLots()
-    console.log(lots);
-  } catch (error) {
-    console.log(error);
-  }
+
 }
 const getLots = async ()=>{
-  try {
-    const lots = await axios.get(`http://localhost:3500/lotes/${1}`)
-    console.log(lots);
-    rows.value=lots.data
+ 
+    const lots = await lotsStore.listlots()
+    if (lots.status < 299) {
+    rows.value = lots.data
     rows.value.forEach((row, index) => {
     row.index = index+1
 })
-  } catch (error) {
-    console.log(error);
+  } else {
+    alert(lots)
   }
 }
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await lotsStore.active(data._id, 0)
+    console.log(res);
+   getLots()
+  } else {
+    res = await lotsStore.active(data._id, 1)
+    console.log(res);
+   getLots()
+  }
+}
+
 
 onMounted(()=>{
   getLots()

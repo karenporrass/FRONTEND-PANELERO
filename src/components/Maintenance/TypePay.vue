@@ -19,17 +19,23 @@
        <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
-                    <template v-slot:body-cell-options="props" >
+              <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
+          <template v-slot:body-cell-options="props">
             <q-td :props="props">
-              <div >
+              <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
-            
           </template>
+
         </q-table>
             </div>
             <div class="col-1"></div>
@@ -60,6 +66,7 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import axios from 'axios';
+import {useTypePay, useTypePayStore} from "../../store/Maintenance/TypePay.js"
 
 let prompt = ref(false)
 let name = ref("")
@@ -67,38 +74,56 @@ let pagination = ref({
         rowsPerPage: 0
       })
 let columns = ref([
-{ name: 'index', label: '#',field: 'index'},
+{ name: 'index', label: 'N°',field: 'index'},
   {name: 'name',label: 'NOMBRE TIPO PAGO',field: 'name',align: 'center'},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])
 
 let rows = ref([])
+const useTypePay= useTypePayStore()
 
 
-const postTypePay = async ()=>{
-  try {
-    const pay = await axios.post(`http://localhost:3500/tipoPago`,{
-      name: name.value,
-    })
-    getTypePay()
-    console.log(pay);
-  } catch (error) {
-    console.log(error);
-  }
-}
-const getTypePay = async ()=>{
-  try {
-    const pay = await axios.get(`http://localhost:3500/tipoPago/${1}`)
-    console.log(pay);
-    rows.value=pay.data
+// get registros proceso diario 
+async function getTypePay() {
+  const res = await useTypePay.listTypePay()
+  console.log(res);
+  if (res.status < 299) {
+    rows.value = res.data
     rows.value.forEach((row, index) => {
-    row.index = index+1
-})
-  } catch (error) {
-    console.log(error);
+      row.index = index + 1
+    })
+  } else {
+    alert(res)
   }
 }
+getTypePay()
+
+//post proceso diario
+async function postTypePay() {
+  const res = await useTypePay.newTypePay(
+    name.value, // se llama a las variables del modal
+  )
+  getTypePay()
+  console.log(res);
+}
+
+
+// activar y desactivar proceso diario 
+async function activarDesactivar(data) {
+  console.log(data);
+  let res = ""
+  if (data.state == 1) {
+    res = await useTypePay.active(data._id, 0)
+    console.log(res);
+    getTypePay()
+  } else {
+    res = await useTypePay.active(data._id, 1)
+    console.log(res);
+    getTypePay()
+  }
+}
+
 
 onMounted(()=>{
   getTypePay()

@@ -20,17 +20,23 @@
        <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
-            <template v-slot:body-cell-options="props" >
+              <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
+          <template v-slot:body-cell-options="props">
             <q-td :props="props">
-              <div >
+              <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
-            
           </template>
+
         </q-table>
 
             </div>
@@ -48,11 +54,11 @@
           <div>
             <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
             <q-input class="q-mb-md" filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
-            <q-input filled type="number" v-model="units" label="Digite las unidades por caja"></q-input>
+            <q-input filled type="number" v-model="unitsPerBox" label="Digite las unidades por caja"></q-input>
 
             <div>
               <br />
-              <q-btn label="guardar" class="text-white bg-green-10" @click="postTypePackaing()" />
+              <q-btn label="guardar" class="text-white bg-green-10" @click="postTypePackaging()" />
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
@@ -65,66 +71,76 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios';
+import {packagingStore} from "../../store/Maintenance/TypePackaging.js"
 
 let prompt = ref(false)
 let name = ref("")
 let maxWeight = ref()
-let units = ref()
-let pagination = ref({
-  rowsPerPage: 0
-})
+let unitsPerBox = ref()
+// let pagination = ref({
+//   rowsPerPage: 0
+// })
 let columns = ref([
 
-{ name: 'index', label: '#',field: 'index'},
+{ name: 'index', label: 'N°',field: 'index'},
   {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
-  {name: 'weight',label: 'PESO MAXIMO ',align: 'center',field: row => row.maxWeight,format: val => `${val}`,sortable: true},
-  { name: 'units', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
+  {name: 'maxWeight',label: 'PESO MAXIMO ',align: 'center',field: row => row.maxWeight,format: val => `${val}`,sortable: true},
+  { name: 'unitsPerBox', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
 let rows = ref([])
 
 
-const postTypePackaing = async () => {
-  try {
-    const packaing = await axios.post(`http://localhost:3500/tipoEmpaque`, {
-      name: name.value,
-      maxWeigth: maxWeight.value,
-      unitsPerBox: units.value
-    })
-    getTypePackaing()
-    console.log(packaing);
-  } catch (error) {
-    console.log(error);
-  }
-}
-const getTypePackaing = async () => {
-  try {
-    const packa = await axios.get(`http://localhost:3500/tipoEmpaque/${1}`)
-    console.log(packa);
-    rows.value = packa.data
+const usePackaging = packagingStore()
+
+
+// get registros proceso diario 
+async function getPackaging() {
+  const res = await usePackaging.listPackaging()
+  console.log(res);
+  if (res.status < 299) {
+    rows.value = res.data
     rows.value.forEach((row, index) => {
-    row.index = index+1
-})
-  } catch (error) {
-    console.log(error);
+      row.index = index + 1
+    })
+  } else {
+    alert(res)
+  }
+}
+getPackaging()
+
+//post proceso diario
+async function postTypePackaging() {
+  const res = await usePackaging.newPackaging(
+    name.value, // se llama a las variables del modal
+    maxWeight.value,
+    unitsPerBox.value,
+  )
+  getPackaging()
+  console.log(res);
+}
+
+
+// activar y desactivar proceso diario 
+async function activarDesactivar(data) {
+  console.log(data);
+  let res = ""
+  if (data.state == 1) {
+    res = await usePackaging.active(data._id, 0)
+    console.log(res);
+    getPackaging()
+  } else {
+    res = await usePackaging.active(data._id, 1)
+    console.log(res);
+    getPackaging()
   }
 }
 
 
-// const putState = async () => {
-//   try {
-//     const packa = await axios.get(`http://localhost:3500/tipoEmpaque/${state}`,{
-//     }),
-//     console.log(packa);
-//     rows.value = packa.data
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 
 onMounted(() => {
-  getTypePackaing()
+  getPackaging()
 })
 
 

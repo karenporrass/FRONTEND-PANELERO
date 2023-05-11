@@ -23,12 +23,18 @@
       <div class="col-1"></div>
       <div class="col-10 ">
         <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
-
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
           </template>
@@ -47,18 +53,14 @@
         </q-card-section>
         <div class="q-pa-md ">
           <div>
-            <q-input filled class="q-mb-md" type="text" v-model="name" label="Digite el nombre del proceso"></q-input>
-            <q-input filled class="q-mb-md" type="text" v-model="description" label="Digite una descripción del proceso"></q-input>
-            <q-input filled class="q-mb-md" type="number" v-model="hours" label="Digite cuántas horas tomó el proceso"></q-input>
-            <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0" @new-value="createValue"
-              :options="filterOptions" @filter="filterFn" style="width: 350px" label="Seleccione la labor" />
-              <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0" @new-value="createValue"
-              :options="filterOptions" @filter="filterFn" style="width: 350px" label="Seleccione las personas" />
-              <q-select filled class="q-mb-md" v-model="farm" :options="options" label="Seleccione la finca" />
-              <q-select filled class="q-mb-xs" v-model="lot" :options="options" label="Seleccione el lote" />
+            <q-select filled class="q-mb-md" v-model="cellarCode" :options="options" label="Seleccione el código de la bodega" />
+            <q-select filled class="q-mb-md" v-model="typePacking" :options="options" label="Seleccione el tipo de empaque" />
+            <q-select filled class="q-mb-md" v-model="typePanela" :options="options" label="Seleccione el tipo de panela" />
+            <q-select filled class="q-mb-xs" v-model="formPanela" :options="options" label="Seleccione la forma de la panela" />
+            <q-input filled class="q-mb-md"  v-model="totalPanelas" type="number" label="Digite el total de panelas"></q-input>
             <div class="q-pb-sm">
               <br />
-              <q-btn label="guardar" class="text-white bg-green-10" />
+              <q-btn label="guardar" class="text-white bg-green-10" @click="postPacked()"/>
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
@@ -69,15 +71,14 @@
 </template>
   
 <script setup>
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
+import { usePackedStore } from "../../store/Transformation/Packed.js"
 let prompt = ref(false)
-let name = ref("")
-let description = ref("")
-let hours = ref()
-let people = ref()
-let lot = ref()
-let labor = ref()
-let farm= ref()
+let cellarCode = ref("")
+let typePacking = ref("")
+let typePanela = ref()
+let formPanela = ref()
+let totalPanelas = ref()
 let options= [
         'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
       ]
@@ -85,24 +86,21 @@ let options= [
 //f
 let columns = ref([
   { name: 'index', label: 'N°', field: 'index', align: 'center' },
-  { name: 'name', label: 'NOMBRE', align: 'center', field: row => row.name, format: val => `${val}`, sortable: true },
-  { name: 'description', align: 'center', label: 'DESCRIPCIÓN', field: 'description', align: 'center', sortable: true },
-  { name: 'hours', label: 'HORAS', field: 'hours', align: 'center', sortable: true },
-  { name: 'people', label: 'PERSONAS', field: 'people', align: 'center' },
-  { name: 'farm', label: 'FINCA', field: 'farms', align: 'center' },
-  { name: 'lot', label: 'LOTE', field: 'lot', align: 'center' },
-  { name: 'date', label: 'FECHA', field: 'date', align: 'center' },
+  { name: 'cellarCode', label: 'CODIGO DE BODEGA', field: 'cellarCode', align: 'center' },
+  { name: 'typePacking', label: 'TIPO DE EMPAQUE', field: 'typePacking', align: 'center' },
+  { name: 'typePanela', label: 'TIPO DE PANELA', field: 'typePanela', align: 'center' },
+  { name: 'formPanela', label: 'FORMA DE LA PANELA', field: 'formPanela', align: 'center' },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center' },
 
 ])
 
 let rows = ref([])
 
-
+const usePacked= usePackedStore()
 
 // get registros empaques
-async function getListDaily() {
-  const res = await useDaily.listDaily()
+async function getPacked() {
+  const res = await usePacked.listPacked()
   console.log(res);
   if (res.status < 299) {
     rows.value = res.data
@@ -113,21 +111,19 @@ async function getListDaily() {
     alert(res)
   }
 }
-getListDaily()
+getPacked()
 
 //post empaques
-async function postDailyProcess() {
-  const res = await useDaily.addDailyProcess(
-    name.value, // se llama a las variables del modal
-    description.value,
-    hours.value,
-    people.value,
-    labor.value,
-    farm.value,
-    lot.value,
-    date.value,
+async function postPacked() {
+  const res = await usePacked.addPacked(
+    cellarCode.value, // se llama a las variables del modal
+    typePacking.value,
+    typePanela.value,
+    formPanela.value,
+    totalPanelas.value,
   )
   console.log(res);
+  getPacked()
 }
 
 
@@ -136,52 +132,20 @@ async function activarDesactivar(data) {
   console.log(data);
   let res = ""
   if (data.state == 1) {
-    res = await useDaily.active(data._id, 0)
+    res = await usePacked.active(data._id, 0)
     console.log(res);
-    getListDaily()
+    getPacked()
   } else {
-    res = await useDaily.active(data._id, 1)
+    res = await usePacked.active(data._id, 1)
     console.log(res);
-    getListDaily()
+    getPacked()
   }
 }
 
 
-
-
-
-
-
-
-const stringOptions = [
-  'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
-]
-    const filterOptions = ref(stringOptions)
-
-      function createValue (val, done){
-        if (val.length > 0) {
-          if (!stringOptions.includes(val)) {
-            stringOptions.push(val)
-          }
-          done(val, 'toggle')
-        }
-      }
-
-      function filterFn (val, update){
-        update(() => {
-          if (val === '') {
-            filterOptions.value = stringOptions
-          }
-          else {
-            const needle = val.toLowerCase()
-            filterOptions.value = stringOptions.filter(
-              v => v.toLowerCase().indexOf(needle) > -1
-            )
-          }
-        })
-      }
-    
-
+onMounted(() => {
+  getPacked()
+})
 
 
 

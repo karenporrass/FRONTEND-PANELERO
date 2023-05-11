@@ -2,17 +2,17 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import axios from "axios"
 
-export const packaigingStore = defineStore('counter', () => {
-    const packaiging = ref("")
+export const packagingStore = defineStore('counter', () => {
+    const packaging = ref("")
     
-    async function listPackaiging() {
+    async function listPackaging() {
       try {
         return await axios.get("http://localhost:3500/tipoEmpaque")
       } catch (error) {
         console.log(error);
       }
     }
-    async function newPackaiging(name, maxWeight, units) {
+    async function newPackaging(name, maxWeight, units) {
         try {
             return await axios.post(`http://localhost:3500/tipoEmpaque`,{
               name: name,
@@ -33,5 +33,5 @@ export const packaigingStore = defineStore('counter', () => {
       }
     }
   
-    return { listPackaiging, packaiging, active, newPackaiging}
+    return { listPackaging, packaging, active, newPackaging}
   })

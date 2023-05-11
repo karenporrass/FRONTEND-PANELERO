@@ -2,17 +2,17 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import axios from "axios"
 
-export const payStore = defineStore('counter', () => {
+export const useTypePayStore = defineStore('counter', () => {
     const pay = ref("")
     
-    async function listPays() {
+    async function listTypePay() {
       try {
         return await axios.get("http://localhost:3500/tipoPago")
       } catch (error) {
         console.log(error);
       }
     }
-    async function newPays(name) {
+    async function newTypePay(name) {
         try {
             return await axios.post(`http://localhost:3500/tipoPago`,{
              name: name,
@@ -31,5 +31,5 @@ export const payStore = defineStore('counter', () => {
       }
     }
   
-    return { listPays, pay, active, newPays }
+    return { listTypePay, pay, active, newTypePay }
   })

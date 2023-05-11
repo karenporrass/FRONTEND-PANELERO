@@ -147,6 +147,7 @@ async function postDailyProcess() {
     lot.value,
     date.value,
   )
+  getListDaily()
   console.log(res);
 }
 

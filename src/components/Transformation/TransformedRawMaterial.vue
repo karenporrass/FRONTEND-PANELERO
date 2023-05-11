@@ -23,12 +23,18 @@
       <div class="col-1"></div>
       <div class="col-10 ">
         <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
-
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
           </template>
@@ -49,11 +55,11 @@
           <div>
             <q-select filled class="q-mb-md" v-model="type" :options="options" label="Seleccione la unidad de medida" />
             <q-input filled class="q-mb-md" type="text" v-model="quantity" label="Digite la cantidad"></q-input>
-              <q-select filled class="q-mb-xs" v-model="farm" :options="options" label="Seleccione la finca" />
-              <q-select filled class="q-mb-xs" v-model="lot" :options="options" label="Seleccione el lote" />
+              <q-select filled class="q-mb-xs" v-model="lot" :options="options" label="Seleccione la finca" />
+              <q-input v-model="date" class="q-mb-xs" filled type="date" label="Seleccione la fecha" />
             <div class="q-pb-sm">
               <br />
-              <q-btn label="guardar" class="text-white bg-green-10" />
+              <q-btn label="guardar" class="text-white bg-green-10" @click="postTransformed()" />
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
@@ -64,13 +70,13 @@
 </template>
   
 <script setup>
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
+import { useTransformedStore } from "../../store/Transformation/TransformedRawMaterial.js"
 let prompt = ref(false)
 let type = ref("")
 let quantity = ref("")
-let lot = ref()
+let lot = ref("")
 let date = ref()
-let farm= ref()
 
 let options= [
         'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
@@ -79,96 +85,64 @@ let options= [
 
 let columns = ref([
   { name: 'index', label: 'N°', field: 'index', align: 'center' },
-  { name: 'name', label: 'NOMBRE', align: 'center', field: row => row.name, format: val => `${val}`, sortable: true },
-  { name: 'description', align: 'center', label: 'DESCRIPCIÓN', field: 'description', align: 'center', sortable: true },
-  { name: 'hours', label: 'HORAS', field: 'hours', align: 'center', sortable: true },
-  { name: 'people', label: 'PERSONAS', field: 'people', align: 'center' },
-
-
+  { name: 'type', label: 'TIPO DE UNIDAD DE MEDIDA', align: 'center', field: 'type' },
+  { name: 'quantity', align: 'center', label: 'CANTIDAD', field: 'quantity', align: 'center', sortable: true },
+  { name: 'lot', label: 'LOTE', field: 'lot', align: 'center' },
+  { name: 'date', label: 'FECHA', field: 'date', align: 'center' },
+  { name: 'options', label: 'OPCIONES', align: 'center' },
 ])
 
-let rows = ref([
+let rows = ref([])
 
-  {
-    name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
+const useTransformed = useTransformedStore()
+
+// get registros proceso diario 
+async function getTransformed() {
+  const res = await useTransformed.listTransformed()
+  console.log(res);
+  if (res.status < 299) {
+    rows.value = res.data
+    rows.value.forEach((row, index) => {
+      row.index = index + 1
+    })
+  } else {
+    alert(res)
   }
-])
+}
+getTransformed()
 
-rows.value.forEach((row, index) => {
-  row.index = index
+//post proceso diario
+async function postTransformed() {
+  const res = await useTransformed.addTransformed(
+    type.value, // se llama a las variables del modal
+    quantity.value,
+    lot.value,
+    date.value,
+  )
+  console.log(res);
+  getTransformed()
+}
+
+
+// activar y desactivar proceso diario 
+async function activarDesactivar(data) {
+  console.log(data);
+  let res = ""
+  if (data.state == 1) {
+    res = await useTransformed.active(data._id, 0)
+    console.log(res);
+    getTransformed()
+  } else {
+    res = await useTransformed.active(data._id, 1)
+    console.log(res);
+    getTransformed()
+  }
+}
+
+onMounted(() => {
+  getTransformed()
 })
 
-
-const stringOptions = [
-  'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
-]
-    const filterOptions = ref(stringOptions)
-
-      function createValue (val, done){
-        if (val.length > 0) {
-          if (!stringOptions.includes(val)) {
-            stringOptions.push(val)
-          }
-          done(val, 'toggle')
-        }
-      }
-
-      function filterFn (val, update){
-        update(() => {
-          if (val === '') {
-            filterOptions.value = stringOptions
-          }
-          else {
-            const needle = val.toLowerCase()
-            filterOptions.value = stringOptions.filter(
-              v => v.toLowerCase().indexOf(needle) > -1
-            )
-          }
-        })
-      }
-    
 
 
 

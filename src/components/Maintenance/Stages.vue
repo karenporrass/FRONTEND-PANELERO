@@ -24,10 +24,15 @@
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
-                  @click="activarDesactivar(props.row)">✅</q-btn>
-                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
             
@@ -38,6 +43,27 @@
         </div> 
 
         <q-dialog v-model="prompt">
+          <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre del tipo de pago"></q-input>
+                  
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postPayment()"  />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
+
+          <q-dialog v-model="promptEdit">
             <q-card >
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
@@ -46,13 +72,11 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la etapa"></q-input>
-                    <q-input  filled type="text" v-model="description" label="Digite una descripcion"></q-input>
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre del tipo de pago"></q-input>
                   
-
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postStages()" />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="putInfo()"  />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -66,9 +90,11 @@
 import {ref, onMounted} from 'vue'
 import {stagesStore} from "../../store/Maintenance/Stages.js"
 const stageStore = stagesStore()
+let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
 let description = ref("")
+let index = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
@@ -83,7 +109,10 @@ let columns = ref([
 let rows = ref([])
 
 const postStages = async ()=>{
-    const stage = await stageStore.newStage( name.value, description.value )
+    const stage = await stageStore.newStage(
+      name.value,
+      description.value
+      )
     getStages()
     console.log(stage);
 }
@@ -91,7 +120,7 @@ const postStages = async ()=>{
 const getStages = async ()=>{
     const stage = await stageStore.listStages()
     console.log(stage);
-    if (res.status < 299) {
+    if (stage.status < 299) {
       rows.value=stage.data
     rows.value.forEach((row, index) => {
     row.index = index+1
@@ -114,8 +143,24 @@ async function activarDesactivar(data) {
   }
 }
 
+function goInfo(data){
+    name.value = data.name 
+    description.value = data.description
+}
 
+async function putInfo(){
+  console.log(index.value);
+  const res = await stageStore.putStage(index.value, 
+  name.value,
+  description.value
+  )
+    console.log(res);
+    getStages()
+}
+
+onMounted(()=>{
   getStages()
+})
 
 
 </script>

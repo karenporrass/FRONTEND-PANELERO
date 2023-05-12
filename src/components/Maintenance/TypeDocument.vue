@@ -24,10 +24,15 @@
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
-                  @click="activarDesactivar(props.row)">✅</q-btn>
-                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
             
@@ -58,6 +63,28 @@
               </div>
             </q-card>
           </q-dialog>
+
+          <q-dialog v-model="promptEdit">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre del tipo de documento"></q-input>
+                  <q-input filled type="text" v-model="acronym" label="Digite el acronimo a las siglas"></q-input>
+                 
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()"  />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
     </div> 
 </template>
   
@@ -65,9 +92,11 @@
 import {ref, onMounted} from 'vue'
 import { documentStore} from "../../store/Maintenance/TypeDocument.js"
 const documentsStore = documentStore()
+let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
 let acronym = ref("")
+let index = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
@@ -90,7 +119,7 @@ const postTypeDocument = async ()=>{
 const getTypeDocument = async ()=>{
     const document = await documentsStore.listDocuments()
     console.log(document);
-    if (res.status < 299) {
+    if (document.status < 299) {
     rows.value=document.data
     rows.value.forEach((row, index) => {
     row.index = index+1
@@ -111,6 +140,32 @@ async function activarDesactivar(data) {
     console.log(res);
     getTypeDocument()
   }
+}
+
+function goInfo(data){
+    names.value = data.names 
+    lastNames.value = data.lastNames
+    typeDocument.value = data.typeDocument
+    numberDocument.value = data.numberDocument
+    rol.value = data.rol
+    cel.value = data.cel
+    address.value = data. address
+    email.value = data.email
+}
+
+async function putInfo(){
+  console.log(index.value);
+  const res = await userStore.putUsers(index.value, 
+    names.value, 
+    lastNames.value, 
+    typeDocument.value,
+    numberDocument.value, 
+    rol.value, 
+    cel.value, 
+    address.value, 
+    email.value )
+    console.log(res);
+    getUsers()
 }
 
 

@@ -24,10 +24,15 @@
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
-                  @click="activarDesactivar(props.row)">✅</q-btn>
-                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
             
@@ -63,6 +68,34 @@
               </div>
             </q-card>
           </q-dialog>
+
+          
+        <q-dialog v-model="promptEdit">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+               EDITAR LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                    <q-input class="q-mb-md" filled type="text" v-model="names" label="Digite el nombre"></q-input>
+                  <q-input class="q-mb-md" filled type="text" v-model="lastNames" label="Digite los apellidos"></q-input>
+                  <q-input class="q-mb-md"  filled type="text" v-model="typeDocument" label="Seleccione el tipo de documento"></q-input>
+                  <q-input class="q-mb-md" filled type="number" v-model="numberDocument" label="Digite el numero de documento"></q-input>
+                  <q-input class="q-mb-md" filled type="text" v-model="rol" label="Seleccione el rol"></q-input>
+                  <q-input class="q-mb-md"  filled type="number" v-model="cel" label="Digite el numero celular"></q-input>
+                  <q-input  class="q-mb-md" filled type="text" v-model="address" label="Digite la direccion"></q-input>
+                  <q-input filled type="text" v-model="email" label="Digite el email"></q-input>
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()"/>
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
       </div> 
 </template>
   
@@ -71,6 +104,7 @@ import {ref, onMounted} from 'vue'
 import {usersStore} from "../../store/Maintenance/CreateUsers.js"
 const userStore = usersStore()
 let prompt = ref(false)
+let promptEdit = ref(false)
 let names = ref("")
 let lastNames = ref("")
 let typeDocument = ref("")
@@ -79,6 +113,8 @@ let rol = ref("")
 let cel = ref()
 let address = ref("")
 let email = ref("")
+let index = ref()
+
 
 
 let pagination = ref({
@@ -115,6 +151,7 @@ const postUser= async ()=>{
 }
 
 async function activarDesactivar(data) {
+  console.log(data);
   let res = ""
   if (data.state == 1) {
     res = await userStore.active(data._id, 0)
@@ -135,13 +172,36 @@ async function getUsers () {
   } else {
     alert(res)
   }
-
 }
 
+function goInfo(data){
+    names.value = data.names 
+    lastNames.value = data.lastNames
+    typeDocument.value = data.typeDocument
+    numberDocument.value = data.numberDocument
+    rol.value = data.rol
+    cel.value = data.cel
+    address.value = data. address
+    email.value = data.email
+}
 
+async function putInfo(){
+  console.log(index.value);
+  const res = await userStore.putUsers(index.value, 
+    names.value, 
+    lastNames.value, 
+    typeDocument.value,
+    numberDocument.value, 
+    rol.value, 
+    cel.value, 
+    address.value, 
+    email.value )
+    console.log(res);
+    getUsers()
+}
+
+onMounted(()=>{
   getUsers()
-
-
-
+})
 
 </script>

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import axios from "axios"
 
-export const useTypePayStore = defineStore('counter', () => {
+export const typePayStore = defineStore('counter', () => {
     const pay = ref("")
     
     async function listTypePay() {

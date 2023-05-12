@@ -66,7 +66,7 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import axios from 'axios';
-import {useTypePay, useTypePayStore} from "../../store/Maintenance/TypePay.js"
+import {useTypePay, typePayStore} from "../../store/Maintenance/TypePay.js"
 
 let prompt = ref(false)
 let name = ref("")
@@ -81,7 +81,7 @@ let columns = ref([
 ])
 
 let rows = ref([])
-const useTypePay= useTypePayStore()
+const useTypePay= typePayStore()
 
 
 // get registros proceso diario 

@@ -7,7 +7,7 @@ export const usePackedStore = defineStore('counter', () => {
     
     async function listPacked() {
       try {
-        return await axios.get("http://localhost:3500/empacados")
+        return await axios.get("https://project-panelero.onrender.com/empacados")
       } catch (error) {
         console.log(error);
       }
@@ -16,7 +16,7 @@ export const usePackedStore = defineStore('counter', () => {
     
     async function addPacked(cellarCode, typePacking, typePanela, formPanela, totalPanelas) {
       try {
-        return await axios.post(`http://localhost:3500/empacados`,{
+        return await axios.post(`https://project-panelero.onrender.com/empacados`,{
           cellarCode: cellarCode,
           typePacking: typePacking,
           typePanela: typePanela,
@@ -31,7 +31,7 @@ export const usePackedStore = defineStore('counter', () => {
     
         async function active(id, estado){
           try {
-            return await axios.put(`http://localhost:3500/empacados/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+            return await axios.put(`https://project-panelero.onrender.com/empacados/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
           } catch (error) {
             console.log(error);
             return error

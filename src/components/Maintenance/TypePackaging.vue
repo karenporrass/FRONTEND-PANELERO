@@ -12,7 +12,10 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class=" text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de empaque</q-btn>
+              <q-btn class="bg-green-10 text-white" @click="prompt = true"><span class="material-symbols-outlined q-mr-sm"
+            style="font-size: 20px;">
+            add_circle
+          </span>Crear nuevo tipo de empaque</q-btn>
             </div>
             <div class="col-1"></div>
         </div>

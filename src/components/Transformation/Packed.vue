@@ -26,7 +26,7 @@
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="edit= true"></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -67,6 +67,44 @@
         </div>
       </q-card>
     </q-dialog>
+
+
+
+    <q-dialog v-model="edit">
+      <q-card>
+        <q-card-section class="bg-green-10 q-px-lg">
+          <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+            MODIFICA LA INFORMACIÓN
+          </h5>
+        </q-card-section>
+        <div class="q-pa-md ">
+          <div>
+            <q-input filled class="q-mb-md" type="text" v-model="name" label="Digite el nombre del proceso"></q-input>
+            <q-input filled class="q-mb-md" type="text" v-model="description"
+              label="Digite una descripción del proceso"></q-input>
+            <q-input filled class="q-mb-md" type="number" v-model="hours"
+              label="Digite cuántas horas tomó el proceso"></q-input>
+            <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0"
+              @new-value="createValue" :options="filterOptions" @filter="filterFn" label="Seleccione las personas" />
+            <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0"
+              @new-value="createValue" :options="filterOptions" @filter="filterFn" label="Seleccione la labor" />
+            <q-select filled class="q-mb-md" v-model="farm" :options="options" label="Seleccione la finca" />
+            <q-select filled class="q-mb-md" v-model="lot" :options="options" label="Seleccione el lote" />
+            <q-input v-model="date" class="q-mb-xs" filled type="date" label="Seleccione la fecha" />
+            <div class="q-pb-sm">
+              <br />
+              <q-btn label="guardar" class="text-white bg-green-10" />
+              <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+            </div>
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
+
+
+
+
+
   </div>
 </template>
   
@@ -74,6 +112,7 @@
 import { ref, onMounted } from "vue"
 import { usePackedStore } from "../../store/Transformation/Packed.js"
 let prompt = ref(false)
+let edit= ref(false)
 let cellarCode = ref("")
 let typePacking = ref("")
 let typePanela = ref()
@@ -97,7 +136,7 @@ let columns = ref([
 let rows = ref([])
 const usePacked= usePackedStore()
 
-getPacked()
+// getPacked()
 
 // get registros empaques
 async function getPacked() {
@@ -144,7 +183,8 @@ async function activarDesactivar(data) {
 }
 
 
-onMounted(() => {
+onMounted(
+  () => {
   getPacked()
 })
 

@@ -11,7 +11,10 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class=" text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de pago</q-btn>
+              <q-btn class="bg-green-10 text-white" @click="prompt = true"><span class="material-symbols-outlined q-mr-sm"
+            style="font-size: 20px;">
+            add_circle
+          </span>Crear nuevo tipo de pago</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -67,11 +70,9 @@
 import {ref, onMounted} from 'vue'
 import axios from 'axios';
 import { typePayStore} from "../../store/Maintenance/TypePay.js"
-<<<<<<< Updated upstream
 
-=======
 const useTypePay= typePayStore()
->>>>>>> Stashed changes
+
 let prompt = ref(false)
 let name = ref("")
 let pagination = ref({

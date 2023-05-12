@@ -25,9 +25,14 @@
             <q-td :props="props">
               <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
-                  @click="activarDesactivar(props.row)">✅</q-btn>
-                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
             
@@ -90,7 +95,7 @@ const postTypeDocument = async ()=>{
 const getTypeDocument = async ()=>{
     const document = await documentsStore.listDocuments()
     console.log(document);
-    if (res.status < 299) {
+    if (document.status < 299) {
     rows.value=document.data
     rows.value.forEach((row, index) => {
     row.index = index+1

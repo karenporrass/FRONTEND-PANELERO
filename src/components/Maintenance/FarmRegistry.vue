@@ -25,9 +25,14 @@
             <q-td :props="props">
               <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
-                  @click="activarDesactivar(props.row)">✅</q-btn>
-                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
             
@@ -84,22 +89,20 @@ let columns = ref([
 let rows = ref([])
 
 const postFarmRegistry = async ()=>{
-
     const farm = await farmStore.newFarm (name.value, registrationNumber.value,extent.value )
-    getFarmRegistry()
     console.log(farm);
-
-
+    getFarmRegistry()
 }
-const getFarmRegistry = async ()=>{
-    const farm = await farmStore.listFarms()
-    if (farm.status < 299) {
-    rows.value = farm.data
+async function getFarmRegistry(){
+    const res = await farmStore.listFarms()
+    console.log(res);
+    if (res.status < 299) {
+    rows.value = res.data
     rows.value.forEach((row, index) => {
     row.index = index+1
 })
   } else {
-    alert(farm)
+    alert(res)
   }
 
 }
@@ -117,8 +120,9 @@ async function activarDesactivar(data) {
   }
 }
 
-
+onMounted(()=>{
   getFarmRegistry()
+ })
 
 
 

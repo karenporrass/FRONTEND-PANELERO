@@ -25,9 +25,14 @@
             <q-td :props="props">
               <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn v-if="props.row.state == 0" round size="xs" color="green-4"
-                  @click="activarDesactivar(props.row)">✅</q-btn>
-                <q-btn v-else round size="xs" color="green-4" @click="activarDesactivar(props.row)">❌</q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
             
@@ -82,10 +87,10 @@ let columns = ref([
 
 let rows = ref([])
 
- getEps()
+// getEps()
 
 const postEps = async ()=>{
-    const res = await epsStores.newEps( name.value,attentionLine.value)
+    const res = await epsStores.newEps(name.value,attentionLine.value)
     console.log(res);
     getEps()
 }
@@ -116,9 +121,8 @@ async function activarDesactivar(data) {
   }
 }
 
- 
-
-
-
+ onMounted(()=>{
+  getEps()
+ })
 
 </script>

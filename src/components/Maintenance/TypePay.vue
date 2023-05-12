@@ -66,7 +66,7 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import axios from 'axios';
-import {useTypePay, typePayStore} from "../../store/Maintenance/TypePay.js"
+import { typePayStore} from "../../store/Maintenance/TypePay.js"
 
 let prompt = ref(false)
 let name = ref("")

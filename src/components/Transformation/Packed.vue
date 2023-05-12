@@ -95,8 +95,9 @@ let columns = ref([
 ])
 
 let rows = ref([])
-
 const usePacked= usePackedStore()
+
+getPacked()
 
 // get registros empaques
 async function getPacked() {

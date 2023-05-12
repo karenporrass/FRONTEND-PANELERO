@@ -119,6 +119,7 @@ const filterOptions = ref(stringOptions)
 
 const useDaily = useDailyStore()
 
+getListDaily()
 
 // get registros proceso diario 
 async function getListDaily() {

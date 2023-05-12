@@ -96,6 +96,8 @@ let rows = ref([])
 
 const useTransformed = useTransformedStore()
 
+getTransformed()
+
 // get registros proceso diario 
 async function getTransformed() {
   const res = await useTransformed.listTransformed()

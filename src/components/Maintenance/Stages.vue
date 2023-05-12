@@ -114,8 +114,8 @@ async function activarDesactivar(data) {
   }
 }
 
-onMounted(()=>{
+
   getStages()
-})
+
 
 </script>

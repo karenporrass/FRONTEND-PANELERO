@@ -67,7 +67,11 @@
 import {ref, onMounted} from 'vue'
 import axios from 'axios';
 import { typePayStore} from "../../store/Maintenance/TypePay.js"
+<<<<<<< Updated upstream
 
+=======
+const useTypePay= typePayStore()
+>>>>>>> Stashed changes
 let prompt = ref(false)
 let name = ref("")
 let pagination = ref({
@@ -81,7 +85,7 @@ let columns = ref([
 ])
 
 let rows = ref([])
-const useTypePay= typePayStore()
+
 
 
 // get registros proceso diario 

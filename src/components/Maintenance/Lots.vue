@@ -113,9 +113,9 @@ async function activarDesactivar(data) {
 }
 
 
-onMounted(()=>{
+
   getLots()
-})
+
 
 
 

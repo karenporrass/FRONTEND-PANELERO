@@ -112,9 +112,9 @@ async function activarDesactivar(data) {
   }
 }
 
-onMounted(()=>{
+
   getSupport()
-})
+
 
 
 

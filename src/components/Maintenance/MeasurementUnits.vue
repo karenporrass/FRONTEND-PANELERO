@@ -111,8 +111,8 @@ async function activarDesactivar(data) {
   }
 }
 
-onMounted(()=>{
+
   getUnits()
-})
+
 
 </script>

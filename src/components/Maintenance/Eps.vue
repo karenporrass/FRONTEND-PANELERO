@@ -81,23 +81,18 @@ let columns = ref([
 ])
 
 let rows = ref([])
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+
+ getEps()
 
 const postEps = async ()=>{
-  try {
-    const eps = await epsStores.newEps( name.value,attentionLine.value)
+    const res = await epsStores.newEps( name.value,attentionLine.value)
+    console.log(res);
     getEps()
-    console.log(eps);
-  } catch (error) {
-    console.log(error);
-  }
 }
 
-const getEps = async ()=>{
-    const eps = await epsStores.listEps()
-    console.log(eps);
+async function getEps() {
+    const res = await epsStores.listEps()
+    console.log(res);
     if (res.status < 299) {
     rows.value = res.data
     rows.value.forEach((row, index) => {
@@ -107,7 +102,6 @@ const getEps = async ()=>{
     alert(res)
   }
 }
-
 
 async function activarDesactivar(data) {
   let res = ""
@@ -122,9 +116,8 @@ async function activarDesactivar(data) {
   }
 }
 
-onMounted(()=>{
-  getEps()
-})
+ 
+
 
 
 

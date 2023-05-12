@@ -99,7 +99,7 @@ let columns = ref([
 
 let rows = ref([])
 
-
+getUsers()
 const postUser= async ()=>{
   const res = await userStore.newUsers(
     names.value, 
@@ -138,9 +138,9 @@ async function getUsers () {
 
 }
 
-onMounted(()=>{
+
   getUsers()
-})
+
 
 
 

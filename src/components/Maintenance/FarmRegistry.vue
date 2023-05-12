@@ -118,9 +118,8 @@ async function activarDesactivar(data) {
 }
 
 
-onMounted(()=>{
   getFarmRegistry()
-})
+
 
 
 

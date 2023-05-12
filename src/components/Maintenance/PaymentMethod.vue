@@ -79,21 +79,21 @@ let rows = ref([])
 
 
 const postPayment = async ()=>{
-    const payment = await paymentStores.newPayment( name.value)
+    const payments = await paymentStores.newPayment( name.value)
     getPayment()
-    console.log(payment);
+    console.log(payments);
 }
 
 const getPayment = async ()=>{
     const payment = await paymentStores.listPayments()
     console.log(payment);
-    if (res.status < 299) {
+    if (payment.status < 299) {
       rows.value=payment.data
     rows.value.forEach((row, index) => {
     row.index = index+1
     })
   } else {
-    alert(res)
+    alert(payment)
   }
 }
 
@@ -110,12 +110,6 @@ async function activarDesactivar(data) {
   }
 }
 
-
-
-onMounted(()=>{
   getPayment()
-})
-
-
 
 </script>

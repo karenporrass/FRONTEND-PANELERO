@@ -113,8 +113,8 @@ async function activarDesactivar(data) {
   }
 }
 
-onMounted(()=>{
+
   getTypeDocument()
-})
+
 
 </script>

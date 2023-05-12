@@ -30,6 +30,24 @@ export const usersStore = defineStore('counter', () => {
           }
       }
 
+      async function putUsers(id, names, lastNames,typeDocument, numberDocument, rol,cel, address, email) { //recivir las variables 
+        try {
+            return await axios.put(`https://project-panelero.onrender.com/usuarios/update/${id}`,{
+             names: names,
+             lastNames: lastNames,
+             typeDocument: typeDocument,
+             numberDocument: numberDocument,
+             rol: rol,
+             cel: cel,
+             address: address,
+             email: email,
+             password: numberDocument
+            })
+          } catch (error) {
+            console.log(error);
+          }
+      }
+
     async function active(id, estado){
       try {
         return await axios.put(`https://project-panelero.onrender.com/usuarios/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
@@ -39,5 +57,5 @@ export const usersStore = defineStore('counter', () => {
       }
     }
   
-    return { listUsers, user, active, newUsers }
+    return { listUsers, user, active, newUsers, putUsers }
   })

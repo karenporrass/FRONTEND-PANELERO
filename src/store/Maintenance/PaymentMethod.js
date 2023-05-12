@@ -22,6 +22,16 @@ export const paymentStore = defineStore('counter', () => {
           }
       }
 
+      async function putPayment(id, name) {
+        try {
+            return await axios.post(`https://project-panelero.onrender.com/metodoPago/${id}`,{
+             name: name,
+            })
+          } catch (error) {
+            console.log(error);
+          }
+      }
+
     async function active(id, estado){
       try {
         return await axios.put(`https://project-panelero.onrender.com/metodoPago/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
@@ -31,5 +41,5 @@ export const paymentStore = defineStore('counter', () => {
       }
     }
   
-    return { listPayments, payment, active, newPayment }
+    return { listPayments, payment, active, newPayment, putPayment }
   })

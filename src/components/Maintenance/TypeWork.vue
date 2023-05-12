@@ -26,7 +26,7 @@
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -66,6 +66,29 @@
               </div>
             </q-card>
           </q-dialog>
+
+          <q-dialog v-model="promptEdit">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                    <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la labor"></q-input>
+                  <q-input class="q-mb-md" filled type="text" v-model="area" label="Digite el área "></q-input>
+                  <q-input  filled type="number" v-model="dailyPayment" label="Digite el pago diario"></q-input>
+            
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()" />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
     </div> 
 </template>
   
@@ -73,11 +96,12 @@
 import {ref, onMounted} from 'vue'
 import axios from 'axios';
 import {workStore} from "../../store/Maintenance/TypeWork.js"
-
+let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
 let area = ref("")
 let dailyPayment = ref("")
+let index = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
@@ -138,6 +162,33 @@ async function activarDesactivar(data) {
     getTypeWork()
   }
 }
+
+function goInfo(data){
+    names.value = data.names 
+    lastNames.value = data.lastNames
+    typeDocument.value = data.typeDocument
+    numberDocument.value = data.numberDocument
+    rol.value = data.rol
+    cel.value = data.cel
+    address.value = data. address
+    email.value = data.email
+}
+
+async function putInfo(){
+  console.log(index.value);
+  const res = await userStore.putUsers(index.value, 
+    names.value, 
+    lastNames.value, 
+    typeDocument.value,
+    numberDocument.value, 
+    rol.value, 
+    cel.value, 
+    address.value, 
+    email.value )
+    console.log(res);
+    getUsers()
+}
+
 onMounted(()=>{
   getTypeWork()
 })

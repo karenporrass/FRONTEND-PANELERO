@@ -22,6 +22,16 @@ export const lotsStore = defineStore('counter', () => {
             console.log(error);
           }
       }
+      async function putlots(id, name, extent) {
+        try {
+            return await axios.post(`https://project-panelero.onrender.com/lotes/${id}`,{
+              name: name,
+              extent: extent
+            })
+          } catch (error) {
+            console.log(error);
+          }
+      }
 
     async function active(id, estado){
       try {
@@ -32,5 +42,5 @@ export const lotsStore = defineStore('counter', () => {
       }
     }
   
-    return { listlots, lots, active, newlots }
+    return { listlots, lots, active, newlots, putlots }
   })

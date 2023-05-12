@@ -22,6 +22,16 @@ export const epsStore = defineStore('counter', () => {
             console.log(error);
           }
       }
+      async function putEps(id, name, attentionLine) {
+        try {
+            return await axios.post(`https://project-panelero.onrender.com/eps/${id}`,{
+                name: name,
+                attentionLine: attentionLine
+            })
+          } catch (error) {
+            console.log(error);
+          }
+      }
 
     async function active(id, estado){
       try {
@@ -32,5 +42,5 @@ export const epsStore = defineStore('counter', () => {
       }
     }
   
-    return { listEps, eps, active, newEps }
+    return { listEps, eps, active, newEps, putEps }
   })

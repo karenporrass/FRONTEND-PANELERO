@@ -23,6 +23,17 @@ export const unitsStore = defineStore('counter', () => {
           }
       }
 
+     async function putUnits(id,name,format) {
+        try {
+            return await axios.post(`https://project-panelero.onrender.com/unidadesMedida/${id}`,{
+              name: name,
+              format: format
+            })
+          } catch (error) {
+            console.log(error);
+          }
+      }
+
     async function active(id, estado){
       try {
         return await axios.put(`https://project-panelero.onrender.com/unidadesMedida/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
@@ -32,5 +43,5 @@ export const unitsStore = defineStore('counter', () => {
       }
     }
   
-    return { listUnits, unit, active, newUnits }
+    return { listUnits, unit, active, newUnits, putUnits}
   })

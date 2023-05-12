@@ -23,8 +23,8 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
+               <div>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -64,6 +64,29 @@
               </div>
             </q-card>
           </q-dialog>
+
+          <q-dialog v-model="promptEdit">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                    <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre de la eps"></q-input>
+                  <q-input filled type="number" v-model="attentionLine" label="Digite la linea de atencion"></q-input>
+                  
+
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="putInfo()" />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
     </div> 
 </template>
   
@@ -71,9 +94,11 @@
 import {ref, onMounted} from 'vue'
 import {epsStore} from "../../store/Maintenance/Eps.js"
 const epsStores = epsStore()
+let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
 let attentionLine = ref()
+let index = ref()
 
 let pagination = ref({
         rowsPerPage: 0
@@ -90,7 +115,10 @@ let rows = ref([])
 // getEps()
 
 const postEps = async ()=>{
-    const res = await epsStores.newEps(name.value,attentionLine.value)
+    const res = await epsStores.newEps(
+      name.value,
+      attentionLine.value
+      )
     console.log(res);
     getEps()
 }
@@ -119,6 +147,20 @@ async function activarDesactivar(data) {
     console.log(res);
     getEps()
   }
+}
+
+function goInfo(data){
+    name.value = data.name
+    attentionLine.value = data. attentionLine
+}
+
+async function putInfo(){
+  console.log(index.value);
+  const res = await epsStores.putEps(index.value, 
+  name.value,
+  attentionLine.value )
+    console.log(res);
+    getEps()
 }
 
  onMounted(()=>{

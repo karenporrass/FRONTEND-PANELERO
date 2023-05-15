@@ -1,13 +1,13 @@
-
 <template>
   <div>
     <div>
       <q-layout view="hHh lpR fFf" container class="shadow-2 fullscreen">
         <q-header elevated class="bg-green-10">
           <q-toolbar>
-            <q-btn  flat @click="toggleLeftDrawer" round dense
+            <q-btn v-show="TituloPedidos == false" flat @click="toggleLeftDrawer" round dense
               icon="menu"><q-toolbar-title>MENU</q-toolbar-title></q-btn>
-            
+            <q-btn v-show="TituloPedidos == true" flat @click="toggleLeftDrawer" round dense
+              icon="menu"><q-toolbar-title>PEDIDOS</q-toolbar-title></q-btn>
 
             <q-space></q-space>
             <q-btn flat icon="fa-regular fa-user" class="q-mr-sm" />
@@ -40,7 +40,7 @@
         </q-header>
         <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="c">
           <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
-            <q-list class="column items-center" style="padding-top: 20px;">
+            <q-list class="column items-center" style="padding-top: 40px;">
 
               <router-link to="/home" style="text-decoration: none;">
                 <q-item clickable class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
@@ -149,7 +149,7 @@
           </q-img>
         </q-drawer>
 
-        <q-page-container style="padding-left: 0;">
+        <q-page-container>
           <q-page padding>
             <router-view></router-view>
           </q-page>
@@ -171,7 +171,16 @@
 import { ref } from 'vue'
 
 const leftDrawerOpen = ref(false)
+let TituloPedidos = ref(false)
+let TituloInventory = ref(false)
 
+function MenuAPedidos() {
+  TituloPedidos = true
+}
+
+function MenuInventory() {
+  TituloInventory = true
+}
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
@@ -179,4 +188,3 @@ function toggleLeftDrawer() {
 
 
 </script>
-

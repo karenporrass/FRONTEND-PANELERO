@@ -54,7 +54,7 @@
         </q-card-section>
         <div class="q-pa-md ">
           <div>
-            <q-input filled type="text" v-model="document" label="DNI"></q-input>
+            <q-input filled type="text" v-model="documen" label="DNI"></q-input>
             <q-input filled type="text" v-model="rol" label="ROL"></q-input>
             <q-input filled type="text" v-model="concept" label="Concepto"></q-input>
             <q-input filled type="text" v-model="methodPay" label="Metodo de pago"></q-input>
@@ -81,11 +81,7 @@ let pagination = ref({
   rowsPerPage: 0
 })
 let columns = ref([
-{
-    name: 'index',
-    label: '#',
-    field: 'index'
-  },
+
   {
     name: 'DNI', required: true, label: 'NUMERO DE DOCUMENTO', align: 'center', field:
       "DNI"
@@ -126,37 +122,34 @@ let rows = ref([
 
 ])
 
-let document = ref()
+let documen = ref()
 let rol = ref()
 let concept = ref()
 let methodPay = ref()
 let time = ref()
 let total = ref()
-let index = ref()
+
 
 
 rows.value.forEach((row, index) => {
   row.index = index
 })
 
-for (let i = 0; i < rows.value.length; i++) {
-    index.value = i;
 
-}
 
 
 const postPays = async () => {
 
   try {
     const pays = await axios.post(`http://localhost:4500/payments/post`, {
-      DNI: document.value,
+      DNI: documen.value,
       ROL: rol.value,
       CONCEPT: concept.value,
       PAYMENT_METHOD: methodPay.value,
       Date: Date, 
       Total: total.value,
       TIME_TO_PAY: time.value,
-      index: index.value
+  
 
     })
     getTypePays()
@@ -186,7 +179,7 @@ function clear() {
   concept.value = ""
   rol.value = ""
   methodPay.value = ""
-  TIME_TO_PAY.value = ""
+
   total.value = ""
 }
 

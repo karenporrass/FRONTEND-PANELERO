@@ -8,7 +8,7 @@
             <div class="col-1"></div>
         </div>
         <q-separator class="q-my-md  bg-green-10" style="height: 2px; margin-left: 100px; margin-right: 100px;" />
-        <div class="row">
+        <div class="row q-mb-sm">
           <div class="col-1"></div>
           <div class="col-10" style="display: flex;" > 
             <router-link to="/homeMantenimiento" style="text-decoration: none; font-size:larger;" class="text-dark">
@@ -62,7 +62,7 @@
         </div> 
 
         <q-dialog v-model="prompt">
-            <q-card >
+            <q-card class="my-card" >
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
                   DILIGENCIA LA INFORMACIÓN
@@ -77,7 +77,9 @@
                   <q-input class="q-mb-md" filled type="text" v-model="rol" label="Seleccione el rol"></q-input>
                   <q-input class="q-mb-md"  filled type="number" v-model="cel" label="Digite el numero celular"></q-input>
                   <q-input  class="q-mb-md" filled type="text" v-model="address" label="Digite la direccion"></q-input>
-                  <q-input filled type="text" v-model="email" label="Digite el email"></q-input>
+                  <q-input  class="q-mb-md" filled type="text" v-model="email" label="Digite el email"></q-input>
+                  <q-input class="q-mb-md"  filled type="text" v-model="emergencyPersonName" label="Digite el nombre de una persona de emergencia"></q-input>
+                  <q-input  filled type="number" v-model="emergencyPersonPhone" label="Digite el numero de la persona"></q-input>
                   <div>
                     <br />
                     <q-btn  label="guardar" class="text-white bg-green-10"  @click="postUser()"/>
@@ -90,7 +92,7 @@
 
           
         <q-dialog v-model="promptEdit">
-            <q-card >
+            <q-card class="my-card" >
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
                EDITAR LA INFORMACIÓN
@@ -98,14 +100,17 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input class="q-mb-md" filled type="text" v-model="names" label="Digite el nombre"></q-input>
-                  <q-input class="q-mb-md" filled type="text" v-model="lastNames" label="Digite los apellidos"></q-input>
-                  <q-input class="q-mb-md"  filled type="text" v-model="typeDocument" label="Seleccione el tipo de documento"></q-input>
-                  <q-input class="q-mb-md" filled type="number" v-model="numberDocument" label="Digite el numero de documento"></q-input>
+                    <!-- <q-input class="q-mb-md" filled type="text" v-model="names" label="Digite el nombre"></q-input>
+                  <q-input class="q-mb-md" filled type="text" v-model="lastNames" label="Digite los apellidos"></q-input> -->
+                  <q-select filled v-model="typeDocument" :options="optionsDocument" label="Seleccione el tipo documento" />
+                  <!-- <q-input class="q-mb-md" filled type="number" v-model="numberDocument" label="Digite el numero de documento"></q-input>
                   <q-input class="q-mb-md" filled type="text" v-model="rol" label="Seleccione el rol"></q-input>
                   <q-input class="q-mb-md"  filled type="number" v-model="cel" label="Digite el numero celular"></q-input>
                   <q-input  class="q-mb-md" filled type="text" v-model="address" label="Digite la direccion"></q-input>
-                  <q-input filled type="text" v-model="email" label="Digite el email"></q-input>
+                  <q-input class="q-mb-md" filled type="text" v-model="email" label="Digite el email"></q-input>
+                  <q-input class="q-mb-md" filled type="text" v-model="password" label="Digite la contraseña"></q-input>
+                  <q-input class="q-mb-md"  filled type="text" v-model="emergencyPersonName" label="Digite el nombre de una persona de emergencia"></q-input>
+                  <q-input  filled type="number" v-model="emergencyPersonPhone" label="Digite el numero de la persona"></q-input> -->
                   <div>
                     <br />
                     <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()"/>
@@ -133,28 +138,34 @@ let cel = ref()
 let address = ref("")
 let email = ref("")
 let index = ref()
-
+let emergencyPersonName= ref("")
+let emergencyPersonPhone= ref("")
+let password = ref("")
 
 
 let pagination = ref({
         rowsPerPage: 0
       })
+ let optionsDocument = ref([])
 let columns = ref([
+{ name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE',field: 'names',align: 'center'},
   {name: 'lastNames',label: 'APELLIDOS',align: 'center',field: row => row.lastNames,format: val => `${val}`,sortable: true},
   { name: 'typeDocument', align: 'center', label: 'TIPO DE DOCUMENTO', field: 'typeDocument',align: 'center', sortable: true },
   { name: 'numberDocument', align: 'center', label: 'NUMERO DOCUMENTO', field: 'numberDocument',align: 'center', sortable: true },
   {name: 'rol',label: 'ROL',field: 'rol',align: 'center'},
-  {name: 'cel',label: 'CEL',field: 'cel',align: 'center'},
+  {name: 'cel',label: 'CELULAR',field: 'cel',align: 'center'},
   {name: 'address',label: 'DIRECCION',field: 'address',align: 'center'},
   {name: 'email',label: 'CORREO',field: 'email',align: 'center'},
+  {name: 'namePerson',label: 'PERSONA EMERGENCIA',field: 'emergencyPersonName',align: 'center'},
+  {name: 'phonePerson',label: 'NUMERO DE CONCTATO',field: 'emergencyPersonPhone',align: 'center'},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])
 
 let rows = ref([])
 
-getUsers()
+
 const postUser= async ()=>{
   const res = await userStore.newUsers(
     names.value, 
@@ -164,7 +175,10 @@ const postUser= async ()=>{
     rol.value, 
     cel.value, 
     address.value, 
-    email.value )
+    email.value,
+    emergencyPersonName.value,
+    emergencyPersonPhone.value
+     )
     console.log(res);
   getUsers()
 }
@@ -188,9 +202,27 @@ async function getUsers () {
   console.log(res);
   if (res.status < 299) {
     rows.value = res.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+  })
   } else {
     alert(res)
   }
+}
+
+const getDocument = async ()=>{
+ const res = await userStore.listDocuments()
+ console.log(res.data);
+ if (res.status < 299) {
+  for(let i in res.data){
+    console.log(i);
+    let object = {label: res.data[i].acronym, value: res.data[i]._id};
+    optionsDocument.value.push(object)
+  }
+ console.log(optionsDocument.value);
+} else {
+ alert(res)
+}
 }
 
 function goInfo(data){
@@ -202,6 +234,8 @@ function goInfo(data){
     cel.value = data.cel
     address.value = data. address
     email.value = data.email
+    emergencyPersonName.value = data.emergencyPersonName
+    emergencyPersonPhone.value = data.emergencyPersonPhone
 }
 
 async function putInfo(){
@@ -214,13 +248,25 @@ async function putInfo(){
     rol.value, 
     cel.value, 
     address.value, 
-    email.value )
+    email.value,
+    password.value,
+    emergencyPersonName.value,
+    emergencyPersonPhone.value
+
+    )
     console.log(res);
     getUsers()
 }
 
 onMounted(()=>{
   getUsers()
+  getDocument()
 })
 
 </script>
+
+<style lang="sass" scoped>
+.my-card
+  height: 60%
+  max-height: 80%
+</style>

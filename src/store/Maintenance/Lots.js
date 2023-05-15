@@ -12,21 +12,30 @@ export const lotsStore = defineStore('counter', () => {
         console.log(error);
       }
     }
-    async function newlots(name, extent) {
+    async function listFarmsActive() {
+      try {
+        return await axios.get("https://project-panelero.onrender.com/registroFinca/state")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    async function newlots(name, extent,farm ) {
         try {
             return await axios.post(`https://project-panelero.onrender.com/lotes`,{
               name: name,
-              extent: extent
+              extent: extent,
+              farm: farm
             })
           } catch (error) {
             console.log(error);
           }
       }
-      async function putlots(id, name, extent) {
+      async function putlots(id, name, extent, farm) {
         try {
             return await axios.post(`https://project-panelero.onrender.com/lotes/${id}`,{
               name: name,
-              extent: extent
+              extent: extent, 
+              farm: farm
             })
           } catch (error) {
             console.log(error);
@@ -42,5 +51,5 @@ export const lotsStore = defineStore('counter', () => {
       }
     }
   
-    return { listlots, lots, active, newlots, putlots }
+    return { listlots, lots, active, newlots, putlots, listFarmsActive }
   })

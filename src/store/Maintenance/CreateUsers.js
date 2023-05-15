@@ -12,7 +12,14 @@ export const usersStore = defineStore('counter', () => {
         console.log(error);
       }
     }
-    async function newUsers(names, lastNames,typeDocument, numberDocument, rol,cel, address, email) {
+    async function listDocuments() {
+      try {
+        return await axios.get("https://project-panelero.onrender.com/tipoDocumento/state")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    async function newUsers(names, lastNames,typeDocument, numberDocument, rol,cel, address, email, emergencyPersonName, emergencyPersonPhone ) {
         try {
             return await axios.post(`https://project-panelero.onrender.com/usuarios`,{
              names: names,
@@ -23,14 +30,17 @@ export const usersStore = defineStore('counter', () => {
              cel: cel,
              address: address,
              email: email,
-             password: numberDocument
+             password: numberDocument,
+             emergencyPersonName: emergencyPersonName,
+            emergencyPersonPhone: emergencyPersonPhone
+
             })
           } catch (error) {
             console.log(error);
           }
       }
 
-      async function putUsers(id, names, lastNames,typeDocument, numberDocument, rol,cel, address, email) { //recivir las variables 
+      async function putUsers(id, names, lastNames,typeDocument, numberDocument, rol,cel, address, email, password , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
         try {
             return await axios.put(`https://project-panelero.onrender.com/usuarios/update/${id}`,{
              names: names,
@@ -41,7 +51,9 @@ export const usersStore = defineStore('counter', () => {
              cel: cel,
              address: address,
              email: email,
-             password: numberDocument
+             password: password,
+             emergencyPersonName: emergencyPersonName,
+              emergencyPersonPhone: emergencyPersonPhone
             })
           } catch (error) {
             console.log(error);
@@ -57,5 +69,7 @@ export const usersStore = defineStore('counter', () => {
       }
     }
   
-    return { listUsers, user, active, newUsers, putUsers }
+
+
+    return { listUsers, user, active, newUsers, putUsers, listDocuments}
   })

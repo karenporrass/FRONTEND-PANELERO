@@ -23,12 +23,18 @@
       <div class="col-1"></div>
       <div class="col-10 ">
         <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
-
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="edit = true"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
           </template>
@@ -52,38 +58,82 @@
               label="Digite una descripción del proceso"></q-input>
             <q-input filled class="q-mb-md" type="number" v-model="hours"
               label="Digite cuántas horas tomó el proceso"></q-input>
-            <!-- <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0"
-              @new-value="createValue" :options="filterOptions" @filter="filterFn" style="width: 350px"
-              label="Seleccione la labor" /> -->
             <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0"
-              @new-value="createValue" :options="filterOptions" @filter="filterFn" style="width: 350px"
-              label="Seleccione las personas" />
+              @new-value="createValue" :options="filterOptions" @filter="filterFn" label="Seleccione las personas" />
+            <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0"
+              @new-value="createValue" :options="filterOptions" @filter="filterFn" label="Seleccione la labor" />
             <q-select filled class="q-mb-md" v-model="farm" :options="options" label="Seleccione la finca" />
-            <q-select filled class="q-mb-xs" v-model="lot" :options="options" label="Seleccione el lote" />
+            <q-select filled class="q-mb-md" v-model="lot" :options="options" label="Seleccione el lote" />
+            <q-input v-model="date" class="q-mb-xs" filled type="date" label="Seleccione la fecha" />
             <div class="q-pb-sm">
               <br />
-              <q-btn label="guardar" class="text-white bg-green-10" @click="postDailyProcess()"/>
+              <q-btn v-if="prompt == true" label="guardar" class="text-white bg-green-10" @click="postDailyProcess()" />
+              <q-btn v-else label="guardar" class="text-white bg-green-10" />
+
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
         </div>
       </q-card>
     </q-dialog>
+
+
+
+
+    <q-dialog v-model="edit">
+      <q-card>
+        <q-card-section class="bg-green-10 q-px-lg">
+          <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+            MODIFICA LA INFORMACIÓN
+          </h5>
+        </q-card-section>
+        <div class="q-pa-md ">
+          <div>
+            <q-input filled class="q-mb-md" type="text" v-model="name" label="Digite el nombre del proceso"></q-input>
+            <q-input filled class="q-mb-md" type="text" v-model="description"
+              label="Digite una descripción del proceso"></q-input>
+            <q-input filled class="q-mb-md" type="number" v-model="hours"
+              label="Digite cuántas horas tomó el proceso"></q-input>
+            <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0"
+              @new-value="createValue" :options="filterOptions" @filter="filterFn" label="Seleccione las personas" />
+            <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0"
+              @new-value="createValue" :options="filterOptions" @filter="filterFn" label="Seleccione la labor" />
+            <q-select filled class="q-mb-md" v-model="farm" :options="options" label="Seleccione la finca" />
+            <q-select filled class="q-mb-md" v-model="lot" :options="options" label="Seleccione el lote" />
+            <q-input v-model="date" class="q-mb-xs" filled type="date" label="Seleccione la fecha" />
+            <div class="q-pb-sm">
+              <br />
+              <q-btn label="guardar" class="text-white bg-green-10" @click="showInfo()" />
+              <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+            </div>
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
+
+
+
+
+
   </div>
 </template>
   
 <script setup>
-import { ref } from "vue"
+import { onMounted, ref } from "vue"
 import axios from "axios";
+import { useDailyStore } from "../../store/Transformation/dailyProcess.js"
+
 
 let prompt = ref(false)
+let edit = ref(false)
 let name = ref("")
 let description = ref("")
 let hours = ref()
 let people = ref()
+let labor = ref()
 let lot = ref()
-// let labor = ref()
 let farm = ref()
+let date = ref()
 let options = [
   'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
 ]
@@ -91,37 +141,94 @@ let options = [
 
 let columns = ref([
   { name: 'index', label: 'N°', field: 'index', align: 'center' },
-  { name: 'name', label: 'NOMBRE', align: 'center', field: 'name', align: 'center'},
-  { name: 'description', align: 'center', label: 'DESCRIPCIÓN', field: 'description', align: 'center'},
+  { name: 'name', label: 'NOMBRE', field: 'name', align: 'center' },
+  { name: 'description', label: 'DESCRIPCIÓN', field: 'description', align: 'center' },
   { name: 'hours', label: 'HORAS', field: 'hours', align: 'center', sortable: true },
   { name: 'people', label: 'PERSONAS', field: 'people', align: 'center' },
-  { name: 'farm', label: 'FINCA', field: 'farms', align: 'center' },
+  { name: 'labor', label: 'LABOR', field: 'labor', align: 'center' },
+  { name: 'farm', label: 'FINCA', field: 'farm', align: 'center' },
   { name: 'lot', label: 'LOTE', field: 'lot', align: 'center' },
-  // { name: 'date', label: 'FECHA', field: 'date', align: 'center' },
-  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center' },
+  { name: 'date', label: 'FECHA', field: 'date', align: 'center' },
+  { name: 'options', label: 'OPCIONES', align: 'center' },
 ])
 
-let rows = ref([
-  {
-    name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
-  }
-])
-
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+let rows = ref([])
 
 const stringOptions = [
   'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
 ]
 const filterOptions = ref(stringOptions)
 
+const useDaily = useDailyStore()
+
+// getListDaily()
+
+// get registros proceso diario 
+async function getListDaily() {
+  const res = await useDaily.listDaily()
+  console.log(res);
+  if (res.status < 299) {
+    rows.value = res.data
+    rows.value.forEach((row, index) => {
+      row.index = index + 1
+    })
+  } else {
+    alert(res)
+  }
+}
+getListDaily()
+
+//post proceso diario
+async function postDailyProcess() {
+  const res = await useDaily.addDailyProcess(
+    name.value, // se llama a las variables del modal
+    description.value,
+    hours.value,
+    people.value,
+    labor.value,
+    farm.value,
+    lot.value,
+    date.value,
+  )
+  getListDaily()
+  console.log(res);
+}
+
+
+// activar y desactivar proceso diario 
+async function activarDesactivar(data) {
+  console.log(data);
+  let res = ""
+  if (data.state == 1) {
+    res = await useDaily.active(data._id, 0)
+    console.log(res);
+    getListDaily()
+  } else {
+    res = await useDaily.active(data._id, 1)
+    console.log(res);
+    getListDaily()
+  }
+}
+
+
+async function showInfo(data) {
+  console.log(data);
+  if (data == data._id) {
+      name.value = name.value,
+      description.value = description.value,
+      hours.value = hours.value,
+      people.value = people.value,
+      labor.value = labor.value,
+      farm.value = farm.value,
+      lot.value = lot.value,
+      date.value = date.value,
+      console.log(data);
+  }
+}
+
+
+
+//function de options en modal
 function createValue(val, done) {
   if (val.length > 0) {
     if (!stringOptions.includes(val)) {
@@ -145,34 +252,9 @@ function filterFn(val, update) {
   })
 }
 
-const postDailyProcess = async () => {
-  console.log(people.value);
-  try {
-    const daily = await axios.post(`http://localhost:3500/procesoDiario`, {
-      name: name.value,
-      description: description.value,
-      hours: hours.value,
-      people: people.value,
-      farm: farm.value,
-      lot: lot.value,
-    })
-    getDailyProcess()
-    console.log(daily);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-const getDailyProcess = async () => {
-  try {
-    const process = await axios.get(`http://localhost:3500/procesoDiario`)
-    console.log(process);
-    rows.value = process.data
-  } catch (error) {
-    console.log(error);
-  }
-}
-
+onMounted( async() => {
+  getListDaily()
+})
 
 </script>
 

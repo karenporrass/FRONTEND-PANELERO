@@ -11,7 +11,10 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class=" text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo tipo de pago</q-btn>
+              <q-btn class="bg-green-10 text-white" @click="prompt = true"><span class="material-symbols-outlined q-mr-sm"
+            style="font-size: 20px;">
+            add_circle
+          </span>Crear nuevo tipo de pago</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -19,17 +22,23 @@
        <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
-                    <template v-slot:body-cell-options="props" >
+              <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
+          <template v-slot:body-cell-options="props">
             <q-td :props="props">
-              <div >
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+              <div>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
-            
           </template>
+
         </q-table>
             </div>
             <div class="col-1"></div>
@@ -47,7 +56,27 @@
                     <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postTypePay()" />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
+
+          <q-dialog v-model="promptEdit">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()" />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -59,47 +88,94 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
+import { typePayStore} from "../../store/Maintenance/TypePay.js"
+
+const useTypePay= typePayStore()
+let promptEdit = ref(false)
 
 let prompt = ref(false)
 let name = ref("")
+let index = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
 let columns = ref([
-{ name: 'index', label: '#',field: 'index'},
+{ name: 'index', label: 'N°',field: 'index'},
   {name: 'name',label: 'NOMBRE TIPO PAGO',field: 'name',align: 'center'},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+let rows = ref([])
 
-const postTypePay = async ()=>{
-  try {
-    const pay = await axios.post(`http://localhost:3500/tipoPago`,{
-      name: name.value,
+
+
+// get registros proceso diario 
+async function getTypePay() {
+  const res = await useTypePay.listTypePay()
+  console.log(res);
+  if (res.status < 299) {
+    rows.value = res.data
+    rows.value.forEach((row, index) => {
+      row.index = index + 1
     })
+  } else {
+    alert(res)
+  }
+}
+getTypePay()
+
+//post proceso diario
+async function postTypePay() {
+  const res = await useTypePay.newTypePay(
+    name.value, // se llama a las variables del modal
+  )
+  getTypePay()
+  console.log(res);
+}
+
+
+// activar y desactivar proceso diario 
+async function activarDesactivar(data) {
+  console.log(data);
+  let res = ""
+  if (data.state == 1) {
+    res = await useTypePay.active(data._id, 0)
+    console.log(res);
     getTypePay()
-    console.log(pay);
-  } catch (error) {
-    console.log(error);
+  } else {
+    res = await useTypePay.active(data._id, 1)
+    console.log(res);
+    getTypePay()
   }
 }
-const getTypePay = async ()=>{
-  try {
-    const pay = await axios.get(`http://localhost:3500/tipoPago`)
-    console.log(pay);
-    rows.value=pay.data
-  } catch (error) {
-    console.log(error);
-  }
+
+function goInfo(data){
+    names.value = data.names 
+    lastNames.value = data.lastNames
+    typeDocument.value = data.typeDocument
+    numberDocument.value = data.numberDocument
+    rol.value = data.rol
+    cel.value = data.cel
+    address.value = data. address
+    email.value = data.email
 }
+
+async function putInfo(){
+  console.log(index.value);
+  const res = await userStore.putUsers(index.value, 
+    names.value, 
+    lastNames.value, 
+    typeDocument.value,
+    numberDocument.value, 
+    rol.value, 
+    cel.value, 
+    address.value, 
+    email.value )
+    console.log(res);
+    getUsers()
+}
+
 
 onMounted(()=>{
   getTypePay()

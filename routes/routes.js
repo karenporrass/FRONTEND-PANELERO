@@ -47,6 +47,7 @@ import Packed from '../src/components/Transformation/Packed.vue'
 export const routes=[
     {path:"/", component:Login},
     {path:"/home", component:Home},
+    {path:"/procesoDiario", component:DailyProcess},
     {path:"/homePedidos", component:orders},
     {path:"/homeInventory", component:Inventory}, 
     {path:"/vault", component:vault},
@@ -55,7 +56,7 @@ export const routes=[
     {path:"/product", component:product },
     {path:"/pedidosDos", component:tablesOrders},
     {path:"/homeCostos", component: homeCosts},
-    {path:"/personas", component:users},
+    {path:"/usuarios", component:users},
     {path:"/tipoDocumento", component:typeDocument},
     {path:"/eps", component:eps},
     {path: "/fincas", component: farmRegistry},

@@ -9,7 +9,7 @@
         </div>
         <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
 
-        <div class="row" style="margin-top: 200px">
+        <div class="row" style="margin-top: 150px">
             <div class="col-2"></div>
             <div class="col-xl-2 col-sm-2" >
                 <router-link to="/procesoDiario" style="text-decoration: none; color: black">

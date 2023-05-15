@@ -23,9 +23,16 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+              <div>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
             
@@ -45,11 +52,33 @@
               <div class="q-pa-md " >
                 <div>
                 <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre del tipo de documento"></q-input>
-                  <q-input filled type="number" v-model="acronym" label="Digite el acronimo a las siglas"></q-input>
+                  <q-input filled type="text" v-model="acronym" label="Digite el acronimo a las siglas"></q-input>
                  
                   <div>
                     <br />
                     <q-btn  label="guardar" class="text-white bg-green-10" @click="postTypeDocument()"  />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
+
+          <q-dialog v-model="promptEdit">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre del tipo de documento"></q-input>
+                  <q-input filled type="text" v-model="acronym" label="Digite el acronimo a las siglas"></q-input>
+                 
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()"  />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -61,11 +90,13 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
-
+import { documentStore} from "../../store/Maintenance/TypeDocument.js"
+const documentsStore = documentStore()
+let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
 let acronym = ref("")
+let index = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
@@ -76,37 +107,69 @@ let columns = ref([
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+let rows = ref([])
+
 
 const postTypeDocument = async ()=>{
-  try {
-    const document = await axios.post(`http://localhost:3500/tipoDocumento`,{
-      name: name.value,
-      acronym: acronym.value
-    })
+    const document = await documentsStore.newDocument( name.value, acronym.value)
     getTypeDocument()
     console.log(document);
-  } catch (error) {
-    console.log(error);
-  }
 }
+
 const getTypeDocument = async ()=>{
-  try {
-    const document = await axios.get(`http://localhost:3500/tipoDocumento`)
+    const document = await documentsStore.listDocuments()
     console.log(document);
+    if (document.status < 299) {
     rows.value=document.data
-  } catch (error) {
-    console.log(error);
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+    })
+    } else {
+      alert(document)
+    }
+}
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await documentsStore.active(data._id, 0)
+    console.log(res);
+    getTypeDocument()
+  } else {
+    res = await documentsStore.active(data._id, 1)
+    console.log(res);
+    getTypeDocument()
   }
 }
 
-onMounted(()=>{
+function goInfo(data){
+    names.value = data.names 
+    lastNames.value = data.lastNames
+    typeDocument.value = data.typeDocument
+    numberDocument.value = data.numberDocument
+    rol.value = data.rol
+    cel.value = data.cel
+    address.value = data. address
+    email.value = data.email
+}
+
+async function putInfo(){
+  console.log(index.value);
+  const res = await userStore.putUsers(index.value, 
+    names.value, 
+    lastNames.value, 
+    typeDocument.value,
+    numberDocument.value, 
+    rol.value, 
+    cel.value, 
+    address.value, 
+    email.value )
+    console.log(res);
+    getUsers()
+}
+
+
   getTypeDocument()
-})
+
 
 </script>

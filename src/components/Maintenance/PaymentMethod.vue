@@ -23,9 +23,16 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+              <div>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
             
@@ -55,15 +62,38 @@
               </div>
             </q-card>
           </q-dialog>
+
+          <q-dialog v-model="promptEdit">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                    <q-input  filled type="text" v-model="name" label="Digite el nombre del tipo de pago"></q-input>
+                  
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()"  />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
     </div> 
 </template>
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
-
+import {paymentStore} from "../../store/Maintenance/PaymentMethod.js"
+const paymentStores = paymentStore()
+let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
+let index = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
@@ -73,38 +103,57 @@ let columns = ref([
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+let rows = ref([])
+
 
 const postPayment = async ()=>{
-  try {
-    const payment = await axios.post(`http://localhost:3500/metodoPago`,{
-      name: name.value
-    })
+    const payments = await paymentStores.newPayment( name.value)
     getPayment()
+    console.log(payments);
+}
+
+const getPayment = async ()=>{
+    const payment = await paymentStores.listPayments()
     console.log(payment);
-  } catch (error) {
-    console.log(error);
+    if (payment.status < 299) {
+      rows.value=payment.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+    })
+  } else {
+    alert(payment)
   }
 }
-const getPayment = async ()=>{
-  try {
-    const payment = await axios.get(`http://localhost:3500/metodoPago`)
-    console.log(payment);
-    rows.value=payment.data
-  } catch (error) {
-    console.log(error);
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await paymentStores.active(data._id, 0)
+    console.log(res);
+   getPayment()
+  } else {
+    res = await paymentStores.active(data._id, 1)
+    console.log(res);
+   getPayment()
   }
+}
+
+function goInfo(data){
+    name.value = data.name
+
+}
+
+async function putInfo(){
+  console.log(index.value);
+  const res = await paymentStores.putPayment(index.value, 
+    name.value 
+    )
+    console.log(res);
+    getPayment()
 }
 
 onMounted(()=>{
   getPayment()
-})
-
-
+ })
 
 </script>

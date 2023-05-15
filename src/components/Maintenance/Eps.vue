@@ -23,9 +23,16 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+               <div>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
             
@@ -57,16 +64,41 @@
               </div>
             </q-card>
           </q-dialog>
+
+          <q-dialog v-model="promptEdit">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                    <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre de la eps"></q-input>
+                  <q-input filled type="number" v-model="attentionLine" label="Digite la linea de atencion"></q-input>
+                  
+
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="putInfo()" />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
     </div> 
 </template>
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import axios from 'axios';
-
+import {epsStore} from "../../store/Maintenance/Eps.js"
+const epsStores = epsStore()
+let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
 let attentionLine = ref()
+let index = ref()
 
 let pagination = ref({
         rowsPerPage: 0
@@ -78,39 +110,61 @@ let columns = ref([
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
-let rows = ref([
-{name:"kadnska", maxWeight: 3,  unitsPerBox: 4}
-])
-rows.value.forEach((row, index) => {
-  row.index = index
-})
+let rows = ref([])
+
+// getEps()
 
 const postEps = async ()=>{
-  try {
-    const eps = await axios.post(`http://localhost:3500/eps`,{
-      name: name.value,
-      attentionLine: attentionLine.value
-    })
+    const res = await epsStores.newEps(
+      name.value,
+      attentionLine.value
+      )
+    console.log(res);
     getEps()
-    console.log(eps);
-  } catch (error) {
-    console.log(error);
-  }
-}
-const getEps = async ()=>{
-  try {
-    const eps = await axios.get(`http://localhost:3500/eps`)
-    console.log(eps);
-    rows.value=eps.data
-  } catch (error) {
-    console.log(error);
-  }
 }
 
-onMounted(()=>{
-  getEps()
+async function getEps() {
+    const res = await epsStores.listEps()
+    console.log(res);
+    if (res.status < 299) {
+    rows.value = res.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
 })
+  } else {
+    alert(res)
+  }
+}
 
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await epsStores.active(data._id, 0)
+    console.log(res);
+    getEps()
+  } else {
+    res = await epsStores.active(data._id, 1)
+    console.log(res);
+    getEps()
+  }
+}
 
+function goInfo(data){
+    name.value = data.name
+    attentionLine.value = data. attentionLine
+}
+
+async function putInfo(){
+  console.log(index.value);
+  const res = await epsStores.putEps(index.value, 
+  name.value,
+  attentionLine.value )
+    console.log(res);
+    getEps()
+}
+
+ onMounted(()=>{
+  getEps()
+ })
 
 </script>

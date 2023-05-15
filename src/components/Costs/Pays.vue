@@ -30,12 +30,19 @@
       <div class="col-1"></div>
       <div class="col-10 ">
         <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll
-          v-model:pagination="pagination" :rows-per-page-options="[0]" >
+          v-model:pagination="pagination" :rows-per-page-options="[0]">
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
 
@@ -45,7 +52,7 @@
       <div class="col-1"></div>
     </div>
 
-    <q-dialog v-model="prompt">
+    <q-dialog v-model="promptEdit">
       <q-card>
         <q-card-section class="bg-green-10">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
@@ -70,13 +77,42 @@
         </div>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="prompt">
+      <q-card>
+        <q-card-section class="bg-green-10">
+          <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+            DILIGENCIA LA INFORMACIÓN
+          </h5>
+        </q-card-section>
+        <div class="q-pa-md ">
+          <div>
+            <q-input filled type="text" v-model="documen" label="DNI"></q-input>
+            <q-input filled type="text" v-model="rol" label="ROL"></q-input>
+            <q-input filled type="text" v-model="concept" label="Concepto"></q-input>
+            <q-input filled type="text" v-model="methodPay" label="Metodo de pago"></q-input>
+            <q-input filled type="number" v-model="time" label="tiempo a pagar"></q-input>
+            <q-input filled type="number" v-model="total" label="Total"></q-input>
+
+            <div>
+              <br />
+              <q-btn label="guardar" class="text-white bg-green-10" @click="putInfo()" />
+              <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+            </div>
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
   
 <script setup>
 import { ref, onMounted } from 'vue'
-import axios from 'axios';
+import { payStore } from "../../store/Costs/Pays.js"
+const PayStore = payStore()
 let prompt = ref(false)
+let promptEdit = ref(false)
+let index = ref()
 let pagination = ref({
   rowsPerPage: 0
 })
@@ -136,55 +172,77 @@ rows.value.forEach((row, index) => {
 })
 
 
-
-
 const postPays = async () => {
+  const pays = await PayStore.newPays(
+    documen.value,
+    rol.value,
+    concept.value,
+    methodPay.value,
+    time.value,
+    total.value,
+  )
+  getPays()
 
-  try {
-    const pays = await axios.post(`http://localhost:4500/payments/post`, {
-      DNI: documen.value,
-      ROL: rol.value,
-      CONCEPT: concept.value,
-      PAYMENT_METHOD: methodPay.value,
-      Date: Date, 
-      Total: total.value,
-      TIME_TO_PAY: time.value,
-  
+}
+const getPays = async () => {
 
+  const pays = await PayStore.listPays()
+  if (pays.status < 299) {
+    rows.value = pays.data
+    rows.value.forEach((row, index) => {
+      row.index = index + 1
     })
-    getTypePays()
-    console.log(pays);
-  } catch (error) {
-    console.log(error);
+  } else {
+    alert(pays)
   }
-  clear()
 }
-const getTypePays = async () => {
-  try {
-    const packa = await axios.get(`http://localhost:4500/payments/get`)
-    console.log(packa);
-    rows.value = packa.data
-  } catch (error) {
-    console.log(error);
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await PayStore.active(data._id, 0)
+    console.log(res);
+    getPays()
+  } else {
+    res = await PayStore.active(data._id, 1)
+    console.log(res);
+    getPays()
   }
-  console.log("ok");
 }
+
+function goInfo(data) {
+  documen.value = data.documen
+rol.value = data.rol
+concept.value = data.concept
+methodPay.value = data.methodPay
+time.value = data.time
+total.value = data.total
+    
+}
+
+async function putInfo() {
+  console.log(index.value);
+  const res = await PayStore.putPays(index.value,
+    documen.value,
+    rol.value,
+    concept.value,
+    methodPay.value,
+    time.value,
+    total.value
+  )
+  console.log(res);
+  getPays()
+}
+
 
 onMounted(() => {
-  getTypePays()
+  getPays()
 })
 
-function clear() {
-  document.value = ""
-  concept.value = ""
-  rol.value = ""
-  methodPay.value = ""
-
-  total.value = ""
-}
 
 </script>
 
-<style scoped>.q-input {
+<style scoped>
+.q-input {
   margin-bottom: 20px;
 }</style>

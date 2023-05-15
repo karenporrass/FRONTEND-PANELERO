@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia'
 import {ref} from "vue"
 import axios from "axios"
+import {requestAxios} from "../../Global/axios.js"
 
 export const usersStore = defineStore('counter', () => {
     const user = ref("")
     
     async function listUsers() {
+      console.log("listUsers")
       try {
-        return await axios.get("https://project-panelero.onrender.com/usuarios")
+        return await requestAxios.get("/usuarios")
       } catch (error) {
         console.log(error);
       }

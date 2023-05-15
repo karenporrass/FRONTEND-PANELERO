@@ -1,21 +1,22 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import axios from "axios";
+import {requestAxios} from "../../Global/axios.js"
 
 export const payStore = defineStore("counter", () => {
   const Pay = ref("");
 
   async function listPays() {
+    console.log("listPays")
     try {
-      return await axios.get("https://project-panelero.onrender.com/payments");
+      return await requestAxios.get("/payments");
     } catch (error) {
       console.log(error);
     }
   }
   async function newPays(documen, rol, concept, methodPay, time) {
     try {
-      return await axios.post(
-        `https://project-panelero.onrender.com/payments`,
+      return await requestAxios.post(
+        `/payments`,
         {
           DNI: documen,
           ROl: rol,
@@ -30,8 +31,8 @@ export const payStore = defineStore("counter", () => {
   }
   async function putPays(id, documen, rol, concept, methodPay, time) {
     try {
-      return await axios.post(
-        `https://project-panelero.onrender.com/payments/${id}`,
+      return await requestAxios.post(
+        `/update/${id}`,
         {
           DNI: documen,
           ROl: rol,
@@ -47,8 +48,8 @@ export const payStore = defineStore("counter", () => {
 
   async function active(id, estado) {
     try {
-      return await axios.put(
-        `https://project-panelero.onrender.com/payments/state/${id}`,
+      return await requestAxios.put(
+        `/state/${id}`,
         { state: estado }
       ); //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
     } catch (error) {

@@ -16,8 +16,7 @@ export const payStore = defineStore("counter", () => {
   async function newPays(documen, rol, concept, methodPay, time) {
     try {
       return await requestAxios.post(
-        `/payments`,
-        {
+        `/payments`,         {
           DNI: documen,
           ROl: rol,
           CONCEPT: concept,

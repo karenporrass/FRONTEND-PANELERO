@@ -10,7 +10,18 @@
         <q-separator class="q-my-md  bg-green-10" style="height: 2px; margin-left: 100px; margin-right: 100px;" />
         <div class="row">
           <div class="col-1"></div>
-          <div class="col-10">Hola</div>
+          <div class="col-10" style="display: flex;" > 
+            <router-link to="/homeMantenimiento" style="text-decoration: none; font-size:larger;" class="text-dark">
+          <div class="q-mr-md" ><span style="font-size: 35px; " class="material-icons-outlined ">
+                arrow_right
+              </span> Mantenimiento</div>
+          </router-link>
+          <div style="font-size: larger;">
+            <span style="font-size: 35px; " class="material-icons-outlined ">
+                arrow_right
+              </span> Usuarios
+            </div>
+        </div> 
           <div class="col-1"></div>
         </div>
         

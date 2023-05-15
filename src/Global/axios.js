@@ -4,4 +4,4 @@ const requestAxios = axios.create({
     baseURL: "https://project-panelero.onrender.com"
 });
 
-export {requestAxios}; 
+export default requestAxios

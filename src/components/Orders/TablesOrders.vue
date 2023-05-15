@@ -40,8 +40,15 @@
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit == true "></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
           </template>
@@ -92,7 +99,41 @@
       </q-card>
     </q-dialog>
 
+    <!-- modal editar  -->
+    <q-dialog v-model="promptEdit">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+               EDITAR LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div style="display: flex;">
+                    <div id="inputs">
+                      <q-input  filled class="q-mb-md" type="number" v-model="documento" label="Digite el numero de documento"></q-input>
+                      <q-input  filled class="q-mb-md" type="text"   v-model="nombre" label="Nombre"></q-input>
+                      <q-input  filled class="q-mb-md" type="text"   v-model="telefono" label="Telefono"></q-input>
+                      <q-input  filled class="q-mb-md" type="text"   v-model="direccion" label="Dirección"></q-input>
+                      <q-input  filled class="q-mb-md" type="number" v-model="saldopendiente" label="Saldo Pendiente"></q-input>
+                      <q-select filled class="q-mb-md" v-model="tipoPanela" :options="options" label="Escoga el tipo de panela" />
+                    </div>
 
+                    <div id="inputs">
+                      <q-select filled class="q-mb-md"               v-model="formaPanela" :options="options2" label="Escoga la forma de la panela" />
+                      <q-input  filled class="q-mb-md" type="number" v-model="cantidad" label="Cantidad"></q-input>
+                      <q-select filled class="q-mb-md"               v-model="tipoEmpaque" :options="options3" label="Escoga el tipo de empaque" />
+                      <q-input  filled class="q-mb-md" type="text"   v-model="comprobantePago" label="Comprobante"></q-input>
+                      <q-input  filled class="q-mb-md" type="text"   v-model="abono" label="Abono"></q-input>
+                      <q-input  filled class="q-mb-md" type="number" v-model="valorTotal" label="Valor Total"></q-input>
+                    </div>
+                    <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putLogin()"/>
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+
+                    </div>
+            </q-card>
+          </q-dialog>
 
 
 </div>
@@ -101,11 +142,14 @@
 
 <script setup>
 import { ref, onMounted} from "vue";
+import {LoginStore} from "../../store/Login/login.js"
 
 import axios from "axios";
 
 
 let abrirCrear=ref(false)
+let promptEdit = ref(false)
+let index = ref()
 
 
 let tipoPanela=ref()
@@ -163,6 +207,63 @@ let rows = ref([
 rows.value.forEach((row, index) => {
   row.index = index
 })
+
+async function activarDesactivar(data) {
+  console.log(data);
+  let res = ""
+  if (data.state == 1) {
+    res = await userStore.active(data._id, 0)
+    console.log(res);
+    orderGet()
+  } else {
+    res = await userStore.active(data._id, 1)
+    console.log(res);
+    orderGet()
+  }
+}
+
+function goInfo(data){
+      documento.value =data.documento
+      telefono.value= data.telefono ,
+      tipoPanela.value= data.tipoPanela,
+      cantidad.value= data.cantidad,
+      comprobantePago.value=data.comprobantePago ,
+      saldopendiente.value=data.saldopendiente,
+      nombre.value= data.nombre,
+      direccion.value= data.direccion,
+      formaPanela.value=data.formaPanela,
+      tipoEmpaque.value= data.tipoEmpaque,
+      abono.value=data.abono ,
+      Date.value= data.Date,
+      valorTotal.value= data.valorTotal
+}
+
+async function putLogin(){
+  console.log(index.value);
+  const res = await LoginStore.putUsers(index.value, 
+      documento.value ,
+      telefono.value,
+      tipoPanela.value,
+      cantidad.value,
+      comprobantePago.value ,
+      saldopendiente.value,
+      nombre.value,
+      direccion.value,
+      formaPanela.value,
+      tipoEmpaque.value,
+      abono.value ,
+      Date.value,
+      valorTotal.value )
+    console.log(res);
+    orderGet()
+}
+
+onMounted(()=>{
+  orderGet()
+})
+
+
+
 
 
 const orderPost = async ()=>{

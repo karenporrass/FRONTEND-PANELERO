@@ -8,7 +8,7 @@
             <div class="col-1"></div>
         </div>
         <q-separator class="q-my-md  bg-green-10" style="height: 2px; margin-left: 100px; margin-right: 100px;" />
-        <div class="row">
+        <div class="row q-mb-sm">
           <div class="col-1"></div>
           <div class="col-10" style="display: flex;" > 
             <router-link to="/homeMantenimiento" style="text-decoration: none; font-size:larger;" class="text-dark">
@@ -70,8 +70,8 @@
               <div class="q-pa-md " >
                 <div>
                     <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del lote"></q-input>
-                    <q-input  filled type="number" v-model="extent" label="Digite la extencion del lote"></q-input>
-
+                    <q-input class="q-mb-md" filled type="number" v-model="extent" label="Digite la extencion del lote"></q-input>
+                    <q-select filled v-model="farm" :options="optionsFarms" label="Seleccione la finca" />
                   <div>
                     <br />
                     <q-btn  label="guardar" class="text-white bg-green-10" @click="postLots()" />
@@ -92,8 +92,8 @@
               <div class="q-pa-md " >
                 <div>
                     <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del lote"></q-input>
-                    <q-input  filled type="number" v-model="extent" label="Digite la extencion del lote"></q-input>
-
+                    <q-input class="q-mb-md" filled type="number" v-model="extent" label="Digite la extencion del lote"></q-input>
+                    <q-select filled v-model="farm" :options="optionsFarms" label="Seleccione la finca" />
                   <div>
                     <br />
                     <q-btn  label="guardar" class="text-white bg-green-10" @click="putInfo()" />
@@ -114,14 +114,17 @@ let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
 let extent= ref()
+let farm = ref("")
 let index = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
+let optionsFarms =ref([])
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE LOTE',field: 'name',align: 'center'},
   {name: 'weight',label: 'EXTENCION',align: 'center',field: row => row.extent,format: val => `${val}`,sortable: true},
+  {name: 'farm',label: 'NOMBRE FINCA',field: 'farm',align: 'center'},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])
@@ -131,7 +134,8 @@ let rows = ref([])
 const postLots= async ()=>{
     const lots = await lotsStores.newlots(
        name.value, 
-       extent.value
+       extent.value,
+       farm.value.value
        )
     getLots()
 
@@ -147,6 +151,21 @@ const getLots = async ()=>{
   } else {
     alert(lots)
   }
+}
+
+const getFarms = async ()=>{
+ const res = await lotsStores.listFarmsActive()
+ console.log(res.data);
+ if (res.status < 299) {
+  for(let i in res.data){
+    console.log(i);
+    let object = {label: res.data[i].name, value: res.data[i]._id};
+    optionsFarms.value.push(object)
+  }
+ console.log(optionsFarms.value);
+} else {
+ alert(res)
+}
 }
 
 async function activarDesactivar(data) {
@@ -165,13 +184,15 @@ async function activarDesactivar(data) {
 function goInfo(data){
     name.value = data.name 
     extent.value = data.extent
+    farm.value = data.farm
 }
 
 async function putInfo(){
   console.log(index.value);
   const res = await lotsStores.putlots(index.value, 
   name.value, 
-  extent.value)
+  extent.value,
+  farm.value.value)
     console.log(res);
     getLots()
 }
@@ -179,6 +200,7 @@ async function putInfo(){
 
 onMounted(()=>{
   getLots()
+  getFarms()
  })
 
 </script>

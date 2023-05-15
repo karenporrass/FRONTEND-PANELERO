@@ -8,6 +8,14 @@
             <div class="col-1"></div>
         </div>
         <q-separator class="q-my-md  bg-green-10" style="height: 2px; margin-left: 100px; margin-right: 100px;" />
+        <div class="row">
+          <div class="col-1"></div>
+          <div class="col-10">Hola</div>
+          <div class="col-1"></div>
+        </div>
+        
+        
+        
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">

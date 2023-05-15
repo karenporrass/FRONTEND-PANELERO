@@ -120,7 +120,7 @@ rows.value.forEach((row, index) => {
 
 const monthlyExpensesPost = async () => {
   try {
-    const Expenses = await axios.post(`http://localhost:4500/monthlyExpenses/post`, {
+    const Expenses = await axios.post(`http://localhost:3500/monthlyExpenses/post`, {
 
 
 
@@ -141,7 +141,7 @@ costValue: valor.value,
 }
 const getTypeExpenses = async () => {
   try {
-    const packa = await axios.get(`http://localhost:4500/monthlyExpenses/get`)
+    const packa = await axios.get(`http://localhost:3500/monthlyExpenses/get`)
     console.log(packa);
     rows.value = packa.data
   } catch (error) {

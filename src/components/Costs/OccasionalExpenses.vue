@@ -117,7 +117,7 @@ rows.value.forEach((row, index) => {
 
 const OcaccionalPays = async ()=>{
   try {
-    const occasionalExpenses = await axios.post(`http://localhost:4500/occasionalExpenses/post`,{
+    const occasionalExpenses = await axios.post(`http://localhost:3500/occasionalExpenses/post`,{
       Name_spent:nameSpent.value,
       Finca:finca.value,
       Description:descrip.value,
@@ -137,7 +137,7 @@ costValue: valor.value
 
 const getTypeOcaccional = async ()=>{
   try {
-    const packa = await axios.get(`http://localhost:4500/occasionalExpenses/get`)
+    const packa = await axios.get(`http://localhost:3500/occasionalExpenses/get`)
     console.log(packa);
     rows.value=packa.data
   } catch (error) {

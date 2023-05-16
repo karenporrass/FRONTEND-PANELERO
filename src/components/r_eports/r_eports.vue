@@ -257,7 +257,7 @@
 
 <script setup>
 import {ref} from "vue"
-import jsPDF from 'jspdf';
+// import jsPDF from 'jspdf';
 
 let abrirDescargar=ref(false)
 let abrirDescargar3=ref(false)

@@ -5,16 +5,17 @@ import axios from "axios"
 export const useTransformedStore = defineStore('counter', () => {
     const transformed = ref("")
     
-    async function listTransformed() {
+    const listTransformed = computed(async ()=>{
       try {
         return await axios.get("https://project-panelero.onrender.com/materiaTransformada")
       } catch (error) {
         console.log(error);
+        return error
       }
-    }
+    })
     
     
-    async function addTransformed(type, quantity, lot, date) {
+    const addTransformed= computed(async (type, quantity, lot, date)=>{  {
       try {
         return await axios.post(`https://project-panelero.onrender.com/materiaTransformada`,{
           type: type,
@@ -25,7 +26,7 @@ export const useTransformedStore = defineStore('counter', () => {
       } catch (error) {
         console.log(error);
       }
-    }
+    }})
     
     
         async function active(id, estado){
@@ -38,4 +39,21 @@ export const useTransformedStore = defineStore('counter', () => {
         }
     
     return { listTransformed, transformed, active, addTransformed }
-  })
+  }) 
+
+
+  // export const useTransformedStore = defineStore('transf',{
+  //   state:()=>({
+
+  //   }),
+  //   actions:{
+  //     async listTransformed() {
+  //       try {
+  //         return await axios.get("https://project-panelero.onrender.com/materiaTransformada")
+  //       } catch (error) {
+  //         console.log(error);
+  //         return error
+  //       }
+  //     }
+  //   }
+  // })

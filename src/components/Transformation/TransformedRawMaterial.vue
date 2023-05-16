@@ -134,7 +134,7 @@ let rows = ref([])
 
 const useTransformed = useTransformedStore()
 
-getTransformed()
+
 
 // get registros proceso diario 
 async function getTransformed() {
@@ -146,10 +146,12 @@ async function getTransformed() {
       row.index = index + 1
     })
   } else {
-    alert(res)
+    console.log(res)
   }
 }
+
 getTransformed()
+
 
 //post proceso diario
 async function postTransformed() {

@@ -1,23 +1,24 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { computed } from 'vue';
 import {requestAxios} from "../../Global/axios.js"
 
 export const payStore = defineStore("counter", () => {
   const Pay = ref("");
 
-  async function listPays() {
+  const listPays = computed(async () => {
     console.log("listPays")
     try {
-      return await requestAxios.get("/payments");
+      return await requestAxios.get("/");
     } catch (error) {
       console.log(error);
     }
-  }
-  async function newPays(documen, rol, concept, methodPay, time) {
+  })
+
+  const newPays = computed (async (documen, rol, concept, methodPay, time) => {
     try {
       return await requestAxios.post(
-        `/payments`,
-        {
+        `/payments`,         {
           DNI: documen,
           ROl: rol,
           CONCEPT: concept,
@@ -28,8 +29,9 @@ export const payStore = defineStore("counter", () => {
     } catch (error) {
       console.log(error);
     }
-  }
-  async function putPays(id, documen, rol, concept, methodPay, time) {
+  })
+
+  const putPays = computed (async (id, documen, rol, concept, methodPay, time) =>{
     try {
       return await requestAxios.post(
         `/update/${id}`,
@@ -44,7 +46,7 @@ export const payStore = defineStore("counter", () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  })
 
   async function active(id, estado) {
     try {

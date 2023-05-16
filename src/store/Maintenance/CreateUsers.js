@@ -14,6 +14,7 @@ export const usersStore = defineStore('counter', () => {
         console.log(error);
       }
     }
+
     async function listDocuments() {
       try {
         return await axios.get("https://project-panelero.onrender.com/tipoDocumento/state")

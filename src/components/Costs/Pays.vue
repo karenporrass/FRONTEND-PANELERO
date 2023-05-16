@@ -172,6 +172,20 @@ rows.value.forEach((row, index) => {
 })
 
 
+const getPays = async () => {
+
+const payList = await PayStore.listPays()
+if (payList.status < 299) {
+  rows.value = pays.data
+  rows.value.forEach((row, index) => {
+    row.index = index + 1
+  })
+} else {
+  console.log(payList)
+}
+}
+
+
 const postPays = async () => {
   const pays = await PayStore.newPays(
     documen.value,
@@ -181,21 +195,11 @@ const postPays = async () => {
     time.value,
     total.value,
   )
+  console.log(pays);
   getPays()
 
 }
-const getPays = async () => {
 
-  const pays = await PayStore.listPays()
-  if (pays.status < 299) {
-    rows.value = pays.data
-    rows.value.forEach((row, index) => {
-      row.index = index + 1
-    })
-  } else {
-    alert(pays)
-  }
-}
 
 async function activarDesactivar(data) {
   let res = ""

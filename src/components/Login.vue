@@ -46,7 +46,7 @@ let password = ref()
 let index   = ref(0)
 let usuario = ref([
     {
-        nameUser: "daniel papasito",
+        nameUser: "daniel",
         password: "123",
       }
     ])

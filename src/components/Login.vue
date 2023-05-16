@@ -21,7 +21,7 @@
                             :dense="dense" /><br>
                         <p id="p-olvido">¿Olvido su contraseña?</p>
                         <div id="div-boton">
-                        <q-btn @click="addUser(),pasarHome()" id="boton-ingresar" color="teal-10" label="INGRESAR " />
+                        <q-btn @click="addUser(),validar() " id="boton-ingresar" color="teal-10" label="INGRESAR " />
                         </div>
                     </div>
                 </div>
@@ -43,6 +43,13 @@ let router= useRouter();
 let dense = ref(false)
 let user = ref()
 let password = ref()
+let index   = ref(0)
+let usuario = ref([
+    {
+        nameUser: "daniel papasito",
+        password: "123",
+      }
+    ])
 
 const addUser = async()=>{
     try {
@@ -63,6 +70,19 @@ function pasarHome() {
     router.push("/home")
 
 }
+function validar() {
+        for (let i = 0; i < usuario.value.length; i++) {
+            index.value = i
+            if (user.value == usuario.value[index.value].nameUser && password.value == usuario.value[index.value].password) {
+            console.log("se logio con exito");
+            pasarHome()
+            }   
+            else{
+                console.log("No es correcto");
+            }
+            console.log("pos ", i);
+        }}
+       
 
 </script>
 

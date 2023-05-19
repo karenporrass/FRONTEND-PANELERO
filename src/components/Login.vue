@@ -94,13 +94,11 @@ function validar() {
 
 <style>
 #imagen-fondo {
-
-    min-height: 100vh;
-    background-image: url(https://images.pexels.com/photos/4086273/pexels-photo-4086273.jpeg?auto=compress&cs=tinysrgb&w=1600);
-    background-repeat: no-repeat;
-    background-size: 100%;
-    align-items: center;
-
+  min-height: 100vh;
+  background-image: url(https://images.pexels.com/photos/4086273/pexels-photo-4086273.jpeg?auto=compress&cs=tinysrgb&w=1600);
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: center;
 }
 
 #contendor-imagen2 {
@@ -187,4 +185,6 @@ function validar() {
     border-radius: 10px;
     width: 120px;
     font-size: 15px;
-}</style>
+}
+
+</style>

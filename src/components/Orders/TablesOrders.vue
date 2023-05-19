@@ -16,6 +16,17 @@
 
         <div id="table" class="col-10" > 
 
+          <div style="display: flex;">
+          <router-link to="/homePedidos" style="text-decoration: none;" class="text-dark">
+            <p style="font-size: 20px; "><span style="font-size: 50px; " class="material-icons-outlined">
+                arrow_right
+              </span> Pedidos</p>
+          </router-link>
+          <p style="font-size: 20px; "><span style="font-size: 50px; " class="material-icons-outlined">
+              arrow_right
+            </span> Pedidos Clientes</p>
+        </div>
+
             <q-btn @click="abrirCrear=true" id="butonAdd">Crear <q-icon name="add"></q-icon> </q-btn>
 
 
@@ -200,7 +211,7 @@ let columns = ref([
 
 let rows = ref([
   {
-    Documento: 1, Date: 1,Telefono: 1,TipoPanela: 1,Cantidad: 1,ComprobantePago: 1,SaldoPendiente: 1, Nombre: 1,Direccion: 1,FormaPanela: 1,TipoEmpaque: 1,Abono: 1,ValorTotal: 1
+    Documento: null, Date: null,Telefono: null,TipoPanela: null,Cantidad: null,ComprobantePago: null,SaldoPendiente: null, Nombre: null,Direccion: null,FormaPanela: null,TipoEmpaque: null,Abono: null,ValorTotal: null
   }
  
 ])
@@ -282,7 +293,7 @@ const orderPost = async ()=>{
       TipoEmpaque: tipoEmpaque.value,
       Abono:abono.value ,
       Date: Date,
-      ValorTotal: valorTotal.value ,
+      ValorTotal: valorTotal.value 
       
     })
     orderGet()

@@ -12,10 +12,10 @@
         <div class="row q-mt-xl">
             <div class="col-2"></div>
             <div class="col-2 q-mt-xl ">
-                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 15px;">
+                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 8px;">
                     <q-card-section>
-                        <div style="margin: 0px auto; width: 20%; ">
-                            <span class="material-symbols-outlined" style="font-size: 50px; color: black; font-weight:bold;">
+                        <div class="text-center">
+                            <span class="material-symbols-outlined" style="font-size: 50px; color: black; font-weight:bold; ">
                             attach_money
                         </span></div>
                         
@@ -32,7 +32,7 @@
             <div class="col-1"></div>
 
             <div class="col-2 text-center  q-mt-xl ">
-                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 15px;">
+                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 8px;">
                     <q-card-section>
                         <div class="text-center"><span class="material-symbols-outlined" style="font-size: 50px; color: black; font-weight:bold;">
 credit_score
@@ -51,7 +51,7 @@ credit_score
             </div>
             <div class="col-1"></div>
             <div class="col-2 text-center  q-mt-xl ">
-                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 15px;">
+                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 8px;">
                     <q-card-section>
                         <div class="text-center"><span class="material-symbols-outlined" style="font-size: 50px; color: black; font-weight:bold;">
                             other_admission

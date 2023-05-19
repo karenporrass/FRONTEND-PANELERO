@@ -4,8 +4,11 @@
       <q-layout view="hHh lpR fFf" container class="shadow-2 fullscreen">
         <q-header elevated class="bg-green-10">
           <q-toolbar>
-            <q-btn  flat @click="toggleLeftDrawer" round dense
+            <q-btn v-show="TituloPedidos == false" flat @click="toggleLeftDrawer" round dense
               icon="menu"><q-toolbar-title>MENU</q-toolbar-title></q-btn>
+            <q-btn v-show="TituloPedidos == true" flat @click="toggleLeftDrawer" round dense
+              icon="menu"><q-toolbar-title>PEDIDOS</q-toolbar-title></q-btn>
+
             <q-space></q-space>
             <q-btn flat icon="fa-regular fa-user" class="q-mr-sm" />
             <q-btn flat icon="fa-solid fa-ellipsis-vertical">
@@ -146,7 +149,7 @@
           </q-img>
         </q-drawer>
 
-        <q-page-container style="padding-left: 0;">
+        <q-page-container>
           <q-page padding>
             <router-view></router-view>
           </q-page>
@@ -168,7 +171,25 @@
 import { ref } from 'vue'
 
 const leftDrawerOpen = ref(false)
+let TituloPedidos = ref(false)
+let TituloInventory = ref(false)
+
+function MenuAPedidos() {
+  TituloPedidos = true
+}
+
+function MenuInventory() {
+  TituloInventory = true
+}
+
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
+
+
 </script>
+
+<style scoped>
+
+</style>

@@ -12,6 +12,16 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
+              <div style="display: flex;">
+          <router-link to="/homeInventory" style="text-decoration: none;" class="text-dark">
+            <p style="font-size: 20px; "><span style="font-size: 50px; " class="material-icons-outlined">
+                arrow_right
+              </span> Inventario</p>
+          </router-link>
+          <p style="font-size: 20px; "><span style="font-size: 50px; " class="material-icons-outlined">
+              arrow_right
+            </span> Marcas</p>
+        </div>
                 <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear marca</q-btn>
             </div>
             <div class="col-1"></div>
@@ -172,3 +182,10 @@ rows.value.forEach((row, index) => {
 
 
 </script>
+
+
+<style scoped>
+.q-input {
+  margin-bottom: 20px;
+}
+</style>

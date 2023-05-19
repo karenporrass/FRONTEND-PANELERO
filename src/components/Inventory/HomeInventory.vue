@@ -15,7 +15,7 @@
 
             <div class="col-2 q-mt-xl ">
                 <q-card class="my-card  shadow-8 q-py-lg "
-                    style="border: solid; border-color: darkgreen; border-radius: 15px;">
+                    style="border: solid; border-color: darkgreen; border-radius: 5px;">
                     <q-card-section>
                         <div class="text-center"> <span class="material-symbols-outlined" style="font-size: 50px;">
                                 add_business
@@ -37,7 +37,7 @@
             <div class="col-2"></div>
 
             <div class="col-2 q-mt-xl ">
-                <q-card class="my-card  shadow-8 q-py-lg  "  style="border: solid; border-color: darkgreen; border-radius: 15px;">
+                <q-card class="my-card  shadow-8 q-py-lg  "  style="border: solid; border-color: darkgreen; border-radius: 5px;">
                   
                     <q-card-section>
                         <div class="text-center"><span class="material-symbols-outlined" style="font-size: 50px;">
@@ -67,7 +67,7 @@
 
             <div class="col-2 q-mt-xl ">
                 <q-card class="my-card  shadow-8  q-py-lg "
-                    style="border: solid; border-color: darkgreen; border-radius: 15px;">
+                    style="border: solid; border-color: darkgreen; border-radius: 5px;">
                     <q-card-section>
                         <div class="text-center"> <span class="material-symbols-outlined" style="font-size: 50px;">
                                 category
@@ -89,7 +89,7 @@
 
             <div class="col-2 q-mt-xl ">
                 <q-card class="my-card  shadow-8 q-py-lg "
-                    style="border: solid; border-color: darkgreen; border-radius: 15px;">
+                    style="border: solid; border-color: darkgreen; border-radius: 5px;">
                     <q-card-section>
                         <div class="text-center"> <span class="material-symbols-outlined" style="font-size: 50px;">
                                 inventory_2
@@ -115,4 +115,17 @@
 
 <script setup>
 
+
+
 </script>
+
+<style scoped>
+
+.row{
+        flex-wrap: nowrap;
+        font-size: 90%;
+        
+}
+
+
+</style>

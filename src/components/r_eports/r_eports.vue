@@ -82,11 +82,7 @@
               
                 </q-card>
             </div>
-            <div class="col-1"></div>
-            <div class="col-2 text-center  q-mt-xl ">
-               
-            </div>
-            <div class="col-2"></div>
+            
         </div>
 
 <!-- modal descargar mantenimiento -->
@@ -112,7 +108,7 @@
                   <q-select filled v-model="tipo" :options="options2" label="Escoja" />
                   <div>
                     <br />
-                    <q-btn  label="Descargar pdf" class="text-white bg-green-10"  />
+                    <q-btn @click="descargarPdf()" label="Descargar pdf" class="text-white bg-green-10"  />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -143,7 +139,7 @@
                   <q-select filled v-model="tipo" :options="options3" label="Escoja" />
                   <div>
                     <br />
-                    <q-btn  label="Descargar pdf" class="text-white bg-green-10"  />
+                    <q-btn @click="descargarPdf()" label="Descargar pdf" class="text-white bg-green-10"  />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -175,7 +171,7 @@
                   <q-select filled v-model="tipo" :options="options4" label="Escoja" />
                   <div>
                     <br />
-                    <q-btn  label="Descargar pdf" class="text-white bg-green-10"  />
+                    <q-btn @click="descargarPdf()" label="Descargar pdf" class="text-white bg-green-10"  />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -209,7 +205,7 @@
                 
                   <div>
                     <br />
-                    <q-btn  label="Descargar pdf" class="text-white bg-green-10"  />
+                    <q-btn @click="descargarPdf()" label="Descargar pdf" class="text-white bg-green-10"  />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -257,14 +253,16 @@
 
 <script setup>
 import {ref} from "vue"
-// import jsPDF from 'jspdf';
+import jsPDF from 'jspdf';
 
 let abrirDescargar=ref(false)
 let abrirDescargar3=ref(false)
 let abrirDescargar4=ref(false)
 let abrirDescargar5=ref(false)
 let abrirDescargar6=ref(false)
-
+let copiNumeros= ref([
+      
+    ]);
 
 let TipoModulo=ref("null")
 let tipo=ref(null)
@@ -309,12 +307,12 @@ function downloadPdfPersonas() {
       pdf.value.setFont("helvetica", "normal");
       pdf.value.setFontSize(12);
 
-      var columns = ["N° Balota", "Nombre", "Celular", "Direccion", "Estado", "Metodo de pago"];
+      var columns = ["NOMBRE", "APELLIDOS", "TIPO DE DOCUMENTO", "NUMERO DE DOCUMENTO", "ROL", "TELEFONO", "DIRECCIÓN", "CORREO", "PERSONA EMERGENCIA"];
       var rows = [];
 
       for (i in copiNumeros.value) {
         console.log(i);
-        rows.push([copiNumeros.value[i].Id, copiNumeros.value[i].nombreComprador, copiNumeros.value[i].celularComprador, copiNumeros.value[i].direccionComprador, copiNumeros.value[i].estado, copiNumeros.value[i].Tipodepago]);
+        rows.push([copiNumeros.value[i].Id, copiNumeros.value[i].nombre, copiNumeros.value[i].apellido, copiNumeros.value[i].tipoDocumento, copiNumeros.value[i].numeroDocumento, copiNumeros.value[i].rol,copiNumeros.value[i].telefono,copiNumeros.value[i].direccion,copiNumeros.value[i].correo,copiNumeros.value[i].persona ]);
       }
       pdf.value.autoTable({
         head: [columns],
@@ -322,61 +320,61 @@ function downloadPdfPersonas() {
         startY: 20,// posición Y donde se iniciará la tabla
 
       });
-      pdf.value.save("Reporte.pdf");
+      pdf.value.save("Reporte Personas.pdf");
     }
 
 
     function descargarPdf() {
-        if (options2.value=="Personas") {
+        if (tipo.value=="Personas") {
             downloadPdfPersonas()
         }
-        // if (options2.value=="Labores") {
+        // if (tipo.value=="Labores") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Método de pago") {
+        // }if (tipo.value=="Método de pago") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
-        // }if (options2.value=="Personas") {
+        // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
         // }
     }
@@ -396,6 +394,10 @@ function downloadPdfPersonas() {
   margin-right: 30px;
   
 }
-
+@media (max-width: 1300px){
+  .q-btn {
+    font-size: 10px;
+  }
+}
 
 </style>

@@ -129,7 +129,10 @@ let columns = ref([
 let rows = ref([])
 
 const postFarmRegistry = async ()=>{
-    const farm = await farmStore.newFarm (name.value, registrationNumber.value,extent.value )
+    const farm = await farmStore.newFarm (
+      name.value, 
+      registrationNumber.value,
+      extent.value )
     console.log(farm);
     getFarmRegistry()
 }

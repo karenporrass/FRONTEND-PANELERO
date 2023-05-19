@@ -17,7 +17,7 @@
                         <q-input id="input-usuario" filled v-model="user" label="DIGITE SU USUARIO" stack-label
                             :dense="dense" /><br>
                         <p id="p-contraseña"><strong>CONTRASEÑA</strong></p>
-                        <q-input id="input-contraseña" filled v-model="password" label="DIGITE SU CONTRASEÑA" stack-label
+                        <q-input id="input-contraseña" type="password" filled v-model="password" label="DIGITE SU CONTRASEÑA" stack-label
                             :dense="dense" /><br>
                         <p id="p-olvido">¿Olvido su contraseña?</p>
                         <div id="div-boton">

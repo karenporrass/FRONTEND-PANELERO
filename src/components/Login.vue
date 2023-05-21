@@ -41,8 +41,8 @@ import axios from "axios"
 import {useRouter} from "vue-router"
 let router= useRouter();
 let dense = ref(false)
-let user = ref()
-let password = ref()
+let user = ref("daniel")
+let password = ref("123")
 let index   = ref(0)
 let usuario = ref([
     {

@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia'
 import {ref} from "vue"
 import axios from "axios"
+import { requestAxios } from '../../Global/axios'
+
 
 export const usePackedStore = defineStore('counter', () => {
     const packed = ref("")
     
     async function listPacked() {
       try {
-        return await axios.get("https://project-panelero.onrender.com/empacados")
+        return await requestAxios.get("/empacados")
       } catch (error) {
         console.log(error);
       }
@@ -16,7 +18,7 @@ export const usePackedStore = defineStore('counter', () => {
     
     async function addPacked(cellarCode, typePacking, typePanela, formPanela, totalPanelas) {
       try {
-        return await axios.post(`https://project-panelero.onrender.com/empacados`,{
+        return await requestAxios.post(`/empacados`,{
           cellarCode: cellarCode,
           typePacking: typePacking,
           typePanela: typePanela,
@@ -31,7 +33,7 @@ export const usePackedStore = defineStore('counter', () => {
     
         async function active(id, estado){
           try {
-            return await axios.put(`https://project-panelero.onrender.com/empacados/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+            return await requestAxios.put(`/empacados/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
           } catch (error) {
             console.log(error);
             return error

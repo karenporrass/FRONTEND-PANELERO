@@ -15,11 +15,18 @@ export const useDailyStore = defineStore('counter', () => {
     }
 
   
-    async function addDailyProcess(infoDialy){
+    async function addDailyProcess(name, description, hours, people, labor, farm, lot, date){
       try {
-        return await requestAxios.post("/procesoDiario",infoDialy {
+        return await requestAxios.post("/procesoDiario",{
+          name: name, // se llama a las variables del modal
+          description: description,
+          hours: hours,
+          people: people,
+          labor: labor,
+          farm: farm,
+          lot: lot,
+          date: date,
         })
-        console.log(infoDialy);
       } catch (error) {
         console.log(error);
       }
@@ -37,7 +44,13 @@ export const useDailyStore = defineStore('counter', () => {
 
     async function edit(){
       try{
-        return await requestAxios.put(`/procesoDiario/update/${id}`, {name:nombre, description: descripcion, hours: horas, people: personas, date: fecha, lot: lote})
+        return await requestAxios.put(`/procesoDiario/update/${id}`, {
+          name:nombre, 
+          description: descripcion, 
+          hours: horas, 
+          people: personas, 
+          date: fecha, 
+          lot: lote})
       } catch (error){
         console.log(error);
         return error

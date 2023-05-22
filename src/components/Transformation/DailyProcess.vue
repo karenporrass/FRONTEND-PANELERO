@@ -8,6 +8,22 @@
       <div class="col-1"></div>
     </div>
     <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
+    <div class="row q-mb-sm">
+          <div class="col-1"></div>
+          <div class="col-10" style="display: flex;" > 
+            <router-link to="/homeTransformacion" style="text-decoration: none; font-size:larger;" class="text-dark">
+          <div class="q-mr-md" ><span style="font-size: 30px; " class="material-icons-outlined ">
+                arrow_right
+              </span>Transformación</div>
+          </router-link>
+          <div style="font-size: larger;">
+            <span style="font-size: 30px; " class="material-icons-outlined text-overline">
+                arrow_right
+              </span> Proceso diario
+            </div>
+        </div> 
+          <div class="col-1"></div>
+        </div>
     <div class="row ">
       <div class="col-1"></div>
       <div class="col-10 ">
@@ -26,7 +42,7 @@
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="edit = true"></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="edit = true, showInfo()"></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -103,7 +119,7 @@
             <q-input v-model="date" class="q-mb-xs" filled type="date" label="Seleccione la fecha" />
             <div class="q-pb-sm">
               <br />
-              <q-btn label="guardar" class="text-white bg-green-10" @click="showInfo()" />
+              <q-btn label="guardar" class="text-white bg-green-10" />
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
@@ -120,7 +136,6 @@
   
 <script setup>
 import { onMounted, ref } from "vue"
-import axios from "axios";
 import { useDailyStore } from "../../store/Transformation/dailyProcess.js"
 
 

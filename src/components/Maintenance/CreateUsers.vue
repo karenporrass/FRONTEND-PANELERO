@@ -324,9 +324,9 @@ onMounted(()=>{
 })
 
 </script>
-
-<style lang="sass" scoped>
+<!-- 
+<style scoped>
 .my-card
   height: 60%
   max-height: 80%
-</style>
+</style> -->

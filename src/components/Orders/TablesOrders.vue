@@ -157,7 +157,6 @@ import { OrderStore } from "../../store/Orders/TablesOrders.js"
 const orderStore = OrderStore()
 
 
-let prompt = ref(false)
 let abrirCrear=ref(false)
 let promptEdit = ref(false)
 let index = ref()

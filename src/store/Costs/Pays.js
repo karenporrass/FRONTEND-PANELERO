@@ -34,7 +34,7 @@ export const payStore = defineStore("counter", () => {
 
   async function putPays(id, documen, rol, concept, methodPay, time ) { //recivir las variables 
     try {
-        return await requestAxios.put(`/payments/update/${id}`,{
+        return await requestAxios.post(`/payments/update/${id}`,{
           DNI: documen,
           ROl: rol,
           CONCEPT: concept,

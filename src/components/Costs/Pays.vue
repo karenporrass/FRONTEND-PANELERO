@@ -174,14 +174,14 @@ rows.value.forEach((row, index) => {
 
 const getPays = async () => {
 
-const payList = await PayStore.listPays()
-if (payList.status < 299) {
-  rows.value = payList.data
+const res = await PayStore.listPays()
+if (res.status < 299) {
+  rows.value = res.data
   rows.value.forEach((row, index) => {
     row.index = index + 1
   })
 } else {
-  console.log(payList)
+  console.log(res)
 }
 }
 

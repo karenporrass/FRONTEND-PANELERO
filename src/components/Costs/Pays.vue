@@ -87,11 +87,12 @@
         </q-card-section>
         <div class="q-pa-md ">
           <div>
-            <q-input filled type="text" v-model="documen" label="DNI"></q-input>
-            <q-input filled type="text" v-model="rol" label="ROL"></q-input>
-            <q-input filled type="text" v-model="concept" label="Concepto"></q-input>
-            <q-input filled type="text" v-model="methodPay" label="Metodo de pago"></q-input>
-            <q-input filled type="number" v-model="time" label="tiempo a pagar"></q-input>
+            
+            <q-input filled type="text" v-model="DNI" label="DNI"></q-input>
+            <q-input filled type="text" v-model="ROL" label="ROL"></q-input>
+            <q-input filled type="text" v-model="CONCEPT" label="Concepto"></q-input>
+            <q-input filled type="text" v-model="PAYMENT_METHOD" label="Metodo de pago"></q-input>
+            <q-input filled type="number" v-model="TIME_TO_PAY" label="tiempo a pagar"></q-input>
             <q-input filled type="number" v-model="total" label="Total"></q-input>
 
             <div>
@@ -158,11 +159,11 @@ let rows = ref([
 
 ])
 
-let documen = ref()
-let rol = ref()
-let concept = ref()
-let methodPay = ref()
-let time = ref()
+let DNI = ref()
+let ROL = ref()
+let CONCEPT = ref()
+let PAYMENT_METHOD = ref()
+let TIME_TO_PAY = ref()
 let total = ref()
 
 
@@ -174,26 +175,27 @@ rows.value.forEach((row, index) => {
 
 const getPays = async () => {
 
-const payList = await PayStore.listPays()
-if (payList.status < 299) {
-  rows.value = pays.data
+const res = await PayStore.listPays()
+if (res.status < 299) {
+  rows.value = res.data
   rows.value.forEach((row, index) => {
     row.index = index + 1
   })
 } else {
-  console.log(payList)
+  console.log(res)
 }
 }
 
 
 const postPays = async () => {
   const pays = await PayStore.newPays(
-    documen.value,
-    rol.value,
-    concept.value,
-    methodPay.value,
-    time.value,
-    total.value,
+
+    DNI.value,
+ROL.value,
+CONCEPT.value,
+PAYMENT_METHOD.value,
+TIME_TO_PAY.value,
+total.value,
   )
   console.log(pays);
   getPays()
@@ -215,11 +217,11 @@ async function activarDesactivar(data) {
 }
 
 function goInfo(data) {
-  documen.value = data.documen
-rol.value = data.rol
-concept.value = data.concept
-methodPay.value = data.methodPay
-time.value = data.time
+  DNI.value = data.documen
+ROL.value = data.rol
+CONCEPT.value = data.concept
+PAYMENT_METHOD.value = data.methodPay
+TIME_TO_PAY.value = data.time
 total.value = data.total
     
 }
@@ -227,12 +229,12 @@ total.value = data.total
 async function putInfo() {
   console.log(index.value);
   const res = await PayStore.putPays(index.value,
-    documen.value,
-    rol.value,
-    concept.value,
-    methodPay.value,
-    time.value,
-    total.value
+  DNI.value,
+ROL.value,
+CONCEPT.value,
+PAYMENT_METHOD.value,
+TIME_TO_PAY.value,
+total.value,
   )
   console.log(res);
   getPays()

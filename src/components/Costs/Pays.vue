@@ -176,7 +176,7 @@ const getPays = async () => {
 
 const payList = await PayStore.listPays()
 if (payList.status < 299) {
-  rows.value = pays.data
+  rows.value = payList.data
   rows.value.forEach((row, index) => {
     row.index = index + 1
   })

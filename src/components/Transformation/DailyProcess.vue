@@ -229,14 +229,14 @@ async function activarDesactivar(data) {
 async function showInfo(data) {
   console.log(data);
   if (data == data._id) {
-      name.value = name.value,
-      description.value = description.value,
-      hours.value = hours.value,
-      people.value = people.value,
-      labor.value = labor.value,
-      farm.value = farm.value,
-      lot.value = lot.value,
-      date.value = date.value,
+      name.value = data.value,
+      description.value = data.value,
+      hours.value = data.value,
+      people.value = data.value,
+      labor.value = data.value,
+      farm.value = data.value,
+      lot.value = data.value,
+      date.value = data.value,
       console.log(data);
   }
 }

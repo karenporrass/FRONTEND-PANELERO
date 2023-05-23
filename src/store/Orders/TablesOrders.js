@@ -61,7 +61,7 @@ export const OrderStore = defineStore('counter', () => {
         }
       })
     
-      async function active(id, estado) {
+      async function active(id,estado) {
         try {
           return await requestAxios.put(
             `/pedido/update/state/${id}`,

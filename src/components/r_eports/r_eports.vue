@@ -253,16 +253,15 @@
 
 <script setup>
 import {ref} from "vue"
-import jsPDF from 'jspdf';
+
+
 
 let abrirDescargar=ref(false)
 let abrirDescargar3=ref(false)
 let abrirDescargar4=ref(false)
 let abrirDescargar5=ref(false)
 let abrirDescargar6=ref(false)
-let copiNumeros= ref([
-      
-    ]);
+
 
 let TipoModulo=ref("null")
 let tipo=ref(null)
@@ -292,36 +291,76 @@ let options6= ref([
       ]   )
 
 
- function validarNumeros() {
-      copiNumeros.value = numeros.value.filter((x) => x.state === '1')
-    }
 
 function downloadPdfPersonas() {
-      validarNumeros()
-      pdf.value = new jsPDF();
-      pdf.value.setFont("helvetica", "bold");
-      pdf.value.setFontSize(16);
+  const docDefinition = {
+    content: [
+      { text: 'Reporte Mantenimiento:Personas', style: 'header' },
+      {
+        style: 'table',
+        table: {
+          headerRows: 1,
+          widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+          body: [
+            [
+              { text: 'NOMBRE', style: 'tableHeader' },
+              { text: 'APELLIDOS', style: 'tableHeader' },
+              { text: 'TIPO DE DOCUMENTO', style: 'tableHeader' },
+              { text: 'ROL', style: 'tableHeader' },
+              { text: 'CELULAR', style: 'tableHeader' },
+              { text: 'DIRECCIÓN', style: 'tableHeader' },
+              { text: 'CORREO', style: 'tableHeader' },
+              { text: 'PERSONA EMERGENCIA', style: 'tableHeader' },
+              { text: 'NUMERO DE CONTACTO', style: 'tableHeader' }
+            ],
+            ...this.rifa.map((item, index) => [
+              { text: `${index + 1}`, style: index % 2 === 0 ? 'even' : 'odd' },
+              { text: item.name, style: 'tableBody' },
+              { text: item.lastNames, style: 'tableBody' }, 
+              { text: item.typeDocument, style: 'tableBody' },
+              { text: item.numberDocument ? 'Activo' : 'Inactivo' , style: 'tableBody' },
+              { text: item.rol, style: 'tableBody' },
+              { text: item.cel, style: 'tableBody' },
+              { text: item.address, style: 'tableBody' },
+              { text: item.email, style: 'tableBody' },
+              { text: item.emergencyPersonName, style: 'tableBody' },
+              { text: item.emergencyPersonPhone, style: 'tableBody' }
 
-      pdf.value.text("Reporte", 20, 20); // agrega un título al archivo PDF
-
-      pdf.value.setFont("helvetica", "normal");
-      pdf.value.setFontSize(12);
-
-      var columns = ["NOMBRE", "APELLIDOS", "TIPO DE DOCUMENTO", "NUMERO DE DOCUMENTO", "ROL", "TELEFONO", "DIRECCIÓN", "CORREO", "PERSONA EMERGENCIA"];
-      var rows = [];
-
-      for (i in copiNumeros.value) {
-        console.log(i);
-        rows.push([copiNumeros.value[i].Id, copiNumeros.value[i].nombre, copiNumeros.value[i].apellido, copiNumeros.value[i].tipoDocumento, copiNumeros.value[i].numeroDocumento, copiNumeros.value[i].rol,copiNumeros.value[i].telefono,copiNumeros.value[i].direccion,copiNumeros.value[i].correo,copiNumeros.value[i].persona ]);
+            ])
+          ]
+        }
       }
-      pdf.value.autoTable({
-        head: [columns],
-        body: rows,
-        startY: 20,// posición Y donde se iniciará la tabla
-
-      });
-      pdf.value.save("Reporte Personas.pdf");
+    ],
+    styles: {
+      header: {
+        fontSize: 18,
+        bold: true,
+        margin: [0, 0, 0, 10]
+      },
+      tableHeader: {
+        bold: true,
+        fontSize: 13,
+        color: 'white',
+        fillColor: '#2d4154'
+      },
+      tableBody: {
+        fontSize: 11
+      },
+      odd: {
+        fillColor: '#f2f2f2'
+      },
+      even: {
+        fillColor: '#dddddd'
+      },
+      table: {
+        margin: [0, 5, 0, 10]
+      }
     }
+  };
+
+  pdfMake.createPdf(docDefinition).download('Tu Rifa.pdf');
+}    
+
 
 
     function descargarPdf() {
@@ -378,6 +417,9 @@ function downloadPdfPersonas() {
         //     downloadPdfPersonas()
         // }
     }
+
+ 
+
 
 </script>
 

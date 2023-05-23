@@ -138,7 +138,7 @@
                     </div>
                     <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putLogin()"/>
+                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()"/>
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
 
@@ -153,11 +153,11 @@
 
 <script setup>
 import { ref, onMounted} from "vue";
-import {LoginStore} from "../../store/Login/login.js"
+import { OrderStore } from "../../store/Orders/TablesOrders.js"
+const orderStore = OrderStore()
 
-import axios from "axios";
 
-
+let prompt = ref(false)
 let abrirCrear=ref(false)
 let promptEdit = ref(false)
 let index = ref()
@@ -219,22 +219,9 @@ rows.value.forEach((row, index) => {
   row.index = index
 })
 
-async function activarDesactivar(data) {
-  console.log(data);
-  let res = ""
-  if (data.state == 1) {
-    res = await userStore.active(data._id, 0)
-    console.log(res);
-    orderGet()
-  } else {
-    res = await userStore.active(data._id, 1)
-    console.log(res);
-    orderGet()
-  }
-}
 
 function goInfo(data){
-      documento.value =data.documento
+      documento.value =data.documento,
       telefono.value= data.telefono ,
       tipoPanela.value= data.tipoPanela,
       cantidad.value= data.cantidad,
@@ -249,101 +236,81 @@ function goInfo(data){
       valorTotal.value= data.valorTotal
 }
 
-async function putLogin(){
+
+const orderGet = async () => {
+
+const res = await orderStore.listOrders()
+if (res.status < 299) {
+    rows.value = res.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+  })
+  } else {
+    alert(res)
+  }
+}
+
+const orderPost = async () => {
+  const order = await orderStore.newOrder(
+    documento.value, 
+    telefono.value, 
+    tipoPanela.value, 
+    cantidad.value, 
+    comprobantePago.value,
+    saldopendiente.value,
+    nombre.value,
+    direccion.value,
+    formaPanela.value,
+    tipoEmpaque.value,
+    abono.value,
+    valorTotal.value
+  )
+  console.log(order);
+  orderGet()
+
+}
+
+async function putInfo() {
   console.log(index.value);
-  const res = await LoginStore.putUsers(index.value, 
-      documento.value ,
-      telefono.value,
-      tipoPanela.value,
-      cantidad.value,
-      comprobantePago.value ,
-      saldopendiente.value,
-      nombre.value,
-      direccion.value,
-      formaPanela.value,
-      tipoEmpaque.value,
-      abono.value ,
-      Date.value,
-      valorTotal.value )
+  const res = await orderStore.putPays(index.value,
+    documento.value, 
+    telefono.value, 
+    tipoPanela.value, 
+    cantidad.value, 
+    comprobantePago.value,
+    saldopendiente.value,
+    nombre.value,
+    direccion.value,
+    formaPanela.value,
+    tipoEmpaque.value,
+    abono.value,
+    valorTotal.value 
+  )
+  console.log(res);
+  orderGet()
+  limpiar()
+}
+
+onMounted(() => {
+  orderGet()
+})
+
+
+
+async function activarDesactivar(data) {
+  console.log(data);
+  let res = ""
+  if (data.state == 1) {
+    res = await orderStore.active(data._id, 0)
     console.log(res);
     orderGet()
-}
-
-onMounted(()=>{
-  orderGet()
-})
-
-
-
-
-
-const orderPost = async ()=>{
-  try {
-    const order = await axios.post(`http://localhost:3500/pedido/post`,{
-      
-      Documento: documento.value,
-      Telefono: telefono.value ,
-      TipoPanela: tipoPanela.value,
-      Cantidad: cantidad.value,
-      ComprobantePago:comprobantePago.value ,
-      SaldoPendiente:saldopendiente.value ,
-      Nombre: nombre.value,
-      Direccion: direccion.value,
-      FormaPanela:formaPanela.value,
-      TipoEmpaque: tipoEmpaque.value,
-      Abono:abono.value ,
-      Date: Date,
-      ValorTotal: valorTotal.value 
-      
-    })
+  } else {
+    res = await orderStore.active(data._id, 1)
+    console.log(res);
     orderGet()
-    console.log(order);
-    limpiar()
-  } catch (error) {
-    console.log(error);
   }
-}
-const orderPut = async ()=>{
-  try {
-    const order = await axios.post(`http://localhost:3500/pedido/editar/{:id}`,{
-      
-      
-      Documento: documento.value,
-      Telefono: telefono.value ,
-      TipoPanela: tipoPanela.value,
-      Cantidad: cantidad.value,
-      ComprobantePago:comprobantePago.value ,
-      SaldoPendiente:saldopendiente.value ,
-      Nombre: nombre.value,
-      Direccion: direccion.value,
-      FormaPanela:formaPanela.value,
-      TipoEmpaque: tipoEmpaque.value,
-      Abono:abono.value ,
-      Date: Date,
-      ValorTotal: valorTotal.value ,
-      
-    })
-    orderGet()
-    console.log(order);
-    limpiar()
-  } catch (error) {
-    console.log(error);
-  }
-}
-const orderGet = async ()=>{
-  try {
-    const packa = await axios.get(`http://localhost:3500/pedido/listar`)
-    console.log(packa);
-    rows.value=packa.data
-  } catch (error) {
-    console.log(error);
-  }
-  console.log("ok");
-}
-
-onMounted(()=>{
   orderGet()
-})
+}
 
 
 function limpiar() {

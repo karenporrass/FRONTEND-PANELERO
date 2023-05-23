@@ -17,14 +17,14 @@ export const payStore = defineStore("counter", () => {
   }
 
 
-  async function newPays(documen, rol, concept, methodPay, time ) {
+  async function newPays(DNI, ROl, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY ) {
     try {
         return await requestAxios.post(`/payments`,{
-          DNI: documen,
-          ROl: rol,
-          CONCEPT: concept,
-          PAYMENT_METHOD: methodPay,
-          TIME_TO_PAY: time,
+          DNI: DNI,
+          ROl: ROl,
+          CONCEPT: CONCEPT,
+          PAYMENT_METHOD: PAYMENT_METHOD,
+          TIME_TO_PAY: TIME_TO_PAY,
 
         })
       } catch (error) {
@@ -32,14 +32,14 @@ export const payStore = defineStore("counter", () => {
       }
   }
 
-  async function putPays(id, documen, rol, concept, methodPay, time ) { //recivir las variables 
+  async function putPays(id, DNI, ROl, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY) { //recivir las variables 
     try {
-        return await requestAxios.post(`/payments/update/${id}`,{
-          DNI: documen,
-          ROl: rol,
-          CONCEPT: concept,
-          PAYMENT_METHOD: methodPay,
-          TIME_TO_PAY: time,
+        return await requestAxios.put(`/payments/update/${id}`,{
+          DNI: DNI,
+          ROl: ROl,
+          CONCEPT: CONCEPT,
+          PAYMENT_METHOD: PAYMENT_METHOD,
+          TIME_TO_PAY: TIME_TO_PAY,
         })
       } catch (error) {
         console.log(error);

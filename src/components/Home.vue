@@ -1,8 +1,12 @@
 <template>
     <div>
-        <div class="row">
-            
-            <div class="col-12 text-h3 text-weight-bolder text-center"  style="padding: 0px; ">
+      <div class="row justify-center" style="margin-top: 40px;">
+        <div class="col-10 text-center text-weight-bold text-h5">
+          <div>Imagenes corporativas</div>
+        </div>
+      </div>
+        <div class="row justify-center q-my-xl">
+            <div class="col-10"  style="padding: 0px; ">
                 <div style="padding: 0px; ">
     <q-carousel
       animated

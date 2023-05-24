@@ -1,34 +1,31 @@
 import { defineStore } from 'pinia'
-import {ref} from "vue"
 import axios from "axios"
 import { requestAxios } from '../../Global/axios'
 
 
-export const useTransformedStore = defineStore('counter', () => {
-    const transformed = ref("")
+export const useTransformedStore = defineStore('Tranformed', () => {
     
-    const listTransformed = computed(async ()=>{
+    const listTransformed = async ()=>{
       try {
-        return await requestAxios.get("/materiaTransformada")
+        return await requestAxios.get("/materiaTransformada",  {
+        })
       } catch (error) {
         console.log(error);
         return error
       }
-    })
+    }
     
     
-    const addTransformed= computed(async (type, quantity, lot, date)=>{  {
+    const addTransformed= async (infoTrans)=>{  {
       try {
-        return await requestAxios.post(`/materiaTransformada`,{
-          type: type,
-          quantity: quantity,
-          lot: lot,
-          date: date,
-        })
+        return await requestAxios.post(`/materiaTransformada`, infoTrans,{
+
+        });
+        console.log(infoTrans);
       } catch (error) {
         console.log(error);
       }
-    }})
+    }
     
     
         async function active(id, estado){
@@ -38,10 +35,10 @@ export const useTransformedStore = defineStore('counter', () => {
             console.log(error);
             return error
           }
-        }
+        }}
     
-    return { listTransformed, transformed, active, addTransformed }
-  }) 
+    return { listTransformed, active, addTransformed }
+  }
 
 
   // export const useTransformedStore = defineStore('transf',{

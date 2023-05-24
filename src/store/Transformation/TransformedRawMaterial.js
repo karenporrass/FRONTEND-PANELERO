@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import axios from "axios"
 import { requestAxios } from '../../Global/axios'
 
 
@@ -39,7 +38,7 @@ export const useTransformedStore = defineStore('Tranformed', () => {
     
     return { listTransformed, active, addTransformed }
   }
-
+)
 
   // export const useTransformedStore = defineStore('transf',{
   //   state:()=>({

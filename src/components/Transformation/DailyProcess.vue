@@ -138,8 +138,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import { useDailyStore } from "../../store/Transformation/dailyProcess.js";
+import { usersStore } from "../../store/Maintenance/CreateUsers";
 
 let prompt = ref(false);
 let edit = ref(false);
@@ -152,25 +153,66 @@ let lot = ref();
 let farm = ref();
 let date = ref();
 let index = ref();
+let optionsPeople = ref([]);
 let options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
 let stringOptions = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
-let filterOptions = ref(stringOptions);
+let filterOptions = ref(optionsPeople);
 
 const useDaily = useDailyStore();
+const useUsers = usersStore();
 
 
 
 let columns = ref([
-  { name: "index", label: "N°", field: "index", align: "center" },
-  { name: "name", label: "NOMBRE", field: "name", align: "center" },
-  { name: "description", label: "DESCRIPCIÓN", field: "description", align: "center" },
-  { name: "hours", label: "HORAS", field: "hours", align: "center", },
-  { name: "people", label: "PERSONAS", field: "people", align: "center" },
-  { name: "labor", label: "LABOR", field: "labor", align: "center" },
-  { name: "farm", label: "FINCA", field: "farm", align: "center" },
-  { name: "lot", label: "LOTE", field: "lot", align: "center" },
-  { name: "date", label: "FECHA", field: "date", align: "center" },
-  { name: "options", label: "OPCIONES", align: "center" },
+  { 
+    name: "index", 
+  label: "N°", 
+  field: "index", 
+  align: "center" },
+  { 
+    name: "name", 
+  label: "NOMBRE", 
+  field: "name", 
+  align: "center" },
+  { 
+    name: "description", 
+  label: "DESCRIPCIÓN", 
+  field: "description", 
+  align: "center" },
+  { 
+    name: "hours", 
+  label: "HORAS", 
+  field: "hours", 
+  align: "center", },
+  { 
+    name: "people", 
+  label: "PERSONAS", 
+  field: (row) => row,
+  align: "center" },
+  { 
+    name: "labor", 
+  label: "LABOR", 
+  field: "labor", 
+  align: "center" },
+  { 
+    name: "farm", 
+  label: "FINCA", 
+  field: "farm", 
+  align: "center" },
+  { 
+    name: "lot", 
+  label: "LOTE", 
+  field: "lot", 
+  align: "center" },
+  { 
+    name: "date", 
+  label: "FECHA", 
+  field: "date", 
+  align: "center" },
+  { 
+    name: "options", 
+  label: "OPCIONES", 
+  align: "center" },
 ]);
 
 let rows = ref([]);
@@ -190,23 +232,25 @@ async function getListDaily() {
       row.index = index + 1;
     });
   } else {
-    alert(res);
+    console.log(res);
   }
 }
 getListDaily();
 
 //post proceso diario
 async function postDailyProcess() {
+  console.log("hola post");
   const res = await useDaily.postDaily({
     name: name.value,
     description: description.value,
     hours: hours.value,
-    people: people.value,
-    labor: labor.value,
+    people: people.value.value,
+    labor: labor.value.value,
     farm: farm.value,
     lot: lot.value,
     date: date.value,
   });
+  console.log("paseeeeee ");
   prompt.value = false;
   getListDaily();
   console.log(res);
@@ -258,6 +302,26 @@ async function putDaily() {
 }
 
 
+async function getPeople() {
+  const res = await useUsers.listUsers()
+  console.log(res);
+  if(res.status<299){
+    console.log("holis");
+    for(let i in res.data){
+      console.log(i);
+      let object= {label:res.data[i].names, value: res.data[i]._id};
+      optionsPeople.value.push(object);
+
+      console.log(optionsPeople.value);
+    }
+  }
+  // res.forEach((row, index) => {
+  //   optionsPeople.value.push({ label: row.name, value: row._id });
+  //   console.log(optionsPeople.value);
+  // });
+}
+
+
 
 
 
@@ -265,8 +329,8 @@ async function putDaily() {
 //function de options en modal
 function createValue(val, done) {
   if (val.length > 0) {
-    if (!stringOptions.includes(val)) {
-      stringOptions.push(val);
+    if (!optionsPeople.value.includes(val)) {
+      optionsPeople.value.push(val);
     }
     done(val, "toggle");
   }
@@ -275,17 +339,18 @@ function createValue(val, done) {
 function filterFn(val, update) {
   update(() => {
     if (val === "") {
-      filterOptions.value = stringOptions;
+      filterOptions.value = optionsPeople.value;
     } else {
       const needle = val.toLowerCase();
-      filterOptions.value = stringOptions.filter(
+      filterOptions.value = optionsPeople.value.filter(
         (v) => v.toLowerCase().indexOf(needle) > -1
       );
     }
   });
 }
 
-onMounted(async () => {
+onBeforeMount(() => {
   getListDaily();
+  getPeople();
 });
 </script>

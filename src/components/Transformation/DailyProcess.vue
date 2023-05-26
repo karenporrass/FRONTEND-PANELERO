@@ -59,6 +59,14 @@
               </div>
             </q-td>
           </template>
+          <template v-slot:body-cell-people="props">
+            <td v-if="props.row.people" v-text="props.row.people.names">
+            </td>
+          </template>
+          <!-- <template v-slot:body-cell-labor="props">
+            <td v-if="props.row.labor" v-text="props.row.labor.name">
+            </td>
+          </template> -->
         </q-table>
       </div>
       <div class="col-1"></div>
@@ -186,10 +194,10 @@ let edit = ref(false);
 let name = ref("");
 let description = ref("");
 let hours = ref();
-let people = ref();
-let labor = ref();
-let lot = ref();
-let farm = ref();
+let people = ref([]);
+let labor = ref([]);
+let lot = ref([]);
+let farm = ref([]);
 let date = ref();
 let index = ref();
 let optionsPeople = ref([]);
@@ -228,7 +236,7 @@ let columns = ref([
   {
     name: "people",
     label: "PERSONAS",
-    field: (row) => row,
+    field: 'people',
     align: "center",
   },
   {
@@ -285,14 +293,14 @@ getListDaily();
 
 //post proceso diario
 async function postDailyProcess() {
-  console.log("hola post");
+  console.log("hola post",  people.value);
   const res = await useDaily.postDaily({
     name: name.value,
     description: description.value,
     hours: hours.value,
-    people: people.value.value,
-    labor: labor.value.value,
-    farm: farm.value.value,
+    people: people.value[0].value,
+    labor: labor.value[0].value,
+    farm: farm.value[0].value,
     lot: lot.value.value,
     date: date.value,
   });
@@ -321,7 +329,7 @@ async function showInfo(data) {
   name.value = data.name;
   description.value = data.description;
   hours.value = data.hours;
-  people.value = data.people;
+  people.value = data.people.names;
   labor.value = data.labor;
   farm.value = data.farm;
   lot.value = data.lot;

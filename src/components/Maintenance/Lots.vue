@@ -169,16 +169,18 @@ const getFarms = async ()=>{
 }
 
 async function activarDesactivar(data) {
+  console.log(data);
   let res = ""
   if (data.state == 1) {
-    res = await lotsStores.active(data._id, 0)
+    res = await lotsStores.active(data._id,0)
     console.log(res);
    getLots()
   } else {
-    res = await lotsStores.active(data._id, 1)
+    res = await lotsStores.active(data._id,1)
     console.log(res);
    getLots()
   }
+  getLots()
 }
 
 function goInfo(data){

@@ -9,7 +9,7 @@ export const usePackedStore = defineStore('counter', () => {
     
     async function listPacked() {
       try {
-        return await requestAxios.get("/empacados")
+        return await requestAxios.get("/empacados/packed")
       } catch (error) {
         console.log(error);
       }
@@ -18,7 +18,7 @@ export const usePackedStore = defineStore('counter', () => {
     
     async function addPacked(cellarCode, typePacking, typePanela, formPanela, totalPanelas) {
       try {
-        return await requestAxios.post(`/empacados`,{
+        return await requestAxios.post(`/empacados/register`,{
           cellarCode: cellarCode,
           typePacking: typePacking,
           typePanela: typePanela,

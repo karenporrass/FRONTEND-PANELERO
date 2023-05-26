@@ -6,8 +6,8 @@ export const useTransformedStore = defineStore('Tranformed', () => {
     
     const listTransformed = async ()=>{
       try {
-        return await requestAxios.get("/materiaTransformada",  {
-        })
+        return await requestAxios.get("/materiaTransformada/transformed"
+        );
       } catch (error) {
         console.log(error);
         return error
@@ -15,9 +15,9 @@ export const useTransformedStore = defineStore('Tranformed', () => {
     }
     
     
-    const addTransformed= async (infoTrans)=>{  {
+    const addTransformed = async (infoTrans)=>{  {
       try {
-        return await requestAxios.post(`/materiaTransformada`, infoTrans,{
+        return await requestAxios.post(`/materiaTransformada/register`, infoTrans,{
 
         });
         console.log(infoTrans);
@@ -27,18 +27,19 @@ export const useTransformedStore = defineStore('Tranformed', () => {
     }
     
     
-        async function active(id, estado){
-          try {
-            return await requestAxios.put(`/materiaTransformada/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
-          } catch (error) {
-            console.log(error);
-            return error
-          }
-        }}
+      //   const active = async (id, estado)=>{ {
+      //     try {
+      //       return await requestAxios.put(`/materiaTransformada/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+      //     } catch (error) {
+      //       console.log(error);
+      //       return error
+      //     }
+      //   }
+    }
     
-    return { listTransformed, active, addTransformed }
-  }
-)
+      return { listTransformed,  addTransformed }
+    }
+    )
 
   // export const useTransformedStore = defineStore('transf',{
   //   state:()=>({

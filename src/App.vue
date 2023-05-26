@@ -14,8 +14,8 @@
 
             <router-link to="/" style="text-decoration: none; color: white;">
             <q-btn flat>
-              <span class="material-symbols-outlined" style="font-size: 25px;">
-                logout
+             <span class="fa-sharp fa-solid fa-arrow-up-from-bracket fa-rotate-270" style="font-size: 25px;"> 
+                
               </span>
               
 
@@ -166,7 +166,7 @@
           </q-img>
         </q-drawer>
 
-        <q-page-container style="padding-left: 0;">
+        <q-page-container>
           <q-page padding>
             <router-view></router-view>
           </q-page>

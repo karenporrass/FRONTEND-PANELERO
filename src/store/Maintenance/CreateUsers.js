@@ -22,6 +22,7 @@ export const usersStore = defineStore('counter', () => {
         console.log(error);
       }
     }
+    
     async function newUsers(names, lastNames,typeDocument, numberDocument, rol,cel, address, email, emergencyPersonName, emergencyPersonPhone ) {
         try {
             return await requestAxios.post(`/usuarios`,{

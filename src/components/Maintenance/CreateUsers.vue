@@ -108,7 +108,7 @@
               ]"/>
                   <q-input class="q-mb-md"  filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules :rules="[
                 (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
+                  (val  > 0) || 'El campo es requerido',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
                   <q-input  class="q-mb-md" filled type="text" v-model="address" label="Digite la direccion" lazy-rules :rules="[
@@ -128,7 +128,7 @@
               ]"/>
                   <q-input  filled type="number" v-model="emergencyPersonPhone" label="Digite el numero de la persona" lazy-rules :rules="[
                 (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
+                  (val  > 0) || 'El campo es requerido',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
 

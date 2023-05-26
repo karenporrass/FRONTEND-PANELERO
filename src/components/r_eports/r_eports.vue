@@ -104,8 +104,16 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                  <q-input filled type="date"  label="Fecha"></q-input><br>
-                  <q-select filled v-model="tipo" :options="options2" label="Escoja" />
+                  <q-input filled type="date"  label="Fecha"  lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'Dijite la fecha',
+                /* val => val > 0 && val < 100 || 'Please type a real age' */
+              ]"/><br>
+                  <q-select filled v-model="tipo" :options="options2" label="Escoja"  lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+                /* val => val > 0 && val < 100 || 'Please type a real age' */
+              ]"/>
                   <div>
                     <br />
                     <q-btn @click="descargarPdf()" label="Descargar pdf" class="text-white bg-green-10"  />

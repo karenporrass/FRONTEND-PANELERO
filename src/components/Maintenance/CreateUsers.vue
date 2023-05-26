@@ -62,85 +62,63 @@
         </div> 
 
         <q-dialog v-model="prompt">
-          <q-card>
+          <q-card style="height: 60%;">
         <q-card-section class="bg-green-9 q-px-lg">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
             DILIGENCIA LA INFORMACIÓN
           </h5>
         </q-card-section>
         <div class="q-pa-md">
-          <q-form @submit.prevent.stop="test" novalidate>
+          <q-form @submit="postUser()" >
             <div>
-              <!-- <q-input filled type="text" v-model="result" label="Resultado" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]" />
-               <q-select filled label="Competencia" v-model="competence" :options="optionsCompetence" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]" /> -->
               <q-input class="q-mb-md" filled type="text" v-model="names" label="Digite el nombre" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
                   <q-input class="q-mb-md" filled type="text" v-model="lastNames" label="Digite los apellidos" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
                <q-select filled v-model="typeDocument" :options="optionsDocument" label="Seleccione el tipo documento" lazy-rules :rules="[
                 (val) =>
-                  (val && val.trim().length < 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
+                  ( val !== null && val !== '' && val !== undefined)  || 'El campo es requerido',
               ]" />
                   <q-input class="q-mb-md" filled type="number" v-model="numberDocument" label="Digite el numero de documento" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
                   <q-input class="q-mb-md" filled type="text" v-model="rol" label="Seleccione el rol" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
                   <q-input class="q-mb-md"  filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules :rules="[
                 (val) =>
-                  (val  > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
+                  (val  !== 0 && val > 0 ) || 'El campo es requerido',
               ]"/>
                   <q-input  class="q-mb-md" filled type="text" v-model="address" label="Digite la direccion" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
                   <q-input  class="q-mb-md" filled type="text" v-model="email" label="Digite el email" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
                   <q-input class="q-mb-md"  filled type="text" v-model="emergencyPersonName" label="Digite el nombre de una persona de emergencia" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
                   <q-input  filled type="number" v-model="emergencyPersonPhone" label="Digite el numero de la persona" lazy-rules :rules="[
                 (val) =>
                   (val  > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
 
               
 
-            
-
               <div class="justify-center flex">
                 <!-- <q-btn class="button_style q-mt-md" :loading="useInstructors.loading" color="secondary" type="submit" label="GUARDAR" /> -->
 
-                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as"  @click="postUser()"></q-btn>
-                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" to="" v-close-popup><span class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
+                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"  @click="postUser()"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
               </div>
             </div>
@@ -186,6 +164,7 @@
 import {ref, onMounted} from 'vue'
 import {usersStore} from "../../store/Maintenance/CreateUsers.js"
 const userStore = usersStore()
+
 let prompt = ref(false)
 let promptEdit = ref(false)
 let names = ref("")
@@ -198,7 +177,7 @@ let address = ref("")
 let email = ref("")
 let index = ref()
 let emergencyPersonName= ref("")
-let emergencyPersonPhone= ref("")
+let emergencyPersonPhone= ref()
 let password = ref("")
 
 
@@ -226,10 +205,11 @@ let rows = ref([])
 
 
 const postUser= async ()=>{
+  console.log("hola");
   const res = await userStore.newUsers(
     names.value, 
     lastNames.value, 
-    typeDocument.value,
+    typeDocument.value.value,
     numberDocument.value, 
     rol.value, 
     cel.value, 
@@ -285,6 +265,7 @@ const getDocument = async ()=>{
 }
 }
 
+
 function goInfo(data){
     names.value = data.names 
     lastNames.value = data.lastNames
@@ -303,7 +284,7 @@ async function putInfo(){
   const res = await userStore.putUsers(index.value, 
     names.value, 
     lastNames.value, 
-    typeDocument.value,
+    typeDocument.value.value,
     numberDocument.value, 
     rol.value, 
     cel.value, 

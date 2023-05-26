@@ -7,7 +7,7 @@ export const stagesStore = defineStore('counter', () => {
     
     async function listStages() {
       try {
-        return await requestAxios.get("/etapas")
+        return await requestAxios.get("/etapas/stages")
       } catch (error) {
         console.log(error);
       }

@@ -9,7 +9,7 @@ export const usersStore = defineStore('counter', () => {
     async function listUsers() {
       console.log("listUsers")
       try {
-        return await requestAxios.get("/usuarios")
+        return await requestAxios.get("/usuarios/user")
       } catch (error) {
         console.log(error);
       }

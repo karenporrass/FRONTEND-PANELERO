@@ -7,7 +7,7 @@ export const supportStore = defineStore('counter', () => {
     
     async function listSupport() {
       try {
-        return await requestAxios.get("/soporte")
+        return await requestAxios.get("/soporte/support")
       } catch (error) {
         console.log(error);
       }

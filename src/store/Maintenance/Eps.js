@@ -7,7 +7,7 @@ export const epsStore = defineStore('counter', () => {
     
     async function listEps() {
       try {
-        return await requestAxios.get("/eps")
+        return await requestAxios.get("/eps/eps")
       } catch (error) {
         console.log(error);
       }

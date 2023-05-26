@@ -7,7 +7,7 @@ export const unitsStore = defineStore('counter', () => {
     
     async function listUnits() {
       try {
-        return await requestAxios.get("/unidadesMedida")
+        return await requestAxios.get("/unidadesMedida/units")
       } catch (error) {
         console.log(error);
       }

@@ -7,7 +7,7 @@ export const paymentStore = defineStore('counter', () => {
     
     async function listPayments() {
       try {
-        return await requestAxios.get("/metodoPago")
+        return await requestAxios.get("/metodoPago/payment")
       } catch (error) {
         console.log(error);
       }

@@ -7,14 +7,14 @@ export const lotsStore = defineStore('counter', () => {
     
     async function listlots() {
       try {
-        return await requestAxios.get("/lotes")
+        return await requestAxios.get("/lotes/farm")
       } catch (error) {
         console.log(error);
       }
     }
     async function listFarmsActive() {
       try {
-        return await requestAxios.get("/registroFinca")
+        return await requestAxios.get("/registroFinca/state")
       } catch (error) {
         console.log(error);
       }

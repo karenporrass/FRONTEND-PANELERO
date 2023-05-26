@@ -7,7 +7,7 @@ export const documentStore = defineStore('counter', () => {
     
     async function listDocuments() {
       try {
-        return await requestAxios.get("/tipoDocumento")
+        return await requestAxios.get("/tipoDocumento/document")
       } catch (error) {
         console.log(error);
       }

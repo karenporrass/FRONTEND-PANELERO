@@ -7,7 +7,7 @@ export const farmRegistryStore = defineStore('counter', () => {
     
     async function listFarms() {
       try {
-        return await requestAxios.get("/registroFinca")
+        return await requestAxios.get("/registroFinca/farm")
       } catch (error) {
         console.log(error);
       }

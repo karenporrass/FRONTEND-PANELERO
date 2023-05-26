@@ -108,7 +108,7 @@
 </template>
   
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onBeforeMount} from 'vue'
 import {epsStore} from "../../store/Maintenance/Eps.js"
 const epsStores = epsStore()
 let promptEdit = ref(false)
@@ -180,8 +180,9 @@ async function putInfo(){
     getEps()
 }
 
- onMounted(()=>{
-  getEps()
- })
+
+onBeforeMount(()=>{
+  getEps();
+})
 
 </script>

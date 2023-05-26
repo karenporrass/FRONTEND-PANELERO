@@ -7,7 +7,7 @@ export const packagingStore = defineStore('counter', () => {
     
     async function listPackaging() {
       try {
-        return await requestAxios.get("/tipoEmpaque")
+        return await requestAxios.get("/tipoEmpaque/packaing")
       } catch (error) {
         console.log(error);
       }

@@ -107,7 +107,7 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import { documentStore} from "../../store/Maintenance/TypeDocument.js"
-const documentsStore = documentStore()
+const documentsStores = documentStore()
 let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
@@ -127,13 +127,16 @@ let rows = ref([])
 
 
 const postTypeDocument = async ()=>{
-    const document = await documentsStore.newDocument( name.value, acronym.value)
+    const document = await documentsStores.newDocument(
+       name.value,
+      acronym.value
+      )
     getTypeDocument()
     console.log(document);
 }
 
 const getTypeDocument = async ()=>{
-    const document = await documentsStore.listDocuments()
+    const document = await documentsStores.listDocuments()
     console.log(document);
     if (document.status < 299) {
     rows.value=document.data
@@ -148,38 +151,27 @@ const getTypeDocument = async ()=>{
 async function activarDesactivar(data) {
   let res = ""
   if (data.state == 1) {
-    res = await documentsStore.active(data._id, 0)
+    res = await documentsStores.active(data._id, 0)
     console.log(res);
     getTypeDocument()
   } else {
-    res = await documentsStore.active(data._id, 1)
+    res = await documentsStores.active(data._id, 1)
     console.log(res);
     getTypeDocument()
   }
 }
 
 function goInfo(data){
-    names.value = data.names 
-    lastNames.value = data.lastNames
-    typeDocument.value = data.typeDocument
-    numberDocument.value = data.numberDocument
-    rol.value = data.rol
-    cel.value = data.cel
-    address.value = data. address
-    email.value = data.email
+  name.value = data.name
+  acronym.value = data.acronym
 }
 
 async function putInfo(){
   console.log(index.value);
   const res = await userStore.putUsers(index.value, 
-    names.value, 
-    lastNames.value, 
-    typeDocument.value,
-    numberDocument.value, 
-    rol.value, 
-    cel.value, 
-    address.value, 
-    email.value )
+    name.value, 
+    acronym.value 
+    )
     console.log(res);
     getUsers()
 }

@@ -46,7 +46,8 @@
     <div class="row q-mt-md">
       <div class="col-1"></div>
       <div class="col-10 ">
-        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
+        <q-table tyle="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
+                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]">
 
           <!-- opciones  -->
 
@@ -275,6 +276,9 @@ let tipoEmpaque=ref()
  let abono= ref()
  let valorTotal=ref()
  let saldopendiente=ref(valorTotal-abono)
+ let pagination = ref({
+        rowsPerPage: 0
+      })
  
 
 
@@ -344,7 +348,6 @@ function goInfo(data){
       formaPanela.value=data.formaPanela
       tipoEmpaque.value= data.tipoEmpaque
       abono.value=data.abono 
-      Date.value= data.Date
       valorTotal.value= data.valorTotal
 }
 

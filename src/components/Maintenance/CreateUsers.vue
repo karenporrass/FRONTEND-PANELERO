@@ -161,7 +161,7 @@
 </template>
   
 <script setup>
-import {ref, onBeforeMount} from 'vue'
+import {ref, onBeforeMount, onMounted} from 'vue'
 import {usersStore} from "../../store/Maintenance/CreateUsers.js"
 const userStore = usersStore()
 
@@ -300,7 +300,7 @@ async function putInfo(){
 }
 
 
-onBeforeMount(()=>{
+onMounted(()=>{
   getUsers();
   getDocument();
 })

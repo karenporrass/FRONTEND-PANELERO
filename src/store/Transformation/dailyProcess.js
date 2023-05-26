@@ -20,7 +20,7 @@ const getDaily = async () =>{
     const postDaily = async (infoDaily) => {
       console.log("post");
       try {
-        await requestAxios.post("/procesoDiario/register", infoDaily, {
+        return await requestAxios.post("/procesoDiario/register", infoDaily, {
           // headers: {
           //   token,
           // },

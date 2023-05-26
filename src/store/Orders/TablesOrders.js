@@ -5,14 +5,14 @@ import {requestAxios} from "../../Global/axios.js"
 export const OrderStore = defineStore('counter', () => {
     const order = ref("")
     
-    const listOrders = (async () => {
+    async function listOrders() {
         console.log("listOrders")
         try {
           return await requestAxios.get("/pedido");
         } catch (error) {
           console.log(error);
         }
-      })
+      }
 
       const newOrder =  (async (documento, telefono, tipoPanela, cantidad, comprobantePago,saldopendiente,nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal) => {
         try {

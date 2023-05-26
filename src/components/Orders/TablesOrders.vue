@@ -51,7 +51,7 @@
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row), promptEdit == true "></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row), promptEdit ==true"></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -69,6 +69,7 @@
       <div class="col-1"></div>
     </div>
 
+    <!-- modal crear  -->
     <q-dialog v-model="abrirCrear">
       <q-card>
         <q-card-section class="bg-green-10 q-px-lg">
@@ -220,26 +221,26 @@ rows.value.forEach((row, index) => {
 
 
 function goInfo(data){
-      documento.value =data.documento,
-      telefono.value= data.telefono ,
-      tipoPanela.value= data.tipoPanela,
-      cantidad.value= data.cantidad,
-      comprobantePago.value=data.comprobantePago ,
-      saldopendiente.value=data.saldopendiente,
-      nombre.value= data.nombre,
-      direccion.value= data.direccion,
-      formaPanela.value=data.formaPanela,
-      tipoEmpaque.value= data.tipoEmpaque,
-      abono.value=data.abono ,
-      Date.value= data.Date,
+      documento.value =data.documento
+      telefono.value= data.telefono 
+      tipoPanela.value= data.tipoPanela
+      cantidad.value= data.cantidad
+      comprobantePago.value=data.comprobantePago 
+      saldopendiente.value=data.saldopendiente
+      nombre.value= data.nombre
+      direccion.value= data.direccion
+      formaPanela.value=data.formaPanela
+      tipoEmpaque.value= data.tipoEmpaque
+      abono.value=data.abono 
+      Date.value= data.Date
       valorTotal.value= data.valorTotal
 }
 
 
-const orderGet = async () => {
-
-const res = await orderStore.listOrders()
-if (res.status < 299) {
+async function orderGet(){
+  const res = await orderStore.listOrders()
+  console.log(res);
+  if (res.status < 299) {
     rows.value = res.data
     rows.value.forEach((row, index) => {
     row.index = index+1

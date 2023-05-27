@@ -186,7 +186,7 @@
 
 <script setup>
 import { onBeforeMount, ref } from "vue";
-import { useDailyStore } from "../../store/Transformation/dailyProcess.js";
+import { useDailyStore } from "../../store/Transformation/DailyProcess.js";
 import { usersStore } from "../../store/Maintenance/CreateUsers";
 
 let prompt = ref(false);

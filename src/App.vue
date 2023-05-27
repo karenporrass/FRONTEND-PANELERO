@@ -9,7 +9,7 @@
            
             <q-space></q-space>
             <q-btn flat icon="fa-regular fa-user" class="q-mr-sm" />
-            <!-- <router-link to="/" style="text-decoration: none; color: white;"> -->
+            <router-link to="/" style="text-decoration: none; color: white;">
             <q-btn flat>
              <span class="fa-sharp fa-solid fa-arrow-up-from-bracket fa-rotate-270" style="font-size: 25px;"> 
                 
@@ -36,7 +36,7 @@
                 </div>
               </q-menu>
             </q-btn>
-            <!-- </router-link> -->
+            </router-link>
 
 
           </q-toolbar>

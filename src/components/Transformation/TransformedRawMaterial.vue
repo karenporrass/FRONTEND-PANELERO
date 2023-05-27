@@ -176,6 +176,7 @@ async function postTransformed() {
     type: type.value, 
     quantity: quantity.value.value,
     lot: lot.value.value,
+    farm: farm.value.value,
     date: date.value,
   }
   )
@@ -219,16 +220,20 @@ async function getFarms() {
 async function getLots() {
   const res = await useLots.listlotsActive();
   console.log(res);
-  if (res.status < 299) {
-    console.log("holis");
-    for (let i in res.data) {
-      console.log(i);
-      let object = { label: res.data[i].names, value: res.data[i]._id };
-      optionsLot.value.push(object);
+  // if (res.status < 299) {
+  //   console.log("holis");
+  //   for (let i in res.data) {
+  //     console.log(i);
+  //     let object = { label: res.data[i].names, value: res.data[i]._id };
+  //     optionsLot.value.push(object);
 
-      console.log(optionsLot.value);
-    }
-  }
+  //     console.log(optionsLot.value);
+  //   }
+  // }
+  res.forEach((row, index) => {
+    optionsLot.value.push({ label: row.name, value: row._id });
+    console.log(optionsLot.value);
+  });
 }
 
 async function getTypes() {

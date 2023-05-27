@@ -104,7 +104,7 @@
 </template>
   
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, onBeforeMount} from 'vue'
 import {paymentStore} from "../../store/Maintenance/PaymentMethod.js"
 const paymentStores = paymentStore()
 let promptEdit = ref(false)
@@ -169,8 +169,8 @@ async function putInfo(){
     getPayment()
 }
 
-onMounted(()=>{
-  getPayment()
+onBeforeMount(()=>{
+  getPayment();
  })
 
 </script>

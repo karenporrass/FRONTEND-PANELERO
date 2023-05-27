@@ -181,7 +181,7 @@ async function putInfo(){
 }
 
 
-onMounted(()=>{
+onBeforeMount(()=>{
   getEps();
 })
 

@@ -216,7 +216,7 @@
             </div>
 
             <div class="col-2 q-px-md">
-                <router-link to="/soporte" style="text-decoration: none; color: black;">
+                <router-link to="/tipoPanela" style="text-decoration: none; color: black;">
                 <q-card class="my-card" style="border-style: solid; border-color: green; border-radius: 10px;">
                     <q-card-section>
                         <div class="row column items-center">
@@ -226,7 +226,7 @@
                     <q-separator class="bg-green-10" style="height: 2px;" />
                         <q-card-section class="q-pt-none">
                             <div class="text-center q-mt-md">
-                                SOPORTE
+                                TIPO DE PANELA
                             </div>
                         </q-card-section>
                     </q-card>

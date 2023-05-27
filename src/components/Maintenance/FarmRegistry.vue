@@ -105,7 +105,7 @@
 </template>
   
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, onBeforeMount} from 'vue'
 import {farmRegistryStore} from "../../store/Maintenance/FarmRegistry.js"
 const farmStore = farmRegistryStore()
 let promptEdit = ref(false)
@@ -179,8 +179,8 @@ async function putInfo(){
     getFarmRegistry()
 }
 
-onMounted(()=>{
-  getFarmRegistry()
+onBeforeMount(()=>{
+  getFarmRegistry();
  })
 
 

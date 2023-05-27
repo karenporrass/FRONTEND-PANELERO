@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">SOPORTE TECNICO</div>
+                <div style="font-size:xx-large;" class="text-weight-bolder">TIPO DE PANELAS</div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -19,7 +19,7 @@
           <div style="font-size: larger;">
             <span style="font-size: 35px; " class="material-icons-outlined ">
                 arrow_right
-              </span> Soporte
+              </span>Tipo de panelas
             </div>
         </div> 
           <div class="col-1"></div>
@@ -27,7 +27,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo comentario</q-btn>
+                <q-btn class="text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo Tipo de panela</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -67,11 +67,11 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input class="q-mb-md" filled type="text" v-model="emailUser" label="Digite el email"></q-input>
-                    <q-input  filled type="text" v-model="coment" label="Digite el comentario"></q-input>
+                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre tipo de panela"></q-input>
+                    <q-input  filled type="number" v-model="coment" label="Digite el precio por unidad"></q-input>
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postSupport()" />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postPanela()" />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -88,8 +88,8 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input class="q-mb-md" filled type="text" v-model="emailUser" label="Digite el email"></q-input>
-                    <q-input  filled type="text" v-model="coment" label="Digite el comentario"></q-input>
+                    <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre tipo de panela"></q-input>
+                    <q-input  filled type="number" v-model="coment" label="Digite el precio por unidad"></q-input>
                   <div>
                     <br />
                     <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()" />
@@ -103,41 +103,40 @@
 </template>
   
 <script setup>
-import {ref, onMounted} from 'vue'
-import { supportStore } from "../../store/Maintenance/Support.js"
-const supportsStore = supportStore()
+import {ref, onMounted, onBeforeMount} from 'vue'
+import { panelaStore } from "../../store/Maintenance/TypePanela.js"
+const panelasStore = panelaStore()
 let promptEdit = ref(false)
 let prompt = ref(false)
-let emailUser = ref("")
-let coment = ref("")
+let name = ref("")
+let price= ref()
 let index = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
-  {name: 'name',label: 'NOMBRE USUARIO',field: 'emailUser',align: 'center'},
-  {name: 'coment',label: 'COMENTARIO',align: 'center',field: row => row.coment,format: val => `${val}`,sortable: true},
+  {name: 'name',label: 'NOMBRE TIPO PANELA',field: 'name',align: 'center'},
+  {name: 'price',label: 'PRICE',align: 'center',field: row => row.price,format: val => `${val}`,sortable: true},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
 let rows = ref([])
 
-const postSupport = async ()=>{
-    const support = await supportsStore.newSupport( 
-      emailUser.value,
-      coment.value 
+const postPanela = async ()=>{
+    const panela = await panelasStore.newPanela( 
+      name.value,
+      price.value 
        )
-    getSupport()
-    console.log(support);
+    getPanela()
+    console.log(panela);
 }
 
-const getSupport = async ()=>{
- 
-    const support = await supportsStore.listSupport()
-    console.log(support);
-    if (support.status < 299) {
-      rows.value=support.data
+const getPanela = async ()=>{
+    const panela = await panelasStore.listPanela()
+    console.log(panela);
+    if (panela.status < 299) {
+      rows.value=panela.data
     rows.value.forEach((row, index) => {
     row.index = index+1
   })
@@ -149,33 +148,33 @@ const getSupport = async ()=>{
 async function activarDesactivar(data) {
   let res = ""
   if (data.state == 1) {
-    res = await supportsStore.active(data._id, 0)
+    res = await panelasStore.active(data._id, 0)
     console.log(res);
-    getSupport()
+    getPanela()
   } else {
-    res = await supportsStore.active(data._id, 1)
+    res = await panelasStore.active(data._id, 1)
     console.log(res);
-    getSupport()
+    getPanela()
   }
 }
 
 function goInfo(data){
-    emailUser.value = data.emailUser
-    coment.value = data.coment
+    name.value = data.name
+    price.value = data.price
 }
 
 async function putInfo(){
   console.log(index.value);
-  const res = await supportsStore.putSupport(index.value, 
-  emailUser.value,
-  coment.value
+  const res = await panelasStore.putPanela(index.value, 
+  name.value,
+  price.value
   )
     console.log(res);
-    getSupport()
+    getPanela()
 }
 
-onMounted(()=>{
-  getSupport()
+onBeforeMount(()=>{
+  getPanela();
  })
 
 

@@ -7,11 +7,20 @@ export const documentStore = defineStore('counter', () => {
     
     async function listDocuments() {
       try {
-        return await requestAxios.get("/tipoDocumento/document")
+        return await requestAxios.get("/tipoDocumento/all")
       } catch (error) {
         console.log(error);
       }
     }
+
+    async function listDocumentsActive() {
+      try {
+        return await requestAxios.get("/tipoDocumento/active")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     async function newDocument(name, acronym) {
         try {
             return await requestAxios.post(`/tipoDocumento`,{
@@ -43,5 +52,5 @@ export const documentStore = defineStore('counter', () => {
       }
     }
   
-    return { listDocuments, document, active, newDocument, putDocument }
+    return { listDocuments, document, active, newDocument, putDocument, listDocumentsActive }
   })

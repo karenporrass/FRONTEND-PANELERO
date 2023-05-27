@@ -23,10 +23,10 @@ import measurementUnits from '../src/components/Maintenance/MeasurementUnits.vue
 import paymentMethod from '../src/components/Maintenance/PaymentMethod.vue'
 import paymentType from '../src/components/Maintenance/TypePay.vue'
 import stages from '../src/components/Maintenance/Stages.vue'
-import support from '../src/components/Maintenance/Support.vue'
+import TypePanela from '../src/components/Maintenance/TypePanela.vue'
 import typePackaging from '../src/components/Maintenance/TypePackaging.vue'
 // reports
-import report from '../src/components/r_eports/r_eports.vue'
+import report from '../src/components/Reports/Reports.vue'
 // inventory
 import Inventory from '../src/components/Inventory/homeInventory.vue'
 
@@ -70,7 +70,7 @@ export const routes=[
     {path:"/gastosMensuales", component: mounthlyExpenses},
     {path:"/gastosOcasionales", component: occasionalExpenses},
     {path: "/etapas", component: stages},
-    {path: "/soporte", component: support},
+    {path: "/tipoPanela", component: TypePanela},
     {path: "/tipoEmpaques", component: typePackaging},
     {path: "/reports", component: report},
     {path: "/homeTransformacion", component: HomeTranformation},

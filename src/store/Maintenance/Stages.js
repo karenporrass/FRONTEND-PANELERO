@@ -7,11 +7,20 @@ export const stagesStore = defineStore('counter', () => {
     
     async function listStages() {
       try {
-        return await requestAxios.get("/etapas/stages")
+        return await requestAxios.get("/etapas/all")
       } catch (error) {
         console.log(error);
       }
     }
+
+    async function listStagesActive() {
+      try {
+        return await requestAxios.get("/etapas/active")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     async function newStage(name, description) {
         try {
             return await requestAxios.post(`/etapas`,{
@@ -45,5 +54,5 @@ export const stagesStore = defineStore('counter', () => {
       }
     }
   
-    return { listStages, stage, active, newStage, putStage }
+    return { listStages, stage, active, newStage, putStage, listStagesActive }
   })

@@ -53,9 +53,10 @@
         </q-card-section>
         <div class="q-pa-md ">
           <div>
-            <q-select filled class="q-mb-md" v-model="type" :options="options" label="Seleccione la unidad de medida" />
-            <q-input filled class="q-mb-md" type="text" v-model="quantity" label="Digite la cantidad"></q-input>
-              <q-select filled class="q-mb-xs" v-model="lot" :options="options" label="Seleccione la finca" />
+            <q-select filled class="q-mb-md" v-model="type" :options="optionsTypes" label="Seleccione la unidad de medida" />
+            <q-input filled class="q-mb-md" type="number" v-model="quantity" label="Digite la cantidad"></q-input>
+            <q-select filled class="q-mb-xs" v-model="farm" :options="optionsFarm" label="Seleccione la finca" />  
+            <q-select filled class="q-mb-xs" v-model="lot" :options="optionsLot" label="Seleccione el lote" />
               <q-input v-model="date" class="q-mb-xs" filled type="date" label="Seleccione la fecha" />
             <div class="q-pb-sm">
               <br />
@@ -109,12 +110,29 @@
 <script setup>
 import { ref, onMounted } from "vue"
 import { useTransformedStore } from "../../store/Transformation/TransformedRawMaterial.js"
+import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js"
+import { lotsStore } from "../../store/Maintenance/Lots.js"
+import { unitsStore } from "../../store/Maintenance/MeasurementUnits.js"
+
+const useTransformed = useTransformedStore()
+const useFarms = farmRegistryStore()
+const useLots = lotsStore()
+const useUnits = unitsStore()
+
+
 let prompt = ref(false)
 let edit= ref(false)
-let type = ref("")
+let type = ref()
 let quantity = ref("")
 let lot = ref("")
+let farm = ref("")
 let date = ref()
+let optionsFarm = ref([]);
+let optionsLot = ref([]);
+let optionsTypes = ref([]);
+
+
+
 
 let options= [
         'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
@@ -132,7 +150,6 @@ let columns = ref([
 
 let rows = ref([])
 
-const useTransformed = useTransformedStore()
 
 
 
@@ -156,14 +173,14 @@ getTransformed()
 //post proceso diario
 async function postTransformed() {
   const res = await useTransformed.addTransformed({
-
-    type: type.value, // se llama a las variables del modal
-    quantity: quantity.value,
-    lot: lot.value,
+    type: type.value, 
+    quantity: quantity.value.value,
+    lot: lot.value.value,
     date: date.value,
   }
   )
   console.log(res);
+  prompt.value = false
   getTransformed()
 }
 
@@ -183,9 +200,64 @@ async function activarDesactivar(data) {
   }
 }
 
-// onMounted(() => {
-//   getTransformed()
-// })
+
+async function getFarms() {
+  const res = await useFarms.listFarmsActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].names, value: res.data[i]._id };
+      optionsFarm.value.push(object);
+
+      console.log(optionsFarm.value);
+    }
+  }
+}
+
+async function getLots() {
+  const res = await useLots.listlotsActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].names, value: res.data[i]._id };
+      optionsLot.value.push(object);
+
+      console.log(optionsLot.value);
+    }
+  }
+}
+
+async function getTypes() {
+  const res = await useUnits.listUnitsActive();
+  console.log(res);
+  // if (res.status < 299) {
+  //   console.log("holis");
+  //   for (let i in res.data) {
+  //     console.log(i);
+  //     let object = { label: res.data[i].names, value: res.data[i]._id };
+  //     optionsTypes.value.push(object);
+
+  //     console.log(optionsTypes.value);
+  //   }
+  // }
+  res.forEach((row, index) => {
+    optionsTypes.value.push({ label: row.name, value: row._id });
+    console.log(optionsTypes.value);
+  });
+}
+
+
+
+onMounted(() => {
+  getTransformed()
+  getFarms()
+  getLots()
+  getTypes()
+})
 
 
 

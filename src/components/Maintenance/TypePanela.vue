@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">SOPORTE TECNICO</div>
+                <div style="font-size:xx-large;" class="text-weight-bolder">TIPO DE PANELAS</div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -19,7 +19,7 @@
           <div style="font-size: larger;">
             <span style="font-size: 35px; " class="material-icons-outlined ">
                 arrow_right
-              </span> Soporte
+              </span>Tipo de panelas
             </div>
         </div> 
           <div class="col-1"></div>
@@ -27,7 +27,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo comentario</q-btn>
+                <q-btn class="text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nuevo Tipo de panela</q-btn>
             </div>
             <div class="col-1"></div>
         </div>

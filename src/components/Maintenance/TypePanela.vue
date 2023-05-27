@@ -103,7 +103,7 @@
 </template>
   
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, onBeforeMount} from 'vue'
 import { panelaStore } from "../../store/Maintenance/TypePanela.js"
 const panelasStore = panelaStore()
 let promptEdit = ref(false)
@@ -173,8 +173,8 @@ async function putInfo(){
     getPanela()
 }
 
-onMounted(()=>{
-  getPanela()
+onBeforeMount(()=>{
+  getPanela();
  })
 
 

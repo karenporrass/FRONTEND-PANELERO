@@ -300,7 +300,7 @@ async function putInfo(){
 }
 
 
-onMounted(()=>{
+onBeforeMount(()=>{
   getUsers();
   getDocument();
 })

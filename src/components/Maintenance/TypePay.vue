@@ -103,7 +103,7 @@
 </template>
   
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, onBeforeMount} from 'vue'
 import { typePayStore} from "../../store/Maintenance/TypePay.js"
 
 const useTypePay= typePayStore()
@@ -193,8 +193,8 @@ async function putInfo(){
 }
 
 
-onMounted(()=>{
-  getTypePay()
+onBeforeMount(()=>{
+  getTypePay();
 })
 
 </script>

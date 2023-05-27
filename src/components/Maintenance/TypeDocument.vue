@@ -177,7 +177,7 @@ async function putInfo(){
 }
 
 
-  getTypeDocument()
-
-
+  onBeforeMount(()=>{
+    getTypeDocument();
+})
 </script>

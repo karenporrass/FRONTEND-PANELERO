@@ -6,19 +6,15 @@
           <q-toolbar>
             <q-btn v-show="TituloPedidos == false" flat @click="toggleLeftDrawer" round dense
               icon="menu"><q-toolbar-title>MENU</q-toolbar-title></q-btn>
-            <q-btn v-show="TituloPedidos == true" flat @click="toggleLeftDrawer" round dense
-              icon="menu"><q-toolbar-title>PEDIDOS</q-toolbar-title></q-btn>
-
+           
             <q-space></q-space>
             <q-btn flat icon="fa-regular fa-user" class="q-mr-sm" />
-
-            <router-link to="/" style="text-decoration: none; color: white;">
+            <!-- <router-link to="/" style="text-decoration: none; color: white;"> -->
             <q-btn flat>
              <span class="fa-sharp fa-solid fa-arrow-up-from-bracket fa-rotate-270" style="font-size: 25px;"> 
                 
               </span>
-              
-
+            
               <q-menu>
                 <div class="row no-wrap q-pa-md">
                   <div class="col-6 column items-center">
@@ -40,17 +36,17 @@
                 </div>
               </q-menu>
             </q-btn>
-            </router-link>
+            <!-- </router-link> -->
 
 
           </q-toolbar>
         </q-header>
         <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered class="c">
           <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
-            <q-list class="column items-center" style="padding-top: 40px;">
+            <q-list class="column items-center q-mt-md" >
 
               <router-link to="/home" style="text-decoration: none;">
-                <q-item clickable class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
+                <q-item clickable class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px; height: 10px ;">
                   <q-item-section avatar style="min-width: 1px; ">
                     <i class="fa-solid fa-house-user" style="font-size: 20px; "></i>
                   </q-item-section>
@@ -188,16 +184,7 @@
 import { ref } from 'vue'
 
 const leftDrawerOpen = ref(false)
-let TituloPedidos = ref(false)
-let TituloInventory = ref(false)
 
-function MenuAPedidos() {
-  TituloPedidos = true
-}
-
-function MenuInventory() {
-  TituloInventory = true
-}
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value

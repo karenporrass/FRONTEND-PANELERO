@@ -103,7 +103,7 @@
 </template>
   
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, onBeforeMount} from 'vue'
 import {unitsStore} from "../../store/Maintenance/MeasurementUnits.js"
 const unitStore = unitsStore()
 let promptEdit = ref(false)
@@ -173,8 +173,8 @@ async function putInfo(){
     getUnits()
 }
 
-onMounted(()=>{
-  getUnits()
+onBeforeMount(()=>{
+  getUnits();
  })
 
 

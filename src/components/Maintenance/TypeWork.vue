@@ -109,7 +109,7 @@
 </template>
   
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 import axios from 'axios';
 
 import {workStore} from "../../store/Maintenance/TypeWork.js"
@@ -207,9 +207,9 @@ async function putInfo(){
     getUsers()
 }
 
-onMounted(()=>{
+onBeforeMount(()=>{
 
-  getTypeWork()
+  getTypeWork();
 })
 
 

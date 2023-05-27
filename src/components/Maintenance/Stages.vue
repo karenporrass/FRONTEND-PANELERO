@@ -103,7 +103,7 @@
 </template>
   
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, onBeforeMount} from 'vue'
 import {stagesStore} from "../../store/Maintenance/Stages.js"
 const stageStore = stagesStore()
 let promptEdit = ref(false)
@@ -174,8 +174,8 @@ async function putInfo(){
     getStages()
 }
 
-onMounted(()=>{
-  getStages()
+onBeforeMount(()=>{
+  getStages();
 })
 
 

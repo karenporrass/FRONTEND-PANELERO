@@ -111,7 +111,7 @@
 </template>
   
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 import axios from 'axios';
 import {packagingStore} from "../../store/Maintenance/TypePackaging.js"
 let promptEdit = ref(false)
@@ -208,8 +208,8 @@ async function putInfo(){
 
 
 
-onMounted(() => {
-  getPackaging()
+onBeforeMount(() => {
+  getPackaging();
 })
 
 

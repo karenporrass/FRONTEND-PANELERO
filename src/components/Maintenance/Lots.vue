@@ -107,7 +107,7 @@
 </template>
   
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, onBeforeMount} from 'vue'
 import {lotsStore} from "../../store/Maintenance/Lots.js"
 const lotsStores = lotsStore()
 let promptEdit = ref(false)
@@ -200,9 +200,9 @@ async function putInfo(){
 }
 
 
-onMounted(()=>{
-  getLots()
-  getFarms()
+onBeforeMount(()=>{
+  getLots();
+  getFarms();
  })
 
 </script>

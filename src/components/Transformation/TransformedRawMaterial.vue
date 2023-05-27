@@ -55,9 +55,9 @@
           <div>
             <q-select filled class="q-mb-md" v-model="type" :options="optionsTypes" label="Seleccione la unidad de medida" />
             <q-input filled class="q-mb-md" type="number" v-model="quantity" label="Digite la cantidad"></q-input>
-            <q-select filled class="q-mb-xs" v-model="farm" :options="optionsFarm" label="Seleccione la finca" />  
-            <q-select filled class="q-mb-xs" v-model="lot" :options="optionsLot" label="Seleccione el lote" />
-              <q-input v-model="date" class="q-mb-xs" filled type="date" label="Seleccione la fecha" />
+            <q-select filled class="q-mb-md" v-model="farm" :options="optionsFarm" label="Seleccione la finca" />  
+            <q-select filled class="q-mb-md" v-model="lot" :options="optionsLot" label="Seleccione el lote" />
+              <q-input v-model="date" class="q-mb-md" filled type="date" label="Seleccione la fecha" />
             <div class="q-pb-sm">
               <br />
               <q-btn label="guardar" class="text-white bg-green-10" @click="postTransformed()" />

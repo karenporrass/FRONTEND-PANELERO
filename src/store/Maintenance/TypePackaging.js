@@ -7,11 +7,20 @@ export const packagingStore = defineStore('counter', () => {
     
     async function listPackaging() {
       try {
-        return await requestAxios.get("/tipoEmpaque/packaing")
+        return await requestAxios.get("/tipoEmpaque/all")
       } catch (error) {
         console.log(error);
       }
     }
+
+    async function listPackagingActive() {
+    try {
+      return await requestAxios.get("/tipoEmpaque/active")
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
     async function newPackaging(name, maxWeight, units) {
         try {
             return await requestAxios.post(`/tipoEmpaque`,{
@@ -45,5 +54,5 @@ export const packagingStore = defineStore('counter', () => {
       }
     }
   
-    return { listPackaging, packaging, active, newPackaging, putPackaging}
+    return { listPackaging, packaging, active, newPackaging, putPackaging, listPackagingActive}
   })

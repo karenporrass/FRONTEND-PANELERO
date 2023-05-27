@@ -7,7 +7,15 @@ export const workStore = defineStore('counter', () => {
     
     async function listWork() {
       try {
-        return await requestAxios.get("/tipoLabor/work")
+        return await requestAxios.get("/tipoLabor/all")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function listWorkActive() {
+      try {
+        return await requestAxios.get("/tipoLabor/Active")
       } catch (error) {
         console.log(error);
       }
@@ -48,5 +56,5 @@ export const workStore = defineStore('counter', () => {
       }
     }
   
-    return { listWork, work, active, newWork, putWork }
+    return { listWork, work, active, newWork, putWork, listWorkActive }
   })

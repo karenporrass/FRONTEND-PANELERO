@@ -9,7 +9,16 @@ export const usersStore = defineStore('counter', () => {
     async function listUsers() {
       console.log("listUsers")
       try {
-        return await requestAxios.get("/usuarios/user")
+        return await requestAxios.get("/usuarios/all")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function listUsersActive() {
+      console.log("listUsersActive")
+      try {
+        return await requestAxios.get("/usuarios/active")
       } catch (error) {
         console.log(error);
       }
@@ -75,5 +84,5 @@ export const usersStore = defineStore('counter', () => {
   
 
 
-    return { listUsers, user, active, newUsers, putUsers, listDocuments}
+    return { listUsers, user, active, newUsers, putUsers, listDocuments, listUsersActive}
   })

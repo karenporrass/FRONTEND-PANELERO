@@ -7,7 +7,15 @@ export const typePayStore = defineStore('counter', () => {
     
     async function listTypePay() {
       try {
-        return await requestAxios.get("/tipoPago/pay")
+        return await requestAxios.get("/tipoPago/all")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function listTypePayActive() {
+      try {
+        return await requestAxios.get("/tipoPago/active")
       } catch (error) {
         console.log(error);
       }
@@ -45,5 +53,5 @@ export const typePayStore = defineStore('counter', () => {
       }
     }
   
-    return { listTypePay, pay, active, newTypePay, putTypePay }
+    return { listTypePay, pay, active, newTypePay, putTypePay, listTypePayActive }
   })

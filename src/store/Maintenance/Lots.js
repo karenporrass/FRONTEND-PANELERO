@@ -7,14 +7,23 @@ export const lotsStore = defineStore('counter', () => {
     
     async function listlots() {
       try {
-        return await requestAxios.get("/lotes/farm")
+        return await requestAxios.get("/lotes/all")
       } catch (error) {
         console.log(error);
       }
     }
+
+    async function listlotsActive() {
+      try {
+        return await requestAxios.get("/lotes/active")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     async function listFarmsActive() {
       try {
-        return await requestAxios.get("/registroFinca/state")
+        return await requestAxios.get("/registroFinca/active")
       } catch (error) {
         console.log(error);
       }
@@ -51,5 +60,5 @@ export const lotsStore = defineStore('counter', () => {
       }
     }
   
-    return { listlots, lots, active, newlots, putlots, listFarmsActive }
+    return { listlots, lots, active, newlots, putlots, listlotsActive, listFarmsActive }
   })

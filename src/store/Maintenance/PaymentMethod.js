@@ -7,11 +7,20 @@ export const paymentStore = defineStore('counter', () => {
     
     async function listPayments() {
       try {
-        return await requestAxios.get("/metodoPago/payment")
+        return await requestAxios.get("/metodoPago/all")
       } catch (error) {
         console.log(error);
       }
     }
+
+    async function listPaymentsActive() {
+      try {
+        return await requestAxios.get("/metodoPago/active")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     async function newPayment(name) {
         try {
             return await requestAxios.post(`/metodoPago`,{
@@ -41,5 +50,5 @@ export const paymentStore = defineStore('counter', () => {
       }
     }
   
-    return { listPayments, payment, active, newPayment, putPayment }
+    return { listPayments, payment, active, newPayment, putPayment, listPayments }
   })

@@ -7,11 +7,20 @@ export const epsStore = defineStore('counter', () => {
     
     async function listEps() {
       try {
-        return await requestAxios.get("/eps/eps")
+        return await requestAxios.get("/eps/all")
       } catch (error) {
         console.log(error);
       }
     }
+
+    async function listEpsActive() {
+      try {
+        return await requestAxios.get("/eps/aactive")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     async function newEps(name, attentionLine) {
         try {
             return await requestAxios.post(`/eps`,{
@@ -42,5 +51,5 @@ export const epsStore = defineStore('counter', () => {
       }
     }
   
-    return { listEps, eps, active, newEps, putEps }
+    return { listEps, eps, active, newEps, putEps, listEpsActive }
   })

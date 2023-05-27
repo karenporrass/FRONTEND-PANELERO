@@ -7,11 +7,20 @@ export const unitsStore = defineStore('counter', () => {
     
     async function listUnits() {
       try {
-        return await requestAxios.get("/unidadesMedida/units")
+        return await requestAxios.get("/unidadesMedida/all")
       } catch (error) {
         console.log(error);
       }
     }
+
+    async function listUnitsActive() {
+      try {
+        return await requestAxios.get("/unidadesMedida/active")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     async function newUnits(name,format) {
         try {
             return await requestAxios.post(`/unidadesMedida`,{
@@ -43,5 +52,5 @@ export const unitsStore = defineStore('counter', () => {
       }
     }
   
-    return { listUnits, unit, active, newUnits, putUnits}
+    return { listUnits, unit, active, newUnits, putUnits, listUnitsActive}
   })

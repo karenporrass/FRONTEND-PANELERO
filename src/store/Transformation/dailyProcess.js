@@ -20,14 +20,17 @@ const getDaily = async () =>{
     const postDaily = async (infoDaily) => {
       console.log("post");
       try {
-        return await requestAxios.post("/procesoDiario/register", infoDaily, {
+        let r= await requestAxios.post("/procesoDiario/register", infoDaily, {
           // headers: {
           //   token,
           // },
         });
+        console.log("hola no guarde nada");
         console.log(infoDaily);
+        console.log(r);
       } catch (error) {
         console.log(error);
+        return error
       }
     };
 

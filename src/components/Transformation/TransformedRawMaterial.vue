@@ -155,11 +155,13 @@ getTransformed()
 
 //post proceso diario
 async function postTransformed() {
-  const res = await useTransformed.addTransformed(
-    type.value, // se llama a las variables del modal
-    quantity.value,
-    lot.value,
-    date.value,
+  const res = await useTransformed.addTransformed({
+
+    type: type.value, // se llama a las variables del modal
+    quantity: quantity.value,
+    lot: lot.value,
+    date: date.value,
+  }
   )
   console.log(res);
   getTransformed()

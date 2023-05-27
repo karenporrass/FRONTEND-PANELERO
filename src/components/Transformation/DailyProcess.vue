@@ -80,7 +80,7 @@
           </h5>
         </q-card-section>
         <div class="q-pa-md">
-          <q-form @submit.prevent.stop="postDailyProcess()" novalidate>
+          <q-form @submit.prevent.stop="postDailyProcess()">
             <div>
               <q-input filled type="text" v-model="name" label="Nombre del proceso" lazy-rules :rules="[
                 (val) =>
@@ -100,13 +100,6 @@
 
               <q-select filled v-model="people" use-input use-chips multiple input-debounce="0" @new-value="createValue"
                 :options="filterOptions" @filter="filterFn" label="Seleccione las personas" lazy-rules :rules="[
-                  (val) =>
-                    ((val) => val !== null && val !== '' && val !== undefined) ||
-                    'El campo es requerido',
-                ]" />
-
-              <q-select filled v-model="labor" use-input use-chips multiple input-debounce="0" @new-value="createValue"
-                :options="filterOptions" @filter="filterFn" label="Seleccione las labores" lazy-rules :rules="[
                   (val) =>
                     ((val) => val !== null && val !== '' && val !== undefined) ||
                     'El campo es requerido',
@@ -161,13 +154,6 @@
                 label="Digite cuántas horas tomó el proceso"></q-input>
               <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0"
                 @new-value="createValue" :options="filterOptions" @filter="filterFn" label="Seleccione las personas" />
-              <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0"
-                @new-value="createValue" :options="filterOptions" @filter="filterFn" label="Seleccione la labor"
-                lazy-rules :rules="[
-                  (val) =>
-                    ((val) => val !== null && val !== '') ||
-                    'El campo es requerido',
-                ]" />
               <q-select filled class="q-mb-md" v-model="farm" :options="options" label="Seleccione la finca" />
               <q-select filled class="q-mb-md" v-model="lot" :options="options" label="Seleccione el lote" />
               <q-input v-model="date" class="q-mb-xs" filled type="date" label="Seleccione la fecha" />
@@ -195,7 +181,6 @@ let name = ref("");
 let description = ref("");
 let hours = ref();
 let people = ref([]);
-let labor = ref([]);
 let lot = ref([]);
 let farm = ref([]);
 let date = ref();
@@ -237,12 +222,6 @@ let columns = ref([
     name: "people",
     label: "PERSONAS",
     field: 'people',
-    align: "center",
-  },
-  {
-    name: "labor",
-    label: "LABOR",
-    field: "labor",
     align: "center",
   },
   {
@@ -293,13 +272,13 @@ getListDaily();
 
 //post proceso diario
 async function postDailyProcess() {
-  console.log("hola post",  people.value);
+  console.log("hola post");
+  console.log(people.value);
   const res = await useDaily.postDaily({
     name: name.value,
     description: description.value,
     hours: hours.value,
     people: people.value[0].value,
-    labor: labor.value[0].value,
     farm: farm.value[0].value,
     lot: lot.value.value,
     date: date.value,
@@ -330,7 +309,6 @@ async function showInfo(data) {
   description.value = data.description;
   hours.value = data.hours;
   people.value = data.people.names;
-  labor.value = data.labor;
   farm.value = data.farm;
   lot.value = data.lot;
   date.value = data.date;
@@ -343,7 +321,6 @@ async function putDaily() {
     description: description.value,
     hours: hours.value,
     // people: people.value.value,
-    // labor: labor.value.value,
     // farm: farm.value.value,
     // lot: lot.value.value,
     // date: date.value,
@@ -354,7 +331,7 @@ async function putDaily() {
 }
 
 async function getPeople() {
-  const res = await useUsers.listUsers();
+  const res = await useUsers.listUsersActive();
   console.log(res);
   if (res.status < 299) {
     console.log("holis");

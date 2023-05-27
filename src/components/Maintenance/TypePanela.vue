@@ -104,8 +104,8 @@
   
 <script setup>
 import {ref, onMounted} from 'vue'
-import { supportStore } from "../../store/Maintenance/Support.js"
-const supportsStore = supportStore()
+// import { supportStore } from "../../store/Maintenance/Support.js"
+// const supportsStore = supportStore()
 let promptEdit = ref(false)
 let prompt = ref(false)
 let emailUser = ref("")

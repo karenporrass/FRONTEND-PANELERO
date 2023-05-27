@@ -105,12 +105,12 @@
                     'El campo es requerido',
                 ]" />
 
-              <q-select filled v-model="farm" :options="options" label="Seleccione la finca" lazy-rules :rules="[
+              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
                 (val) =>
                 ((val) => val !== null && val !== '') || 'El campo es requerido',
               ]" />
               
-              <q-select filled v-model="lot" :options="options" label="Seleccione el lote" :rules="[
+              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" :rules="[
                 (val) =>
                 ((val) => val !== null && val !== '') || 'El campo es requerido',
               ]"/>
@@ -186,6 +186,8 @@ let farm = ref([]);
 let date = ref();
 let index = ref();
 let optionsPeople = ref([]);
+let optionsFarm = ref([]);
+let optionsLot = ref([]);
 let options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
 let stringOptions = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
 let filterOptions = ref(optionsPeople);

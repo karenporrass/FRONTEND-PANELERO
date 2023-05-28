@@ -26,7 +26,8 @@
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="edit = true"></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="
+                  (index = props.row._id), showInfo(props.row), (edit = true)"></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -70,6 +71,7 @@
 
 
 
+ 
     <q-dialog v-model="edit">
       <q-card>
         <q-card-section class="bg-green-10 q-px-lg">
@@ -79,27 +81,23 @@
         </q-card-section>
         <div class="q-pa-md ">
           <div>
-            <q-input filled class="q-mb-md" type="text" v-model="name" label="Digite el nombre del proceso"></q-input>
-            <q-input filled class="q-mb-md" type="text" v-model="description"
-              label="Digite una descripción del proceso"></q-input>
-            <q-input filled class="q-mb-md" type="number" v-model="hours"
-              label="Digite cuántas horas tomó el proceso"></q-input>
-            <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0"
-              @new-value="createValue" :options="filterOptions" @filter="filterFn" label="Seleccione las personas" />
-            <q-select filled class="q-mb-md" v-model="labor" use-input use-chips multiple input-debounce="0"
-              @new-value="createValue" :options="filterOptions" @filter="filterFn" label="Seleccione la labor" />
-            <q-select filled class="q-mb-md" v-model="farm" :options="options" label="Seleccione la finca" />
-            <q-select filled class="q-mb-md" v-model="lot" :options="options" label="Seleccione el lote" />
-            <q-input v-model="date" class="q-mb-xs" filled type="date" label="Seleccione la fecha" />
+            <q-select filled class="q-mb-md" v-model="type" :options="optionsTypes" label="Seleccione la unidad de medida" />
+            <q-input filled class="q-mb-md" type="number" v-model="quantity" label="Digite la cantidad"></q-input>
+            <q-select filled class="q-mb-md" v-model="farm" :options="optionsFarm" label="Seleccione la finca" />  
+            <q-select filled class="q-mb-md" v-model="lot" :options="optionsLot" label="Seleccione el lote" />
+              <q-input v-model="date" class="q-mb-md" filled type="date" label="Seleccione la fecha" />
             <div class="q-pb-sm">
               <br />
-              <q-btn label="guardar" class="text-white bg-green-10" @click="showInfo()" />
+              <q-btn label="guardar" class="text-white bg-green-10" @click="putTransformed()" />
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
         </div>
       </q-card>
     </q-dialog>
+
+
+
 
 
 
@@ -131,18 +129,11 @@ let optionsFarm = ref([]);
 let optionsLot = ref([]);
 let optionsTypes = ref([]);
 
-
-
-
-let options= [
-        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
-      ]
-
-
 let columns = ref([
   { name: 'index', label: 'N°', field: 'index', align: 'center' },
   { name: 'type', label: 'TIPO DE UNIDAD DE MEDIDA', align: 'center', field: 'type' },
   { name: 'quantity', align: 'center', label: 'CANTIDAD', field: 'quantity', align: 'center', sortable: true },
+  { name: 'farm', label: 'FINCA', field: 'farm', align: 'center' },
   { name: 'lot', label: 'LOTE', field: 'lot', align: 'center' },
   { name: 'date', label: 'FECHA', field: 'date', align: 'center' },
   { name: 'options', label: 'OPCIONES', align: 'center' },
@@ -202,6 +193,30 @@ async function activarDesactivar(data) {
 }
 
 
+function showInfo(data) {
+  type.value = data.type;
+  quantity.value = data.quantity;
+  lot.value = data.lot;
+  farm.value = data.farm.name;
+  date.value = data.date;
+}
+
+async function putTransformed() {
+  console.log(index.value);
+  const res = await useResults.updateResult(index.value, {
+    number: number.value,
+    program: program.value.value,
+    shift: shift.value.value.toUpperCase(),
+    owner: owner.value.value,
+  });
+  console.log(res);
+  getFiches();
+  edit.value = false;
+}
+
+
+
+
 async function getFarms() {
   const res = await useFarms.listFarmsActive();
   console.log(res);
@@ -209,7 +224,7 @@ async function getFarms() {
     console.log("holis");
     for (let i in res.data) {
       console.log(i);
-      let object = { label: res.data[i].names, value: res.data[i]._id };
+      let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsFarm.value.push(object);
 
       console.log(optionsFarm.value);
@@ -220,20 +235,16 @@ async function getFarms() {
 async function getLots() {
   const res = await useLots.listlotsActive();
   console.log(res);
-  // if (res.status < 299) {
-  //   console.log("holis");
-  //   for (let i in res.data) {
-  //     console.log(i);
-  //     let object = { label: res.data[i].names, value: res.data[i]._id };
-  //     optionsLot.value.push(object);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsLot.value.push(object);
 
-  //     console.log(optionsLot.value);
-  //   }
-  // }
-  res.forEach((row, index) => {
-    optionsLot.value.push({ label: row.name, value: row._id });
-    console.log(optionsLot.value);
-  });
+      console.log(optionsLot.value);
+    }
+  }
 }
 
 async function getTypes() {

@@ -171,9 +171,19 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, onMounted, ref } from "vue";
 import { useDailyStore } from "../../store/Transformation/DailyProcess.js";
 import { usersStore } from "../../store/Maintenance/CreateUsers";
+import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js"
+import { lotsStore } from "../../store/Maintenance/Lots.js"
+
+
+const useDaily = useDailyStore();
+const useUsers = usersStore();
+const useFarms = farmRegistryStore();
+const useLots = lotsStore()
+
+
 
 let prompt = ref(false);
 let edit = ref(false);
@@ -192,8 +202,6 @@ let options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
 let stringOptions = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
 let filterOptions = ref(optionsPeople);
 
-const useDaily = useDailyStore();
-const useUsers = usersStore();
 
 let columns = ref([
   {
@@ -351,6 +359,40 @@ async function getPeople() {
   // });
 }
 
+
+async function getFarms() {
+  const res = await useFarms.listFarmsActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsFarm.value.push(object);
+
+      console.log(optionsFarm.value);
+    }
+  }
+}
+
+async function getLots() {
+  const res = await useLots.listlotsActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsLot.value.push(object);
+
+      console.log(optionsLot.value);
+    }
+  }
+}
+
+
+
+
 //function de options en modal
 function createValue(val, done) {
   if (val.length > 0) {
@@ -374,8 +416,10 @@ function filterFn(val, update) {
   });
 }
 
-onBeforeMount(() => {
+onMounted(() => {
   getListDaily();
   getPeople();
+  getFarms();
+  getLots()
 });
 </script>

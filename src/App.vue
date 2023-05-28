@@ -4,7 +4,7 @@
       <q-layout view="hHh lpR fFf" container class="shadow-2 fullscreen">
         <q-header elevated class="bg-green-10">
           <q-toolbar>
-            <q-btn v-show="TituloPedidos == false" flat @click="toggleLeftDrawer" round dense
+            <q-btn flat @click="toggleLeftDrawer" round dense
               icon="menu"><q-toolbar-title>MENU</q-toolbar-title></q-btn>
            
             <q-space></q-space>

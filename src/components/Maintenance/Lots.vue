@@ -138,18 +138,19 @@ const postLots= async ()=>{
        farm.value.value
        )
     getLots()
-
+console.log(lots);
 }
+
 const getLots = async ()=>{
- 
     const lots = await lotsStores.listlots()
     if (lots.status < 299) {
     rows.value = lots.data
     rows.value.forEach((row, index) => {
     row.index = index+1
 })
+console.log(lots);
   } else {
-    alert(lots)
+    console.log(lots)
   }
 }
 

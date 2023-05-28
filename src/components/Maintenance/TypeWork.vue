@@ -38,7 +38,8 @@
     <div class="row q-mt-md">
       <div class="col-1"></div>
       <div class="col-10 ">
-        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
+        <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index" virtual-scroll  :virtual-scroll-item-size="48"
+          :pagination="pagination" :rows-per-page-options="[0]"    >
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
@@ -67,17 +68,32 @@
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+                <q-form @submit="postTypeWork()">
                 <div>
-                    <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la labor"></q-input>
-                  <q-input class="q-mb-md" filled type="text" v-model="area" label="Digite el área "></q-input>
-                  <q-input  filled type="number" v-model="dailyPayment" label="Digite el pago diario"></q-input>
-            
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postTypeWork()" />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la labor" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
+
+               <q-input class="q-mb-md" filled type="text" v-model="area" label="Digite el area"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.trim().length > 0) || 'El campo es requerido',
+                ]" />
+
+                <q-input class="q-mb-md" filled type="text" v-model="dailyPayment" label="Dijite el pago diario"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.trim().length > 0) || 'El campo es requerido',
+                ]" />
+                  
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  @click="postTypeWork()"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
+                  </span>CERRAR</q-btn>
                 </div>
+                </q-form>
               </div>
             </q-card>
           </q-dialog>
@@ -90,17 +106,33 @@
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+
+                <q-form @submit="putInfo()">
                 <div>
-                    <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la labor"></q-input>
-                  <q-input class="q-mb-md" filled type="text" v-model="area" label="Digite el área "></q-input>
-                  <q-input  filled type="number" v-model="dailyPayment" label="Digite el pago diario"></q-input>
-            
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()" />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la labor" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
+
+               <q-input class="q-mb-md" filled type="text" v-model="area" label="Digite el area"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.trim().length > 0) || 'El campo es requerido',
+                ]" />
+
+                <q-input class="q-mb-md" filled type="text" v-model="dailyPayment" label="Dijite el pago diario"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.trim().length > 0) || 'El campo es requerido',
+                ]" />
+                  
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  @click="putInfo()"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
+                  </span>CERRAR</q-btn>
                 </div>
+                </q-form>
               </div>
             </q-card>
           </q-dialog>
@@ -182,29 +214,21 @@ async function activarDesactivar(data) {
 }
 
 function goInfo(data){
-    names.value = data.names 
-    lastNames.value = data.lastNames
-    typeDocument.value = data.typeDocument
-    numberDocument.value = data.numberDocument
-    rol.value = data.rol
-    cel.value = data.cel
-    address.value = data. address
-    email.value = data.email
+    nams.value = data.name
+    area.value = data.area
+    dailyPayment.value = data.value
+    
 }
 
 async function putInfo(){
   console.log(index.value);
   const res = await userStore.putUsers(index.value, 
-    names.value, 
-    lastNames.value, 
-    typeDocument.value,
-    numberDocument.value, 
-    rol.value, 
-    cel.value, 
-    address.value, 
-    email.value )
+    name.value, 
+    area.value,
+    dailyPayment.value
+   )
     console.log(res);
-    getUsers()
+    getTypeWork()
 }
 
 onBeforeMount(()=>{

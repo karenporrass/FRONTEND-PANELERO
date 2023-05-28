@@ -68,14 +68,20 @@
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+                <q-form @submit="postTypePay()">
                 <div>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postTypePay()" />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del tipo de pago (jornal, detajo, contrato)" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
+
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  @click="postTypePay()"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
+                  </span>CERRAR</q-btn>
                 </div>
+                </q-form>
               </div>
             </q-card>
           </q-dialog>
@@ -88,14 +94,20 @@
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+                <q-form @submit="putInfo()">
                 <div>
-                    <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()" />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del tipo de pago (jornal, detajo, contrato)" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
+
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  @click="putInfo()"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
+                  </span>CERRAR</q-btn>
                 </div>
+                </q-form>
               </div>
             </q-card>
           </q-dialog>
@@ -167,29 +179,16 @@ async function activarDesactivar(data) {
 }
 
 function goInfo(data){
-    names.value = data.names 
-    lastNames.value = data.lastNames
-    typeDocument.value = data.typeDocument
-    numberDocument.value = data.numberDocument
-    rol.value = data.rol
-    cel.value = data.cel
-    address.value = data. address
-    email.value = data.email
+    name.value = data.name
 }
 
 async function putInfo(){
   console.log(index.value);
   const res = await userStore.putUsers(index.value, 
-    names.value, 
-    lastNames.value, 
-    typeDocument.value,
-    numberDocument.value, 
-    rol.value, 
-    cel.value, 
-    address.value, 
-    email.value )
+    name.value, 
+   )
     console.log(res);
-    getUsers()
+    getTypePay()
 }
 
 

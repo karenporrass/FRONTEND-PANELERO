@@ -66,16 +66,31 @@
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+                <q-form @submit="postFarmRegistry()">
                 <div>
-                    <q-input class="q-mb-md"  filled type="number" v-model="registrationNumber" label="Digite el numero de matricula"></q-input>
-                    <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre de la finca"></q-input>
-                  <q-input filled type="text" v-model="extent" label="Digite en metros las extencion de terreno"></q-input>
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postFarmRegistry()"  />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                  <q-input class="q-mb-md" filled type="number" v-model="registrationNumber" label="Digite el numero de matricula"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.trim().length > 0) || 'El campo es requerido',
+                ]" />
+                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Finca" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
+
+               <q-input class="q-mb-md" filled type="number" v-model="extent" label="Digite en metros la estencion de terreno"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.trim().length > 0) || 'El campo es requerido',
+                ]" />
+
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  @click="postFarmRegistry()"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
+                  </span>CERRAR</q-btn>
                 </div>
+                </q-form>
               </div>
             </q-card>
           </q-dialog>
@@ -88,17 +103,32 @@
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+                <q-form @submit="putInfo()">
                 <div>
-                    <q-input class="q-mb-md"  filled type="number" v-model="registrationNumber" label="Digite el numero de matricula"></q-input>
-                    <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre de la finca"></q-input>
-                  <q-input filled type="text" v-model="extent" label="Digite en metros las extencion de terreno"></q-input>
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10" @click="putInfo()"  />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                  <q-input class="q-mb-md" filled type="number" v-model="registrationNumber" label="Digite el numero de matricula"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.trim().length > 0) || 'El campo es requerido',
+                ]" />
+                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Finca" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
+
+               <q-input class="q-mb-md" filled type="number" v-model="extent" label="Digite en metros la estencion de terreno"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.trim().length > 0) || 'El campo es requerido',
+                ]" />
+
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  @click="putInfo()"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
+                  </span>CERRAR</q-btn>
                 </div>
-              </div>
+                </q-form>
+                </div>
             </q-card>
           </q-dialog>
     </div> 
@@ -112,7 +142,7 @@ let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
 let registrationNumber = ref("")
-let extent = ref("")
+let extent = ref()
 let index = ref()
 let pagination = ref({
         rowsPerPage: 0

@@ -66,16 +66,26 @@
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+                <q-form @submit="postTypeDocument()">
                 <div>
-                <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre del tipo de documento"></q-input>
-                  <q-input filled type="text" v-model="acronym" label="Digite el acronimo a las siglas"></q-input>
-                 
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postTypeDocument()"  />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del Tipo de documento" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
+
+               <q-input class="q-mb-md" filled type="text" v-model="acronym" label="Digite el acronimo"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.trim().length > 0) || 'El campo es requerido',
+                ]" />
+
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  @click="postTypeDocument()"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
+                  </span>CERRAR</q-btn>
                 </div>
+                </q-form>
               </div>
             </q-card>
           </q-dialog>
@@ -88,16 +98,27 @@
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+
+                <q-form @submit="putInfo()">
                 <div>
-                <q-input class="q-mb-md"  filled type="text" v-model="name" label="Digite el nombre del tipo de documento"></q-input>
-                  <q-input filled type="text" v-model="acronym" label="Digite el acronimo a las siglas"></q-input>
-                 
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()"  />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del Tipo de documento" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
+
+               <q-input class="q-mb-md" filled type="text" v-model="acronym" label="Digite el acronimo"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.trim().length > 0) || 'El campo es requerido',
+                ]" />
+
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  @click="putInfo()"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
+                  </span>CERRAR</q-btn>
                 </div>
+                </q-form>
               </div>
             </q-card>
           </q-dialog>
@@ -105,7 +126,7 @@
 </template>
   
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, onBeforeMount} from 'vue'
 import { documentStore} from "../../store/Maintenance/TypeDocument.js"
 const documentsStores = documentStore()
 let promptEdit = ref(false)
@@ -173,7 +194,7 @@ async function putInfo(){
     acronym.value 
     )
     console.log(res);
-    getUsers()
+    getTypeDocument()
 }
 
 

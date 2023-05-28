@@ -98,19 +98,18 @@
                   (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="people" use-input use-chips multiple input-debounce="0" @new-value="createValue"
-                :options="filterOptions" @filter="filterFn" label="Seleccione las personas" lazy-rules :rules="[
+              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules :rules="[
                   (val) =>
                     ((val) => val !== null && val !== '' && val !== undefined) ||
                     'El campo es requerido',
                 ]" />
 
-              <q-select filled v-model="farm" :options="options" label="Seleccione la finca" lazy-rules :rules="[
+              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
                 (val) =>
                 ((val) => val !== null && val !== '') || 'El campo es requerido',
               ]" />
               
-              <q-select filled v-model="lot" :options="options" label="Seleccione el lote" :rules="[
+              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" :rules="[
                 (val) =>
                 ((val) => val !== null && val !== '') || 'El campo es requerido',
               ]"/>
@@ -171,17 +170,17 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, ref } from "vue";
-import { useDailyStore } from "../../store/Transformation/DailyProcess.js";
-import { usersStore } from "../../store/Maintenance/CreateUsers";
-import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js"
-import { lotsStore } from "../../store/Maintenance/Lots.js"
+import { onMounted, ref } from "vue";
+import { useDailyStore } from "../../store/Transformation/dailyProcess.js";
+// import { usersStore } from "../../store/Maintenance/CreateUsers";
+// import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js"
+// import { lotsStore } from "../../store/Maintenance/Lots.js"
 
 
+// const useFarms = farmRegistryStore();
 const useDaily = useDailyStore();
-const useUsers = usersStore();
-const useFarms = farmRegistryStore();
-const useLots = lotsStore()
+// const useUsers = usersStore();
+// const useLots = lotsStore()
 
 
 
@@ -198,9 +197,7 @@ let index = ref();
 let optionsPeople = ref([]);
 let optionsFarm = ref([]);
 let optionsLot = ref([]);
-let options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
-let stringOptions = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
-let filterOptions = ref(optionsPeople);
+// let filterOptions = ref(optionsPeople);
 
 
 let columns = ref([
@@ -237,13 +234,13 @@ let columns = ref([
   {
     name: "farm",
     label: "FINCA",
-    field: "farm",
+    field: (row) => row.farm.name,
     align: "center",
   },
   {
     name: "lot",
     label: "LOTE",
-    field: "lot",
+    field: (row) => row.lot.name,
     align: "center",
   },
   {
@@ -260,6 +257,13 @@ let columns = ref([
 ]);
 
 let rows = ref([]);
+
+onMounted(() => {
+  // getListDaily();
+  getPeople();
+  getFarms();
+  getLots()
+});
 
 // const newDate = new date.value.toLocaleDateString('en-CO',
 // { year: 'numeric', month: '2-digit', day: '2-digit' }).split('/').reverse().join('-')
@@ -283,40 +287,24 @@ getListDaily();
 
 
 
-
-//post proceso diario
-async function postDailyProcess() {
-try{
-
-  const peopleData = await getPeople();
-
-  const peopleArray = peopleData.map((person) => ({
-    _id: person.value,
-    names: person.label,
-  }));
-  
-  
+// post proceso diario
+async function postDailyProcess() {  
   console.log("hola post");
-  console.log(people.value);
-  const res = await useDaily.postDaily({
+  await useDaily.postDaily({
     name: name.value,
     description: description.value,
     hours: hours.value,
-    people: peopleArray,
+    people: people.value.value,
     farm: farm.value.value,
     lot: lot.value.value,
     date: date.value,
   });
-
   console.log("paseeeeee ");
-  console.log(person.value);
+  console.log(name.value);
   prompt.value = false;
+  // console.log(res);
   getListDaily();
-  console.log(res);
-} catch (error){
-  console.log(error);
-}
-}
+} 
 
 // activar y desactivar proceso diario
 async function activarDesactivar(data) {
@@ -359,9 +347,10 @@ async function putDaily() {
   edit.value = false;
 }
 
+
 async function getPeople() {
   optionsPeople.value=[]
-  const res = await useUsers.listUsersActive();
+  const res = await useDaily.listUsersActive();
   console.log(res);
   if (res.status < 299) {
     console.log("holis");
@@ -376,15 +365,11 @@ async function getPeople() {
   } else {
     throw new Error ("Error al obtener los datos de people")
   }
-  // res.forEach((row, index) => {
-  //   optionsPeople.value.push({ label: row.name, value: row._id });
-  //   console.log(optionsPeople.value);
-  // });
 }
 
 
 async function getFarms() {
-  const res = await useFarms.listFarmsActive();
+  const res = await useDaily.listFarmsActive();
   console.log(res);
   if (res.status < 299) {
     console.log("holis");
@@ -399,7 +384,7 @@ async function getFarms() {
 }
 
 async function getLots() {
-  const res = await useLots.listlotsActive();
+  const res = await useDaily.listlotsActive();
   console.log(res);
   if (res.status < 299) {
     console.log("holis");
@@ -410,39 +395,38 @@ async function getLots() {
 
       console.log(optionsLot.value);
     }
+    return optionsPeople.value
+  } else {
+    throw new Error ("Error al obtener los datos de lotes")
   }
 }
 
 
 
 
-//function de options en modal
-function createValue(val, done) {
-  if (val.length > 0) {
-    if (!optionsPeople.value.includes(val)) {
-      optionsPeople.value.push(val);
-    }
-    done(val, "toggle");
-  }
-}
 
-function filterFn(val, update) {
-  update(() => {
-    if (val === "") {
-      filterOptions.value = optionsPeople.value;
-    } else {
-      const needle = val.toLowerCase();
-      filterOptions.value = optionsPeople.value.filter(
-        (v) => v.toLowerCase().indexOf(needle) > -1
-      );
-    }
-  });
-}
+// //function de options en modal
+// function createValue(val, done) {
+//   if (val.length > 0) {
+//     if (!optionsPeople.value.includes(val)) {
+//       optionsPeople.value.push(val);
+//     }
+//     done(val, "toggle");
+//   }
+// }
 
-onMounted(() => {
-  getListDaily();
-  getPeople();
-  // getFarms();
-  // getLots()
-});
+// function filterFn(val, update) {
+//   update(() => {
+//     if (val === "") {
+//       filterOptions.value = optionsPeople.value;
+//     } else {
+//       const needle = val.toLowerCase();
+//       filterOptions.value = optionsPeople.value.filter(
+//         (v) => v.toLowerCase().indexOf(needle) > -1
+//       );
+//     }
+//   });
+// }
+
+
 </script>

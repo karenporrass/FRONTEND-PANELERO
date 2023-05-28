@@ -59,10 +59,10 @@
               </div>
             </q-td>
           </template>
-          <template v-slot:body-cell-people="props">
+          <!-- <template v-slot:body-cell-people="props">
             <td v-if="props.row.people" v-text="props.row.people.names">
             </td>
-          </template>
+          </template> -->
           <!-- <template v-slot:body-cell-labor="props">
             <td v-if="props.row.labor" v-text="props.row.labor.name">
             </td>
@@ -105,12 +105,12 @@
                     'El campo es requerido',
                 ]" />
 
-              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
+              <q-select filled v-model="farm" :options="options" label="Seleccione la finca" lazy-rules :rules="[
                 (val) =>
                 ((val) => val !== null && val !== '') || 'El campo es requerido',
               ]" />
               
-              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" :rules="[
+              <q-select filled v-model="lot" :options="options" label="Seleccione el lote" :rules="[
                 (val) =>
                 ((val) => val !== null && val !== '') || 'El campo es requerido',
               ]"/>
@@ -231,7 +231,7 @@ let columns = ref([
   {
     name: "people",
     label: "PERSONAS",
-    field: 'people',
+    field: (row) => row.people.names,
     align: "center",
   },
   {
@@ -280,23 +280,42 @@ async function getListDaily() {
 }
 getListDaily();
 
+
+
+
+
 //post proceso diario
 async function postDailyProcess() {
+try{
+
+  const peopleData = await getPeople();
+
+  const peopleArray = peopleData.map((person) => ({
+    _id: person.value,
+    names: person.label,
+  }));
+  
+  
   console.log("hola post");
   console.log(people.value);
   const res = await useDaily.postDaily({
     name: name.value,
     description: description.value,
     hours: hours.value,
-    people: people.value[0].value,
-    farm: farm.value[0].value,
+    people: peopleArray,
+    farm: farm.value.value,
     lot: lot.value.value,
     date: date.value,
   });
+
   console.log("paseeeeee ");
+  console.log(person.value);
   prompt.value = false;
   getListDaily();
   console.log(res);
+} catch (error){
+  console.log(error);
+}
 }
 
 // activar y desactivar proceso diario
@@ -341,6 +360,7 @@ async function putDaily() {
 }
 
 async function getPeople() {
+  optionsPeople.value=[]
   const res = await useUsers.listUsersActive();
   console.log(res);
   if (res.status < 299) {
@@ -352,6 +372,9 @@ async function getPeople() {
 
       console.log(optionsPeople.value);
     }
+    return optionsPeople.value
+  } else {
+    throw new Error ("Error al obtener los datos de people")
   }
   // res.forEach((row, index) => {
   //   optionsPeople.value.push({ label: row.name, value: row._id });
@@ -419,7 +442,7 @@ function filterFn(val, update) {
 onMounted(() => {
   getListDaily();
   getPeople();
-  getFarms();
-  getLots()
+  // getFarms();
+  // getLots()
 });
 </script>

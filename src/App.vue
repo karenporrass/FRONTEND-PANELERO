@@ -9,7 +9,7 @@
            
             <q-space></q-space>
             <q-btn flat icon="fa-regular fa-user" class="q-mr-sm" />
-            <router-link to="/" style="text-decoration: none; color: white;">
+            <!-- <router-link to="/" style="text-decoration: none; color: white;"> -->
             <q-btn flat>
              <span class="fa-sharp fa-solid fa-arrow-up-from-bracket fa-rotate-270" style="font-size: 25px;"> 
                 
@@ -36,7 +36,7 @@
                 </div>
               </q-menu>
             </q-btn>
-            </router-link>
+            <!-- </router-link> -->
 
 
           </q-toolbar>
@@ -46,7 +46,7 @@
             <q-list class="column items-center q-mt-md" >
 
               <router-link to="/home" style="text-decoration: none;">
-                <q-item clickable class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px; height: 10px ;">
+                <q-item clickable class="bg-green-9 text-white q-mb-md" style="border-radius: 12px; width: 230px;">
                   <q-item-section avatar style="min-width: 1px; ">
                     <i class="fa-solid fa-house-user" style="font-size: 20px; "></i>
                   </q-item-section>
@@ -184,7 +184,16 @@
 import { ref } from 'vue'
 
 const leftDrawerOpen = ref(false)
+let TituloPedidos = ref(false)
+let TituloInventory = ref(false)
 
+function MenuAPedidos() {
+  TituloPedidos = true
+}
+
+function MenuInventory() {
+  TituloInventory = true
+}
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value

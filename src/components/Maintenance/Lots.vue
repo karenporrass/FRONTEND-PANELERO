@@ -142,7 +142,7 @@ const postLots= async ()=>{
 }
 const getLots = async ()=>{
  
-    const lots = await lotsStores.listlots()
+    const lots = await lotsStores.listFarmsActive()
     if (lots.status < 299) {
     rows.value = lots.data
     rows.value.forEach((row, index) => {

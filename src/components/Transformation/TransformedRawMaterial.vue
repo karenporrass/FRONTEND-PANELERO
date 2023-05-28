@@ -55,9 +55,9 @@
           <div>
             <q-select filled class="q-mb-md" v-model="type" :options="optionsTypes" label="Seleccione la unidad de medida" />
             <q-input filled class="q-mb-md" type="number" v-model="quantity" label="Digite la cantidad"></q-input>
-            <q-select filled class="q-mb-xs" v-model="farm" :options="optionsFarm" label="Seleccione la finca" />  
-            <q-select filled class="q-mb-xs" v-model="lot" :options="optionsLot" label="Seleccione el lote" />
-              <q-input v-model="date" class="q-mb-xs" filled type="date" label="Seleccione la fecha" />
+            <q-select filled class="q-mb-md" v-model="farm" :options="optionsFarm" label="Seleccione la finca" />  
+            <q-select filled class="q-mb-md" v-model="lot" :options="optionsLot" label="Seleccione el lote" />
+              <q-input v-model="date" class="q-mb-md" filled type="date" label="Seleccione la fecha" />
             <div class="q-pb-sm">
               <br />
               <q-btn label="guardar" class="text-white bg-green-10" @click="postTransformed()" />
@@ -176,6 +176,7 @@ async function postTransformed() {
     type: type.value, 
     quantity: quantity.value.value,
     lot: lot.value.value,
+    farm: farm.value.value,
     date: date.value,
   }
   )
@@ -219,16 +220,20 @@ async function getFarms() {
 async function getLots() {
   const res = await useLots.listlotsActive();
   console.log(res);
-  if (res.status < 299) {
-    console.log("holis");
-    for (let i in res.data) {
-      console.log(i);
-      let object = { label: res.data[i].names, value: res.data[i]._id };
-      optionsLot.value.push(object);
+  // if (res.status < 299) {
+  //   console.log("holis");
+  //   for (let i in res.data) {
+  //     console.log(i);
+  //     let object = { label: res.data[i].names, value: res.data[i]._id };
+  //     optionsLot.value.push(object);
 
-      console.log(optionsLot.value);
-    }
-  }
+  //     console.log(optionsLot.value);
+  //   }
+  // }
+  res.forEach((row, index) => {
+    optionsLot.value.push({ label: row.name, value: row._id });
+    console.log(optionsLot.value);
+  });
 }
 
 async function getTypes() {

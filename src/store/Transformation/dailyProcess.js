@@ -20,14 +20,13 @@ const getDaily = async () =>{
     const postDaily = async (infoDaily) => {
       console.log("post");
       try {
-        let r= await requestAxios.post("/procesoDiario/register", infoDaily, {
+        await requestAxios.post("/procesoDiario/register", infoDaily, {
           // headers: {
           //   token,
           // },
         });
-        console.log("hola no guarde nada");
         console.log(infoDaily);
-        console.log(r);
+        // console.log(r);
       } catch (error) {
         console.log(error);
         return error
@@ -57,8 +56,30 @@ const getDaily = async () =>{
       }
     };
 
+    async function listFarmsActive() {
+      try {
+        return await requestAxios.get("/registroFinca/active")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    async function listUsersActive() {
+      console.log("listUsersActive")
+      try {
+        return await requestAxios.get("/usuarios/active")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function listlotsActive() {
+      try {
+        return await requestAxios.get("/lotes/active")
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
 
-
-    return { getDaily, active, postDaily, updateDaily}
+    return { getDaily, active, postDaily, updateDaily, listFarmsActive, listUsersActive, listlotsActive}
   })

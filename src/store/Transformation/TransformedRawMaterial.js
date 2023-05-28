@@ -36,23 +36,37 @@ export const useTransformedStore = defineStore('Tranformed', () => {
       //     }
       //   }
     }
+
+
+
+    async function listUnitsActive() {
+      try {
+        return await requestAxios.get("/unidadesMedida/active")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+
+    async function listFarmsActive() {
+      try {
+        return await requestAxios.get("/registroFinca/active")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function listlotsActive() {
+      try {
+        return await requestAxios.get("/lotes/active")
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+
+
     
-      return { listTransformed,  addTransformed }
+      return { listTransformed,  addTransformed, listUnitsActive, listFarmsActive,listlotsActive }
     }
     )
-
-  // export const useTransformedStore = defineStore('transf',{
-  //   state:()=>({
-
-  //   }),
-  //   actions:{
-  //     async listTransformed() {
-  //       try {
-  //         return await axios.get("https://project-panelero.onrender.com/materiaTransformada")
-  //       } catch (error) {
-  //         console.log(error);
-  //         return error
-  //       }
-  //     }
-  //   }
-  // })

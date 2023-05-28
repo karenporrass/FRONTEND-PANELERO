@@ -107,15 +107,11 @@
   
 <script setup>
 import { ref, onMounted } from "vue"
+
 import { useTransformedStore } from "../../store/Transformation/TransformedRawMaterial.js"
-import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js"
-import { lotsStore } from "../../store/Maintenance/Lots.js"
-import { unitsStore } from "../../store/Maintenance/MeasurementUnits.js"
 
 const useTransformed = useTransformedStore()
-const useFarms = farmRegistryStore()
-const useLots = lotsStore()
-const useUnits = unitsStore()
+
 
 
 let prompt = ref(false)
@@ -130,13 +126,47 @@ let optionsLot = ref([]);
 let optionsTypes = ref([]);
 
 let columns = ref([
-  { name: 'index', label: 'N°', field: 'index', align: 'center' },
-  { name: 'type', label: 'TIPO DE UNIDAD DE MEDIDA', align: 'center', field: 'type' },
-  { name: 'quantity', align: 'center', label: 'CANTIDAD', field: 'quantity', align: 'center', sortable: true },
-  { name: 'farm', label: 'FINCA', field: 'farm', align: 'center' },
-  { name: 'lot', label: 'LOTE', field: 'lot', align: 'center' },
-  { name: 'date', label: 'FECHA', field: 'date', align: 'center' },
-  { name: 'options', label: 'OPCIONES', align: 'center' },
+  { 
+  name: 'index', 
+  label: 'N°', 
+  field: 'index', 
+  align: 'center' 
+},
+  { 
+  name: 'type', 
+  label: 'TIPO DE UNIDAD DE MEDIDA', 
+  align: 'center', 
+  field: (row) => row.type.name,
+},
+  { 
+  name: 'quantity', 
+  label: 'CANTIDAD', 
+  field: (row) => row.quantity.name,
+  align: 'center', 
+},
+  { 
+  name: 'farm', 
+  label: 'FINCA', 
+  field: (row) => row.farm.name,
+  align: 'center' 
+},
+  { 
+  name: 'lot', 
+  label: 'LOTE', 
+  field: (row) => row.lot.name,
+  align: 'center' 
+},
+  { 
+  name: 'date', 
+  label: 'FECHA', 
+  field: 'date', 
+  align: 'center' 
+},
+  { 
+  name: 'options', 
+  label: 'OPCIONES', 
+  align: 'center' 
+},
 ])
 
 let rows = ref([])
@@ -164,7 +194,7 @@ getTransformed()
 //post proceso diario
 async function postTransformed() {
   const res = await useTransformed.addTransformed({
-    type: type.value, 
+    type: type.value.value, 
     quantity: quantity.value.value,
     lot: lot.value.value,
     farm: farm.value.value,

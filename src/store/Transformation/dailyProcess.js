@@ -20,14 +20,14 @@ const getDaily = async () =>{
     const postDaily = async (infoDaily) => {
       console.log("post");
       try {
-        await requestAxios.post("/procesoDiario/register", infoDaily, {
+        return await requestAxios.post("/procesoDiario/register", infoDaily, {
           // headers: {
           //   token,
           // },
         });
-        console.log(infoDaily);
         // console.log(r);
       } catch (error) {
+        console.log(infoDaily);
         console.log(error);
         return error
       }
@@ -45,7 +45,7 @@ const getDaily = async () =>{
     const updateDaily = async (id, infoDaily) => {
       console.log(infoDaily);
       try {
-        await requestAxios.put(`/procesoDiario/update/${id}`, infoDaily, {
+        return await requestAxios.put(`/procesoDiario/update/${id}`, infoDaily, {
           // headers: {
           //   token,
           // },

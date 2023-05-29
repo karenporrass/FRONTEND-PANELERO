@@ -47,71 +47,119 @@
 
     <q-dialog v-model="prompt">
       <q-card>
-        <q-card-section class="bg-green-10 q-px-lg">
+        <q-card-section class="bg-green-9 q-px-lg">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
             DILIGENCIA LA INFORMACIÓN
           </h5>
         </q-card-section>
-        <div class="q-pa-md ">
-          <div>
-            <q-select filled class="q-mb-md" v-model="type" :options="optionsTypes" label="Seleccione la unidad de medida" />
-            <q-input filled class="q-mb-md" type="number" v-model="quantity" label="Digite la cantidad"></q-input>
-            <q-select filled class="q-mb-md" v-model="farm" :options="optionsFarm" label="Seleccione la finca" />  
-            <q-select filled class="q-mb-md" v-model="lot" :options="optionsLot" label="Seleccione el lote" />
-              <q-input v-model="date" class="q-mb-md" filled type="date" label="Seleccione la fecha" />
-            <div class="q-pb-sm">
-              <br />
-              <q-btn label="guardar" class="text-white bg-green-10" @click="postTransformed()" />
-              <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+        <div class="q-pa-md">
+          <q-form @submit.prevent.stop="postTransformed()">
+            <div>
+              <q-input filled type="number" v-model="quantity" label="Digite la cantidad" lazy-rules :rules="[
+                (val) =>
+                  (val !== ' ') || 'El campo es requerido',
+                  (val > 0 ) || 'El campo debe ser mayor a 0',
+              ]" />
+
+            <q-select filled v-model="type" :options="optionsTypes" label="Seleccione la unidad de medida" lazy-rules :rules="[
+                (val) =>
+                  ((val) => val !== null && val !== '' && val !== undefined) ||
+                  'El campo es requerido',
+              ]" />
+
+              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
+                (val) =>
+                ((val) => val !== null && val !== '') || 'El campo es requerido',
+              ]" />
+              
+              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" :rules="[
+                (val) =>
+                ((val) => val !== null && val !== '') || 'El campo es requerido',
+              ]"/>
+              
+              <q-input v-model="date" filled type="date" label="Seleccione la fecha" :rules="[
+                (val) =>
+                ((val) => val !== null && val !== '') || 'El campo es requerido',
+              ]"/>
+
+
+              <div class="justify-center flex">
+                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-10 text-white"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px">
+                    cancel </span>CERRAR</q-btn>
+              </div>
             </div>
-          </div>
+          </q-form>
         </div>
       </q-card>
     </q-dialog>
 
 
-
- 
     <q-dialog v-model="edit">
       <q-card>
-        <q-card-section class="bg-green-10 q-px-lg">
+        <q-card-section class="bg-green-9 q-px-lg">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
             MODIFICA LA INFORMACIÓN
           </h5>
         </q-card-section>
-        <div class="q-pa-md ">
-          <div>
-            <q-select filled class="q-mb-md" v-model="type" :options="optionsTypes" label="Seleccione la unidad de medida" />
-            <q-input filled class="q-mb-md" type="number" v-model="quantity" label="Digite la cantidad"></q-input>
-            <q-select filled class="q-mb-md" v-model="farm" :options="optionsFarm" label="Seleccione la finca" />  
-            <q-select filled class="q-mb-md" v-model="lot" :options="optionsLot" label="Seleccione el lote" />
-              <q-input v-model="date" class="q-mb-md" filled type="date" label="Seleccione la fecha" />
-            <div class="q-pb-sm">
-              <br />
-              <q-btn label="guardar" class="text-white bg-green-10" @click="putTransformed()" />
-              <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+        <div class="q-pa-md">
+          <q-form @submit.prevent.stop="putTransformed()">
+            <div>
+              <q-input filled type="number" v-model="quantity" label="Digite la cantidad" lazy-rules :rules="[
+                (val) =>
+                  (val !== ' ') || 'El campo es requerido',
+                  (val > 0 ) || 'El campo debe ser mayor a 0',
+              ]" />
+
+            <q-select filled v-model="type" :options="optionsTypes" label="Seleccione la unidad de medida" lazy-rules :rules="[
+                (val) =>
+                  ((val) => val !== null && val !== '' && val !== undefined) ||
+                  'El campo es requerido',
+              ]" />
+
+              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
+                (val) =>
+                ((val) => val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
+              ]" />
+              
+              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" :rules="[
+                (val) =>
+                ((val) => val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
+              ]"/>
+              
+              <q-input v-model="date" filled type="date" label="Seleccione la fecha" :rules="[
+                (val) =>
+                ((val) => val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
+              ]"/>
+
+
+              <div class="justify-center flex">
+                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-10 text-white"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px">
+                    cancel </span>CERRAR</q-btn>
+              </div>
             </div>
-          </div>
+          </q-form>
         </div>
       </q-card>
     </q-dialog>
-
-
-
-
-
-
+   
 
   </div>
 </template>
   
 <script setup>
 import { ref, onMounted } from "vue"
-
 import { useTransformedStore } from "../../store/Transformation/TransformedRawMaterial.js"
-
+import {lotsStore} from "../../store/Maintenance/Lots.js"
+import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js"
+import {unitsStore} from "../../store/Maintenance/MeasurementUnits.js"
 const useTransformed = useTransformedStore()
-
+const useLots = lotsStore()
+const useFarms = farmRegistryStore();
+const useTypes = unitsStore()
 
 
 let prompt = ref(false)
@@ -141,7 +189,7 @@ let columns = ref([
   { 
   name: 'quantity', 
   label: 'CANTIDAD', 
-  field: (row) => row.quantity.name,
+  field: (row) => row.quantity,
   align: 'center', 
 },
   { 
@@ -159,7 +207,7 @@ let columns = ref([
   { 
   name: 'date', 
   label: 'FECHA', 
-  field: 'date', 
+  field: (row) => row.date.slice(0, 10),
   align: 'center' 
 },
   { 
@@ -171,6 +219,12 @@ let columns = ref([
 
 let rows = ref([])
 
+onMounted(() => {
+  getTransformed()
+  getFarms()
+  getLots()
+  getTypes()
+})
 
 
 
@@ -188,20 +242,18 @@ async function getTransformed() {
   }
 }
 
-getTransformed()
 
 
 //post proceso diario
 async function postTransformed() {
-  const res = await useTransformed.addTransformed({
-    type: type.value.value, 
-    quantity: quantity.value.value,
+  await useTransformed.addTransformed({
+    type: type.value.value,
+    quantity: quantity.value,
     lot: lot.value.value,
     farm: farm.value.value,
     date: date.value,
-  }
-  )
-  console.log(res);
+  });
+  console.log("hola post");
   prompt.value = false
   getTransformed()
 }
@@ -224,23 +276,24 @@ async function activarDesactivar(data) {
 
 
 function showInfo(data) {
-  type.value = data.type;
+  type.value = data.type.name;
   quantity.value = data.quantity;
-  lot.value = data.lot;
+  lot.value = data.lot.name;
   farm.value = data.farm.name;
-  date.value = data.date;
+  date.value = data.date.slice(0, 10);
 }
 
 async function putTransformed() {
   console.log(index.value);
-  const res = await useResults.updateResult(index.value, {
-    number: number.value,
-    program: program.value.value,
-    shift: shift.value.value.toUpperCase(),
-    owner: owner.value.value,
+  const res = await useTransformed.updateTransformed(index.value, {
+    type: type.value.value,
+    quantity: quantity.value,
+    lot: lot.value.value,
+    farm: farm.value.value,
+    date: date.value,
   });
   console.log(res);
-  getFiches();
+  getTransformed();
   edit.value = false;
 }
 
@@ -278,32 +331,22 @@ async function getLots() {
 }
 
 async function getTypes() {
-  const res = await useUnits.listUnitsActive();
+  const res = await useTypes.listUnitsActive();
   console.log(res);
-  // if (res.status < 299) {
-  //   console.log("holis");
-  //   for (let i in res.data) {
-  //     console.log(i);
-  //     let object = { label: res.data[i].names, value: res.data[i]._id };
-  //     optionsTypes.value.push(object);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsTypes.value.push(object);
 
-  //     console.log(optionsTypes.value);
-  //   }
-  // }
-  res.forEach((row, index) => {
-    optionsTypes.value.push({ label: row.name, value: row._id });
-    console.log(optionsTypes.value);
-  });
+      console.log(optionsTypes.value);
+    }
+  }
 }
 
 
 
-onMounted(() => {
-  getTransformed()
-  getFarms()
-  getLots()
-  getTypes()
-})
 
 
 

@@ -4,7 +4,7 @@ import { requestAxios } from '../../Global/axios'
 
 export const useTransformedStore = defineStore('Tranformed', () => {
     
-    const listTransformed = async ()=>{
+    async function listTransformed() {
       try {
         return await requestAxios.get("/materiaTransformada/transformed"
         );
@@ -18,7 +18,6 @@ export const useTransformedStore = defineStore('Tranformed', () => {
     const addTransformed = async (infoTrans)=>{  {
       try {
         return await requestAxios.post(`/materiaTransformada/register`, infoTrans,{
-
         });
         console.log(infoTrans);
       } catch (error) {
@@ -27,16 +26,29 @@ export const useTransformedStore = defineStore('Tranformed', () => {
     }
     
     
-      //   const active = async (id, estado)=>{ {
-      //     try {
-      //       return await requestAxios.put(`/materiaTransformada/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
-      //     } catch (error) {
-      //       console.log(error);
-      //       return error
-      //     }
-      //   }
+        const active = async (id, estado)=>{ {
+          try {
+            return await requestAxios.put(`/materiaTransformada/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+          } catch (error) {
+            console.log(error);
+            return error
+          }
+        }
     }
 
+    const updateTransformed = async (id, infoTrans) => {
+      console.log(infoTrans);
+      try {
+        await requestAxios.put(`/materiaTransformada/update/${id}`, infoTrans, {
+          // headers: {
+          //   token,
+          // },
+        });
+        console.log(infoTrans);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
 
     async function listUnitsActive() {
@@ -67,6 +79,6 @@ export const useTransformedStore = defineStore('Tranformed', () => {
 
 
     
-      return { listTransformed,  addTransformed, listUnitsActive, listFarmsActive,listlotsActive }
+      return { listTransformed,  addTransformed, active, updateTransformed, listUnitsActive, listFarmsActive,listlotsActive }
     }
-    )
+  })

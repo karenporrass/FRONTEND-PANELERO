@@ -134,32 +134,57 @@
 
     <q-dialog v-model="edit">
       <q-card>
-        <q-card-section class="bg-green-10 q-px-lg">
+        <q-card-section class="bg-green-9 q-px-lg">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
             MODIFICA LA INFORMACIÓN
           </h5>
         </q-card-section>
         <div class="q-pa-md">
-          <q-form @submit.prevent.stop="putDaily()" novalidate>
+          <q-form @submit.prevent.stop="putDaily()">
             <div>
-              <q-input filled class="q-mb-md" type="text" v-model="name" label="Digite el nombre del proceso" lazy-rules
-                :rules="[
+              <q-input filled type="text" v-model="name" label="Nombre del proceso" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
+
+              <q-input filled type="text" v-model="description" label="Descripción del proceso" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
+
+              <q-input filled type="number" v-model="hours" label="Cuántas horas tomó el proceso" lazy-rules :rules="[
+                (val) =>
+                  (val !== '') || 'El campo es requerido',
+                  (val) => val > 0 || 'El campo debe ser mayor a 0',
+              ]" />
+
+              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules :rules="[
                   (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
+                    ((val) => val !== null && val !== '' && val !== undefined) ||
+                    'El campo es requerido',
                 ]" />
-              <q-input filled class="q-mb-md" type="text" v-model="description"
-                label="Digite una descripción del proceso"></q-input>
-              <q-input filled class="q-mb-md" type="number" v-model="hours"
-                label="Digite cuántas horas tomó el proceso"></q-input>
-              <q-select filled class="q-mb-md" v-model="people" use-input use-chips multiple input-debounce="0"
-                @new-value="createValue" :options="filterOptions" @filter="filterFn" label="Seleccione las personas" />
-              <q-select filled class="q-mb-md" v-model="farm" :options="options" label="Seleccione la finca" />
-              <q-select filled class="q-mb-md" v-model="lot" :options="options" label="Seleccione el lote" />
-              <q-input v-model="date" class="q-mb-xs" filled type="date" label="Seleccione la fecha" />
-              <div class="q-pb-sm">
-                <br />
-                <q-btn label="guardar" type="submit" class="text-white bg-green-10" />
-                <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+
+              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
+                (val) =>
+                ((val) => val !== null && val !== '') || 'El campo es requerido',
+              ]" />
+              
+              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" :rules="[
+                (val) =>
+                ((val) => val !== null && val !== '') || 'El campo es requerido',
+              ]"/>
+              
+              <q-input v-model="date" filled type="date" label="Seleccione la fecha" :rules="[
+                (val) =>
+                ((val) => val !== null && val !== '' && val!== undefined) || 'El campo es requerido',
+              ]"/>
+
+
+              <div class="justify-center flex">
+                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px">
+                    cancel </span>CERRAR</q-btn>
               </div>
             </div>
           </q-form>
@@ -227,7 +252,7 @@ let columns = ref([
   },
   {
     name: "people",
-    label: "PERSONAS",
+    label: "PERSONA ENCARGADA",
     field: (row) => row.people.names,
     align: "center",
   },
@@ -246,7 +271,13 @@ let columns = ref([
   {
     name: "date",
     label: "FECHA",
-    field: "date",
+    field: (row) => row.date.slice(0, 10),
+    align: "center",
+  },
+  {
+    name: "status",
+    label: "ESTADO",
+    field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
     align: "center",
   },
   {
@@ -259,15 +290,21 @@ let columns = ref([
 let rows = ref([]);
 
 onMounted(() => {
-  // getListDaily();
+  getListDaily();
   getPeople();
   getFarms();
   getLots()
 });
 
-// const newDate = new date.value.toLocaleDateString('en-CO',
+// const newDate = new Date(date).toLocaleDateString('en-CO', 
 // { year: 'numeric', month: '2-digit', day: '2-digit' }).split('/').reverse().join('-')
-// console.log(newDate);
+
+// if (date.value) {
+//   const fechaRecortada = fecha.value.slice(0, 10);
+// console.log(fechaRecortada);} 
+// else {
+//   console.log(date.value);
+// }
 
 // get registros proceso diario
 async function getListDaily() {
@@ -283,7 +320,6 @@ async function getListDaily() {
   }
 }
 getListDaily();
-
 
 
 
@@ -326,10 +362,16 @@ async function showInfo(data) {
   description.value = data.description;
   hours.value = data.hours;
   people.value = data.people.names;
-  farm.value = data.farm;
-  lot.value = data.lot;
-  date.value = data.date;
-}
+  farm.value = data.farm.name;
+  lot.value = data.lot.name;
+  date.value = data.date.slice(0, 10);
+  console.log(date.value);
+
+  const fechaRecortada = date.value.slice(0, 10);
+console.log(fechaRecortada);} 
+
+
+
 
 async function putDaily() {
   console.log(index.value);
@@ -337,10 +379,10 @@ async function putDaily() {
     name: name.value,
     description: description.value,
     hours: hours.value,
-    // people: people.value.value,
-    // farm: farm.value.value,
-    // lot: lot.value.value,
-    // date: date.value,
+    people: people.value.value,
+    farm: farm.value.value,
+    lot: lot.value.value,
+    date: date.value,
   });
   console.log(res);
   getListDaily();
@@ -349,7 +391,7 @@ async function putDaily() {
 
 
 async function getPeople() {
-  optionsPeople.value=[]
+  // optionsPeople.value=[]
   const res = await useDaily.listUsersActive();
   console.log(res);
   if (res.status < 299) {

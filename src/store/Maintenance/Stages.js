@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 
-export const stagesStore = defineStore('counter', () => {
+export const stagesStore = defineStore('stagesStore', () => {
     const stage = ref("")
     
     async function listStages() {

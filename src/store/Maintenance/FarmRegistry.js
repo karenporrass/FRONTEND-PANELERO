@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 
-export const farmRegistryStore = defineStore('counter', () => {
+export const farmRegistryStore = defineStore('farmRegistryStore', () => {
     const farm = ref("")
     
     async function listFarms() {

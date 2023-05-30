@@ -34,7 +34,7 @@ export const panelaStore = defineStore('counter', () => {
 
     async function putPanela(id, name, price) {
         try {
-            return await requestAxios.post(`/tipoPanela/${id}`,{
+            return await requestAxios.put(`/tipoPanela/update/${id}`,{
               name: name,
               price: price
             })
@@ -53,4 +53,7 @@ export const panelaStore = defineStore('counter', () => {
     }
   
     return { panela, listPanela, listPanelaActive, newPanela, putPanela, active}
-  })
+  },
+  {
+    persist: true,
+  },)

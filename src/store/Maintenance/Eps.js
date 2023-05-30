@@ -33,7 +33,7 @@ export const epsStore = defineStore('counter', () => {
       }
       async function putEps(id, name, attentionLine) {
         try {
-            return await requestAxios.post(`/eps/${id}`,{
+            return await requestAxios.put(`/eps/update/${id}`,{
                 name: name,
                 attentionLine: attentionLine
             })
@@ -52,4 +52,8 @@ export const epsStore = defineStore('counter', () => {
     }
   
     return { listEps, eps, active, newEps, putEps, listEpsActive }
-  })
+  },
+   {
+    persist: true,
+  },
+  )

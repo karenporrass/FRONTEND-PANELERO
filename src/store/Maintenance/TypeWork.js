@@ -36,7 +36,7 @@ export const workStore = defineStore('counter', () => {
 
       async function putWork(id, name, area, dailyPayment) {
         try {
-            return await requestAxios.post(`/tipoLabor/${id}`,{
+            return await requestAxios.put(`/tipoLabor/update/${id}`,{
 
               name: name,
               area: area,
@@ -57,4 +57,7 @@ export const workStore = defineStore('counter', () => {
     }
   
     return { listWork, work, active, newWork, putWork, listWorkActive }
-  })
+  }, {
+    persist: true,
+  },
+  )

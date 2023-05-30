@@ -34,7 +34,7 @@ export const documentStore = defineStore('counter', () => {
 
     async function putDocument(id, name, acronym) {
         try {
-            return await requestAxios.post(`/tipoDocumento/${id}`,{
+            return await requestAxios.put(`/tipoDocumento/update/${id}`,{
               name: name,
               acronym: acronym
             })
@@ -53,4 +53,6 @@ export const documentStore = defineStore('counter', () => {
     }
   
     return { listDocuments, document, active, newDocument, putDocument, listDocumentsActive }
-  })
+  }, {
+    persist: true,
+  },)

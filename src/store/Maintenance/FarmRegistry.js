@@ -35,7 +35,7 @@ export const farmRegistryStore = defineStore('counter', () => {
 
       async function putFarm(id, name, registrationNumber, extent) {
         try {
-            return await requestAxios.post(`/registroFinca/${id}`,{
+            return await requestAxios.put(`/registroFinca/update/${id}`,{
               name: name,
               registrationNumber: registrationNumber,
              extent: extent
@@ -55,4 +55,8 @@ export const farmRegistryStore = defineStore('counter', () => {
     }
   
     return { listFarms, farm, active, newFarm, putFarm, listFarmsActive }
-  })
+  },
+  {
+    persist: true,
+  },
+  )

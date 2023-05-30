@@ -35,7 +35,7 @@ export const packagingStore = defineStore('counter', () => {
 
     async function putPackaging(id, name, maxWeight, units) {
         try {
-            return await requestAxios.post(`/tipoEmpaque/${id}`,{
+            return await requestAxios.put(`/tipoEmpaque/update/${id}`,{
               name: name,
               maxWeigth: maxWeight,
               unitsPerBox: units
@@ -55,4 +55,7 @@ export const packagingStore = defineStore('counter', () => {
     }
   
     return { listPackaging, packaging, active, newPackaging, putPackaging, listPackagingActive}
-  })
+  }, {
+    persist: true,
+  },
+  )

@@ -33,7 +33,7 @@ export const typePayStore = defineStore('counter', () => {
 
     async function putTypePay(id, name) {
         try {
-            return await requestAxios.post(`/tipoPago/${id}`,{
+            return await requestAxios.put(`/tipoPago/update/${id}`,{
              name: name,
 
             })
@@ -54,4 +54,7 @@ export const typePayStore = defineStore('counter', () => {
     }
   
     return { listTypePay, pay, active, newTypePay, putTypePay, listTypePayActive }
-  })
+  }, {
+    persist: true,
+  },
+  )

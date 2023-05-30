@@ -73,14 +73,13 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="text" v-model="format" label="Digite el formato"
+               <q-input class="q-mb-md" filled type="text" v-model="acronym" label="Digite el acronimo"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]" />
 
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                  @click="postUnits()"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -106,14 +105,13 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="text" v-model="format" label="Digite el formato"
+               <q-input class="q-mb-md" filled type="text" v-model="acronym" label="Digite el acronimo"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]" />
 
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                  @click="putInfo()"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -133,7 +131,7 @@ const unitStore = unitsStore()
 let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
-let format = ref()
+let acronym = ref()
 let index = ref()
 let pagination = ref({
         rowsPerPage: 0
@@ -141,7 +139,7 @@ let pagination = ref({
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE DE LA UNIDAD DE MEDIDA',field: 'name',align: 'center'},
-  {name: 'weight',label: 'FORMATO',align: 'center',field: row => row.format,format: val => `${val}`,sortable: true},
+  {name: 'weight',label: 'ACRONIMO',align: 'center',field: row => row.format,format: val => `${val}`,sortable: true},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])
@@ -151,7 +149,7 @@ let rows = ref([])
 const postUnits = async ()=>{
     const unit = await unitStore.newUnits(
       name.value,
-       format.value
+      acronym.value
        )
     getUnits()
     console.log(unit);
@@ -184,14 +182,14 @@ async function activarDesactivar(data) {
 
 function goInfo(data){
     name.value = data.name 
-    format.value = data.format
+    acronym.value = data.acronym
 }
 
 async function putInfo(){
   console.log(index.value);
   const res = await unitStore.putUnits(index.value, 
   name.value,
-  format.value
+  acronym.value
    )
     console.log(res);
     getUnits()

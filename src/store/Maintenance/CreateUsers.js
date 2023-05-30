@@ -26,7 +26,7 @@ export const usersStore = defineStore('counter', () => {
 
     async function listDocuments() {
       try {
-        return await requestAxios.get("/tipoDocumento/state")
+        return await requestAxios.get("/tipoDocumento/active")
       } catch (error) {
         console.log(error);
       }
@@ -82,13 +82,11 @@ export const usersStore = defineStore('counter', () => {
       }
     }
   
-    async function listUsersActive() {
-      try {
-        return await requestAxios.get("/usuarios/active")
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    
 
     return { listUsers, user, active, newUsers, putUsers, listDocuments, listUsersActive}
-  })
+  },
+  {
+    persist: true,
+  },
+  )

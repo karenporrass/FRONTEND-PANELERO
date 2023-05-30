@@ -71,7 +71,7 @@
                   <q-input class="q-mb-md" filled type="number" v-model="registrationNumber" label="Digite el numero de matricula"
                 lazy-rules :rules="[
                   (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
+                    (val  > 0) || 'El campo es requerido',
                 ]" />
                   <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Finca" lazy-rules :rules="[
                 (val) =>
@@ -81,11 +81,10 @@
                <q-input class="q-mb-md" filled type="number" v-model="extent" label="Digite en metros la estencion de terreno"
                 lazy-rules :rules="[
                   (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
+                    (val  > 0) || 'El campo es requerido',
                 ]" />
 
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                  @click="postFarmRegistry()"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -108,7 +107,7 @@
                   <q-input class="q-mb-md" filled type="number" v-model="registrationNumber" label="Digite el numero de matricula"
                 lazy-rules :rules="[
                   (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
+                    (val  > 0) || 'El campo es requerido',
                 ]" />
                   <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Finca" lazy-rules :rules="[
                 (val) =>
@@ -118,11 +117,10 @@
                <q-input class="q-mb-md" filled type="number" v-model="extent" label="Digite en metros la estencion de terreno"
                 lazy-rules :rules="[
                   (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
+                    (val > 0) || 'El campo es requerido',
                 ]" />
 
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                  @click="putInfo()"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>

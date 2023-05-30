@@ -33,9 +33,16 @@
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
-              <div >
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"></q-btn>
-                <q-btn round icon="delete" size="xs" color="green-10"></q-btn>
+              <div>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
               </div>
             </q-td>
             
@@ -45,7 +52,7 @@
             <div class="col-1"></div>
         </div> 
 
-        <q-dialog v-model="prompt">
+        <q-dialog v-model="promptEdit">
             <q-card >
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
@@ -65,7 +72,36 @@
 
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10" @click="OcaccionalPays()" />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postOccasional()" />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
+
+
+          <q-dialog v-model="prompt">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  DILIGENCIA LA INFORMACIÓN
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+        
+                  <q-input filled type="text" v-model="nameSpent" label="Nombre del gasto"></q-input>
+                  <q-input  filled type="text" v-model="finca" label="Finca"></q-input>
+                  <q-input  filled type="text" v-model="descrip" label="Descripcion"></q-input>
+           
+                  <q-input  filled type="text" v-model="Method" label="Metodo de pago"></q-input>
+                  <q-input  filled type="number" v-model="valor" label="Valor del gasto"></q-input>
+                  <q-input  filled type="number" v-model="total" label="Total"></q-input>
+
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10" @click="putInfo()" />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -77,8 +113,11 @@
   
 <script setup>
 import {ref, onMounted} from "vue"
-import axios from 'axios';
+import { OccasionalStore } from "../../store/Costs/OccasionalExpenses.js"
+const occasionalStore = OccasionalStore()
 let prompt = ref(false)
+let promptEdit = ref(false)
+let index = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
@@ -94,13 +133,11 @@ let columns = ref([
 
 
 
-let nameSpent = ref()
-let finca = ref()
-let descrip = ref()
-
-let Method = ref()
-let valor = ref() 
-let total = ref()
+let Name_spent = ref()
+let Finca = ref()
+let Description = ref()
+let PAYMENT_METHOD = ref()
+let costValue = ref()
 
 let rows = ref([
   {
@@ -115,50 +152,82 @@ rows.value.forEach((row, index) => {
 
 
 
-const OcaccionalPays = async ()=>{
-  try {
-    const occasionalExpenses = await axios.post(`http://localhost:3500/occasionalExpenses/post`,{
-      Name_spent:nameSpent.value,
-      Finca:finca.value,
-      Description:descrip.value,
-PAYMENT_METHOD: Method.value,
-Date: Date,
 
-costValue: valor.value
-     
-    })
-     getTypeOcaccional()
-    console.log(occasionalExpenses);
-  } catch (error) {
-    console.log(error);
-  }
-  clear()
+
+
+
+const postOccasional = async () => {
+  const occasional = await occasionalStore.newOccasional(
+
+Name_spent.value,
+Finca.value,
+Description.value,
+PAYMENT_METHOD.value,
+costValue.value,
+
+  )
+  console.log(pays);
+  getPays()
+
 }
 
-const getTypeOcaccional = async ()=>{
-  try {
-    const packa = await axios.get(`http://localhost:3500/occasionalExpenses/get`)
-    console.log(packa);
-    rows.value=packa.data
-  } catch (error) {
-    console.log(error);
-  }
-  console.log("ok");
-}
 
-onMounted(()=>{
-  getTypeOcaccional()
+
+
+async function getOccasional() {
+    const res = await occasionalStore.listOccasional()
+    console.log(res);
+    if (res.status < 299) {
+    rows.value = res.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
 })
-
-
-function clear() {
-  nameSpent.value = ""
-finca.value = ""
-descrip.value = ""
-Method.value = ""
-valor.value = ""
-total.value =""
+  } else {
+    alert(res)
+  }
 }
+
+
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await occasionalStore.active(data._id, 0)
+    console.log(res);
+    getOccasional()
+  } else {
+    res = await occasionalStore.active(data._id, 1)
+    console.log(res);
+    getOccasional()
+  }
+}
+
+function goInfo(data) {
+  Name_spent.value = data.Name_spent
+Finca.value = data.Finca
+Description.value = data.Description
+PAYMENT_METHOD.value = data.PAYMENT_METHOD
+costValue.value = data.costValue
+    
+}
+
+async function putInfo() {
+  console.log(index.value);
+  const res = await occasionalStore.putOccasional(index.value,
+  Name_spent.value,
+Finca.value,
+Description.value,
+PAYMENT_METHOD.value,
+costValue.value,
+  )
+  console.log(res);
+  getOccasional()
+}
+
+
+onMounted(() => {
+  getOccasional()
+})
 
 </script>
 

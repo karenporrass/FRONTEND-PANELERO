@@ -3,28 +3,31 @@ import { ref } from "vue";
 
 import {requestAxios} from "../../Global/axios.js"
 
-export const payStore = defineStore("counter", () => {
-  const Pay = ref("");
+export const monthlyStore = defineStore("counter", () => {
+  const monthly = ref("");
 
 
-  async function listPays() {
-    console.log("listPays")
+  async function listMonthly() {
+    console.log("listMonthly")
     try {
-      return await requestAxios.get("/payments")
+      return await requestAxios.get("/monthlyExpenses")
     } catch (error) {
       console.log(error);
     }
   }
 
+  
 
-  async function newPays(documen, rol, concept, methodPay, time ) {
+  async function newMonthly(Name_spent, Finca, Description, PAYMENT_METHOD, costValue ) {
     try {
-        return await requestAxios.post(`/payments`,{
-          DNI: documen,
-          ROl: rol,
-          CONCEPT: concept,
-          PAYMENT_METHOD: methodPay,
-          TIME_TO_PAY: time,
+        return await requestAxios.post(`/monthlyExpenses`,{
+         
+
+          Name_spent: Name_spent,
+          Finca: Finca,
+          Description: Description,
+          PAYMENT_METHOD: PAYMENT_METHOD,
+          costValue: costValue
 
         })
       } catch (error) {
@@ -32,14 +35,14 @@ export const payStore = defineStore("counter", () => {
       }
   }
 
-  async function putPays(id, documen, rol, concept, methodPay, time ) { //recivir las variables 
+  async function putMonthly(id, Name_spent, Finca, Description, PAYMENT_METHOD, costValue ) { //recivir las variables 
     try {
-        return await requestAxios.post(`/payments/update/${id}`,{
-          DNI: documen,
-          ROl: rol,
-          CONCEPT: concept,
-          PAYMENT_METHOD: methodPay,
-          TIME_TO_PAY: time,
+        return await requestAxios.put(`/monthlyExpenses/update/${id}`,{
+          Name_spent: Name_spent,
+          Finca: Finca,
+          Description: Description,
+          PAYMENT_METHOD: PAYMENT_METHOD,
+          costValue: costValue
         })
       } catch (error) {
         console.log(error);
@@ -48,7 +51,7 @@ export const payStore = defineStore("counter", () => {
 
   async function active(id, estado){
     try {
-      return await requestAxios.put(`/payments/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+      return await requestAxios.put(`/monthlyExpenses/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
     } catch (error) {
       console.log(error);
       return error
@@ -59,5 +62,5 @@ export const payStore = defineStore("counter", () => {
 
   
 
-  return {  listPays, newPays, putPays, active, Pay };
+  return {  monthly, listMonthly, newMonthly, putMonthly, active };
 });

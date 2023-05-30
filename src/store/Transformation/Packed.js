@@ -1,13 +1,10 @@
 import { defineStore } from 'pinia'
-import {ref} from "vue"
-import axios from "axios"
 import { requestAxios } from '../../Global/axios'
 
 
-export const usePackedStore = defineStore('counter', () => {
-    const packed = ref("")
+export const usePackedStore = defineStore('usePackedStore', () => {
     
-    async function listPacked() {
+    const listPacked = async()=> {
       try {
         return await requestAxios.get("/empacados/packed")
       } catch (error) {
@@ -16,20 +13,17 @@ export const usePackedStore = defineStore('counter', () => {
     }
     
     
-    async function addPacked(cellarCode, typePacking, typePanela, formPanela, totalPanelas) {
+    const postPacked = async (infoPacked) => {
+      console.log("post");
       try {
-        return await requestAxios.post(`/empacados/register`,{
-          cellarCode: cellarCode,
-          typePacking: typePacking,
-          typePanela: typePanela,
-          formPanela: formPanela,
-          totalPanelas: totalPanelas,
-        })
+        return await requestAxios.post("/empacados/register",infoPacked, {
+        });
       } catch (error) {
+        console.log(infoPacked);
         console.log(error);
+        return error
       }
     }
-    
     
         async function active(id, estado){
           try {
@@ -40,5 +34,21 @@ export const usePackedStore = defineStore('counter', () => {
           }
         }
     
-    return { listPacked, packed, active, addPacked }
+        const updatePacked = async (id, infoPacked) => {
+          console.log(infoDaily);
+          try {
+            return await requestAxios.put(`/empacados/update/${id}`, infoPacked, {
+              // headers: {
+              //   token,
+              // },
+            });
+            console.log(infoPacked);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+
+
+
+    return { listPacked, postPacked, active,  updatePacked }
   })

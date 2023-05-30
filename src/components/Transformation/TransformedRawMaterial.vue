@@ -152,11 +152,11 @@
   
 <script setup>
 import { ref, onMounted } from "vue"
-import { useTransformedStore } from "../../store/Transformation/TransformedRawMaterial.js"
+import { storeTransformed } from "../../store/Transformation/TransformedRawMaterial.js"
 import {lotsStore} from "../../store/Maintenance/Lots.js"
 import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js"
 import {unitsStore} from "../../store/Maintenance/MeasurementUnits.js"
-const useTransformed = useTransformedStore()
+const useTransformed = storeTransformed()
 const useLots = lotsStore()
 const useFarms = farmRegistryStore();
 const useTypes = unitsStore()

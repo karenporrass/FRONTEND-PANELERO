@@ -218,7 +218,7 @@ async function postPacked() {
     //----------------------------------------
     // typePanela.value,
     // formPanela.value,
-    // totalPanelas.value,
+    // totalPanelas.value, FALTAAAAAAAAA SOLO SIRVE GET
   });
   console.log(res);
   getPacked()

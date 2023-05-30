@@ -2,9 +2,8 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 
-export const workStore = defineStore('counter', () => {
+export const workStore = defineStore('workStore', () => {
     const work = ref("")
-    
     async function listWork() {
       try {
         return await requestAxios.get("/tipoLabor/all")

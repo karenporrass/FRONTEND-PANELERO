@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 
-export const paymentStore = defineStore('counter', () => {
+export const paymentStore = defineStore('paymentStore', () => {
     const payment = ref("")
     
     async function listPayments() {

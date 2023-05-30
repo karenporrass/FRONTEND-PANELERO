@@ -162,13 +162,14 @@ const useFarms = farmRegistryStore();
 const useTypes = unitsStore()
 
 
-let prompt = ref(false)
-let edit= ref(false)
-let type = ref()
-let quantity = ref("")
-let lot = ref("")
-let farm = ref("")
-let date = ref()
+let prompt = ref(false);
+let edit= ref(false);
+let index = ref();
+let type = ref();
+let quantity = ref("");
+let lot = ref("");
+let farm = ref("");
+let date = ref();
 let optionsFarm = ref([]);
 let optionsLot = ref([]);
 let optionsTypes = ref([]);
@@ -344,10 +345,6 @@ async function getTypes() {
     }
   }
 }
-
-
-
-
 
 
 

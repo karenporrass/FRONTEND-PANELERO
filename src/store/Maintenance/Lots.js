@@ -61,4 +61,8 @@ export const lotsStore = defineStore('counter', () => {
     }
   
     return { listlots, lots, active, newlots, putlots, listlotsActive, listFarmsActive }
-  })
+  },
+  {
+    persist: true,
+  },
+  )

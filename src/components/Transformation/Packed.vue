@@ -56,7 +56,7 @@
         <div class="q-pa-md">
           <q-form @submit.prevent.stop="postPacked()">
             <div>
-              <q-select filled v-model="cellar" :options="optionsCellar" label="Seleccione la bodega" lazy-rules :rules="[
+              <q-select filled v-model="cellar" :options="optionsPanela" label="Seleccione la bodega" lazy-rules :rules="[
                   (val) =>
                     ((val) => val !== null && val !== '' && val !== undefined) ||
                     'El campo es requerido',
@@ -160,6 +160,7 @@ const usePacked= usePackedStore()
 
 let prompt = ref(false)
 let edit= ref(false)
+let index= ref()
 let totalPanelas = ref();
 let cellar = ref([]);
 let typePacking = ref([]);
@@ -208,17 +209,18 @@ async function getPacked() {
 onMounted(
   () => {
   getPacked()
+  getTypePanela()
+  getPackaingPanela() 
 })
 
 //post empaques
 async function postPacked() {
+  console.log("hola post");
   const res = await usePacked.postPacked({
-    cellar: cellar.value, // se llama a las variables del modal
+    cellar: cellar.value, 
     typePanela: typePanela.value.value,
-    //----------------------------------------
-    // typePanela.value,
-    // formPanela.value,
-    // totalPanelas.value, FALTAAAAAAAAA SOLO SIRVE GET
+    formPanela: formPanela.value.value,
+    totalPanelas: totalPanelas.value, 
   });
   console.log(res);
   getPacked()
@@ -242,6 +244,65 @@ async function activarDesactivar(data) {
 
 
 
+async function showInfo(data) {
+  cellar.value = data.cellar;
+  typePacking.value = data.typePacking;
+  typePanela.value = data.typePanela;
+  formPanela.value = data.formPanela;
+  totalPanelas.value = data.totalPanelas;
+  console.log(date.value);
+} 
+
+async function putPacked(){
+  const res= await usePacked.updatePacked(index.value, {    
+    cellar: cellar.value, 
+    typePanela: typePanela.value.value,
+    formPanela: formPanela.value.value,
+    totalPanelas: totalPanelas.value, 
+  });
+  console.log(res);
+  getPacked()
+  edit.value = false;
+}
+
+
+async function getTypePanela() {
+  const res = await usePacked.listPanelaActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsTypePanela.value.push(object);
+
+      console.log(optionsTypePanela.value);
+    }
+    return optionsTypePanela.value
+  } else {
+    throw new Error ("Error al obtener los datos de people")
+  }
+}
+
+
+
+async function getPackaingPanela() {
+  const res = await usePacked.listPackagingActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsPacking.value.push(object);
+
+      console.log(optionsPacking.value);
+    }
+    return optionsPacking.value
+  } else {
+    throw new Error ("Error al obtener los datos de people")
+  }
+}
 
 
 

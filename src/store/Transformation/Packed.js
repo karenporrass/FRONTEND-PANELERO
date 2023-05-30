@@ -48,7 +48,23 @@ export const usePackedStore = defineStore('usePackedStore', () => {
           }
         };
 
+        async function listPackagingActive() {
+          try {
+            return await requestAxios.get("/tipoEmpaque/active")
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      
+        async function listPanelaActive() {
+          try {
+            return await requestAxios.get("/tipoPanela/active")
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      
 
 
-    return { listPacked, postPacked, active,  updatePacked }
+    return { listPacked, postPacked, active,  updatePacked, listPackagingActive, listPanelaActive }
   })

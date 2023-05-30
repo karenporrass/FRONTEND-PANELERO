@@ -39,7 +39,7 @@
       <div class="col-1"></div>
       <div class="col-10 ">
         <q-table style="height: 400px" flat bordered  ref="tableRef" :rows="rows" :columns="columns" row-key="index" virtual-scroll  :virtual-scroll-item-size="48"
-          :pagination="pagination" :rows-per-page-options="[0]"   v-model:expanded="expanded" >
+          :pagination="pagination" :rows-per-page-options="[0]"    >
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
@@ -89,7 +89,7 @@
               <q-input class="q-mb-md" filled type="number" v-model="numberDocument" label="Digite el numero de documento"
                 lazy-rules :rules="[
                   (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
+                    (val > 0) || 'El campo es requerido',
                 ]" />
               <q-input class="q-mb-md" filled type="text" v-model="rol" label="Seleccione el rol" lazy-rules :rules="[
                 (val) =>
@@ -124,8 +124,7 @@
               <div class="justify-center flex">
                 <!-- <q-btn class="button_style q-mt-md" :loading="useInstructors.loading" color="secondary" type="submit" label="GUARDAR" /> -->
 
-                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                  @click="postUser()"></q-btn>
+                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -164,7 +163,7 @@
               <q-input class="q-mb-md" filled type="number" v-model="numberDocument" label="Digite el numero de documento"
                 lazy-rules :rules="[
                   (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
+                    (val  > 0) || 'El campo es requerido',
                 ]" />
               <q-input class="q-mb-md" filled type="text" v-model="rol" label="Seleccione el rol" lazy-rules :rules="[
                 (val) =>

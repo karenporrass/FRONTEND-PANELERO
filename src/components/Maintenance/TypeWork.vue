@@ -87,8 +87,7 @@
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]" />
                   
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                  @click="postTypeWork()"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -126,8 +125,7 @@
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]" />
                   
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                  @click="putInfo()"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -168,7 +166,7 @@ let rows = ref([])
 
 const useTypeWork = workStore()
 
-getTypeWork()
+// getTypeWork()
 
 // get registros proceso diario 
 async function getTypeWork() {
@@ -183,7 +181,7 @@ async function getTypeWork() {
     alert(res)
   }
 }
-getTypeWork()
+// getTypeWork()
 
 //post proceso diario
 async function postTypeWork() {
@@ -214,15 +212,15 @@ async function activarDesactivar(data) {
 }
 
 function goInfo(data){
-    nams.value = data.name
+    name.value = data.name
     area.value = data.area
-    dailyPayment.value = data.value
+    dailyPayment.value = data.dailyPayment
     
 }
 
 async function putInfo(){
   console.log(index.value);
-  const res = await userStore.putUsers(index.value, 
+  const res = await useTypeWork.putWork(index.value, 
     name.value, 
     area.value,
     dailyPayment.value

@@ -84,7 +84,6 @@
                 ((val) => val > 0) || 'El campo debe ser mayor a 0',
               ]"/>
 
-
               <div class="justify-center flex">
                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-10 text-white"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" to="" v-close-popup><span
@@ -155,8 +154,10 @@
 <script setup>
 import { ref, onMounted } from "vue"
 import { usePackedStore } from "../../store/Transformation/Packed.js"
+import {panelaStore} from "../../store/Maintenance/TypePanela.js"
 
 const usePacked= usePackedStore()
+const useTypePanela = panelaStore()
 
 let prompt = ref(false)
 let edit= ref(false)
@@ -223,6 +224,7 @@ async function postPacked() {
     totalPanelas: totalPanelas.value, 
   });
   console.log(res);
+  prompt.value = false;
   getPacked()
 }
 
@@ -280,7 +282,7 @@ async function getTypePanela() {
     }
     return optionsTypePanela.value
   } else {
-    throw new Error ("Error al obtener los datos de people")
+    throw new Error ("Error al obtener los datos del tipo de panela")
   }
 }
 

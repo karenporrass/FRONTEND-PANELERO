@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 
-export const paymentStore = defineStore('counter', () => {
+export const paymentStore = defineStore('paymentStore', () => {
     const payment = ref("")
     
     async function listPayments() {
@@ -33,7 +33,7 @@ export const paymentStore = defineStore('counter', () => {
 
       async function putPayment(id, name) {
         try {
-            return await requestAxios.post(`/metodoPago/${id}`,{
+            return await requestAxios.put(`/metodoPago/update/${id}`,{
              name: name,
             })
           } catch (error) {
@@ -51,4 +51,6 @@ export const paymentStore = defineStore('counter', () => {
     }
   
     return { listPayments, payment, active, newPayment, putPayment, listPayments }
-  })
+  }, {
+    persist: true,
+  },)

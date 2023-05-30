@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 
-export const panelaStore = defineStore('counter', () => {
+export const panelaStore = defineStore('panelaStore', () => {
     const panela = ref("")
     
     async function listPanela() {
@@ -34,7 +34,7 @@ export const panelaStore = defineStore('counter', () => {
 
     async function putPanela(id, name, price) {
         try {
-            return await requestAxios.post(`/tipoPanela/${id}`,{
+            return await requestAxios.put(`/tipoPanela/update/${id}`,{
               name: name,
               price: price
             })
@@ -53,4 +53,7 @@ export const panelaStore = defineStore('counter', () => {
     }
   
     return { panela, listPanela, listPanelaActive, newPanela, putPanela, active}
-  })
+  },
+  {
+    persist: true,
+  },)

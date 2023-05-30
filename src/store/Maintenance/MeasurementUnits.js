@@ -21,22 +21,22 @@ export const unitsStore = defineStore('unitsStore', () => {
       }
     }
 
-    async function newUnits(name,format) {
+    async function newUnits(name,acronym) {
         try {
             return await requestAxios.post(`/unidadesMedida`,{
               name: name,
-              format: format
+              acronym: acronym
             })
           } catch (error) {
             console.log(error);
           }
       }
 
-     async function putUnits(id,name,format) {
+     async function putUnits(id,name,acronym) {
         try {
-            return await requestAxios.post(`/unidadesMedida/${id}`,{
+            return await requestAxios.put(`/unidadesMedida/update/${id}`,{
               name: name,
-              format: format
+              acronym: acronym
             })
           } catch (error) {
             console.log(error);
@@ -53,4 +53,7 @@ export const unitsStore = defineStore('unitsStore', () => {
     }
   
     return { listUnits, unit, active, newUnits, putUnits, listUnitsActive}
-  })
+  }, {
+    persist: true,
+  },
+  )

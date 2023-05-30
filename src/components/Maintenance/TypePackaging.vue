@@ -70,17 +70,31 @@
           </h5>
         </q-card-section>
         <div class="q-pa-md ">
-          <div>
-            <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del empaque"></q-input>
-            <q-input class="q-mb-md" filled type="number" v-model="maxWeight" label="Peso maximo"></q-input>
-            <q-input filled type="number" v-model="unitsPerBox" label="Digite las unidades por caja"></q-input>
+          <q-form @submit="postTypePackaging()">
+                <div>
+                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del empaque" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
 
-            <div>
-              <br />
-              <q-btn label="guardar" class="text-white bg-green-10" @click="postTypePackaging()" />
-              <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-            </div>
-          </div>
+               <q-input class="q-mb-md" filled type="number" v-model="maxWeigth" label="Peso maximo"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val  > 0) || 'El campo es requerido',
+                ]" />
+
+                <q-input class="q-mb-md" filled type="number" v-model="unitsPerBox" label="Dijite la cantidad de unidades por caja"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val  > 0) || 'El campo es requerido',
+                ]" />
+                  
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
+                  </span>CERRAR</q-btn>
+                </div>
+                </q-form>
         </div>
       </q-card>
     </q-dialog>
@@ -101,20 +115,19 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="number" v-model="maxWeight" label="Peso maximo"
+               <q-input class="q-mb-md" filled type="number" v-model="maxWeigth" label="Peso maximo"
                 lazy-rules :rules="[
                   (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
+                    (val  > 0) || 'El campo es requerido',
                 ]" />
 
                 <q-input class="q-mb-md" filled type="number" v-model="unitsPerBox" label="Dijite la cantidad de unidades por caja"
                 lazy-rules :rules="[
                   (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
+                    (val  > 0) || 'El campo es requerido',
                 ]" />
                   
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                  @click="putInfo()"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -133,7 +146,7 @@ import {packagingStore} from "../../store/Maintenance/TypePackaging.js"
 let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
-let maxWeight = ref()
+let maxWeigth = ref()
 let unitsPerBox = ref()
 let index = ref()
 // let pagination = ref({
@@ -143,7 +156,7 @@ let columns = ref([
 
 { name: 'index', label: 'N°',field: 'index'},
   {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
-  {name: 'maxWeight',label: 'PESO MAXIMO ',align: 'center',field: row => row.maxWeight,format: val => `${val}`,sortable: true},
+  {name: 'maxWeight',label: 'PESO MAXIMO ',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
   { name: 'unitsPerBox', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
@@ -173,7 +186,7 @@ getPackaging()
 async function postTypePackaging() {
   const res = await usePackaging.newPackaging(
     name.value, // se llama a las variables del modal
-    maxWeight.value,
+    maxWeigth.value,
     unitsPerBox.value,
   )
   getPackaging()
@@ -198,15 +211,15 @@ async function activarDesactivar(data) {
 
 function goInfo(data){
     name.value = data.name
-    maxWeight.value = data.maxWeight
+    maxWeigth.value = data.maxWeigth
     unitsPerBox.value= data.unitsPerBox
 }
 
 async function putInfo(){
   console.log(index.value);
-  const res = await userStore.putUsers(index.value, 
+  const res = await usePackaging.putPackaging(index.value, 
     name.value, 
-    maxWeight.value,
+    maxWeigth.value,
     unitsPerBox.value
     )
     console.log(res);

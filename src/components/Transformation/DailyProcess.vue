@@ -444,31 +444,4 @@ async function getLots() {
 }
 
 
-
-
-
-// //function de options en modal
-// function createValue(val, done) {
-//   if (val.length > 0) {
-//     if (!optionsPeople.value.includes(val)) {
-//       optionsPeople.value.push(val);
-//     }
-//     done(val, "toggle");
-//   }
-// }
-
-// function filterFn(val, update) {
-//   update(() => {
-//     if (val === "") {
-//       filterOptions.value = optionsPeople.value;
-//     } else {
-//       const needle = val.toLowerCase();
-//       filterOptions.value = optionsPeople.value.filter(
-//         (v) => v.toLowerCase().indexOf(needle) > -1
-//       );
-//     }
-//   });
-// }
-
-
 </script>

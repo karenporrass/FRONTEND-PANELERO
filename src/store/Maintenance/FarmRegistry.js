@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 
-export const farmRegistryStore = defineStore('counter', () => {
+export const farmRegistryStore = defineStore('farmRegistryStore', () => {
     const farm = ref("")
     
     async function listFarms() {
@@ -35,7 +35,7 @@ export const farmRegistryStore = defineStore('counter', () => {
 
       async function putFarm(id, name, registrationNumber, extent) {
         try {
-            return await requestAxios.post(`/registroFinca/${id}`,{
+            return await requestAxios.put(`/registroFinca/update/${id}`,{
               name: name,
               registrationNumber: registrationNumber,
              extent: extent
@@ -55,4 +55,8 @@ export const farmRegistryStore = defineStore('counter', () => {
     }
   
     return { listFarms, farm, active, newFarm, putFarm, listFarmsActive }
-  })
+  },
+  {
+    persist: true,
+  },
+  )

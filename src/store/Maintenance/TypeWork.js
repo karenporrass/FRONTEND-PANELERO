@@ -2,9 +2,8 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 
-export const workStore = defineStore('counter', () => {
+export const workStore = defineStore('workStore', () => {
     const work = ref("")
-    
     async function listWork() {
       try {
         return await requestAxios.get("/tipoLabor/all")
@@ -36,7 +35,7 @@ export const workStore = defineStore('counter', () => {
 
       async function putWork(id, name, area, dailyPayment) {
         try {
-            return await requestAxios.post(`/tipoLabor/${id}`,{
+            return await requestAxios.put(`/tipoLabor/update/${id}`,{
 
               name: name,
               area: area,
@@ -57,4 +56,7 @@ export const workStore = defineStore('counter', () => {
     }
   
     return { listWork, work, active, newWork, putWork, listWorkActive }
-  })
+  }, {
+    persist: true,
+  },
+  )

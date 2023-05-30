@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 
-export const stagesStore = defineStore('counter', () => {
+export const stagesStore = defineStore('stagesStore', () => {
     const stage = ref("")
     
     async function listStages() {
@@ -34,7 +34,7 @@ export const stagesStore = defineStore('counter', () => {
 
     async function putStage(id, name, description) {
         try {
-            return await requestAxios.post(`/etapas/${id}`,{
+            return await requestAxios.put(`/etapas/update/${id}`,{
               name: name,
               description: description,
             })
@@ -55,4 +55,7 @@ export const stagesStore = defineStore('counter', () => {
     }
   
     return { listStages, stage, active, newStage, putStage, listStagesActive }
-  })
+  },
+  {
+    persist: true,
+  },)

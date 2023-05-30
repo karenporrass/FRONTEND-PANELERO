@@ -38,7 +38,8 @@
             <div class="col-1"></div>
             <div class="col-10 ">
               <q-table style="height: 400px" flat bordered  ref="tableRef" :rows="rows" :columns="columns" row-key="index" virtual-scroll  :virtual-scroll-item-size="48"
-          :pagination="pagination" :rows-per-page-options="[0]"   v-model:expanded="expanded" >
+          :pagination="pagination" :rows-per-page-options="[0]" >
+
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
               <div>
@@ -86,8 +87,7 @@
                     (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
                 ]" />
 
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                  @click="postLots()"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -124,8 +124,7 @@
                     (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
                 ]" />
 
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                  @click="putInfo()"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>

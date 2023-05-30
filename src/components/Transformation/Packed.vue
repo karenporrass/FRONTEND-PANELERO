@@ -56,19 +56,19 @@
         <div class="q-pa-md">
           <q-form @submit.prevent.stop="postPacked()">
             <div>
-              <q-select filled v-model="cellar" :options="optionsPanela" label="Seleccione la bodega" lazy-rules :rules="[
+              <q-select filled v-model="cellar" :options="optionsColorPanela" label="Seleccione la bodega" lazy-rules :rules="[
                   (val) =>
                     ((val) => val !== null && val !== '' && val !== undefined) ||
                     'El campo es requerido',
                 ]" />
 
-              <q-select filled v-model="typePanela" :options="optionsTypePanela" label="Seleccione el tipo de panela" lazy-rules :rules="[
+              <q-select filled v-model="colorPanela" :options="optionsColorPanela" label="Seleccione el color de la panela" lazy-rules :rules="[
                   (val) =>
                     ((val) => val !== null && val !== '' && val !== undefined) ||
                     'El campo es requerido',
                 ]" />
 
-              <q-select filled v-model="formPanela" :options="optionsPanela" label="Seleccione la forma de la panela" lazy-rules :rules="[
+              <q-select filled v-model="formPanela" :options="optionsFormPanela" label="Seleccione la forma de la panela" lazy-rules :rules="[
                 (val) =>
                 ((val) => val !== null && val !== '') || 'El campo es requerido',
               ]" />
@@ -113,13 +113,13 @@
                     'El campo es requerido',
                 ]" />
 
-              <q-select filled v-model="typePanela" :options="optionsTypePanela" label="Seleccione el tipo de panela" lazy-rules :rules="[
+              <q-select filled v-model="colorPanela" :options="optionsColorPanela" label="Seleccione el color de la panela" lazy-rules :rules="[
                   (val) =>
                     ((val) => val !== null && val !== '' && val !== undefined) ||
                     'El campo es requerido',
                 ]" />
 
-              <q-select filled v-model="formPanela" :options="optionsPanela" label="Seleccione la forma de la panela" lazy-rules :rules="[
+              <q-select filled v-model="formPanela" :options="optionsFormPanela" label="Seleccione la forma de la panela" lazy-rules :rules="[
                 (val) =>
                 ((val) => val !== null && val !== '') || 'El campo es requerido',
               ]" />
@@ -154,10 +154,8 @@
 <script setup>
 import { ref, onMounted } from "vue"
 import { usePackedStore } from "../../store/Transformation/Packed.js"
-import {panelaStore} from "../../store/Maintenance/TypePanela.js"
 
 const usePacked= usePackedStore()
-const useTypePanela = panelaStore()
 
 let prompt = ref(false)
 let edit= ref(false)
@@ -165,23 +163,22 @@ let index= ref()
 let totalPanelas = ref();
 let cellar = ref([]);
 let typePacking = ref([]);
-let typePanela = ref([]);
+let colorPanela = ref([]);
 let formPanela = ref([]);
-let optionsPanela = ref([
-{ label: "Cuadrada", value: "Cuadrada" },
-{ label: "Redonda", value: "Redonda" },
-{ label: "Pastilla", value: "Pastilla" },
-{ label: "Cuadrito", value: "Cuadrito" },
+let optionsColorPanela = ref([
+{ label: "Morena", value: "Morena" },
+{ label: "Blanca", value: "Blanca" },
+{ label: "Intermedia", value: "Intermedia" },
 ])
 let optionsCellar = ref([]);
 let optionsPacking = ref([]);
-let optionsTypePanela = ref([])
+let optionsFormPanela = ref([])
 
 
 let columns = ref([
   { name: 'index', label: 'N°', field: 'index', align: 'center' },
   { name: 'cellar', label: 'BODEGA', field: 'cellar', align: 'center' },
-  { name: 'typePanela', label: 'TIPO DE PANELA', field: 'typePanela', align: 'center' },
+  { name: 'colorPanela', label: 'TIPO DE PANELA', field: 'colorPanela', align: 'center' },
   { name: 'formPanela', label: 'FORMA DE LA PANELA', field: 'formPanela', align: 'center' },
   { name: 'typePacking', label: 'TIPO DE EMPAQUE', field: 'typePacking', align: 'center' },
   { name: 'totalPanelas', label: 'TOTAL DE PANELAS', field: 'totalPanelas', align: 'center' },
@@ -210,7 +207,7 @@ async function getPacked() {
 onMounted(
   () => {
   getPacked()
-  getTypePanela()
+  getFormPanela()
   getPackaingPanela() 
 })
 
@@ -219,7 +216,7 @@ async function postPacked() {
   console.log("hola post");
   const res = await usePacked.postPacked({
     cellar: cellar.value, 
-    typePanela: typePanela.value.value,
+    colorPanela: colorPanela.value.value,
     formPanela: formPanela.value.value,
     totalPanelas: totalPanelas.value, 
   });
@@ -249,7 +246,7 @@ async function activarDesactivar(data) {
 async function showInfo(data) {
   cellar.value = data.cellar;
   typePacking.value = data.typePacking;
-  typePanela.value = data.typePanela;
+  colorPanela.value = data.colorPanela;
   formPanela.value = data.formPanela;
   totalPanelas.value = data.totalPanelas;
   console.log(date.value);
@@ -258,7 +255,7 @@ async function showInfo(data) {
 async function putPacked(){
   const res= await usePacked.updatePacked(index.value, {    
     cellar: cellar.value, 
-    typePanela: typePanela.value.value,
+    colorPanela: colorPanela.value.value,
     formPanela: formPanela.value.value,
     totalPanelas: totalPanelas.value, 
   });
@@ -268,7 +265,7 @@ async function putPacked(){
 }
 
 
-async function getTypePanela() {
+async function getFormPanela() {
   const res = await usePacked.listPanelaActive();
   console.log(res);
   if (res.status < 299) {
@@ -276,11 +273,11 @@ async function getTypePanela() {
     for (let i in res.data) {
       console.log(i);
       let object = { label: res.data[i].name, value: res.data[i]._id };
-      optionsTypePanela.value.push(object);
+      optionsFormPanela.value.push(object);
 
-      console.log(optionsTypePanela.value);
+      console.log(optionsFormPanela.value);
     }
-    return optionsTypePanela.value
+    return optionsFormPanela.value
   } else {
     throw new Error ("Error al obtener los datos del tipo de panela")
   }

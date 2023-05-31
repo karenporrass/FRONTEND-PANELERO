@@ -58,19 +58,19 @@
             <div>
               <q-select filled v-model="cellar" :options="optionsColorPanela" label="Seleccione la bodega" lazy-rules :rules="[
                   (val) =>
-                    ((val) => val !== null && val !== '' && val !== undefined) ||
+                    ((val) => val !== null || val !== '' || val !== undefined) ||
                     'El campo es requerido',
                 ]" />
 
               <q-select filled v-model="colorPanela" :options="optionsColorPanela" label="Seleccione el color de la panela" lazy-rules :rules="[
                   (val) =>
-                    ((val) => val !== null && val !== '' && val !== undefined) ||
+                    ((val) => val !== null || val !== '' || val !== undefined) ||
                     'El campo es requerido',
                 ]" />
 
               <q-select filled v-model="formPanela" :options="optionsFormPanela" label="Seleccione la forma de la panela" lazy-rules :rules="[
                 (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
+                ((val) => val !== null || val !== '' || val !== undefined) || 'El campo es requerido',
               ]" />
               
               <q-select filled v-model="typePacking" :options="optionsPacking" label="Seleccione el empaque" :rules="[
@@ -109,27 +109,27 @@
             <div>
               <q-select filled v-model="cellar" :options="optionsCellar" label="Seleccione la bodega" lazy-rules :rules="[
                   (val) =>
-                    ((val) => val !== null && val !== '' && val !== undefined) ||
+                    ((val) => val !== null || val !== '' || val !== undefined) ||
                     'El campo es requerido',
                 ]" />
 
               <q-select filled v-model="colorPanela" :options="optionsColorPanela" label="Seleccione el color de la panela" lazy-rules :rules="[
                   (val) =>
-                    ((val) => val !== null && val !== '' && val !== undefined) ||
+                    ((val) => val !== null || val !== '' || val !== undefined) ||
                     'El campo es requerido',
                 ]" />
 
               <q-select filled v-model="formPanela" :options="optionsFormPanela" label="Seleccione la forma de la panela" lazy-rules :rules="[
                 (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
+                ((val) => val !== null || val !== '' || val !== undefined) || 'El campo es requerido',
               ]" />
               
-              <q-select filled v-model="typePacking" :options="optionsPacking" label="Seleccione el empaque" :rules="[
+              <q-select filled v-model="typePacking" :options="optionsPacking" label="Seleccione el empaque" lazy-rules :rules="[
                 (val) =>
-                ((val) => val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
+                ((val) => val !== null || val !== '' || val !== undefined) || 'El campo es requerido',
               ]"/>
               
-              <q-input v-model="totalPanelas" filled type="number" label="Digite la cantidad total de las panelas" :rules="[
+              <q-input v-model="totalPanelas" filled type="number" label="Digite la cantidad total de las panelas" lazy-rules :rules="[
                 (val) =>
                 ((val) => val !== null && val !== '') || 'El campo es requerido',
                 ((val) => val > 0) || 'El campo debe ser mayor a 0',
@@ -176,13 +176,56 @@ let optionsFormPanela = ref([])
 
 
 let columns = ref([
-  { name: 'index', label: 'N°', field: 'index', align: 'center' },
-  { name: 'cellar', label: 'BODEGA', field: 'cellar', align: 'center' },
-  { name: 'colorPanela', label: 'TIPO DE PANELA', field: 'colorPanela', align: 'center' },
-  { name: 'formPanela', label: 'FORMA DE LA PANELA', field: 'formPanela', align: 'center' },
-  { name: 'typePacking', label: 'TIPO DE EMPAQUE', field: 'typePacking', align: 'center' },
-  { name: 'totalPanelas', label: 'TOTAL DE PANELAS', field: 'totalPanelas', align: 'center' },
-  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center' },
+  { 
+    name: 'index', 
+  label: 'N°', 
+  field: 'index', 
+  align: 'center' 
+}
+  ,
+  { 
+    name: 'cellar', 
+  label: 'BODEGA', 
+  field: 'cellar', 
+  align: 'center' 
+},
+  { 
+    name: 'colorPanela', 
+  label: 'TIPO DE PANELA', 
+  field: 'colorPanela', 
+  align: 'center' 
+},
+  { 
+    name: 'formPanela', 
+  label: 'FORMA DE LA PANELA', 
+  field: 'formPanela', 
+  align: 'center' 
+},
+  { 
+    name: 'typePacking', 
+  label: 'TIPO DE EMPAQUE', 
+  field: (row) => row.name,
+  align: 'center' 
+},
+  { 
+    name: 'totalPanelas', 
+  label: 'TOTAL DE PANELAS', 
+  field: 'totalPanelas', 
+  align: 'center' 
+},
+  {
+    name: "status",
+    label: "ESTADO",
+    field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
+    align: "center",
+  },
+
+  { 
+    name: 'options', 
+    align: 'center', 
+    label: 'OPCIONES', 
+    align: 'center' 
+  },
 
 
 ])

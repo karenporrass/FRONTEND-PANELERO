@@ -82,4 +82,8 @@ const getDaily = async () =>{
 
 
     return { getDaily, active, postDaily, updateDaily, listFarmsActive, listUsersActive, listlotsActive}
-  })
+  },
+  {
+    persist: true,
+  },
+  )

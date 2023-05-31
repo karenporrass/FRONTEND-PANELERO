@@ -32,7 +32,7 @@ import Inventory from '../src/components/Inventory/homeInventory.vue'
 
 import vault from '../src/components/Inventory/vault.vue'
 import brands from '../src/components/Inventory/brands.vue'
-import category from '../src/components/Inventory/category.vue'
+import category from '../src/components/Inventory/Category.vue'
 import product from '../src/components/Inventory/product.vue'
 
 

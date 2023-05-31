@@ -109,6 +109,8 @@ import {ref} from "vue"
 // const CategoryStore = categoryStore()
 
 
+import { CategoryStore } from "../../store/Inventory/category.js"
+const categoryStore = CategoryStore()
 
 let prompt = ref(false)
 let promptEdit = ref(false)
@@ -141,7 +143,7 @@ rows.value.forEach((row, index) => {
 
 
 const postCategory = async () => {
-  const pays = await CategoryStore.newCategory(
+  const pays = await categoryStore.newCategory(
 
   name_category.value,
   description.value,
@@ -155,7 +157,7 @@ const postCategory = async () => {
 
 
 async function getCategory() {
-    const res = await CategoryStore.listCategory()
+    const res = await categoryStore.listCategory()
     console.log(res);
     if (res.status < 299) {
     rows.value = res.data
@@ -172,11 +174,11 @@ async function getCategory() {
 async function activarDesactivar(data) {
   let res = ""
   if (data.state == 1) {
-    res = await CategoryStore.active(data._id, 0)
+    res = await categoryStore.active(data._id, 0)
     console.log(res);
     getCategory()
   } else {
-    res = await CategoryStore.active(data._id, 1)
+    res = await categoryStore.active(data._id, 1)
     console.log(res);
     getCategory()
   }
@@ -191,7 +193,7 @@ function goInfo(data) {
 
 async function putInfo() {
   console.log(index.value);
-  const res = await CategoryStore.putCategory(index.value,
+  const res = await categoryStore.putCategory(index.value,
   name_category.value,
   description.value,
   )

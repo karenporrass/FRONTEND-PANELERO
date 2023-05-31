@@ -224,7 +224,12 @@
 <script setup>
 import { ref, onBeforeMount, onMounted } from 'vue'
 import { usersStore } from "../../store/Maintenance/CreateUsers.js"
+import { LoginStore } from '../../store/Login/login';
+
 const userStore = usersStore()
+const loginStore = LoginStore()
+
+
 
 let prompt = ref(false)
 let promptEdit = ref(false)
@@ -278,7 +283,8 @@ const postUser = async () => {
     address.value,
     email.value,
     emergencyPersonName.value,
-    emergencyPersonPhone.value
+    emergencyPersonPhone.value,
+    loginStore.token
   )
   console.log(res);
   getUsers()

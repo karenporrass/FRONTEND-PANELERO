@@ -59,8 +59,15 @@ export const monthlyStore = defineStore("counter", () => {
   }
 
 
-
+  async function listMonthlyActive() {
+    try {console.log("yes");
+      return await requestAxios.get("/metodoPago/active")
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
 
-  return {  monthly, listMonthly, newMonthly, putMonthly, active };
+  return {  monthly, listMonthly, newMonthly, putMonthly, active, listMonthlyActive };
 });

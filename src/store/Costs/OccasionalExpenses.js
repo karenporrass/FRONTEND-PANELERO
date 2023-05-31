@@ -57,9 +57,17 @@ export const OccasionalStore = defineStore("counter", () => {
     }
   }
 
+  async function listOccacionalActive() {
+    try {console.log("yes");
+      return await requestAxios.get("/metodoPago/active")
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
   
 
-  return {  Occasional, listOccasional, newOccasional, putOccasional, active };
+  return {  Occasional, listOccasional, newOccasional, putOccasional, active, listOccacionalActive };
 });

@@ -39,6 +39,10 @@
 import { ref } from "vue";
 import axios from "axios"
 import {useRouter} from "vue-router"
+import {LoginStore} from '../store/Login/login.js'
+
+const store = LoginStore()
+
 let router= useRouter();
 let dense = ref(false)
 let user = ref("daniel")
@@ -54,13 +58,16 @@ let usuario = ref([
 const addUser = async()=>{
     try {
 
-        const newuser = await axios.post("http://localhost:3500/login",{
+        const newuser = await axios.post("http://localhost:3500/login/login",{
             user:user.value,
             password:password.value 
             
 
         })
         console.log(newuser);
+        store.getToken(newuser.data);
+
+       console.log(store.token)
     } catch (error) {
         console.log(error);
     }

@@ -27,7 +27,10 @@
             </span> Pedidos Clientes</p>
         </div>
 
-            <q-btn @click="abrirCrear=true" id="butonAdd">Crear <q-icon name="add"></q-icon> </q-btn>
+            <q-btn class="bg-green-10 text-white" @click="abrirCrear=true"><span class="material-symbols-outlined q-mr-sm"
+            style="font-size: 20px">
+            add_circle
+          </span>Crear Nuevo Pedido</q-btn>
 
 
         </div>
@@ -54,7 +57,7 @@
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row), promptEdit ==true"></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row), promptEdit =true"></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -105,11 +108,6 @@
                   (val && val.trim().length > 0) || 'Dijite su Dirección',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
-                      <q-input  filled class="q-mb-md" type="number" v-model="saldopendiente" label="Saldo Pendiente" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite su documento',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
                       <q-select filled class="q-mb-md" v-model="tipoPanela" :options="options" label="Escoga el tipo de panela" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'Llene el campo de tipo de panela',
@@ -157,7 +155,7 @@
 
       <div id="botones">
         <br />
-        <q-btn @click="orderPost()" label="guardar" class="text-white bg-green-10" />
+        <q-btn @click="orderPost()" label="guardar" class="text-white bg-green-10"  />
         <q-btn class="q-ml-md" label="cerrar" v-close-popup />
       </div>
     </div>
@@ -166,87 +164,60 @@
 
     <!-- modal editar  -->
     <q-dialog v-model="promptEdit">
-            <q-card >
-              <q-card-section class="bg-green-10">
-                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
-               EDITAR LA INFORMACIÓN
-                </h5>
-              </q-card-section>
-              <div >
-                    <div id="inputs">
-                      <q-input  filled class="q-mb-md" type="number" v-model="documento" label="Digite el numero de documento" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite su documento',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                      <q-input  filled class="q-mb-md" type="text"   v-model="nombre" label="Nombre" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite su nombre',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                      <q-input  filled class="q-mb-md" type="text"   v-model="telefono" label="Telefono" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite su telefono',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                      <q-input  filled class="q-mb-md" type="text"   v-model="direccion" label="Dirección" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite su Dirección',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                      <q-input  filled class="q-mb-md" type="number" v-model="saldopendiente" label="Saldo Pendiente" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite su documento',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                      <q-select filled class="q-mb-md" v-model="tipoPanela" :options="options" label="Escoga el tipo de panela" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Llene el campo de tipo de panela',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                    </div>
+  <q-card >
+    <q-card-section class="bg-green-10">
+      <h5 class="q-mt-sm  text-white">
+        EDITAR LA INFORMACIÓN
+      </h5>
+    </q-card-section >
+    <div style="display: flex;">
+      <div id="inputs" style="min-width: 200px; margin-left: 30px; margin-top: 20px;">
+        <q-input filled class="q-mb-md" type="number" v-model="documento" label="Digite el número de documento" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Digite su documento',
+        ]" />
+        <q-input filled class="q-mb-md" type="text" v-model="nombre" label="Nombre" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Digite su nombre',
+        ]" />
+        <q-input filled class="q-mb-md" type="text" v-model="telefono" label="Teléfono" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Digite su teléfono',
+        ]" />
+        <q-input filled class="q-mb-md" type="text" v-model="direccion" label="Dirección" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Digite su dirección',
+        ]" />
+        <q-input filled class="q-mb-md" type="number" v-model="saldopendiente" label="Saldo Pendiente" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Digite su documento',
+        ]" />
+        <q-select filled class="q-mb-md" v-model="tipoPanela" :options="options" label="Escoja el tipo de panela" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Llene el campo de tipo de panela',
+        ]" />
+      </div>
 
-                    <div id="inputs">
-                      <q-select filled class="q-mb-md"  v-model="formaPanela" :options="options2" label="Escoga la forma de la panela" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Llene el campo de forma de la panela',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                      <q-input  filled class="q-mb-md" type="number" v-model="cantidad" label="Cantidad" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite la Cantidad',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                      <q-select filled class="q-mb-md"               v-model="tipoEmpaque" :options="options3" label="Escoga el tipo de empaque" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Llene el campo de tipo de empaque',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                      <q-input  filled class="q-mb-md" type="text"   v-model="comprobantePago" label="Comprobante" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite su Comprobante',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                      <q-input  filled class="q-mb-md" type="text"   v-model="abono" label="Abono" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite el Abono',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                      <q-input  filled class="q-mb-md" type="number" v-model="valorTotal" label="Valor Total" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite el valor total',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-            </div>
-                    <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()"/>
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
-
-              </div>
-            </q-card>
-          </q-dialog>
+      <div id="inputs" style="min-width: 200px; margin-left: 30px;margin-top: 20px;">
+        <q-select filled class="q-mb-md" v-model="formaPanela" :options="options2" label="Escoja la forma de la panela" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Llene el campo de forma de la panela',
+        ]" />
+        <q-input filled class="q-mb-md" type="number" v-model="cantidad" label="Cantidad" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Digite la cantidad',
+        ]" />
+        <q-select filled class="q-mb-md" v-model="tipoEmpaque" :options="options3" label="Escoja el tipo de empaque" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Llene el campo de tipo de empaque',
+        ]" />
+        <q-input filled class="q-mb-md" type="text" v-model="comprobantePago" label="Comprobante" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Digite su comprobante',
+        ]" />      <q-input filled class="q-mb-md" type="text" v-model="abono" label="Abono" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Digite el abono',
+        ]" />
+        <q-input filled class="q-mb-md" type="number" v-model="valorTotal" label="Valor Total" lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Digite el valor total',
+        ]" />
+      </div></div>
+      <div id="botones_editar" style="margin-left: 170px; margin-bottom: 20px;">
+        <q-btn label="Guardar" class="text-white bg-green-10" @click="putInfo()" />
+        <q-btn class="q-ml-md" label="Cerrar" v-close-popup />
+      </div>
+    
+  </q-card>
+</q-dialog>
 
 
 </div>
@@ -256,8 +227,12 @@
 <script setup>
 import { ref, onMounted} from "vue";
 import { OrderStore } from "../../store/Orders/TablesOrders.js"
+
+import { LoginStore } from "../../store/Login/login.js";
+
 const orderStore = OrderStore()
 
+const loginStore = LoginStore()
 
 let abrirCrear=ref(false)
 let promptEdit = ref(false)
@@ -299,7 +274,7 @@ let tipoEmpaque=ref()
 let columns = ref([
   { name: 'index', label: 'N°', field: 'index', align: 'center' },
   { name:'documento', align:'center', label: 'Documento', field: 'Documento' },
-  { name: 'date', label: 'Fecha', align: 'center', field: 'Date'  },
+  { name: 'date', label: 'Fecha De Creacion', align: 'center', field: 'Date'  },
   { name: 'name', label: 'Nombre', align: 'center', field: 'Nombre'  },
   { name:'telefono', align:'center', label: 'Telefono', field: 'Telefono' },
   { name:'cantidad', align:'center', label: 'Cantidad', field: 'Cantidad' },
@@ -308,20 +283,22 @@ let columns = ref([
   { name:'direccion', align:'center', label: 'Direccion', field: 'Direccion' },
   { name:'abono', align:'center', label: 'Abono', field: 'Abono' },
   { name:'valorTotal', align:'center', label: 'ValorTotal', field: 'ValorTotal' },
+  {
+    name: "status",
+    label: "ESTADO",
+    field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
+    align: "center",
+  },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center' },
 
 ])
 
-let rows2 = ref([
+
+
+let rows2= ref([
   {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
-    iron: '1%'
+    name:'Yogur',
+    
   }
 ])
 
@@ -337,18 +314,18 @@ rows.value.forEach((row, index) => {
 
 
 function goInfo(data){
-      documento.value =data.documento
-      telefono.value= data.telefono 
-      tipoPanela.value= data.tipoPanela
-      cantidad.value= data.cantidad
-      comprobantePago.value=data.comprobantePago 
-      saldopendiente.value=data.saldopendiente
-      nombre.value= data.nombre
-      direccion.value= data.direccion
-      formaPanela.value=data.formaPanela
-      tipoEmpaque.value= data.tipoEmpaque
-      abono.value=data.abono 
-      valorTotal.value= data.valorTotal
+      documento.value =data.Documento
+      telefono.value= data.Telefono 
+      tipoPanela.value= data.TipoPanela
+      cantidad.value= data.Cantidad
+      comprobantePago.value=data.ComprobantePago 
+      saldopendiente.value=data.SaldoPendiente
+      nombre.value= data.Nombre
+      direccion.value= data.Direccion
+      formaPanela.value=data.FormaPanela
+      tipoEmpaque.value= data.TipoEmpaque
+      abono.value=data.Abono 
+      valorTotal.value= data.ValorTotal
 }
 
 
@@ -365,7 +342,7 @@ async function orderGet(){
   }
 }
 
-const orderPost = async () => {
+async function orderPost(){
   const order = await orderStore.newOrder(
     documento.value, 
     telefono.value, 
@@ -378,16 +355,18 @@ const orderPost = async () => {
     formaPanela.value,
     tipoEmpaque.value,
     abono.value,
-    valorTotal.value
+    valorTotal.value,
+    loginStore.token
   )
   console.log(order);
   orderGet()
-
+  limpiar()
+  
 }
 
 async function putInfo() {
   console.log(index.value);
-  const res = await orderStore.putPays(index.value,
+  const res = await orderStore.putOrder(index.value,
     documento.value, 
     telefono.value, 
     tipoPanela.value, 
@@ -457,7 +436,6 @@ function limpiar() {
 #modalCrear{
   min-width: 50%;
   height: 900px;
-  
 }
 #pCrear{
   margin-right: 20px;
@@ -470,7 +448,6 @@ function limpiar() {
   margin-bottom: 10px;
   margin-right: 50px;
 }
-
 
 
 

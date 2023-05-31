@@ -19,9 +19,12 @@
           </router-link>
           <p style="font-size: 20px; "><span style="font-size: 50px; " class="material-icons-outlined">
               arrow_right
-            </span> PEDIDOS CLIENTES</p>
+            </span> Pedidos clientes</p>
         </div>
-        <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo pago</q-btn>
+        <q-btn class="bg-green-10 text-white" @click="promptEdit = true"><span class="material-symbols-outlined q-mr-sm"
+            style="font-size: 20px">
+            add_circle
+          </span> Crear nuevo pago</q-btn>
       </div>
       <div class="col-1"></div>
     </div>
@@ -36,7 +39,7 @@
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  prompt = true "></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -62,38 +65,41 @@
           </h5>
         </q-card-section>
         <div class="q-pa-md ">
+          <q-form @submit.prevent.stop="postPays()">
+
           <div>
-            <q-input filled type="text" v-model="documen" label="DNI" lazy-rules :rules="[
+            <q-input filled type="text" v-model="DNI" label="DNI" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" ></q-input>
+            <q-input filled type="text" v-model="ROL" label="ROL" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-            <q-input filled type="text" v-model="rol" label="ROL" lazy-rules :rules="[
+            <q-input filled type="text" v-model="CONCEPT" label="Concepto" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
-            <q-input filled type="text" v-model="concept" label="Concepto" lazy-rules :rules="[
+              ]" ></q-input>
+             <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" lazy-rules :rules="[
                 (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
-            <q-input filled type="text" v-model="methodPay" label="Metodo de pago" lazy-rules :rules="[
+                ((val) => val !== null && val !== '') || 'El campo es requerido',
+              ]"/>
+            <q-input filled type="number" v-model="TIME_TO_PAY" label="tiempo a pagar" lazy-rules :rules="[
                 (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
-            <q-input filled type="number" v-model="time" label="tiempo a pagar" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
+                  (val  > 0) || 'El campo es requerido',
               ]"></q-input>
             <q-input filled type="number" v-model="total" label="Total" lazy-rules :rules="[
                 (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
+                  (val  > 0) || 'El campo es requerido',
               ]"></q-input>
 
             <div>
               <br />
-              <q-btn label="guardar" class="text-white bg-green-10" @click="postPays()" />
+              <q-btn label="guardar" type="submit" class="text-white bg-green-10"  />
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
+          </q-form>
         </div>
       </q-card>
     </q-dialog>
@@ -108,12 +114,31 @@
         <div class="q-pa-md ">
           <div>
             
-            <q-input filled type="text" v-model="DNI" label="DNI"></q-input>
-            <q-input filled type="text" v-model="ROL" label="ROL"></q-input>
-            <q-input filled type="text" v-model="CONCEPT" label="Concepto"></q-input>
-            <q-input filled type="text" v-model="PAYMENT_METHOD" label="Metodo de pago"></q-input>
-            <q-input filled type="number" v-model="TIME_TO_PAY" label="tiempo a pagar"></q-input>
-            <q-input filled type="number" v-model="total" label="Total"></q-input>
+            <q-input filled type="text" v-model="DNI" label="DNI" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+            <q-input filled type="text" v-model="ROL" label="ROL" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+            <q-input filled type="text" v-model="CONCEPT" label="Concepto" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+
+            <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"/>
+            <q-input filled type="number" v-model="TIME_TO_PAY" label="tiempo a pagar" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+            <q-input filled type="number" v-model="total" label="Total" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
 
             <div>
               <br />
@@ -156,8 +181,10 @@ let columns = ref([
       "Date"
   },
   {
-    name: 'PAYMENT_METHOD', label: 'METODO DE PAGO', align: 'center', field:
-      "PAYMENT_METHOD"
+    name: "PAYMENT_METHOD",
+    label: "Metodo de pago",
+    field: (row) => row.PAYMENT_METHOD,
+    align: "center",
   },
   {
     name: 'TIME_TO_PAY', label: 'TIEMPO A PAGAR', align: 'center', field:
@@ -165,27 +192,28 @@ let columns = ref([
   },
   {
     name: 'total', label: 'TOTAL A PAGAR', align: 'center', field:
-      "total"
+      "Total"
+  },
+  {
+    name: "status",
+    label: "ESTADO",
+    field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
+    align: "center",
   },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 
 
 
-let rows = ref([
-  {
-    DNI: 1, ROL: 1, CONCEPT: 1, PAYMENT_METHOD: 1, TIME_TO_PAY: 1, total: 1, index: 0,
-  },
-
-])
+let rows = ref([])
 
 let DNI = ref()
 let ROL = ref()
 let CONCEPT = ref()
-let PAYMENT_METHOD = ref()
+let PAYMENT_METHOD = ref([])
 let TIME_TO_PAY = ref()
 let total = ref()
-
+let optionsMethod = ref([]);
 
 
 rows.value.forEach((row, index) => {
@@ -193,20 +221,41 @@ rows.value.forEach((row, index) => {
 })
 
 
+async function getMethod() {
+  // optionsPeople.value=[]
+  const res = await PayStore.listPaymentsActive();
+  console.log(res);
+  if (res.status < 299) {
+   
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsMethod.value.push(object);
+
+      console.log(optionsMethod.value);
+    }
+    
+  } else {
+    throw new Error ("Error al obtener los datos de metodo de pago")
+  }
+}
 
 
 const postPays = async () => {
-  const pays = await PayStore.newPays(
-
-  DNI.value,
-  ROL.value,
-  CONCEPT.value,
-  PAYMENT_METHOD.value,
-  TIME_TO_PAY.value,
-  total.value,
-  )
+  console.log("hola");
+  const pays = await PayStore.newPays({
+  DNI: DNI.value,
+  ROL: ROL.value,
+  CONCEPT: CONCEPT.value,
+  PAYMENT_METHOD: PAYMENT_METHOD.value.label,
+  TIME_TO_PAY: TIME_TO_PAY.value,
+  Total: total.value
+  })
+  console.log("pos");
   console.log(pays);
   getPays()
+  promptEdit.value = false;
+
 
 }
 
@@ -247,7 +296,7 @@ ROL.value = data.ROL
 CONCEPT.value = data.CONCEPT
 PAYMENT_METHOD.value = data.PAYMENT_METHOD
 TIME_TO_PAY.value = data.TIME_TO_PAY
-total.value = data.total
+total.value = data.Total
     
 }
 
@@ -268,6 +317,7 @@ total.value,
 
 onMounted(() => {
   getPays()
+  getMethod()
 })
 
 

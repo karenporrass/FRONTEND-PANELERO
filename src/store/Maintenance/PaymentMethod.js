@@ -50,7 +50,7 @@ export const paymentStore = defineStore('paymentStore', () => {
       }
     }
   
-    return { listPayments, payment, active, newPayment, putPayment, listPayments }
+    return { listPayments, payment, active, newPayment, putPayment, listPayments, listPaymentsActive }
   }, {
     persist: true,
   },)

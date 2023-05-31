@@ -45,17 +45,16 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="number" v-model="document" label="Digite el cantidad del gasto"></q-input>
-                    <q-input  filled type="text" v-model="document" label="Digite el nombre del gasto"></q-input>
-                  <q-input filled type="text" v-model="rol" label="Escoga la finca"></q-input>
-                  <q-input  filled type="text" v-model="concept" label="Digite el descripcion"></q-input>
-                  <q-input  filled type="text" v-model="methodPay" label="Escoga el metodo de pago"></q-input>
-                  <q-input filled type="number" v-model="time" label="Digite el valor del gasto"></q-input>
-                  <q-input  filled type="number" v-model="total" label="Total"></q-input>
+                    <q-input  filled type="number" v-model="name_cellars" label="Digite el cantidad del gasto"></q-input>
+                    <q-input  filled type="text" v-model="content" label="Digite el nombre del gasto"></q-input>
+                  <q-input filled type="text" v-model="administrator" label="Escoga la finca"></q-input>
+                  <q-input  filled type="text" v-model="extension" label="Digite el descripcion"></q-input>
+                  <q-input  filled type="text" v-model="dirrecion" label="Escoga el metodo de pago"></q-input>
+                 
 
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  />
+                    <q-btn  label="guardar" class="text-white bg-green-10"   />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -66,7 +65,9 @@
 </template>
   
 <script setup>
-import {ref} from "vue"
+import {ref, onMounted} from "vue"
+import { vaultStore } from "../../store/Inventory/vault.js"
+const VaultStore = vaultStore()
 let prompt = ref(false)
 let pagination = ref({
         rowsPerPage: 0
@@ -81,103 +82,102 @@ let pagination = ref({
   { name: 'sodium', label: 'VALOR DEL GASTO', field: 'sodium',align: 'center' },
   { name: 'calcium', label: 'TOTAL', field: 'calcium',align: 'center',sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
 ])
+let name_cellars = ref()
+let content = ref()
+let administrator = ref()
+let extension = ref()
+let dirrecion = ref()
+let promptEdit = ref(false)
+let index = ref()
 
- let rows= ref( [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
 
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: '6%',
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: '3%',
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: '7%',
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
-  }
-])
+ let rows= ref([])
 
 rows.value.forEach((row, index) => {
   row.index = index
+})
+
+
+
+
+const postVault = async () => {
+  console.log("hola");
+  const vault = await VaultStore.newVault({
+    name_cellars: name_cellars.value,
+    content: content.value,
+    administrator: administrator.value,
+    extension: extension.value.label,
+    dirrecion: dirrecion.value,
+
+
+
+  
+  })
+  console.log("pos");
+  console.log(vault);
+  getVault()
+  promptEdit.value = false;
+
+
+}
+
+
+
+
+async function getVault() {
+    const res = await VaultStore.listVault()
+    console.log(res);
+    if (res.status < 299) {
+    rows.value = res.data
+    rows.value.forEach((row, index) => {
+    row.index = index+1
+})
+  } else {
+    alert(res)
+  }
+}
+
+
+
+async function activarDesactivar(data) {
+  let res = ""
+  if (data.state == 1) {
+    res = await VaultStore.active(data._id, 0)
+    console.log(res);
+    getVault()
+  } else {
+    res = await VaultStore.active(data._id, 1)
+    console.log(res);
+    getVault()
+  }
+}
+
+function goInfo(data) {
+name_cellars.value = data.name_cellars 
+content.value   = data.content 
+administrator.value  = data.administrator 
+extension.value.label = data.extension
+dirrecion.value = data.dirrecion 
+    
+}
+
+async function putInfo() {
+  console.log(index.value);
+  const res = await VaultStore.putVault(index.value,
+  name_cellars.value,
+content.value,
+administrator.value,
+extension.value,
+dirrecion.value
+  )
+  console.log(res);
+  getVault()
+}
+
+
+onMounted(() => {
+  getVault()
+  
 })
 
 

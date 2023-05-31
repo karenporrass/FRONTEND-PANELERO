@@ -21,7 +21,10 @@
               arrow_right
             </span> Gastos mensuales</p>
         </div>
-        <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo gasto</q-btn>
+        <q-btn class="bg-green-10 text-white" @click="promptEdit = true"><span class="material-symbols-outlined q-mr-sm"
+            style="font-size: 20px">
+            add_circle
+          </span>Crear nuevo gasto</q-btn>
       </div>
       <div class="col-1"></div>
     </div>
@@ -34,7 +37,7 @@
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  prompt = true "></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -62,12 +65,30 @@
         <div class="q-pa-md ">
           <div>
 
-            <q-input filled type="text" v-model="Name_spent" label="Digite el nombre del gasto"></q-input>
-            <q-input filled type="text" v-model="Finca" label="Escoga la finca"></q-input>
-            <q-input filled type="text" v-model="Description" label="Digite la descripcion"></q-input>
-            <q-input filled type="text" v-model="PAYMENT_METHOD" label="Escoga el metodo de pago"></q-input>
-            <q-input filled type="number" v-model="costValue" label="tiempo a pagar"></q-input>
-            <q-input filled type="number" v-model="total" label="Total"></q-input>
+            <q-input filled type="text" v-model="Name_spent" label="Digite el nombre del gasto" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+            <q-input filled type="text" v-model="Finca" label="Escoga la finca" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+            <q-input filled type="text" v-model="Description" label="Digite la descripcion" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+           <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length  > 0) || 'El campo es requerido',
+              ]"/>
+            <q-input filled type="number" v-model="costValue" label="tiempo a pagar" lazy-rules :rules="[
+                (val) =>
+                  (val  > 0) || 'El campo es requerido',
+              ]"></q-input>
+            <q-input filled type="number" v-model="total" label="Total" lazy-rules :rules="[
+                (val) =>
+                  (val  > 0) || 'El campo es requerido',
+              ]"></q-input>
 
             <div>
               <br />
@@ -89,12 +110,30 @@
         <div class="q-pa-md ">
           <div>
 
-            <q-input filled type="text" v-model="Name_spent" label="Digite el nombre del gasto"></q-input>
-            <q-input filled type="text" v-model="Finca" label="Escoga la finca"></q-input>
-            <q-input filled type="text" v-model="Description" label="Digite la descripcion"></q-input>
-            <q-input filled type="text" v-model="PAYMENT_METHOD" label="Escoga el metodo de pago"></q-input>
-            <q-input filled type="number" v-model="costValue" label="tiempo a pagar"></q-input>
-            <q-input filled type="number" v-model="total" label="Total"></q-input>
+            <q-input filled type="text" v-model="Name_spent" label="Digite el nombre del gasto" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+            <q-input filled type="text" v-model="Finca" label="Escoga la finca" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+            <q-input filled type="text" v-model="Description" label="Digite la descripcion" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+             <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" lazy-rules :rules="[
+                (val) =>
+                  (val  > 0) || 'El campo es requerido',
+              ]"/>
+            <q-input filled type="number" v-model="costValue" label="tiempo a pagar" lazy-rules :rules="[
+                (val) =>
+                  (val  > 0) || 'El campo es requerido',
+              ]"></q-input>
+            <q-input filled type="number" v-model="total" label="Total" lazy-rules :rules="[
+                (val) =>
+                  (val  > 0) || 'El campo es requerido',
+              ]"></q-input>
 
             <div>
               <br />
@@ -122,7 +161,7 @@ let Finca = ref()
 let Description = ref()
 let PAYMENT_METHOD = ref()
 let costValue = ref()
-
+let optionsMethod = ref([])
 
 
 let pagination = ref({
@@ -133,19 +172,25 @@ let columns = ref([
   { name: 'finca', align: 'center', label: 'FINCA', field: 'Finca',align: 'center' },
   { name: 'Description', label: 'DESCRIPCION', field: 'Description' ,align: 'center'},
   { name: 'Date', label: 'FECHA', field: 'Date',align: 'center' },
-  { name: 'PAYMENT_METHOD', label: 'METODO DE PAGO', field: 'PAYMENT_METHOD',align: 'center' },
+  {
+    name: "PAYMENT_METHOD",
+    label: "Metodo de pago",
+    field: (row) => row.PAYMENT_METHOD,
+    align: "center",
+  },
   { name: 'costValue', label: 'VALOR DEL GASTO', field: 'costValue',align: 'center' },
+  {
+    name: "status",
+    label: "ESTADO",
+    field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
+    align: "center",
+  },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])  
 
 
 
-let rows = ref([
-  {
-    Name_spent: 1,  Finca: 1, Description: 1, Date:1,  PAYMENT_METHOD: 1, costValue: 1,
-  },
-  
-])
+let rows = ref([])
 
 rows.value.forEach((row, index) => {
   row.index = index
@@ -153,6 +198,24 @@ rows.value.forEach((row, index) => {
 
 
 
+async function getMethod() {
+  // optionsPeople.value=[]
+  const res = await MonthlyStore.listMonthlyActive();
+  console.log(res);
+  if (res.status < 299) {
+   
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsMethod.value.push(object);
+
+      console.log(optionsMethod.value);
+    }
+    
+  } else {
+    throw new Error ("Error al obtener los datos de metodo de pago")
+  }
+}
 
 const getMonthly = async () => {
 
@@ -222,6 +285,7 @@ costValue.value,
 
 onMounted(() => {
   getMonthly()
+  getMethod()
 })
 </script>
 

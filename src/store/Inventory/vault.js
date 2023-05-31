@@ -3,25 +3,25 @@ import { ref } from "vue";
 
 import {requestAxios} from "../../Global/axios.js"
 
-export const payStore = defineStore("payStore", () => {
-  const Pay = ref("");
+export const vaultStore = defineStore("vaultStore", () => {
+  const vault = ref("");
 
 
-  async function listPays() {
+  async function listVault() {
     console.log("listPays")
     try {
-      return await requestAxios.get("/payments")
+      return await requestAxios.get("/cellars")
     } catch (error) {
       console.log(error);
     }
   }
 
 
-  async function newPays(pay ) {
+  async function newVault(vault ) {
     console.log(pay)
     try {
       console.log("entro");
-        let r = await requestAxios.post('/payments',pay);
+        let r = await requestAxios.post('/cellars',vault);
         console.log(r);
         return r
       } catch (error) {
@@ -30,9 +30,9 @@ export const payStore = defineStore("payStore", () => {
       }
   }
 
-  async function putPays(id, DNI, ROl, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY) { //recivir las variables 
+  async function putVault(id, DNI, ROl, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY) { //recivir las variables 
     try {
-        return await requestAxios.put(`/payments/update/${id}`,{
+        return await requestAxios.put(`/cellars/update/${id}`,{
           DNI: DNI,
           ROl: ROl,
           CONCEPT: CONCEPT,
@@ -46,7 +46,7 @@ export const payStore = defineStore("payStore", () => {
 
   async function active(id, estado){
     try {
-      return await requestAxios.put(`/payments/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+      return await requestAxios.put(`/cellars/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
     } catch (error) {
       console.log(error);
       return error
@@ -54,7 +54,7 @@ export const payStore = defineStore("payStore", () => {
   }
 
 
-  async function listPaymentsActive() {
+  async function listVaultActive() {
     try {console.log("yes");
       return await requestAxios.get("/metodoPago/active")
       
@@ -65,7 +65,7 @@ export const payStore = defineStore("payStore", () => {
 
   
 
-  return {  listPays, newPays, putPays, active, listPaymentsActive, Pay };
+  return {  vault, listVault, newVault, putVault,  listVaultActive, active };
 },
 {
   persist: true,

@@ -152,26 +152,21 @@
                   (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules :rules="[
-                  (val) =>
-                    ((val) => val !== null || val !== '' || val !== undefined) ||
-                    'El campo es requerido',
-                ]" />
+              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules 
+              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
 
-              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
-                (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
-              ]" />
+
+              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules 
+              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
+
               
-              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" lazy-rules :rules="[
-                (val) =>
-                ((val) => val.value !== null || val.value !== '' || val.value !== undefined) || 'El campo es requerido',
-              ]"/>
+              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" lazy-rules               
+              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
+
               
-              <q-input v-model="date" filled type="date" label="Seleccione la fecha" :rules="[
-                (val) =>
-                ((val) => val !== null || val !== '' || val!== undefined) || 'El campo es requerido',
-              ]"/>
+              <q-input v-model="date" filled type="date" label="Seleccione la fecha" 
+                :rules="[ val => val && val.trim().length > 0 || 'El campo es requerido']"/>
+
 
 
               <div class="justify-center flex">

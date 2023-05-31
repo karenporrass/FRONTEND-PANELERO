@@ -80,7 +80,7 @@
           </h5>
         </q-card-section>
         <div class="q-pa-md">
-          <q-form @submit.prevent.stop="postDailyProcess()">
+          <q-form ref="myForm" @submit.prevent.stop="postDailyProcess()">
             <div>
               <q-input filled type="text" v-model="name" label="Nombre del proceso" lazy-rules :rules="[
                 (val) =>
@@ -94,30 +94,24 @@
 
               <q-input filled type="number" v-model="hours" label="Cuántas horas tomó el proceso" lazy-rules :rules="[
                 (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
+                  (val != ' ') || 'El campo es requerido',
                   (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules :rules="[
-                  (val) =>
-                    ((val) => val !== null && val !== '' && val !== undefined) ||
-                    'El campo es requerido',
-                ]" />
+              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules               
+              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
 
-              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
-                (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
-              ]" />
+
+              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules 
+              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
+
               
-              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" :rules="[
-                (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
-              ]"/>
+              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" lazy-rules 
+              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
               
-              <q-input v-model="date" filled type="date" label="Seleccione la fecha" :rules="[
-                (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
-              ]"/>
+              <q-input v-model="date" filled type="date" label="Seleccione la fecha" lazy-rules 
+              :rules="[ val => val && val.trim().length > 0 || 'El campo es requerido']"/>
+
 
 
               <div class="justify-center flex">
@@ -140,7 +134,7 @@
           </h5>
         </q-card-section>
         <div class="q-pa-md">
-          <q-form @submit.prevent.stop="putDaily()">
+          <q-form ref="myForm" @submit.prevent.stop="putDaily()" @reset.prevent.stop="reset()">
             <div>
               <q-input filled type="text" v-model="name" label="Nombre del proceso" lazy-rules :rules="[
                 (val) =>
@@ -160,7 +154,7 @@
 
               <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules :rules="[
                   (val) =>
-                    ((val) => val !== null && val !== '' && val !== undefined) ||
+                    ((val) => val !== null || val !== '' || val !== undefined) ||
                     'El campo es requerido',
                 ]" />
 
@@ -169,14 +163,14 @@
                 ((val) => val !== null && val !== '') || 'El campo es requerido',
               ]" />
               
-              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" :rules="[
+              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" lazy-rules :rules="[
                 (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
+                ((val) => val.value !== null || val.value !== '' || val.value !== undefined) || 'El campo es requerido',
               ]"/>
               
               <q-input v-model="date" filled type="date" label="Seleccione la fecha" :rules="[
                 (val) =>
-                ((val) => val !== null && val !== '' && val!== undefined) || 'El campo es requerido',
+                ((val) => val !== null || val !== '' || val!== undefined) || 'El campo es requerido',
               ]"/>
 
 
@@ -211,6 +205,7 @@ const useDaily = useDailyStore();
 
 let prompt = ref(false);
 let edit = ref(false);
+const myForm = ref(null);
 let name = ref("");
 let description = ref("");
 let hours = ref();
@@ -296,15 +291,10 @@ onMounted(() => {
   getLots()
 });
 
-// const newDate = new Date(date).toLocaleDateString('en-CO', 
-// { year: 'numeric', month: '2-digit', day: '2-digit' }).split('/').reverse().join('-')
 
-// if (date.value) {
-//   const fechaRecortada = fecha.value.slice(0, 10);
-// console.log(fechaRecortada);} 
-// else {
-//   console.log(date.value);
-// }
+function reset() {
+    myForm.value.resetValidation()
+  }
 
 // get registros proceso diario
 async function getListDaily() {
@@ -340,6 +330,7 @@ async function postDailyProcess() {
   prompt.value = false;
   // console.log(res);
   getListDaily();
+  reset()
 } 
 
 // activar y desactivar proceso diario
@@ -386,6 +377,9 @@ async function putDaily() {
   });
   console.log(res);
   getListDaily();
+  setTimeout(() => {
+    reset()
+      }, 2000);
   edit.value = false;
 }
 

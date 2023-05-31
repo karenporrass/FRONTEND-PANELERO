@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 
+
 export const OrderStore = defineStore('counter', () => {
     const order = ref("")
     
@@ -14,10 +15,11 @@ export const OrderStore = defineStore('counter', () => {
         }
       }
 
-      const newOrder =  (async (documento, telefono, tipoPanela, cantidad, comprobantePago,saldopendiente,nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal) => {
+      async function newOrder(documento, telefono, tipoPanela, cantidad, comprobantePago,saldopendiente,
+        nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal,token) {
         try {
           return await requestAxios.post(
-            `/pedido`,         {
+            '/pedido',         {
                 Documento: documento,
                 Telefono: telefono,
                 TipoPanela: tipoPanela,
@@ -29,13 +31,14 @@ export const OrderStore = defineStore('counter', () => {
                 FormaPanela: formaPanela,
                 TipoEmpaque: tipoEmpaque,
                 Abono: abono,
-                ValorTotal: valorTotal
+                ValorTotal: valorTotal,
+                token: token
             }
           );
         } catch (error) {
           console.log(error);
         }
-      })
+      }
     
       const putOrder =  (async (id,documento, telefono, tipoPanela, cantidad, comprobantePago,saldopendiente,nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal) =>{
         try {
@@ -71,6 +74,7 @@ export const OrderStore = defineStore('counter', () => {
         }
       }
     
-      return { listOrders, newOrder, putOrder, active, order };
-    });
+      return { listOrders, newOrder, putOrder, active, order } },
+      {persist:true});
+ 
     

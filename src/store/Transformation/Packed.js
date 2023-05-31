@@ -42,8 +42,8 @@ export const usePackedStore = defineStore('usePackedStore', () => {
               //   token,
               // },
             });
-            console.log(infoPacked);
           } catch (error) {
+            console.log(infoPacked);
             console.log(error);
           }
         };
@@ -70,4 +70,8 @@ export const usePackedStore = defineStore('usePackedStore', () => {
 
 
     return { listPacked, postPacked, active,  updatePacked, listPackagingActive, listPanelaActive }
-  })
+  },
+  {
+    persist: true,
+  },
+  )

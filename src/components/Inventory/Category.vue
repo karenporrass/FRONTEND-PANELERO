@@ -107,8 +107,10 @@
 import {ref,  onMounted} from "vue"
 import { CategoryStore } from "../../store/Inventory/category.js"
 const categoryStore = CategoryStore()
+
 let prompt = ref(false)
 let promptEdit = ref(false)
+
 let index = ref()
 let pagination = ref({
         rowsPerPage: 0

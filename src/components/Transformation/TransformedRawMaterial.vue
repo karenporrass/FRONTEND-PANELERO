@@ -63,23 +63,23 @@
 
             <q-select filled v-model="type" :options="optionsTypes" label="Seleccione la unidad de medida" lazy-rules :rules="[
                 (val) =>
-                  ((val) => val !== null && val !== '' && val !== undefined) ||
+                  ((val) => val !== null || val !== '' || val !== undefined) ||
                   'El campo es requerido',
               ]" />
 
               <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
                 (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
+                ((val) => val !== null || val !== '' || val !== undefined) || 'El campo es requerido',
               ]" />
               
               <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" :rules="[
                 (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
+                ((val) => val !== null || val !== '' || val !== undefined) || 'El campo es requerido',
               ]"/>
               
               <q-input v-model="date" filled type="date" label="Seleccione la fecha" :rules="[
                 (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
+                ((val) => val !== null || val !== '' || val !== undefined) || 'El campo es requerido',
               ]"/>
 
 
@@ -211,6 +211,12 @@ let columns = ref([
   field: (row) => row.date.slice(0, 10),
   align: 'center' 
 },
+{
+    name: "status",
+    label: "ESTADO",
+    field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
+    align: "center",
+  },
   { 
   name: 'options', 
   label: 'OPCIONES', 

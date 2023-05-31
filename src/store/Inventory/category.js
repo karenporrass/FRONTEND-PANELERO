@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 import {requestAxios} from "../../Global/axios.js"
 
-export const CategoryStore = defineStore("counter", () => {
+export const CategoryStore = defineStore("CategoryStore", () => {
   const Category = ref("");
 
 

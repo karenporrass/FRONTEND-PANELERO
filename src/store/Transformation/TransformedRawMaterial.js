@@ -81,4 +81,8 @@ export const storeTransformed = defineStore('storeTransformed', () => {
 
     
       return { listTransformed,  addTransformed, active, updateTransformed, listUnitsActive, listFarmsActive,listlotsActive }
-  })
+    },
+    {
+      persist: true,
+    },
+    )

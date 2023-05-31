@@ -4,7 +4,11 @@ import {requestAxios} from "../../Global/axios.js"
 
 export const LoginStore = defineStore('counter', () => {
   const login = ref("")
+  const token = ref()
   
+  function getToken(token) {
+   this.token = token
+  }
 
   async function newLogin(name, attentionLine) {
       try {
@@ -27,5 +31,5 @@ export const LoginStore = defineStore('counter', () => {
     }
 
 
-  return {  newLogin, putLogin, login }
-})
+  return {  newLogin, putLogin, login, getToken } },
+  {persist:true});

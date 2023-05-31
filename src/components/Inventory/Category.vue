@@ -105,10 +105,14 @@
   
 <script setup>
 import {ref} from "vue"
-import { categoryStore } from "../../store/Inventory/category.js"
-const CategoryStore = categoryStore()
+// import { categoryStore } from "../../store/Inventory/category.js"
+// const CategoryStore = categoryStore()
+
+
+
 let prompt = ref(false)
 let promptEdit = ref(false)
+
 let index = ref()
 let pagination = ref({
         rowsPerPage: 0

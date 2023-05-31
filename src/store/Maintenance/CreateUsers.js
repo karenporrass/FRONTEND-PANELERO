@@ -32,7 +32,7 @@ export const usersStore = defineStore('usersStore', () => {
       }
     }
     
-    async function newUsers(names, lastNames,typeDocument, numberDocument, rol,cel, address, email, emergencyPersonName, emergencyPersonPhone ) {
+    async function newUsers(names, lastNames,typeDocument, numberDocument, rol,cel, address, email, emergencyPersonName, emergencyPersonPhone, token ) {
         try {
             return await requestAxios.post(`/usuarios`,{
              names: names,
@@ -45,7 +45,8 @@ export const usersStore = defineStore('usersStore', () => {
              email: email,
              password: numberDocument,
              emergencyPersonName: emergencyPersonName,
-            emergencyPersonPhone: emergencyPersonPhone
+            emergencyPersonPhone: emergencyPersonPhone,
+            token: token
 
             })
           } catch (error) {

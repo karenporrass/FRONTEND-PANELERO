@@ -200,7 +200,6 @@ const useDaily = useDailyStore();
 
 let prompt = ref(false);
 let edit = ref(false);
-const myForm = ref(null);
 let name = ref("");
 let description = ref("");
 let hours = ref();
@@ -287,9 +286,6 @@ onMounted(() => {
 });
 
 
-function reset() {
-    myForm.value.resetValidation()
-  }
 
 // get registros proceso diario
 async function getListDaily() {
@@ -321,7 +317,7 @@ async function postDailyProcess() {
     date: date.value,
   });
   console.log("paseeeeee ");
-  console.log(name.value);
+  console.log(people.value.value);
   prompt.value = false;
   // console.log(res);
   getListDaily();
@@ -361,6 +357,7 @@ console.log(fechaRecortada);}
 
 async function putDaily() {
   console.log(index.value);
+  console.log(people.value.value);
   const res = await useDaily.updateDaily(index.value, {
     name: name.value,
     description: description.value,
@@ -371,11 +368,13 @@ async function putDaily() {
     date: date.value,
   });
   console.log(res);
-  getListDaily();
-  setTimeout(() => {
-    reset()
-      }, 2000);
+  // console.log(name.value);
+  // console.log(farm.value);
+  // console.log(lot.value);
+  // console.log(people.value);
+
   edit.value = false;
+  getListDaily();
 }
 
 

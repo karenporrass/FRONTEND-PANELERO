@@ -343,12 +343,21 @@ async function showInfo(data) {
   name.value = data.name;
   description.value = data.description;
   hours.value = data.hours;
-  people.value = data.people.names;
-  farm.value = data.farm.name;
-  lot.value = data.lot.name;
+  people.value = {
+    label: data.people.names,
+    value: data.people._id
+  };
+  farm.value = {
+    label: data.farm.name,
+    value: data.farm._id
+  };
+  lot.value = {
+    label: data.lot.name,
+    value: data.lot._id
+  };
   date.value = data.date.slice(0, 10);
   console.log(date.value);
-
+console.log(lot.value);
   const fechaRecortada = date.value.slice(0, 10);
 console.log(fechaRecortada);} 
 
@@ -357,7 +366,7 @@ console.log(fechaRecortada);}
 
 async function putDaily() {
   console.log(index.value);
-  console.log(people.value.value);
+  console.log(people.value);
   const res = await useDaily.updateDaily(index.value, {
     name: name.value,
     description: description.value,
@@ -368,11 +377,6 @@ async function putDaily() {
     date: date.value,
   });
   console.log(res);
-  // console.log(name.value);
-  // console.log(farm.value);
-  // console.log(lot.value);
-  // console.log(people.value);
-
   edit.value = false;
   getListDaily();
 }
@@ -433,3 +437,11 @@ async function getLots() {
 
 
 </script>
+
+
+
+<style scoped>
+.q-field__control{
+    color:rgb(248, 244, 5) !important;
+}
+</style>

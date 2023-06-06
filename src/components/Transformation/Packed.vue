@@ -198,7 +198,7 @@ let columns = ref([
   { 
     name: 'formPanela', 
   label: 'FORMA DE LA PANELA', 
-  field: 'formPanela', 
+  field: (row) => row.formPanela.name,
   align: 'center' 
 },
   { 

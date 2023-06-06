@@ -45,14 +45,17 @@ const getDaily = async () =>{
     const updateDaily = async (id, infoDaily) => {
       console.log(infoDaily);
       try {
-        return await requestAxios.put(`/procesoDiario/update/${id}`, infoDaily, {
+        let r = await requestAxios.put(`/procesoDiario/update/${id}`, infoDaily, {
           // headers: {
           //   token,
           // },
         });
-        console.log(infoDaily);
+        console.log(r);
+        return r
       } catch (error) {
+        console.log(infoDaily);
         console.log(error);
+        return error
       }
     };
 

@@ -17,12 +17,12 @@ export const CategoryStore = defineStore("CategoryStore", () => {
   }
 
 
-  async function newCategory(name_brands, description, creator ) {
+  async function newCategory(name_brands, description ) {
     try {
-        return await requestAxios.post(`/category`,{
+        return await requestAxios.post("/category",{
             name_brands: name_brands,
             description: description,
-            creator: creator,
+            
           
 
         })
@@ -31,12 +31,12 @@ export const CategoryStore = defineStore("CategoryStore", () => {
       }
   }
 
-  async function putCategory(id, name_brands, description, creator) { //recivir las variables 
+  async function putCategory(id, name_brands, description) { //recivir las variables 
     try {
         return await requestAxios.post(`/category/update/${id}`,{
             name_brands: name_brands,
             description: description,
-            creator: creator,
+          
         })
       } catch (error) {
         console.log(error);

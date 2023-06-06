@@ -152,26 +152,21 @@
                   (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules :rules="[
-                  (val) =>
-                    ((val) => val !== null || val !== '' || val !== undefined) ||
-                    'El campo es requerido',
-                ]" />
+              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules 
+              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
 
-              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
-                (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
-              ]" />
+
+              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules 
+              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
+
               
-              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" lazy-rules :rules="[
-                (val) =>
-                ((val) => val.value !== null || val.value !== '' || val.value !== undefined) || 'El campo es requerido',
-              ]"/>
+              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" lazy-rules               
+              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
+
               
-              <q-input v-model="date" filled type="date" label="Seleccione la fecha" :rules="[
-                (val) =>
-                ((val) => val !== null || val !== '' || val!== undefined) || 'El campo es requerido',
-              ]"/>
+              <q-input v-model="date" filled type="date" label="Seleccione la fecha" 
+                :rules="[ val => val && val.trim().length > 0 || 'El campo es requerido']"/>
+
 
 
               <div class="justify-center flex">
@@ -205,7 +200,6 @@ const useDaily = useDailyStore();
 
 let prompt = ref(false);
 let edit = ref(false);
-const myForm = ref(null);
 let name = ref("");
 let description = ref("");
 let hours = ref();
@@ -292,9 +286,6 @@ onMounted(() => {
 });
 
 
-function reset() {
-    myForm.value.resetValidation()
-  }
 
 // get registros proceso diario
 async function getListDaily() {
@@ -326,7 +317,7 @@ async function postDailyProcess() {
     date: date.value,
   });
   console.log("paseeeeee ");
-  console.log(name.value);
+  console.log(people.value.value);
   prompt.value = false;
   // console.log(res);
   getListDaily();
@@ -352,12 +343,21 @@ async function showInfo(data) {
   name.value = data.name;
   description.value = data.description;
   hours.value = data.hours;
-  people.value = data.people.names;
-  farm.value = data.farm.name;
-  lot.value = data.lot.name;
+  people.value = {
+    label: data.people.names,
+    value: data.people._id
+  };
+  farm.value = {
+    label: data.farm.name,
+    value: data.farm._id
+  };
+  lot.value = {
+    label: data.lot.name,
+    value: data.lot._id
+  };
   date.value = data.date.slice(0, 10);
   console.log(date.value);
-
+console.log(lot.value);
   const fechaRecortada = date.value.slice(0, 10);
 console.log(fechaRecortada);} 
 
@@ -366,6 +366,7 @@ console.log(fechaRecortada);}
 
 async function putDaily() {
   console.log(index.value);
+  console.log(people.value);
   const res = await useDaily.updateDaily(index.value, {
     name: name.value,
     description: description.value,
@@ -376,11 +377,8 @@ async function putDaily() {
     date: date.value,
   });
   console.log(res);
-  getListDaily();
-  setTimeout(() => {
-    reset()
-      }, 2000);
   edit.value = false;
+  getListDaily();
 }
 
 
@@ -439,3 +437,11 @@ async function getLots() {
 
 
 </script>
+
+
+
+<style scoped>
+.q-field__control{
+    color:rgb(248, 244, 5) !important;
+}
+</style>

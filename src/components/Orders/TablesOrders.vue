@@ -227,11 +227,9 @@
 <script setup>
 import { ref, onMounted} from "vue";
 import { OrderStore } from "../../store/Orders/TablesOrders.js"
-
 import { LoginStore } from "../../store/Login/login.js";
 
 const orderStore = OrderStore()
-
 const loginStore = LoginStore()
 
 let abrirCrear=ref(false)

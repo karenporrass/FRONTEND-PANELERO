@@ -6,11 +6,7 @@ export const useDailyStore = defineStore('Daily', () => {
 const getDaily = async () =>{
   try {
     return await requestAxios.get("/procesoDiario/dailyProcess"
-    //  {
-    //   // headers: {
-    //   //   token,
-    //   // },
-    // }
+  
     );
   } catch (error) {
     console.log(error);

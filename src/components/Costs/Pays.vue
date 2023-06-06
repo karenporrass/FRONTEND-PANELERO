@@ -21,7 +21,7 @@
               arrow_right
             </span> Pedidos clientes</p>
         </div>
-        <q-btn class="bg-green-10 text-white" @click="promptEdit = true"><span class="material-symbols-outlined q-mr-sm"
+        <q-btn class="bg-green-10 text-white" @click="prompt = true"><span class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px">
             add_circle
           </span> Crear nuevo pago</q-btn>
@@ -39,7 +39,7 @@
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  prompt = true "></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -57,7 +57,7 @@
       <div class="col-1"></div>
     </div>
 
-    <q-dialog v-model="promptEdit">
+    <q-dialog v-model="prompt">
       <q-card>
         <q-card-section class="bg-green-10">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
@@ -104,7 +104,7 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="prompt">
+    <q-dialog v-model="promptEdit">
       <q-card>
         <q-card-section class="bg-green-10">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
@@ -127,10 +127,8 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
 
-            <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"/>
+            <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" lazy-rules 
+              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
             <q-input filled type="number" v-model="TIME_TO_PAY" label="tiempo a pagar" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
@@ -176,9 +174,12 @@ let columns = ref([
     name: 'CONCEPT', label: 'CONCEPTO', sortable: true, align: 'center', field:
       "CONCEPT"
   },
-  {
-    name: 'date', label: 'FECHA PAGO', align: 'center', field:
-      "Date"
+
+   {
+    name: "date",
+    label: "FECHA",
+    field: (row) => row.Date.slice(0, 10),
+    align: "center",
   },
   {
     name: "PAYMENT_METHOD",
@@ -294,7 +295,11 @@ function goInfo(data) {
   DNI.value = data.DNI
 ROL.value = data.ROL
 CONCEPT.value = data.CONCEPT
-PAYMENT_METHOD.value = data.PAYMENT_METHOD
+PAYMENT_METHOD.value = {
+  label: data.PAYMENT_METHOD.name,
+  value: data.PAYMENT_METHOD._id
+} 
+
 TIME_TO_PAY.value = data.TIME_TO_PAY
 total.value = data.Total
     

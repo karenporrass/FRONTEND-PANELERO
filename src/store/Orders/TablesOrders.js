@@ -15,7 +15,7 @@ export const OrderStore = defineStore('counter', () => {
         }
       }
 
-      async function newOrder(documento, telefono, tipoPanela, cantidad, comprobantePago,saldopendiente,
+      async function newOrder(documento, telefono, tipoPanela, cantidad, comprobantePago,
         nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal,token) {
         try {
           return await requestAxios.post(
@@ -25,7 +25,7 @@ export const OrderStore = defineStore('counter', () => {
                 TipoPanela: tipoPanela,
                 Cantidad: cantidad,
                 ComprobantePago:comprobantePago ,
-                SaldoPendiente: saldopendiente,
+               
                 Nombre: nombre,
                 Direccion: direccion,
                 FormaPanela: formaPanela,
@@ -40,7 +40,7 @@ export const OrderStore = defineStore('counter', () => {
         }
       }
     
-      const putOrder =  (async (id,documento, telefono, tipoPanela, cantidad, comprobantePago,saldopendiente,nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal) =>{
+      const putOrder =  (async (id,documento, telefono, tipoPanela, cantidad, comprobantePago,nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal) =>{
         try {
           return await requestAxios.post(
             `/pedido/editar/${id}`,
@@ -50,7 +50,6 @@ export const OrderStore = defineStore('counter', () => {
               TipoPanela: tipoPanela,
               Cantidad: cantidad,
               ComprobantePago:comprobantePago ,
-              SaldoPendiente: saldopendiente,
               Nombre: nombre,
               Direccion: direccion,
               FormaPanela: formaPanela,

@@ -21,7 +21,7 @@
                             :dense="dense" /><br>
                         <p id="p-olvido">¿Olvido su contraseña?</p>
                         <div id="div-boton">
-                        <q-btn @click="addUser(),validar() " id="boton-ingresar" color="teal-10" label="INGRESAR " />
+                        <q-btn @click="validar() " id="boton-ingresar" color="teal-10" label="INGRESAR " />
                         </div>
                     </div>
                 </div>
@@ -55,6 +55,8 @@ let usuario = ref([
       }
     ])
 
+
+
 const addUser = async()=>{
     try {
 
@@ -64,17 +66,20 @@ const addUser = async()=>{
             
 
         })
-        console.log(newuser);
+        
         store.getToken(newuser.data);
 
-       console.log(store.token)
+       console.log("Se genero token")
     } catch (error) {
         console.log(error);
     }
 }
 
 function pasarHome() {
-    router.push("/home")
+    if (store.token==store.token) {
+        router.push("/home")
+    }
+    
 
 }
 function validar() {
@@ -82,6 +87,7 @@ function validar() {
             index.value = i
             if (user.value == usuario.value[index.value].nameUser && password.value == usuario.value[index.value].password) {
             console.log("se logio con exito");
+            addUser()
             pasarHome()
             }   
             else{

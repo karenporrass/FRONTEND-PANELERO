@@ -30,11 +30,13 @@
         </div>
           <!-- TABLE INFO -->
           <div class="row q-mt-md">
-            <div class="col-1"></div>
-            <div class="col-10 ">
-                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
-                    <template v-slot:body-cell-options="props" >
+      <div class="col-1"></div>
+      <div class="col-10 ">
+        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll
+          v-model:pagination="pagination" :rows-per-page-options="[0]">
+          
+
+          <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  prompt = true "></q-btn>
@@ -48,12 +50,12 @@
                   </span></q-btn>
               </div>
             </q-td>
-            
+
           </template>
         </q-table>
-            </div>
-            <div class="col-1"></div>
-        </div> 
+      </div>
+      <div class="col-1"></div>
+    </div>
 
         <q-dialog v-model="promptEdit">
             <q-card >

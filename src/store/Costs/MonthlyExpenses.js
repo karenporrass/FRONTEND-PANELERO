@@ -70,4 +70,8 @@ export const monthlyStore = defineStore("counter", () => {
   
 
   return {  monthly, listMonthly, newMonthly, putMonthly, active, listMonthlyActive };
-});
+},
+{
+  persist: true,
+},
+);

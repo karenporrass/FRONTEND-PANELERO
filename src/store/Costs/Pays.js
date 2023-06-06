@@ -30,14 +30,15 @@ export const payStore = defineStore("payStore", () => {
       }
   }
 
-  async function putPays(id, DNI, ROl, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY) { //recivir las variables 
+  async function putPays(id, DNI, ROL, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY, total) { //recivir las variables 
     try {
         return await requestAxios.put(`/payments/update/${id}`,{
           DNI: DNI,
-          ROl: ROl,
+          ROl: ROL,
           CONCEPT: CONCEPT,
           PAYMENT_METHOD: PAYMENT_METHOD,
           TIME_TO_PAY: TIME_TO_PAY,
+          Total: total
         })
       } catch (error) {
         console.log(error);

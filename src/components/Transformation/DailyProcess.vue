@@ -358,8 +358,9 @@ async function showInfo(data) {
   date.value = data.date.slice(0, 10);
   console.log(date.value);
 console.log(lot.value);
-  const fechaRecortada = date.value.slice(0, 10);
-console.log(fechaRecortada);} 
+//   const fechaRecortada = date.value.slice(0, 10);
+// console.log(fechaRecortada);
+} 
 
 
 

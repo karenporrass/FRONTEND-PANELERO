@@ -1,51 +1,69 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import {requestAxios} from "../../Global/axios.js"
+import { requestAxios } from "../../Global/axios.js"
 
-export const CategoryStore = defineStore("CategoryStore", () => {
-  const Category = ref("");
+export const productStore = defineStore("productStore", () => {
+  const product = ref("");
 
 
-  async function listCategory() {
-    console.log("listCategory")
+  async function listProduct() {
+    console.log("listProduct")
     try {
-      return await requestAxios.get("/category")
+      return await requestAxios.get("/product")
     } catch (error) {
       console.log(error);
     }
   }
 
 
-  async function newCategory(name_brands, description ) {
+  async function newProduct(amount,expense_name,  administrator, Finca, description, PAYMENT_METHOD, cost_value, total  ) {
     try {
-        return await requestAxios.post("/category",{
-            name_brands: name_brands,
-            description: description,
-            
-          
+      return await requestAxios.post("/product", {
+     
 
-        })
-      } catch (error) {
-        console.log(error);
-      }
+        amount: amount, 
+        expense_name: expense_name, 
+        administrator: administrator, 
+        Finca: Finca, 
+        description: description, 
+        PAYMENT_METHOD: PAYMENT_METHOD, 
+        cost_value: cost_value, 
+        total: total, 
+        Date: Date, 
+        state: state, 
+
+
+
+      })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  async function putCategory(id, name_brands, description) { //recivir las variables 
+  async function putProduct(id, amount,expense_name,  administrator, Finca, description, PAYMENT_METHOD, cost_value, total) { //recivir las variables 
     try {
-        return await requestAxios.post(`/category/update/${id}`,{
-            name_brands: name_brands,
-            description: description,
-          
-        })
-      } catch (error) {
-        console.log(error);
-      }
+      return await requestAxios.post(`/product/update/${id}`, {
+        amount: amount, 
+        expense_name: expense_name, 
+        administrator: administrator, 
+        Finca: Finca, 
+        description: description, 
+        PAYMENT_METHOD: PAYMENT_METHOD, 
+        cost_value: cost_value, 
+        total: total, 
+        Date: Date, 
+        state: state, 
+
+      })
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  async function active(id, estado){
+  async function active(id, estado) {
     try {
-      return await requestAxios.put(`/category/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+      return await requestAxios.put(`/product/state/${id}`, { state: estado }) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
     } catch (error) {
       console.log(error);
       return error
@@ -54,7 +72,8 @@ export const CategoryStore = defineStore("CategoryStore", () => {
 
 
 
-  
 
-  return { Category, listCategory, newCategory, putCategory, active };
+
+  return { product, listProduct, newProduct, putProduct, active };
 });
+  

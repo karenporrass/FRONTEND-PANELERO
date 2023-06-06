@@ -66,6 +66,7 @@
                 <div>
                     <q-input  filled type="number" v-model="name_category" label="Digite el cantidad del gasto"></q-input>
                     <q-input  filled type="text" v-model="description" label="Digite el nombre del gasto"></q-input>
+                   
                  
 
                   <div>
@@ -89,6 +90,7 @@
                 <div>
                     <q-input  filled type="text" v-model="name_category" label="Digite el cantidad del gasto"></q-input>
                     <q-input  filled type="text" v-model="description" label="Digite el nombre del gasto"></q-input>
+               
 
                   <div>
                     <br />
@@ -131,6 +133,8 @@ let pagination = ref({
 let name_category = ref()
 let description  = ref()
 
+
+
 rows.value.forEach((row, index) => {
   row.index = index
 })
@@ -143,6 +147,7 @@ const postCategory = async () => {
 
   name_category.value,
   description.value,
+  
   )
   console.log(pays);
   getCategory()
@@ -184,6 +189,7 @@ function goInfo(data) {
   name_category.value = data.name_category
   description.value = data.description
 
+
     
 }
 
@@ -192,6 +198,7 @@ async function putInfo() {
   const res = await categoryStore.putCategory(index.value,
   name_category.value,
   description.value,
+
   )
   console.log(res);
   getCategory()

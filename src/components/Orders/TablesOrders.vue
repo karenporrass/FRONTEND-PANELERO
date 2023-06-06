@@ -357,6 +357,7 @@ async function orderPost(){
     loginStore.token
   )
   console.log(order);
+  abrirCrear.value=false
   orderGet()
   limpiar()
   
@@ -379,6 +380,7 @@ async function putInfo() {
     valorTotal.value 
   )
   console.log(res);
+  abrirCrear.value=false
   orderGet()
   limpiar()
 }

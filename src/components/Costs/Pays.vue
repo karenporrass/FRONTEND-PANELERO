@@ -39,7 +39,7 @@
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  edit = true "></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -57,6 +57,7 @@
       <div class="col-1"></div>
     </div>
 
+    <!-- crear  -->
     <q-dialog v-model="prompt">
       <q-card>
         <q-card-section class="bg-green-10">
@@ -65,7 +66,7 @@
           </h5>
         </q-card-section>
         <div class="q-pa-md ">
-          <q-form @submit.prevent.stop="postPays()">
+         
 
           <div>
             <q-input filled type="text" v-model="DNI" label="DNI" lazy-rules :rules="[
@@ -82,7 +83,7 @@
               ]" ></q-input>
              <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" lazy-rules :rules="[
                 (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
+                ((val) =>  val !== '') || 'El campo es requerido',
               ]"/>
             <q-input filled type="number" v-model="TIME_TO_PAY" label="tiempo a pagar" lazy-rules :rules="[
                 (val) =>
@@ -95,20 +96,21 @@
 
             <div>
               <br />
-              <q-btn label="guardar" type="submit" class="text-white bg-green-10"  />
+              <q-btn label="guardar" class="text-white bg-green-10"  @click="postPays()" />
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
-          </q-form>
+         
         </div>
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="promptEdit">
+    <!-- editar -->
+    <q-dialog v-model="edit">
       <q-card>
         <q-card-section class="bg-green-10">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
-            DILIGENCIA LA INFORMACIÓN
+            Actualizar Información
           </h5>
         </q-card-section>
         <div class="q-pa-md ">
@@ -140,7 +142,7 @@
 
             <div>
               <br />
-              <q-btn label="guardar" class="text-white bg-green-10" @click="putInfo()" />
+              <q-btn label="Actualizar" class="text-white bg-green-10" @click="putInfo()" />
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
@@ -155,7 +157,7 @@ import { ref, onMounted } from 'vue'
 import { payStore } from "../../store/Costs/Pays.js"
 const PayStore = payStore()
 let prompt = ref(false)
-let promptEdit = ref(false)
+let edit = ref(false)
 let index = ref()
 let pagination = ref({
   rowsPerPage: 0
@@ -167,7 +169,7 @@ let columns = ref([
       "DNI"
   },
   {
-    name: 'ROL', align: 'center', label: 'ROL', align: 'center', field:
+    name: 'ROL', align: 'center', label: 'Cargo', align: 'center', field:
       "ROL"
   },
   {
@@ -244,18 +246,18 @@ async function getMethod() {
 
 const postPays = async () => {
   console.log("hola");
-  const pays = await PayStore.newPays({
-  DNI: DNI.value,
-  ROL: ROL.value,
-  CONCEPT: CONCEPT.value,
-  PAYMENT_METHOD: PAYMENT_METHOD.value.label,
-  TIME_TO_PAY: TIME_TO_PAY.value,
-  Total: total.value
-  })
-  console.log("pos");
+  const pays = await PayStore.newPays(
+DNI.value,
+ROL.value,
+CONCEPT.value,
+PAYMENT_METHOD.value.label,
+TIME_TO_PAY.value,
+total.value
+  )
+  console.log("creo");
   console.log(pays);
   getPays()
-  promptEdit.value = false;
+  prompt.value = false;
 
 
 }
@@ -295,11 +297,7 @@ function goInfo(data) {
   DNI.value = data.DNI
 ROL.value = data.ROL
 CONCEPT.value = data.CONCEPT
-PAYMENT_METHOD.value = {
-  label: data.PAYMENT_METHOD.name,
-  value: data.PAYMENT_METHOD._id
-} 
-
+PAYMENT_METHOD.value =  data.PAYMENT_METHOD
 TIME_TO_PAY.value = data.TIME_TO_PAY
 total.value = data.Total
     
@@ -317,6 +315,7 @@ total.value,
   )
   console.log(res);
   getPays()
+  edit.value = false
 }
 
 

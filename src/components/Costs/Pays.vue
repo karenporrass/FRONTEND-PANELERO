@@ -247,12 +247,12 @@ async function getMethod() {
 const postPays = async () => {
   console.log("hola");
   const pays = await PayStore.newPays(
-DNI.value,
-ROL.value,
-CONCEPT.value,
-PAYMENT_METHOD.value.label,
-TIME_TO_PAY.value,
-total.value
+  DNI.value,
+  ROL.value,
+  CONCEPT.value,
+  PAYMENT_METHOD.value.label,
+  TIME_TO_PAY.value,
+  total.value
   )
   console.log("creo");
   console.log(pays);

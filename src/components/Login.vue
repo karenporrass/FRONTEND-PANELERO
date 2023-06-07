@@ -128,6 +128,7 @@ function validar() {
     display: flex;
     border-radius: 10px;
     border: 1px solid black;
+
 }
 
 #div-img {
@@ -199,5 +200,34 @@ function validar() {
     width: 120px;
     font-size: 15px;
 }
+
+@media (max-height: 720px) {
+    #contenedor-col2{
+        height: 620px;
+        
+    }
+    #boton-ingresar {
+    border-radius: 10px;
+    width: 100px;
+    font-size: 12px;
+    }
+    #p-olvido {
+    color: black;
+    font-size: 12px;
+}
+#p-usuario {
+    color: black;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 11px;
+    
+}
+
+#p-contraseña {
+    color: black;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 11px;
+}
+}
+
 
 </style>

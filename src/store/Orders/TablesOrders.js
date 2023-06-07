@@ -25,7 +25,6 @@ export const OrderStore = defineStore('counter', () => {
                 TipoPanela: tipoPanela,
                 Cantidad: cantidad,
                 ComprobantePago:comprobantePago ,
-               
                 Nombre: nombre,
                 Direccion: direccion,
                 FormaPanela: formaPanela,

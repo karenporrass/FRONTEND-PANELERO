@@ -418,8 +418,6 @@ function limpiar() {
       valorTotal.value =""
 }
 
-
-
 </script>
 
 <style>

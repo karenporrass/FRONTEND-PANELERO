@@ -169,8 +169,8 @@ let columns = ref([
       "DNI"
   },
   {
-    name: 'ROL', align: 'center', label: 'Cargo', align: 'center', field:
-      "ROL"
+    name: 'ROL', align: 'center', label: 'ROL', align: 'center', 
+    field:"ROL"
   },
   {
     name: 'CONCEPT', label: 'CONCEPTO', sortable: true, align: 'center', field:
@@ -325,6 +325,7 @@ TIME_TO_PAY.value,
 total.value,
   )
   console.log(res);
+  console.log(ROL.value);
   getPays()
   edit.value = false
   vaciar()

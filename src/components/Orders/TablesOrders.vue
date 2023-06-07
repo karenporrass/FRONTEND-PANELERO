@@ -27,7 +27,7 @@
             </span> Pedidos Clientes</p>
         </div>
 
-            <q-btn class="bg-green-10 text-white" @click="abrirCrear=true"><span class="material-symbols-outlined q-mr-sm"
+            <q-btn class="bg-green-10 text-white" @click="abrirCrear=true,  limpiar()"><span class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px">
             add_circle
           </span>Crear Nuevo Pedido</q-btn>
@@ -66,7 +66,13 @@
                     class="material-symbols-outlined" style="font-size: 18px;">
                     close
                   </span></q-btn>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"> Factura</q-btn>
+                <q-btn name="request_quote" round icon="edit" class="q-mx-md" size="xs" color="green-10"> Factura<span class="material-icons-outlined">
+request_quote
+</span></q-btn>
+
+<!-- <span class="material-icons-outlined">
+request_quote
+</span> -->
 
               </div>
             </q-td>
@@ -272,7 +278,12 @@ let tipoEmpaque=ref()
 let columns = ref([
   { name: 'index', label: 'N°', field: 'index', align: 'center' },
   { name:'documento', align:'center', label: 'Documento', field: 'Documento' },
-  { name: 'date', label: 'Fecha De Creacion', align: 'center', field: 'Date'  },
+  {
+    name: "date",
+    label: "FECHA",
+    field: (row) => row.Date.slice(0, 10),
+    align: "center",
+  },
   { name: 'name', label: 'Nombre', align: 'center', field: 'Nombre'  },
   { name:'telefono', align:'center', label: 'Telefono', field: 'Telefono' },
   { name:'cantidad', align:'center', label: 'Cantidad', field: 'Cantidad' },
@@ -382,7 +393,7 @@ async function putInfo() {
   console.log(res);
   abrirCrear.value=false
   orderGet()
-  limpiar()
+  
 }
 
 onMounted(() => {

@@ -41,7 +41,7 @@ export const OrderStore = defineStore('counter', () => {
     
       const putOrder =  (async (id,documento, telefono, tipoPanela, cantidad, comprobantePago,nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal) =>{
         try {
-          return await requestAxios.post(
+          return await requestAxios.put(
             `/pedido/editar/${id}`,
             {
               Documento: documento,
@@ -65,7 +65,7 @@ export const OrderStore = defineStore('counter', () => {
       async function active(id,estado) {
         try {
           return await requestAxios.put(
-            `/pedido/update/state/${id}`,{ state: estado }); //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+            `/pedido/state/${id}`,{ state: estado }); //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
         } catch (error) {
           console.log(error);
           return error;

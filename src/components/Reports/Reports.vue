@@ -300,8 +300,15 @@ let options6= ref([
 
 
 
-function downloadPdfPersonas() {
+function downloadPdfPersonas(x) {
+
+
+
   const docDefinition = {
+    
+
+
+
     content: [
       { text: 'Reporte Mantenimiento:Personas', style: 'header' },
       {
@@ -379,23 +386,23 @@ function downloadPdfPersonas() {
         //     downloadPdfPersonas()
         // }if (tipo.value=="Método de pago") {
         //     downloadPdfPersonas()
-        // }if (tipo.value=="Personas") {
+        // }if (tipo.value=="Tipo de pago") {
         //     downloadPdfPersonas()
-        // }if (tipo.value=="Personas") {
+        // }if (tipo.value=="Unidad de medida") {
         //     downloadPdfPersonas()
-        // }if (tipo.value=="Personas") {
+        // }if (tipo.value=="Eps") {
         //     downloadPdfPersonas()
-        // }if (tipo.value=="Personas") {
+        // }if (tipo.value=="Tipo de documento") {
         //     downloadPdfPersonas()
-        // }if (tipo.value=="Personas") {
+        // }if (tipo.value=="Lotes") {
         //     downloadPdfPersonas()
-        // }if (tipo.value=="Personas") {
+        // }if (tipo.value=="Etapas") {
         //     downloadPdfPersonas()
-        // }if (tipo.value=="Personas") {
+        // }if (tipo.value=="Fincas") {
         //     downloadPdfPersonas()
-        // }if (tipo.value=="Personas") {
+        // }if (tipo.value=="Empaques") {
         //     downloadPdfPersonas()
-        // }if (tipo.value=="Personas") {
+        // }if (tipo.value=="Soporte") {
         //     downloadPdfPersonas()
         // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()

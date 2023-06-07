@@ -189,7 +189,8 @@ let columns = ref([
   {
     name: "PAYMENT_METHOD",
     label: "Metodo de pago",
-    field: "PAYMENT_METHOD",
+    field: (row) => row.PAYMENT_METHOD.name,
+
     align: "center",
   },
   {

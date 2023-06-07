@@ -85,10 +85,7 @@
                 (val) =>
                   (val  > 0) || 'El campo es requerido',
               ]"></q-input>
-            <q-input filled type="number" v-model="total" label="Total" lazy-rules :rules="[
-                (val) =>
-                  (val  > 0) || 'El campo es requerido',
-              ]"></q-input>
+            <q-input filled type="number" v-model="total" label="Total" ></q-input>
 
             <div>
               <br />

@@ -17,20 +17,11 @@ export const payStore = defineStore("payStore", () => {
   }
 
 
-  async function newPays(DNI, ROL, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY, total ) {
+  async function newPays(pay) {
     
     try {
-      
-        let r = await requestAxios.post('/payments', {
-          DNI: DNI,
-          ROl: ROL,
-          CONCEPT: CONCEPT,
-          PAYMENT_METHOD: PAYMENT_METHOD,
-          TIME_TO_PAY: TIME_TO_PAY,
-          Total: total
-         
-        })
-
+      console.log(22);
+        let r = await requestAxios.post('/payments', pay)
         return r
       } catch (error) {
         return error

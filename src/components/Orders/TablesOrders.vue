@@ -300,12 +300,7 @@ let rows2= ref([
   }
 ])
 
-let rows = ref([
-  {
-    Documento: null, Date: null,Telefono: null,TipoPanela: null,Cantidad: null,ComprobantePago: null,SaldoPendiente: null, Nombre: null,Direccion: null,FormaPanela: null,TipoEmpaque: null,Abono: null,ValorTotal: null
-  }
- 
-])
+let rows = ref([])
 rows.value.forEach((row, index) => {
   row.index = index
 })
@@ -393,6 +388,7 @@ onMounted(() => {
 
 async function activarDesactivar(data) {
   console.log(data);
+  console.log(33);
   let res = ""
   if (data.state == 1) {
     res = await orderStore.active(data._id, 0)

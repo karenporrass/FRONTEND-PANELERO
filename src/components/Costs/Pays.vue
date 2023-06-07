@@ -244,23 +244,34 @@ async function getMethod() {
 }
 
 
+function vaciar() {
+DNI.value = ""
+ROL.value = ""
+CONCEPT.value = ""
+PAYMENT_METHOD.value = ""
+TIME_TO_PAY.value = ""
+total.value = ""
+}
+
 const postPays = async () => {
   console.log("hola");
-  const pays = await PayStore.newPays(
-DNI.value,
-ROL.value,
-CONCEPT.value,
-PAYMENT_METHOD.value.label,
-TIME_TO_PAY.value,
-total.value
-  )
+  const pays = await PayStore.newPays({
+  DNI: DNI.value,
+  ROL: ROL.value,
+  CONCEPT: CONCEPT.value,
+  PAYMENT_METHOD: PAYMENT_METHOD.value.value,
+  TIME_TO_PAY: TIME_TO_PAY.value,
+  Total: total.value
+})
   console.log("creo");
   console.log(pays);
   getPays()
   prompt.value = false;
-
+  vaciar()
 
 }
+
+
 
 
 
@@ -316,6 +327,7 @@ total.value,
   console.log(res);
   getPays()
   edit.value = false
+  vaciar()
 }
 
 

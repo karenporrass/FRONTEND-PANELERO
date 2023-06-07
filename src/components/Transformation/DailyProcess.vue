@@ -308,7 +308,7 @@ getListDaily();
 async function postDailyProcess() {  
   console.log("hola post");
   await useDaily.postDaily({
-    name: name.value,
+    // name: name.value,
     description: description.value,
     hours: hours.value,
     people: people.value.value,

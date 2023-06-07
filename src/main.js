@@ -23,7 +23,7 @@ import 'quasar/src/css/index.sass'
 
 import App from './App.vue'
 import { createApp } from 'vue'
-import { Quasar } from 'quasar'
+import { Quasar, Notify } from 'quasar'
 import {createRouter, createWebHashHistory} from 'vue-router'
 import {routes} from "../routes/routes.js"
 import { createPinia } from "pinia"
@@ -32,7 +32,10 @@ const app = createApp(App)
 const pinia = createPinia()
 
 app.use(Quasar, {
-    plugins: {}, 
+    plugins: {
+        Notify,
+
+    }, 
 })
 
 const router = createRouter({

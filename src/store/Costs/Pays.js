@@ -29,9 +29,10 @@ export const payStore = defineStore("payStore", () => {
       }
   }
 
-  async function putPays(id, DNI, ROL, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY, total) { //recivir las variables 
+  async function putPays(id, DNI, ROL, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY, total) { 
+      console.log("cambiar");
     try {
-        return await requestAxios.put(`/payments/update/${id}`,{
+        let r= await requestAxios.put(`/payments/update/${id}`,{
           DNI: DNI,
           ROl: ROL,
           CONCEPT: CONCEPT,
@@ -39,6 +40,9 @@ export const payStore = defineStore("payStore", () => {
           TIME_TO_PAY: TIME_TO_PAY,
           Total: total
         })
+        console.log(r);
+        console.log(ROL);
+        console.log(PAYMENT_METHOD)
       } catch (error) {
         console.log(error);
       }

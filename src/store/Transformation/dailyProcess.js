@@ -1,26 +1,32 @@
 import { defineStore } from "pinia";
 import { requestAxios } from "../../Global/axios";
-// import { notifyError, notifySuccess } from "../../Global/notify.js";
+import { notifyError, notifySuccess } from "../../Global/notify.js";
 
 export const useDailyStore = defineStore(
   "Daily",
   () => {
+    
+    
     const getDaily = async () => {
       try {
         await requestAxios.get("/procesoDiario/dailyProcess");
       } catch (error) {
         console.log(error);
-        // notifyError(error.response.data.errors.join(", "));
       }
     };
+
+
+    
     const postDaily = async (infoDaily) => {
       console.log("post");
       try {
-         await requestAxios.post("/procesoDiario/register", infoDaily, {
+        await requestAxios.post("/procesoDiario/register", infoDaily, {
         });
       } catch (error) {
         console.log(infoDaily);
         console.log(error);
+        notifyError(error.response.data.errors.join(", "));
+
       }
     };
 

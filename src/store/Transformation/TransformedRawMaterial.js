@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { requestAxios } from '../../Global/axios'
+import { notifyError, notifySuccess } from "../../Global/notify.js";
+
 
 
 export const storeTransformed = defineStore('storeTransformed', () => {
@@ -17,11 +19,15 @@ export const storeTransformed = defineStore('storeTransformed', () => {
     
     const addTransformed = async (infoTrans)=>  {
       try {
-        return await requestAxios.post(`/materiaTransformada/register`, infoTrans,{
+        await requestAxios.post(`/materiaTransformada/register`, infoTrans,{
         });
         console.log(infoTrans);
+        notifySuccess('Materia prima transformada registrada correctamente ')
+
       } catch (error) {
         console.log(error);
+        console.log(error.response.data);
+        notifyError(error.response.data.errors.join(', '))
       }
     }
     
@@ -41,13 +47,15 @@ export const storeTransformed = defineStore('storeTransformed', () => {
       console.log(infoTrans);
       try {
         await requestAxios.put(`/materiaTransformada/update/${id}`, infoTrans, {
-          // headers: {
-          //   token,
-          // },
         });
         console.log(infoTrans);
+        notifySuccess('Materia prima transformada editada correctamente')
       } catch (error) {
         console.log(error);
+
+        notifyError(error.response.data.errors.join(', '))
+
+
       }
     };
 

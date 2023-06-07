@@ -283,17 +283,26 @@ async function activarDesactivar(data) {
 
 
 function showInfo(data) {
-  type.value = data.type.name;
   quantity.value = data.quantity;
-  lot.value = data.lot.name;
-  farm.value = data.farm.name;
+  type.value = {
+    label: data.type.name,
+    value: data.type._id
+  };
+  farm.value = {
+    label: data.farm.name,
+    value: data.farm._id
+  };
+  lot.value = {
+    label: data.lot.name,
+    value: data.lot._id
+  };
   date.value = data.date.slice(0, 10);
 }
 
 async function putTransformed() {
   console.log(index.value);
   const res = await useTransformed.updateTransformed(index.value, {
-    type: type.value.value,
+    // type: type.value.value,
     quantity: quantity.value,
     lot: lot.value.value,
     farm: farm.value.value,

@@ -82,7 +82,7 @@
                 (val) =>
                   (val  > 0) || 'El campo es requerido',
               ]"></q-input>
-            <q-input filled type="number" v-model="total" label="Total" ></q-input>
+            <q-input filled type="number" v-model="Total" label="Total" ></q-input>
 
             <div>
               <br />
@@ -121,7 +121,7 @@
                 (val) =>
                   (val  > 0) || 'El campo es requerido',
               ]"></q-input>
-            <q-input filled type="number" v-model="total" label="Total" lazy-rules :rules="[
+            <q-input filled type="number" v-model="Total" label="Total" lazy-rules :rules="[
                 (val) =>
                   (val  > 0) || 'El campo es requerido',
               ]"></q-input>
@@ -152,7 +152,7 @@ let Finca = ref()
 let Description = ref()
 let PAYMENT_METHOD = ref()
 let costValue = ref()
-let total = ref()
+let Total = ref()
 let optionsMethod = ref([])
 
 
@@ -163,7 +163,12 @@ let columns = ref([
 {name: 'Name_spent',label: 'Nombre del gasto',field: 'Name_spent',align: 'center'},
   { name: 'finca', align: 'center', label: 'FINCA', field: 'Finca',align: 'center' },
   { name: 'Description', label: 'DESCRIPCION', field: 'Description' ,align: 'center'},
-  { name: 'Date', label: 'FECHA', field: 'Date',align: 'center' },
+  {
+    name: "date",
+    label: "FECHA",
+    field: (row) => row.Date.slice(0, 10),
+    align: "center",
+  },
   {
     name: "PAYMENT_METHOD",
     label: "Metodo de pago",
@@ -177,7 +182,9 @@ let columns = ref([
     field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
     align: "center",
   },
+  { name: 'Total', align: 'center', label: 'Total', align: 'center', sortable: true, field: 'Total' },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
+
 ])  
 
 
@@ -232,12 +239,13 @@ Finca.value,
 Description.value,
 PAYMENT_METHOD.value.label,
 costValue.value,
-total.value
+Total.value
 
   )
  
   console.log(monthly);
   getMonthly()
+  promptEdit.value = false
 
 }
 
@@ -261,7 +269,7 @@ Finca.value = data.Finca
 Description.value = data.Description
 PAYMENT_METHOD.value = data.PAYMENT_METHOD
 costValue.value = data.costValue
-total.value = data.Total
+Total.value = data.Total
 }
 
 async function putInfo() {
@@ -272,7 +280,7 @@ Finca.value,
 Description.value,
 PAYMENT_METHOD.value,
 costValue.value,
-total.value
+Total.value
   )
   console.log(res);
   getMonthly()

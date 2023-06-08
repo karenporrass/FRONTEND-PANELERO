@@ -18,7 +18,7 @@ export const monthlyStore = defineStore("counter", () => {
 
   
 
-  async function newMonthly(Name_spent, Finca, Description, PAYMENT_METHOD, costValue, total ) {
+  async function newMonthly(Name_spent, Finca, Description, PAYMENT_METHOD, costValue, Total ) {
       console.log("2 crea");
     try {
         return await requestAxios.post(`/monthlyExpenses`,{
@@ -27,14 +27,15 @@ export const monthlyStore = defineStore("counter", () => {
           Description: Description,
           PAYMENT_METHOD: PAYMENT_METHOD,
           costValue: costValue,
-          Total: total
+          Total: Total
         })
       } catch (error) {
         console.log(error);
       }
   }
 
-  async function putMonthly(id, Name_spent, Finca, Description, PAYMENT_METHOD, costValue, total ) { //recivir las variables 
+  async function putMonthly(id, Name_spent, Finca, Description, PAYMENT_METHOD, costValue, Total ) {
+    console.log("actualiza");
     try {
         return await requestAxios.put(`/monthlyExpenses/update/${id}`,{
           Name_spent: Name_spent,
@@ -42,7 +43,7 @@ export const monthlyStore = defineStore("counter", () => {
           Description: Description,
           PAYMENT_METHOD: PAYMENT_METHOD,
           costValue: costValue,
-          Total: total
+          Total: Total
         })
       } catch (error) {
         console.log(error);

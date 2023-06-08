@@ -77,10 +77,7 @@
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-           <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length  > 0) || 'El campo es requerido',
-              ]"/>
+           <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" />
             <q-input filled type="number" v-model="costValue" label="tiempo a pagar" lazy-rules :rules="[
                 (val) =>
                   (val  > 0) || 'El campo es requerido',
@@ -119,10 +116,7 @@
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-             <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" lazy-rules :rules="[
-                (val) =>
-                  (val  > 0) || 'El campo es requerido',
-              ]"/>
+             <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" />
             <q-input filled type="number" v-model="costValue" label="tiempo a pagar" lazy-rules :rules="[
                 (val) =>
                   (val  > 0) || 'El campo es requerido',
@@ -158,6 +152,7 @@ let Finca = ref()
 let Description = ref()
 let PAYMENT_METHOD = ref()
 let costValue = ref()
+let total = ref()
 let optionsMethod = ref([])
 
 
@@ -229,15 +224,18 @@ if (res.status < 299) {
 
 
 const postMonthly = async () => {
+  console.log("1Crea");
   const monthly = await MonthlyStore.newMonthly(
 
 Name_spent.value,
 Finca.value,
 Description.value,
-PAYMENT_METHOD.value,
+PAYMENT_METHOD.value.label,
 costValue.value,
+total.value
 
   )
+ 
   console.log(monthly);
   getMonthly()
 
@@ -263,7 +261,7 @@ Finca.value = data.Finca
 Description.value = data.Description
 PAYMENT_METHOD.value = data.PAYMENT_METHOD
 costValue.value = data.costValue
-
+total.value = data.Total
 }
 
 async function putInfo() {
@@ -274,6 +272,7 @@ Finca.value,
 Description.value,
 PAYMENT_METHOD.value,
 costValue.value,
+total.value
   )
   console.log(res);
   getMonthly()
@@ -290,6 +289,10 @@ onMounted(() => {
 .q-input {
   margin-bottom: 20px;
 }
+
+.q-select{
+    margin-bottom: 20px;
+  }
 </style>
 
 

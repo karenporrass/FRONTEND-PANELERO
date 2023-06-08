@@ -347,4 +347,8 @@ onMounted(() => {
 
 <style scoped>.q-input {
   margin-bottom: 20px;
-}</style>
+}
+  .q-select{
+    margin-bottom: 20px;
+  }
+</style>

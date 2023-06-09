@@ -17,7 +17,7 @@ export const OccasionalStore = defineStore("counter", () => {
   }
 
 
-  async function newOccasional(Name_spent, Finca, Description, PAYMENT_METHOD, costValue ) {
+  async function newOccasional(Name_spent, Finca, Description, PAYMENT_METHOD, costValue,   Total ) {
     try {
         return await requestAxios.post(`/occasionalExpenses`,{
          
@@ -26,22 +26,23 @@ export const OccasionalStore = defineStore("counter", () => {
           Finca: Finca,
           Description: Description,
           PAYMENT_METHOD: PAYMENT_METHOD,
-          costValue: costValue
-
+          costValue: costValue,
+          Total:   Total
         })
       } catch (error) {
         console.log(error);
       }
   }
 
-  async function putOccasional(id, Name_spent, Finca, Description, PAYMENT_METHOD, costValue ) { //recivir las variables 
+  async function putOccasional(id, Name_spent, Finca, Description, PAYMENT_METHOD, costValue, Total ) { //recivir las variables 
     try {
         return await requestAxios.put(`/occasionalExpenses/update/${id}`,{
           Name_spent: Name_spent,
           Finca: Finca,
           Description: Description,
           PAYMENT_METHOD: PAYMENT_METHOD,
-          costValue: costValue
+          costValue: costValue,
+          Total: Total
         })
       } catch (error) {
         console.log(error);
@@ -67,9 +68,16 @@ export const OccasionalStore = defineStore("counter", () => {
   }
 
 
+  async function listFarmsActive() {
+    try {
+      return await requestAxios.get("/registroFinca/active");
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
 
-  return {  Occasional, listOccasional, newOccasional, putOccasional, active, listOccacionalActive };
+  return {  Occasional, listOccasional, newOccasional, putOccasional, active, listOccacionalActive, listFarmsActive };
 },
 {
   persist: true,

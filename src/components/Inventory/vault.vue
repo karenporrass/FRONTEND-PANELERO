@@ -27,15 +27,34 @@
             <div class="col-1"></div>
         </div>
         <!-- TABLE INFO -->
-       <div class="row q-mt-md">
-            <div class="col-1"></div>
-            <div class="col-10 ">
-                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                    virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" />
-            </div>
-            <div class="col-1"></div>
-        </div> 
+        <div class="row q-mt-md">
+      <div class="col-1"></div>
+      <div class="col-10 ">
+        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll
+          v-model:pagination="pagination" :rows-per-page-options="[0]">
 
+
+          <template v-slot:body-cell-options="props">
+            <q-td :props="props">
+              <div>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"
+                  @click="index = props.row._id, goInfo(props.row), promptEdit = true"></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
+                    check
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px;">
+                    close
+                  </span></q-btn>
+              </div>
+            </q-td>
+
+          </template>
+        </q-table>
+      </div>
+      <div class="col-1"></div>
+    </div>
         <q-dialog v-model="prompt">
             <q-card >
               <q-card-section class="bg-green-10">
@@ -45,16 +64,42 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="number" v-model="name_cellars" label="Digite el cantidad del gasto"></q-input>
-                    <q-input  filled type="text" v-model="content" label="Digite el nombre del gasto"></q-input>
-                  <q-input filled type="text" v-model="administrator" label="Escoga la finca"></q-input>
-                  <q-input  filled type="text" v-model="extension" label="Digite el descripcion"></q-input>
-                  <q-input  filled type="text" v-model="dirrecion" label="Escoga el metodo de pago"></q-input>
+                  <q-input  filled type="text" v-model="name_cellars" label="Digite el cantidad del gasto"></q-input>
+                    <q-input  filled type="text" v-model="content" label="Digite del contenido"></q-input>
+                  <q-input filled type="text" v-model="administrator" label="Digite el nombre del administrador"></q-input>
+                  <q-input  filled type="text" v-model="extension" label="Digite la extension"></q-input>
+                  <q-input  filled type="text" v-model="dirrecion" label="Digite la dirrecion"></q-input>
                  
 
                   <div>
                     <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"   />
+                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="postVault()" />
+                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
+                  </div>
+                </div>
+              </div>
+            </q-card>
+          </q-dialog>
+
+          <q-dialog v-model="promptEdit">
+            <q-card >
+              <q-card-section class="bg-green-10">
+                <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+                  Actualizar Información
+                </h5>
+              </q-card-section>
+              <div class="q-pa-md " >
+                <div>
+                    <q-input  filled type="text" v-model="name_cellars" label="Digite el cantidad del gasto"></q-input>
+                    <q-input  filled type="text" v-model="content" label="Digite del contenido"></q-input>
+                  <q-input filled type="text" v-model="administrator" label="Digite el nombre del administrador"></q-input>
+                  <q-input  filled type="text" v-model="extension" label="Digite la extension"></q-input>
+                  <q-input  filled type="text" v-model="dirrecion" label="Digite la dirrecion"></q-input>
+                 
+
+                  <div>
+                    <br />
+                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()" />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
                 </div>
@@ -69,18 +114,29 @@ import {ref, onMounted} from "vue"
 import { vaultStore } from "../../store/Inventory/vault.js"
 const VaultStore = vaultStore()
 let prompt = ref(false)
+
 let pagination = ref({
         rowsPerPage: 0
       })
       let columns = ref([
-  {name: 'index',label: 'CANTIDAD',field: 'index',align: 'center'},
-  {name: 'name',required: true,label: 'NOMBRE DEL GASTO',align: 'center',field: row => row.name,format: val => `${val}`,sortable: true},
-  { name: 'calories', align: 'center', label: 'FINCA', field: 'calories',align: 'center', sortable: true },
-  { name: 'fat', label: 'DESCRIPCION', field: 'fat', sortable: true ,align: 'center'},
-  { name: 'carbs', label: 'FECHA', field: 'carbs',align: 'center' },
-  { name: 'protein', label: 'METODO DE PAGO', field: 'protein',align: 'center' },
-  { name: 'sodium', label: 'VALOR DEL GASTO', field: 'sodium',align: 'center' },
-  { name: 'calcium', label: 'TOTAL', field: 'calcium',align: 'center',sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
+  {name: 'name',required: true,label: 'Nombre del gasto',align: 'center',field: 'name_cellars'},
+  { name: 'content', align: 'center', label: 'content', field: 'content',align: 'center',  },
+  { name: 'administrator', label: 'administrador', field: 'administrator', align: 'center'},
+  {
+    name: "date",
+    label: "Fecha",
+    field: (row) => row.Date.slice(0, 10),
+    align: "center",
+  },
+  { name: 'extension', label: 'extension', field: 'extension',align: 'center' },
+  { name: 'dirrecion', label: 'dirrecion', field: 'dirrecion',align: 'center' },
+  {
+    name: "status",
+    label: "Estado",
+    field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
+    align: "center",
+  },
+  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 let name_cellars = ref()
 let content = ref()
@@ -106,15 +162,12 @@ const postVault = async () => {
     name_cellars: name_cellars.value,
     content: content.value,
     administrator: administrator.value,
-    extension: extension.value.label,
+    extension: extension.value,
     dirrecion: dirrecion.value,
 
-
-
-  
   })
   console.log("pos");
-  console.log(vault);
+  console.log(extension.value);
   getVault()
   promptEdit.value = false;
 
@@ -156,9 +209,9 @@ function goInfo(data) {
 name_cellars.value = data.name_cellars 
 content.value   = data.content 
 administrator.value  = data.administrator 
-extension.value.label = data.extension
+extension.value = data.extension
 dirrecion.value = data.dirrecion 
-    
+console.log(extension.value);   
 }
 
 async function putInfo() {

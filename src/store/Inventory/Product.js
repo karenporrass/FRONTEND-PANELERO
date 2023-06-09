@@ -43,7 +43,7 @@ export const productStore = defineStore("productStore", () => {
 
   async function putProduct(id, amount,expense_name,  administrator, Finca, description, PAYMENT_METHOD, cost_value, total) { //recivir las variables 
     try {
-      return await requestAxios.post(`/product/update/${id}`, {
+      return await requestAxios.put(`/product/update/${id}`, {
         amount: amount, 
         expense_name: expense_name, 
         administrator: administrator, 
@@ -70,10 +70,17 @@ export const productStore = defineStore("productStore", () => {
     }
   }
 
+  async function listPaymentsActive() {
+    try {console.log("yes");
+      return await requestAxios.get("/metodoPago/active")
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
 
-
-  return { product, listProduct, newProduct, putProduct, active };
+  return { product, listProduct, newProduct, putProduct, active, listPaymentsActive };
 });
   

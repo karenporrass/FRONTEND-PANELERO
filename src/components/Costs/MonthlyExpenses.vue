@@ -69,10 +69,7 @@
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-            <q-input filled type="text" v-model="Finca" label="Escoga la finca" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
+            <q-select filled type="text" v-model="Finca" :options="optionsFarm" label="seleccione la finca" />
             <q-input filled type="text" v-model="Description" label="Digite la descripcion" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
@@ -108,10 +105,7 @@
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-            <q-input filled type="text" v-model="Finca" label="Escoga la finca" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
+             <q-select filled type="text" v-model="Finca" :options="optionsFarm" label="seleccione la finca" />
             <q-input filled type="text" v-model="Description" label="Digite la descripcion" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
@@ -148,12 +142,13 @@ let promptEdit = ref(false)
 let index = ref()
 let prompt = ref(false)
 let Name_spent = ref()
-let Finca = ref()
+let Finca = ref([])
 let Description = ref()
 let PAYMENT_METHOD = ref()
 let costValue = ref()
 let Total = ref()
 let optionsMethod = ref([])
+let optionsFarm = ref([]);
 
 
 let pagination = ref({
@@ -161,7 +156,10 @@ let pagination = ref({
 })
 let columns = ref([
 {name: 'Name_spent',label: 'Nombre del gasto',field: 'Name_spent',align: 'center'},
-  { name: 'finca', align: 'center', label: 'FINCA', field: 'Finca',align: 'center' },
+  { name: 'finca',   label: "FINCA",
+    field: (row) => row.Finca.name,
+    align: "center",
+  },
   { name: 'Description', label: 'DESCRIPCION', field: 'Description' ,align: 'center'},
   {
     name: "date",
@@ -175,14 +173,15 @@ let columns = ref([
     field: (row) => row.PAYMENT_METHOD.name,
     align: "center",
   },
-  { name: 'costValue', label: 'VALOR DEL GASTO', field: 'costValue',align: 'center' },
+  { name: 'costValue', label: 'VALOR DEL GASTO', field: 'costValue',align: 'center' },  
+  { name: 'Total', align: 'center', label: 'Total', align: 'center', sortable: true, field: 'Total' },
   {
     name: "status",
     label: "ESTADO",
     field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
     align: "center",
   },
-  { name: 'Total', align: 'center', label: 'Total', align: 'center', sortable: true, field: 'Total' },
+
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])  
@@ -197,24 +196,7 @@ rows.value.forEach((row, index) => {
 
 
 
-async function getMethod() {
-  // optionsPeople.value=[]
-  const res = await MonthlyStore.listMonthlyActive();
-  console.log(res);
-  if (res.status < 299) {
-   
-    for (let i in res.data) {
-      console.log(i);
-      let object = { label: res.data[i].name, value: res.data[i]._id };
-      optionsMethod.value.push(object);
 
-      console.log(optionsMethod.value);
-    }
-    
-  } else {
-    throw new Error ("Error al obtener los datos de metodo de pago")
-  }
-}
 
 const getMonthly = async () => {
 const res = await MonthlyStore.listMonthly()
@@ -235,7 +217,7 @@ const postMonthly = async () => {
   const monthly = await MonthlyStore.newMonthly(
 
 Name_spent.value,
-Finca.value,
+Finca.value.value,
 Description.value,
 PAYMENT_METHOD.value.value,
 costValue.value,
@@ -265,7 +247,10 @@ async function activarDesactivar(data) {
 
 function goInfo(data) {
 Name_spent.value = data.Name_spent
-Finca.value = data.Finca
+Finca.value =  {
+    label: data.Finca.name,
+    value: data.Finca._id
+  };
 Description.value = data.Description,
 PAYMENT_METHOD.value = {
     label: data.PAYMENT_METHOD.name,
@@ -282,7 +267,7 @@ async function putInfo() {
   console.log(index.value);
   const res = await MonthlyStore.putMonthly(index.value,
 Name_spent.value,
-Finca.value,
+Finca.value.value,
 Description.value,
 PAYMENT_METHOD.value.value,
 costValue.value,
@@ -293,9 +278,44 @@ Total.value
   getMonthly()
 }
 
+
+async function getFarms() {
+  const res = await MonthlyStore.listFarmsActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("hols");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsFarm.value.push(object);
+
+      console.log(optionsFarm.value);
+    }
+  }
+}
+
+async function getMethod() {
+  // optionsPeople.value=[]
+  const res = await MonthlyStore.listMonthlyActive();
+  console.log(res);
+  if (res.status < 299) {
+   
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsMethod.value.push(object);
+
+      console.log(optionsMethod.value);
+    }
+    
+  } else {
+    throw new Error ("Error al obtener los datos de metodo de pago")
+  }
+}
+
 function vaciar() {
   Name_spent.value = ""
-  Finca.value = ""
+  Finca.value = null
   Description.value = ""
   PAYMENT_METHOD.value = null
   costValue.value = ""
@@ -306,6 +326,7 @@ function vaciar() {
 onMounted(() => {
   getMonthly()
   getMethod()
+  getFarms()
 })
 </script>
 

@@ -22,7 +22,7 @@
               arrow_right
             </span> Marcas</p>
         </div>
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear marca</q-btn>
+                <q-btn class="bg-green-10 text-white" @click="prompt = true, vaciar()">Crear marca</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -55,7 +55,7 @@
             <div class="col-1"></div>
         </div> 
 
-        <q-dialog v-model="promptEdit">
+        <q-dialog v-model="prompt">
             <q-card >
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
@@ -64,7 +64,7 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                  <q-input  filled type="number" v-model="name_brands" label="Digite el cantidad del gasto"></q-input>
+                  <q-input  filled type="text" v-model="name_brands" label="Digite el cantidad del gasto"></q-input>
                     <q-input  filled type="text" v-model="description" label="Digite el nombre del gasto"></q-input>
                   <q-input filled type="text" v-model="creator" label="Escoga la finca"></q-input>
                   
@@ -80,16 +80,16 @@
           </q-dialog>
 
 
-          <q-dialog v-model="prompt">
+          <q-dialog v-model="promptEdit">
             <q-card >
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
-                  DILIGENCIA LA INFORMACIÓN
+                  Actualizar Información
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="number" v-model="name_brands" label="Digite el cantidad del gasto"></q-input>
+                    <q-input  filled type="text" v-model="name_brands" label="Digite el cantidad del gasto"></q-input>
                     <q-input  filled type="text" v-model="description" label="Digite el nombre del gasto"></q-input>
                   <q-input filled type="text" v-model="creator" label="Escoga la finca"></q-input>
                   <div>
@@ -119,12 +119,18 @@ let pagination = ref({
   {name: 'name_Spent',label: 'Nombre marca',field: 'name_brands',align: 'center'},
   {name: 'Descripcion',required: true,label: 'Descripcion',align: 'center',field: 'description',},
   { name: 'creator', align: 'center', label: 'Creador', field: 'creator',align: 'center', },
+  {
+    name: "status",
+    label: "ESTADO",
+    field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
+    align: "center",
+  },
+  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
+
  
 ])
 
- let rows= ref( [
-  {  name_brands: 1, description: 1, creator: 1, index: 0, }
-])
+ let rows= ref( [])
 
 let name_brands = ref()
 let description = ref()
@@ -144,7 +150,7 @@ const postBrands = async () => {
   )
   console.log(brands);
   getBrands()
-
+  prompt.value = false
 }
 
 
@@ -198,6 +204,16 @@ creator.value,
   )
   console.log(res);
   getBrands()
+  promptEdit.value = false
+}
+
+
+function vaciar() {
+  name_brands.value = ""
+  description.value = ""
+  creator.value = ""
+
+
 }
 
 

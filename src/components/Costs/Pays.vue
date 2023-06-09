@@ -74,10 +74,11 @@
               (val) =>
                 (val && val.trim().length > 0) || 'El campo es requerido',
             ]"></q-input>
-            <q-input filled type="text" v-model="ROL" label="ROL" lazy-rules :rules="[
-              (val) =>
-                (val && val.trim().length > 0) || 'El campo es requerido',
-            ]"></q-input>
+             <q-select filled type="text" v-model="ROL" :options="optionsPeople"
+              label="seleccione el rol" lazy-rules :rules="[
+                (val) =>
+                  ((val) => val !== '') || 'El campo es requerido',
+              ]" />
             <q-input filled type="text" v-model="CONCEPT" label="Concepto" lazy-rules :rules="[
               (val) =>
                 (val && val.trim().length > 0) || 'El campo es requerido',
@@ -122,10 +123,11 @@
               (val) =>
                 (val && val.trim().length > 0) || 'El campo es requerido',
             ]"></q-input>
-            <q-input filled type="text" v-model="ROL" label="ROL" lazy-rules :rules="[
-              (val) =>
-                (val && val.trim().length > 0) || 'El campo es requerido',
-            ]"></q-input>
+           <q-select filled type="text" v-model="ROL" :options="optionsPeople"
+              label="seleccione el rol" lazy-rules :rules="[
+                (val) =>
+                  ((val) => val !== '') || 'El campo es requerido',
+              ]" />
             <q-input filled type="text" v-model="CONCEPT" label="Concepto" lazy-rules :rules="[
               (val) =>
                 (val && val.trim().length > 0) || 'El campo es requerido',
@@ -171,9 +173,13 @@ let columns = ref([
     name: 'DNI', required: true, label: 'NUMERO DE DOCUMENTO', align: 'center', field:
       "DNI"
   },
+
   {
-    name: 'ROL', align: 'center', label: 'ROL', align: 'center',
-    field: "ROL"
+    name: "ROL",
+    label: "ROL",
+    field: (row) => row.ROL.rol,
+
+    align: "center",
   },
   {
     name: 'CONCEPT', label: 'CONCEPTO', sortable: true, align: 'center', field:
@@ -190,7 +196,6 @@ let columns = ref([
     name: "PAYMENT_METHOD",
     label: "Metodo de pago",
     field: (row) => row.PAYMENT_METHOD.name,
-
     align: "center",
   },
   {
@@ -215,12 +220,14 @@ let columns = ref([
 let rows = ref([])
 
 let DNI = ref()
-let ROL = ref()
+let ROL = ref([])
 let CONCEPT = ref()
+let optionsMethod = ref([])
 let PAYMENT_METHOD = ref([])
+let optionsPeople = ref([])
 let TIME_TO_PAY = ref()
 let total = ref()
-let optionsMethod = ref([]);
+
 
 
 rows.value.forEach((row, index) => {
@@ -228,40 +235,13 @@ rows.value.forEach((row, index) => {
 })
 
 
-async function getMethod() {
-  // optionsPeople.value=[]
-  const res = await PayStore.listPaymentsActive();
-  console.log(res);
-  if (res.status < 299) {
-    for (let i in res.data) {
-      console.log(i);
-      let object = { label: res.data[i].name, value: res.data[i]._id };
-      optionsMethod.value.push(object);
 
-      console.log(optionsMethod.value);
-    }
-
-  } else {
-    throw new Error("Error al obtener los datos de metodo de pago")
-  }
-}
-
-
-function vaciar() {
-  DNI.value = ""
-  ROL.value = ""
-  CONCEPT.value = ""
-  PAYMENT_METHOD.value = ""
-  TIME_TO_PAY.value = ""
-  total.value = ""
-
-}
 
 const postPays = async () => {
   console.log("hola");
   const pays = await PayStore.newPays({
     DNI: DNI.value,
-    ROL: ROL.value,
+    ROL: ROL.value.value,
     CONCEPT: CONCEPT.value,
     PAYMENT_METHOD: PAYMENT_METHOD.value.value,
     TIME_TO_PAY: TIME_TO_PAY.value,
@@ -310,14 +290,17 @@ async function activarDesactivar(data) {
 }
 
 function goInfo(data) {
-  DNI.value = data.DNI
-  ROL.value = data.ROL
+  DNI.value = data.DNI;
+  ROL.value = {
+    label: data.ROL.rol,
+    value: data.ROL._id
+  };
   CONCEPT.value = data.CONCEPT
   PAYMENT_METHOD.value = {
     label: data.PAYMENT_METHOD.name,
     value: data.PAYMENT_METHOD._id
   };
-  TIME_TO_PAY.value = data.TIME_TO_PAY
+  TIME_TO_PAY.value = data.TIME_TO_PAY;
   total.value = data.Total
 
 }
@@ -326,7 +309,7 @@ async function putInfo() {
   console.log(index.value);
   const res = await PayStore.putPays(index.value,
     DNI.value,
-    ROL.value,
+    ROL.value.value,
     CONCEPT.value,
     PAYMENT_METHOD.value.value,
     TIME_TO_PAY.value,
@@ -339,9 +322,60 @@ async function putInfo() {
 
 }
 
+function vaciar() {
+  DNI.value = ""
+  ROL.value = ""
+  CONCEPT.value = ""
+  PAYMENT_METHOD.value = null
+  TIME_TO_PAY.value = ""
+  total.value = ""
+
+}
+
+async function getMethod() {
+  // optionsPeople.value=[]
+  const res = await PayStore.listPaymentsActive();
+  console.log(res);
+  if (res.status < 299) {
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsMethod.value.push(object);
+
+      console.log(optionsMethod.value);
+    }
+  } else {
+    throw new Error("Error al obtener los datos de metodo de pago")
+  }
+}
+
+
+
+
+async function getPeople() {
+  // optionsPeople.value=[]
+  const res = await PayStore.listUsersActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].rol, value: res.data[i]._id };
+      optionsPeople.value.push(object);
+
+      console.log(optionsPeople.value);
+    }
+    return optionsPeople.value
+  } else {
+    throw new Error ("Error al obtener los datos de people")
+  }
+}
+
+
 
 onMounted(() => {
   getPays()
+  getPeople();
   getMethod()
 })
 

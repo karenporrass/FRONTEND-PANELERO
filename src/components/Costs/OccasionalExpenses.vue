@@ -67,16 +67,13 @@
               <div class="q-pa-md " >
                 <div>
         
-                  <q-input filled type="text" v-model="nameSpent" label="Nombre del gasto"></q-input>
-                  <q-input  filled type="text" v-model="Finca" label="Finca"></q-input>
+                  <q-input filled type="text" v-model="Name_spent" label="Nombre del gasto"></q-input>
+                  <q-select filled type="text" v-model="Finca" :options="optionsFarm" label="seleccione la finca" />
                   <q-input  filled type="text" v-model="Description" label="Descripcion"></q-input>
            
-                  <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"/>
+                  <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" />
                   <q-input  filled type="number" v-model="costValue" label="Valor del gasto"></q-input>
-                  <q-input  filled type="number" v-model="total" label="Total"></q-input>
+                  <q-input  filled type="number" v-model="Total" label="Total"></q-input>
 
                   <div>
                     <br />
@@ -100,15 +97,12 @@
                 <div>
         
                   <q-input filled type="text" v-model="Name_spent" label="Nombre del gasto"></q-input>
-                  <q-input  filled type="text" v-model="Finca" label="Finca"></q-input>
+                  <q-select filled type="text" v-model="Finca" :options="optionsFarm" label="seleccione la finca" />
                   <q-input  filled type="text" v-model="Description" label="Descripcion"></q-input>
            
-                  <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" lazy-rules :rules="[
-                (val) =>
-                  (val  > 0) || 'El campo es requerido',
-              ]"/>
+                  <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago" />
                   <q-input  filled type="number" v-model="costValue" label="Valor del gasto"></q-input>
-                  <q-input  filled type="number" v-model="total" label="Total"></q-input>
+                  <q-input  filled type="number" v-model="Total" label="Total"></q-input>
 
                   <div>
                     <br />
@@ -134,19 +128,33 @@ let pagination = ref({
       })
 let columns = ref([
   {name: 'Name_spent',label: 'Nombre del gasto',field: 'Name_spent',align: 'center'},
-  { name: 'finca', align: 'center', label: 'FINCA', field: 'Finca',align: 'center' },
+  { name: 'finca',   label: "FINCA",
+    field: (row) => row.Finca.name,
+    align: "center",
+  },
   { name: 'Description', label: 'DESCRIPCION', field: 'Description' ,align: 'center'},
-  { name: 'Date', label: 'FECHA', field: 'Date',align: 'center' },
+  {
+    name: "date",
+    label: "FECHA",
+    field: (row) => row.Date.slice(0, 10),
+    align: "center",
+  },
   {
     name: "PAYMENT_METHOD",
     label: "Metodo de pago",
-    field: (row) => row.PAYMENT_METHOD,
+    field: (row) => row.PAYMENT_METHOD.name,
     align: "center",
   },
   { name: 'costValue', label: 'VALOR DEL GASTO', field: 'costValue',align: 'center' },
   {
     name: 'total', label: 'TOTAL A PAGAR', align: 'center', field:
       "Total"
+  },
+  {
+    name: "status",
+    label: "ESTADO",
+    field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
+    align: "center",
   },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
   
@@ -155,11 +163,13 @@ let columns = ref([
 
 
 let Name_spent = ref()
-let Finca = ref()
+let Finca = ref([])
 let Description = ref()
-let PAYMENT_METHOD = ref()
+let PAYMENT_METHOD = ref([])
 let costValue = ref()
 let optionsMethod = ref([]);
+let optionsFarm = ref([]);
+let Total = ref();
 let rows = ref([])
 
 rows.value.forEach((row, index) => {
@@ -169,47 +179,28 @@ rows.value.forEach((row, index) => {
 
 function vaciar() {
   Name_spent.value = ""
-  Finca.value = ""
+  Finca.value = null
   Description.value = ""
-  PAYMENT_METHOD.value = ""
+  PAYMENT_METHOD.value = null
   costValue.value = ""
-  optionsMethod.value = ""
-
+  Total.value =  ""
 }
 
-
-async function getMethod() {
-  // optionsPeople.value=[]
-  const res = await occasionalStore.listOccacionalActive();
-  console.log(res);
-  if (res.status < 299) {
-   
-    for (let i in res.data) {
-      console.log(i);
-      let object = { label: res.data[i].name, value: res.data[i]._id };
-      optionsMethod.value.push(object);
-
-      console.log(optionsMethod.value);
-    }
-    
-  } else {
-    throw new Error ("Error al obtener los datos de metodo de pago")
-  }
-}
 
 const postOccasional = async () => {
   const occasional = await occasionalStore.newOccasional(
 
 Name_spent.value,
-Finca.value,
+Finca.value.value,
 Description.value,
-PAYMENT_METHOD.value,
+PAYMENT_METHOD.value.value,
 costValue.value,
+Total.value
 
   )
   console.log(occasional);
-  getPays()
-
+  getOccasional()
+  promptEdit.value = false
 }
 
 
@@ -245,7 +236,10 @@ async function activarDesactivar(data) {
 
 function goInfo(data) {
   Name_spent.value = data.Name_spent
-Finca.value = data.Finca
+  Finca.value =  {
+    label: data.Finca.name,
+    value: data.Finca._id
+  };
 Description.value = data.Description
 PAYMENT_METHOD.value = 
 {
@@ -253,17 +247,18 @@ PAYMENT_METHOD.value =
     value: data.PAYMENT_METHOD._id
   };
 costValue.value = data.costValue
-    
+Total.value = data.Total
 }
 
 async function putInfo() {
   console.log(index.value);
   const res = await occasionalStore.putOccasional(index.value,
   Name_spent.value,
-Finca.value,
+Finca.value.value,
 Description.value,
-PAYMENT_METHOD.value,
+PAYMENT_METHOD.value.value,
 costValue.value,
+Total.value
   )
   console.log(res);
   getOccasional()
@@ -271,9 +266,45 @@ costValue.value,
 }
 
 
+async function getMethod() {
+  // optionsPeople.value=[]
+  const res = await occasionalStore.listOccacionalActive();
+  console.log(res);
+  if (res.status < 299) {
+   
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsMethod.value.push(object);
+
+      console.log(optionsMethod.value);
+    }
+    
+  } else {
+    throw new Error ("Error al obtener los datos de metodo de pago")
+  }
+}
+
+async function getFarms() {
+  const res = await occasionalStore.listFarmsActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("hols");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsFarm.value.push(object);
+
+      console.log(optionsFarm.value);
+    }
+  }
+}
+
+
 onMounted(() => {
   getOccasional()
   getMethod()
+  getFarms()
 })
 
 </script>
@@ -282,5 +313,7 @@ onMounted(() => {
 .q-input{
   margin-bottom: 20px;
 }
-
+.q-select{
+    margin-bottom: 20px;
+  }
 </style>

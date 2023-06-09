@@ -18,7 +18,7 @@ export const vaultStore = defineStore("vaultStore", () => {
 
 
   async function newVault(vault ) {
-    console.log(pay)
+    console.log(newVault)
     try {
       console.log("entro");
         let r = await requestAxios.post('/cellars',vault);
@@ -30,14 +30,14 @@ export const vaultStore = defineStore("vaultStore", () => {
       }
   }
 
-  async function putVault(id, DNI, ROl, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY) { //recivir las variables 
+  async function putVault(id, name_cellars, content, administrator, extension, dirrecion) { //recivir las variables 
     try {
         return await requestAxios.put(`/cellars/update/${id}`,{
-          DNI: DNI,
-          ROl: ROl,
-          CONCEPT: CONCEPT,
-          PAYMENT_METHOD: PAYMENT_METHOD,
-          TIME_TO_PAY: TIME_TO_PAY,
+          name_cellars: name_cellars,
+          content: content,
+          administrator: administrator,
+          extension: extension,
+          dirrecion: dirrecion,
         })
       } catch (error) {
         console.log(error);

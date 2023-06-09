@@ -30,8 +30,7 @@ export const productStore = defineStore("productStore", () => {
         PAYMENT_METHOD: PAYMENT_METHOD, 
         cost_value: cost_value, 
         total: total, 
-        Date: Date, 
-        state: state, 
+  
 
 
 
@@ -52,8 +51,7 @@ export const productStore = defineStore("productStore", () => {
         PAYMENT_METHOD: PAYMENT_METHOD, 
         cost_value: cost_value, 
         total: total, 
-        Date: Date, 
-        state: state, 
+   
 
       })
     } catch (error) {

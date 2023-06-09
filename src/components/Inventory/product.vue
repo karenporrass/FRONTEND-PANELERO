@@ -12,7 +12,7 @@
       <div class="col-1"></div>
       <div class="col-10 ">
         <div style="display: flex;">
-          <router-link to="/homeInventoy" style="text-decoration: none;" class="text-dark">
+          <router-link to="/homeInventory" style="text-decoration: none;" class="text-dark">
             <p style="font-size: 20px; "><span style="font-size: 50px; " class="material-icons-outlined">
                 arrow_right
               </span> Inventario</p>

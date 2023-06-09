@@ -9,7 +9,7 @@ export const useDailyStore = defineStore(
     
     const getDaily = async () => {
       try {
-        await requestAxios.get("/procesoDiario/dailyProcess");
+        return await requestAxios.get("/procesoDiario/dailyProcess");
       } catch (error) {
         console.log(error);
       }
@@ -20,7 +20,7 @@ export const useDailyStore = defineStore(
     const postDaily = async (infoDaily) => {
       console.log("post");
       try {
-        await requestAxios.post("/procesoDiario/register", infoDaily, {
+        return await requestAxios.post("/procesoDiario/register", infoDaily, {
         });
       } catch (error) {
         console.log(infoDaily);

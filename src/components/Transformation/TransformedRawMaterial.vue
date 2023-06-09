@@ -11,7 +11,7 @@
     <div class="row ">
       <div class="col-1"></div>
       <div class="col-10 ">
-        <q-btn class="bg-green-10 text-white" @click="prompt = true"><span class="material-symbols-outlined q-mr-sm"
+        <q-btn class="bg-green-10 text-white" @click="prompt = true, cleanForm()"><span class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px;">
             add_circle
           </span> Crear nueva transformación</q-btn>
@@ -22,7 +22,7 @@
     <div class="row q-mt-md">
       <div class="col-1"></div>
       <div class="col-10 ">
-        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
+        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" class="my-table">
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
@@ -182,6 +182,7 @@ let columns = ref([
   align: 'center' 
 },
   { 
+  style: 'max-width: 10px; white-space: normal; text-overflow: initial !important;',
   name: 'type', 
   label: 'TIPO DE UNIDAD DE MEDIDA', 
   align: 'center', 
@@ -192,6 +193,7 @@ let columns = ref([
   label: 'CANTIDAD', 
   field: (row) => row.quantity,
   align: 'center', 
+
 },
   { 
   name: 'farm', 
@@ -364,8 +366,27 @@ async function getTypes() {
 
 
 
+function cleanForm(){
+  quantity.value = "",
+  type.value = null,
+  farm.value = null,
+  lot.value = null,
+  date.value = ""
+}
+
 
 
 </script>
+
+
+
+<style scoped>
+.my-table .q-table__middle tbody tr th,
+.my-table .q-table__middle tbody tr td {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial !important; /* text-overflow: ellipsis; para cortar el texto */
+}
+</style>
 
 

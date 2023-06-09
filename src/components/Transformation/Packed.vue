@@ -11,7 +11,7 @@
     <div class="row ">
       <div class="col-1"></div>
       <div class="col-10 ">
-        <q-btn class="bg-green-10 text-white" @click="prompt = true"><span class="material-symbols-outlined q-mr-sm"
+        <q-btn class="bg-green-10 text-white" @click="prompt = true, cleanForm()"><span class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px;">
             add_circle
           </span> Crear nuevo empaque</q-btn>
@@ -262,6 +262,7 @@ async function postPacked() {
     colorPanela: colorPanela.value.value,
     formPanela: formPanela.value.value,
     totalPanelas: totalPanelas.value, 
+    typePacking: typePacking.value
   });
   console.log(res);
   prompt.value = false;
@@ -288,10 +289,13 @@ async function activarDesactivar(data) {
 
 async function showInfo(data) {
   cellar.value = data.cellar;
-  typePacking.value = data.typePacking;
   colorPanela.value = data.colorPanela;
   formPanela.value = data.formPanela;
   totalPanelas.value = data.totalPanelas;
+  typePacking.value = {
+    label: data.typePacking.name,
+    value: data.typePacking._id
+  };
   console.log(date.value);
 } 
 
@@ -300,6 +304,7 @@ async function putPacked(){
     cellar: cellar.value, 
     colorPanela: colorPanela.value.value,
     formPanela: formPanela.value.value,
+    typePacking: typePacking.value.value,
     totalPanelas: totalPanelas.value, 
   });
   console.log(res);
@@ -346,7 +351,13 @@ async function getPackaingPanela() {
   }
 }
 
-
+function cleanForm(){
+  cellar.value = null,
+  colorPanela.value= null,
+  formPanela.value= null,
+  typePacking.value= null,
+  totalPanelas.value = ""
+}
 
 
 </script>

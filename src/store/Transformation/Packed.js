@@ -35,7 +35,7 @@ export const usePackedStore = defineStore('usePackedStore', () => {
         }
     
         const updatePacked = async (id, infoPacked) => {
-          console.log(infoDaily);
+          console.log(infoPacked);
           try {
             return await requestAxios.put(`/empacados/update/${id}`, infoPacked, {
               // headers: {

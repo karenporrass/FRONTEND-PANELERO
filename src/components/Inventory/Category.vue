@@ -22,7 +22,7 @@
               arrow_right
             </span> Categoria</p>
         </div>
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear categoria</q-btn>
+                <q-btn class="bg-green-10 text-white" @click="prompt = true, vaciar()">Crear categoria</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -55,7 +55,7 @@
       <div class="col-1"></div>
     </div>
 
-        <q-dialog v-model="promptEdit">
+        <q-dialog v-model="prompt">
             <q-card >
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
@@ -64,11 +64,9 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="number" v-model="name_category" label="Digite el cantidad del gasto"></q-input>
-                    <q-input  filled type="text" v-model="description" label="Digite el nombre del gasto"></q-input>
+                    <q-input  filled type="text" v-model="name_category" label="Digite el nombre de la categoria"></q-input>
+                    <q-input  filled type="text" v-model="description" label="Digite la descripción"></q-input>
                    
-                 
-
                   <div>
                     <br />
                     <q-btn  label="guardar" class="text-white bg-green-10" @click="postCategory()" />
@@ -79,7 +77,7 @@
             </q-card>
           </q-dialog>
 
-          <q-dialog v-model="prompt">
+          <q-dialog v-model="promptEdit">
             <q-card >
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
@@ -88,9 +86,8 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                    <q-input  filled type="text" v-model="name_category" label="Digite el cantidad del gasto"></q-input>
-                    <q-input  filled type="text" v-model="description" label="Digite el nombre del gasto"></q-input>
-               
+                  <q-input  filled type="text" v-model="name_category" label="Digite el nombre de la categoria"></q-input>
+                    <q-input  filled type="text" v-model="description" label="Digite la descripción"></q-input>
 
                   <div>
                     <br />
@@ -120,7 +117,13 @@ let pagination = ref({
       let columns = ref([
   {name: 'name_category',label: 'nombre categoria',field: 'name_category',align: 'center'},
   {name: 'description',required: true, label: 'description',align: 'center',field: 'description'},
-  
+  {
+    name: "status",
+    label: "ESTADO",
+    field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
+    align: "center",
+  },
+  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
   
 ])
 
@@ -144,14 +147,13 @@ rows.value.forEach((row, index) => {
 
 const postCategory = async () => {
   const pays = await categoryStore.newCategory(
-
   name_category.value,
   description.value,
   
   )
   console.log(pays);
   getCategory()
-
+  prompt.value = false
 }
 
 
@@ -202,8 +204,15 @@ async function putInfo() {
   )
   console.log(res);
   getCategory()
+  promptEdit.value = false
 }
 
+
+function vaciar() {
+  name_category.value = ""
+description.value  = ""
+
+}
 
 onMounted(() => {
   getCategory()

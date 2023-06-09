@@ -8,7 +8,7 @@ export const BrandsStore = defineStore("counter", () => {
 
 
   async function listPBrands() {
-    console.log("listBrands")
+    console.log("list")
     try {
       return await requestAxios.get("/brands")
     } catch (error) {
@@ -18,9 +18,10 @@ export const BrandsStore = defineStore("counter", () => {
 
 
   async function newBrands(name_brands, description, creator ) {
+    console.log("entro");
     try {
         return await requestAxios.post(`/brands`,{
-            name_brands: name_brands,
+          name_brands: name_brands,
             description: description,
             creator: creator,
           
@@ -33,8 +34,8 @@ export const BrandsStore = defineStore("counter", () => {
 
   async function putBrands(id, name_brands, description, creator) { //recivir las variables 
     try {
-        return await requestAxios.post(`/brands/update/${id}`,{
-            name_brands: name_brands,
+        return await requestAxios.put(`/brands/update/${id}`,{
+          name_brands: name_brands,
             description: description,
             creator: creator,
         })

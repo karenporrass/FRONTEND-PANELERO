@@ -34,16 +34,14 @@ export const payStore = defineStore("payStore", () => {
     try {
         return await requestAxios.put(`/payments/update/${id}`,{
           DNI: DNI,
-          ROl: ROL,
+          ROL: ROL,
           CONCEPT: CONCEPT,
           PAYMENT_METHOD: PAYMENT_METHOD,
           TIME_TO_PAY: TIME_TO_PAY,
           Total: total
-        })
-      } catch (error) {
-        console.log(error);
-        console.log("rol", ROL);
-        console.log(PAYMENT_METHOD)
+        })  
+      } 
+      catch (error) {
       }
   }
 
@@ -66,9 +64,18 @@ export const payStore = defineStore("payStore", () => {
     }
   }
 
+  async function listUsersActive() {
+    console.log("listUsersActive");
+    try {
+      return await requestAxios.get("/usuarios/active");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   
 
-  return {  listPays, newPays, putPays, active, listPaymentsActive };
+  return {  listPays, newPays, putPays, active, listPaymentsActive, listUsersActive };
 },
 {
   persist: true,

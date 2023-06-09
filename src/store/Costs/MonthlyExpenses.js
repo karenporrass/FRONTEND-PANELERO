@@ -68,9 +68,17 @@ export const monthlyStore = defineStore("monthlyStore", () => {
       console.log(error);
     }
   }
+
+  async function listFarmsActive() {
+    try {
+      return await requestAxios.get("/registroFinca/active");
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
 
-  return { listMonthly, newMonthly, putMonthly, active, listMonthlyActive };
+  return { listMonthly, newMonthly, putMonthly, active, listMonthlyActive, listFarmsActive };
 },
 {
   persist: true,

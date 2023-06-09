@@ -3,7 +3,7 @@
     <div class="row q-mt-md">
       <div class="col-1"></div>
       <div class="col-10  text-center">
-        <div class="text-weight-bolder text-h4">PAGOS</div>
+        <div class="text-weight-bolder text-h4">Productos</div>
       </div>
       <div class="col-1"></div>
     </div>
@@ -12,16 +12,16 @@
       <div class="col-1"></div>
       <div class="col-10 ">
         <div style="display: flex;">
-          <router-link to="/homeCostos" style="text-decoration: none;" class="text-dark">
+          <router-link to="/homeInventory" style="text-decoration: none;" class="text-dark">
             <p style="font-size: 20px; "><span style="font-size: 50px; " class="material-icons-outlined">
                 arrow_right
-              </span> Costos</p>
+              </span> Inventario</p>
           </router-link>
           <p style="font-size: 20px; "><span style="font-size: 50px; " class="material-icons-outlined">
               arrow_right
-            </span> Pedidos clientes</p>
+            </span> Productos</p>
         </div>
-        <q-btn class="bg-green-10 text-white" @click="promptEdit = true"><span class="material-symbols-outlined q-mr-sm"
+        <q-btn class="bg-green-10 text-white" @click="prompt = true"><span class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px">
             add_circle
           </span> Crear nuevo pago</q-btn>
@@ -56,7 +56,7 @@
       <div class="col-1"></div>
     </div>
 
-    <q-dialog v-model="promptEdit">
+    <q-dialog v-model="prompt">
       <q-card>
         <q-card-section class="bg-green-10">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
@@ -72,7 +72,9 @@
                     <q-input  filled type="text" v-model="administrator" label="Digite el nombre del administrador"></q-input>
                   <q-input filled type="text" v-model="Finca" label="Escoga la finca"></q-input>
                   <q-input  filled type="text" v-model="description" label="Digite el descripcion"></q-input>
-                  <q-input  filled type="text" v-model="PAYMENT_METHOD" label="Escoga el metodo de pago"></q-input>
+                  <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod"
+              label="seleccione el metodo de pago" lazy-rules
+              :rules="[val => val && val.toString().trim().length > 0 || 'El campo es requerido']" />
                   <q-input filled type="number" v-model="cost_value" label="Digite el valor del gasto"></q-input>
                   <q-input  filled type="number" v-model="total" label="Digite el total"></q-input>
 
@@ -87,7 +89,7 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="prompt">
+    <q-dialog v-model="edit">
       <q-card>
         <q-card-section class="bg-green-10">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
@@ -101,7 +103,9 @@
                     <q-input  filled type="text" v-model="administrator" label="Digite el nombre del administrador"></q-input>
                   <q-input filled type="text" v-model="Finca" label="Escoga la finca"></q-input>
                   <q-input  filled type="text" v-model="description" label="Digite el descripcion"></q-input>
-                  <q-input  filled type="text" v-model="PAYMENT_METHOD" label="Escoga el metodo de pago"></q-input>
+                  <q-select filled type="text" v-model="PAYMENT_METHOD" :options="optionsMethod"
+              label="seleccione el metodo de pago" lazy-rules
+              :rules="[val => val && val.toString().trim().length > 0 || 'El campo es requerido']" />
                   <q-input filled type="number" v-model="cost_value" label="Digite el valor del gasto"></q-input>
                   <q-input  filled type="number" v-model="total" label="Digite el total"></q-input>
                   
@@ -119,17 +123,18 @@
 </template>
 
 <script setup>
-import {ref} from "vue"
+import {ref, onMounted} from "vue"
 import { productStore } from "../../store/Inventory/Product.js"
 const ProductStore = productStore()
 let prompt = ref(false)
-let promptEdit = ref(false)
+let optionsMethod = ref([])
+let edit = ref(false)
 let amount = ref()
 let expense_name = ref()
 let administrator = ref()
 let Finca = ref()
 let description = ref()
-let PAYMENT_METHOD = ref()
+let PAYMENT_METHOD = ref([])
 let cost_value = ref()
 let total = ref()
 let pagination = ref({
@@ -141,7 +146,12 @@ let pagination = ref({
   { name: 'administrador', align: 'center', label: 'Administrador', field: 'administrator',align: 'center', },
   { name: 'finca', label: 'Finca', field: 'Finca' ,align: 'center'},
   { name: 'description', label: 'Descripcion', field: 'description',align: 'center' },
-  { name: 'PAYMENT_METHOD', label: 'METODO DE PAGO', field: 'PAYMENT_METHOD',align: 'center' },
+  {
+    name: "PAYMENT_METHOD",
+    label: "Metodo de pago",
+    field: (row) => row.PAYMENT_METHOD.name,
+    align: "center",
+  },
   { name: 'cost_value', label: 'VALOR DEL GASTO', field: 'sodium',align: 'cost_value' },
   { name: 'total', label: 'TOTAL', field: 'total',align: 'center',}
 ])
@@ -154,24 +164,7 @@ rows.value.forEach((row, index) => {
 
 
 
-async function getMethod() {
-  // optionsPeople.value=[]
-  const res = await ProductStore.listPaymentsActive();
-  console.log(res);
-  if (res.status < 299) {
-   
-    for (let i in res.data) {
-      console.log(i);
-      let object = { label: res.data[i].name, value: res.data[i]._id };
-      optionsMethod.value.push(object);
 
-      console.log(optionsMethod.value);
-    }
-    
-  } else {
-    throw new Error ("Error al obtener los datos de metodo de pago")
-  }
-}
 
 
 const postProduct = async () => {
@@ -182,14 +175,14 @@ expense_name: expense_name.value,
 administrator: administrator.value,
 Finca: Finca.value,
 description: description.value,
-PAYMENT_METHOD: PAYMENT_METHOD.value,
+PAYMENT_METHOD: PAYMENT_METHOD.value.value,
 cost_value: cost_value.value,
 total: total.value,
   })
   console.log("pos");
   console.log(pays);
-  getPays()
-  promptEdit.value = false;
+  getProduct()
+  prompt.value = false;
 
 
 }
@@ -232,7 +225,10 @@ expense_name.value = data.expense_name
 administrator.value = data.administrator 
 Finca.value = data.Finca 
 description.value = data.description 
-PAYMENT_METHOD.value = data.PAYMENT_METHOD 
+PAYMENT_METHOD.value = {
+    label: data.PAYMENT_METHOD.name,
+    value: data.PAYMENT_METHOD._id
+  };
 cost_value.value = data.cost_value 
 total.value = data.total 
 }
@@ -251,8 +247,28 @@ total.value,
   )
   console.log(res);
   getProduct()
+  edit.value = false
 }
 
+async function getMethod() {
+  // optionsPeople.value=[]
+  const res = await ProductStore.listPaymentsActive();
+  console.log(res);
+  if (res.status < 299) {
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsMethod.value.push(object);
+
+      console.log(optionsMethod.value);
+    }
+
+   
+
+  } else {
+    throw new Error("Error al obtener los datos de metodo de pago")
+  }
+}
 
 onMounted(() => {
   getProduct()

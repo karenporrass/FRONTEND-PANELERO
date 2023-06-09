@@ -171,7 +171,7 @@
         <q-footer elevated class="bg-dark text-white">
           <q-toolbar>
             <q-toolbar-title class="text-center" style="font-size: 14px;">
-              <div> Sena © Copyright 2023</div>
+              <div>Sena 2023 © Todos los derechos reservados</div>
             </q-toolbar-title>
           </q-toolbar>
         </q-footer>

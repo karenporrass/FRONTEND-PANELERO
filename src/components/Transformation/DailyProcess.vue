@@ -29,7 +29,7 @@
     <div class="row">
       <div class="col-1"></div>
       <div class="col-10">
-        <q-btn class="bg-green-10 text-white" @click="prompt = true"><span class="material-symbols-outlined q-mr-sm"
+        <q-btn class="bg-green-10 text-white" @click="prompt = true, cleanForm()"><span class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px">
             add_circle
           </span>
@@ -93,29 +93,37 @@
               ]" />
 
               <q-input filled type="number" v-model="hours" label="Cuántas horas tomó el proceso" lazy-rules :rules="[
-                (val) =>
-                  (val != ' ') || 'El campo es requerido',
-                  (val) => val > 0 || 'El campo debe ser mayor a 0',
+                (val) => val != ' ' || 'El campo es requerido',
+                (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules               
-              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
+              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
 
+              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
+                (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
 
-              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules 
-              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
+              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" lazy-rules :rules="[
+                (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
 
-              
-              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" lazy-rules 
-              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
-              
-              <q-input v-model="date" filled type="date" label="Seleccione la fecha" lazy-rules 
-              :rules="[ val => val && val.trim().length > 0 || 'El campo es requerido']"/>
-
-
+              <q-input v-model="date" filled type="date" label="Seleccione la fecha" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
 
               <div class="justify-center flex">
-                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-10 text-white"></q-btn>
+                <q-btn icon="save_as" label="GUARDAR" type="submit"
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-10 text-white"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px">
                     cancel </span>CERRAR</q-btn>
@@ -147,27 +155,33 @@
               ]" />
 
               <q-input filled type="number" v-model="hours" label="Cuántas horas tomó el proceso" lazy-rules :rules="[
-                (val) =>
-                  (val !== '') || 'El campo es requerido',
-                  (val) => val > 0 || 'El campo debe ser mayor a 0',
+                (val) => val !== '' || 'El campo es requerido',
+                (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules 
-              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
+              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
 
+              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules :rules="[
+                (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
 
-              <q-select filled v-model="farm" :options="optionsFarm" label="Seleccione la finca" lazy-rules 
-              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
+              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" lazy-rules :rules="[
+                (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
 
-              
-              <q-select filled v-model="lot" :options="optionsLot" label="Seleccione el lote" lazy-rules               
-              :rules="[ val => val && val.toString().trim().length > 0 || 'El campo es requerido']"/>
-
-              
-              <q-input v-model="date" filled type="date" label="Seleccione la fecha" 
-                :rules="[ val => val && val.trim().length > 0 || 'El campo es requerido']"/>
-
-
+              <q-input v-model="date" filled type="date" label="Seleccione la fecha" :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]" />
 
               <div class="justify-center flex">
                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as"></q-btn>
@@ -305,7 +319,7 @@ getListDaily();
 
 
 // post proceso diario
-async function postDailyProcess() {  
+async function postDailyProcess() {
   console.log("hola post");
   await useDaily.postDaily({
     // name: name.value,
@@ -322,7 +336,7 @@ async function postDailyProcess() {
   // console.log(res);
   getListDaily();
   reset()
-} 
+}
 
 // activar y desactivar proceso diario
 async function activarDesactivar(data) {
@@ -357,10 +371,8 @@ async function showInfo(data) {
   };
   date.value = data.date.slice(0, 10);
   console.log(date.value);
-console.log(lot.value);
-//   const fechaRecortada = date.value.slice(0, 10);
-// console.log(fechaRecortada);
-} 
+  console.log(lot.value);
+}
 
 
 
@@ -398,7 +410,7 @@ async function getPeople() {
     }
     return optionsPeople.value
   } else {
-    throw new Error ("Error al obtener los datos de people")
+    throw new Error("Error al obtener los datos de people")
   }
 }
 
@@ -432,8 +444,20 @@ async function getLots() {
     }
     return optionsPeople.value
   } else {
-    throw new Error ("Error al obtener los datos de lotes")
+    throw new Error("Error al obtener los datos de lotes")
   }
+}
+
+
+
+function cleanForm() {
+    name.value = "",
+    description.value = "",
+    hours.value = "",
+    people.value = "",
+    farm.value = "",
+    lot.value = "",
+    date.value = ""
 }
 
 
@@ -442,7 +466,7 @@ async function getLots() {
 
 
 <style scoped>
-.q-field__control{
-    color:rgb(248, 244, 5) !important;
+.q-field__control {
+  color: rgb(248, 244, 5) !important;
 }
 </style>

@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+
 
 import {requestAxios} from "../../Global/axios.js"
 
 export const payStore = defineStore("payStore", () => {
-  const Pay = ref("");
+
 
 
   async function listPays() {
@@ -21,8 +21,8 @@ export const payStore = defineStore("payStore", () => {
     
     try {
       console.log(22);
-        let r = await requestAxios.post('/payments', pay)
-        return r
+        return await requestAxios.post('/payments', pay)
+        
       } catch (error) {
         return error
        
@@ -32,7 +32,7 @@ export const payStore = defineStore("payStore", () => {
   async function putPays(id, DNI, ROL, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY, total) { 
       console.log("cambiar");
     try {
-        let r= await requestAxios.put(`/payments/update/${id}`,{
+        return await requestAxios.put(`/payments/update/${id}`,{
           DNI: DNI,
           ROl: ROL,
           CONCEPT: CONCEPT,
@@ -40,11 +40,10 @@ export const payStore = defineStore("payStore", () => {
           TIME_TO_PAY: TIME_TO_PAY,
           Total: total
         })
-        console.log(r);
-        console.log(ROL);
-        console.log(PAYMENT_METHOD)
       } catch (error) {
         console.log(error);
+        console.log("rol", ROL);
+        console.log(PAYMENT_METHOD)
       }
   }
 
@@ -69,7 +68,7 @@ export const payStore = defineStore("payStore", () => {
 
   
 
-  return {  listPays, newPays, putPays, active, listPaymentsActive, Pay };
+  return {  listPays, newPays, putPays, active, listPaymentsActive };
 },
 {
   persist: true,

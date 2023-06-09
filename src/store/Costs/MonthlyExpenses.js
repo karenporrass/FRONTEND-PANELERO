@@ -1,18 +1,18 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
-
 import {requestAxios} from "../../Global/axios.js"
 
-export const monthlyStore = defineStore("counter", () => {
-  const monthly = ref("");
+export const monthlyStore = defineStore("monthlyStore", () => {
 
 
   async function listMonthly() {
     console.log("listMonthly")
     try {
-      return await requestAxios.get("/monthlyExpenses")
+      let r= await requestAxios.get("/monthlyExpenses")
+      console.log(r);
+      return r
     } catch (error) {
       console.log(error);
+      
     }
   }
 
@@ -70,7 +70,7 @@ export const monthlyStore = defineStore("counter", () => {
   }
   
 
-  return {  monthly, listMonthly, newMonthly, putMonthly, active, listMonthlyActive };
+  return { listMonthly, newMonthly, putMonthly, active, listMonthlyActive };
 },
 {
   persist: true,

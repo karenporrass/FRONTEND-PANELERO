@@ -21,7 +21,7 @@
               arrow_right
             </span> Gastos Ocacionales </p>
         </div>
-                <q-btn class="bg-green-10 text-white"  @click="promptEdit = true"><span class="material-symbols-outlined q-mr-sm"
+                <q-btn class="bg-green-10 text-white"  @click="promptEdit = true, vaciar()"><span class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px">
             add_circle
           </span>Crear nuevo gasto</q-btn>
@@ -167,7 +167,15 @@ rows.value.forEach((row, index) => {
 })
 
 
+function vaciar() {
+  Name_spent.value = ""
+  Finca.value = ""
+  Description.value = ""
+  PAYMENT_METHOD.value = ""
+  costValue.value = ""
+  optionsMethod.value = ""
 
+}
 
 
 async function getMethod() {
@@ -239,7 +247,11 @@ function goInfo(data) {
   Name_spent.value = data.Name_spent
 Finca.value = data.Finca
 Description.value = data.Description
-PAYMENT_METHOD.value = data.PAYMENT_METHOD
+PAYMENT_METHOD.value = 
+{
+    label: data.PAYMENT_METHOD.name,
+    value: data.PAYMENT_METHOD._id
+  };
 costValue.value = data.costValue
     
 }
@@ -255,6 +267,7 @@ costValue.value,
   )
   console.log(res);
   getOccasional()
+  prompt.value = false
 }
 
 

@@ -263,7 +263,7 @@ const postPays = async () => {
     DNI: DNI.value,
     ROL: ROL.value,
     CONCEPT: CONCEPT.value,
-    PAYMENT_METHOD: PAYMENT_METHOD.value.label,
+    PAYMENT_METHOD: PAYMENT_METHOD.value.value,
     TIME_TO_PAY: TIME_TO_PAY.value,
     Total: total.value
   })
@@ -313,7 +313,10 @@ function goInfo(data) {
   DNI.value = data.DNI
   ROL.value = data.ROL
   CONCEPT.value = data.CONCEPT
-  PAYMENT_METHOD.value = data.PAYMENT_METHOD
+  PAYMENT_METHOD.value = {
+    label: data.PAYMENT_METHOD.name,
+    value: data.PAYMENT_METHOD._id
+  };
   TIME_TO_PAY.value = data.TIME_TO_PAY
   total.value = data.Total
 
@@ -325,7 +328,7 @@ async function putInfo() {
     DNI.value,
     ROL.value,
     CONCEPT.value,
-    PAYMENT_METHOD.value,
+    PAYMENT_METHOD.value.value,
     TIME_TO_PAY.value,
     total.value,
   )

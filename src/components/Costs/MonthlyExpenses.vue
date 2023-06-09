@@ -21,7 +21,7 @@
               arrow_right
             </span> Gastos mensuales</p>
         </div>
-        <q-btn class="bg-green-10 text-white" @click="promptEdit = true"><span class="material-symbols-outlined q-mr-sm"
+        <q-btn class="bg-green-10 text-white" @click="promptEdit = true, vaciar()"><span class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px">
             add_circle
           </span>Crear nuevo gasto</q-btn>
@@ -172,7 +172,7 @@ let columns = ref([
   {
     name: "PAYMENT_METHOD",
     label: "Metodo de pago",
-    field: (row) => row.PAYMENT_METHOD,
+    field: (row) => row.PAYMENT_METHOD.name,
     align: "center",
   },
   { name: 'costValue', label: 'VALOR DEL GASTO', field: 'costValue',align: 'center' },
@@ -217,8 +217,8 @@ async function getMethod() {
 }
 
 const getMonthly = async () => {
-
 const res = await MonthlyStore.listMonthly()
+console.log(res);
 if (res.status < 299) {
   rows.value = res.data
   rows.value.forEach((row, index) => {
@@ -237,7 +237,7 @@ const postMonthly = async () => {
 Name_spent.value,
 Finca.value,
 Description.value,
-PAYMENT_METHOD.value.label,
+PAYMENT_METHOD.value.value,
 costValue.value,
 Total.value
 
@@ -266,8 +266,14 @@ async function activarDesactivar(data) {
 function goInfo(data) {
 Name_spent.value = data.Name_spent
 Finca.value = data.Finca
-Description.value = data.Description
-PAYMENT_METHOD.value = data.PAYMENT_METHOD
+Description.value = data.Description,
+PAYMENT_METHOD.value = {
+    label: data.PAYMENT_METHOD.name,
+    value: data.PAYMENT_METHOD._id
+  };
+
+
+  console.log( PAYMENT_METHOD.value);
 costValue.value = data.costValue
 Total.value = data.Total
 }
@@ -278,14 +284,24 @@ async function putInfo() {
 Name_spent.value,
 Finca.value,
 Description.value,
-PAYMENT_METHOD.value,
+PAYMENT_METHOD.value.value,
 costValue.value,
 Total.value
   )
   console.log(res);
+  prompt.value = false
   getMonthly()
 }
 
+function vaciar() {
+  Name_spent.value = ""
+  Finca.value = ""
+  Description.value = ""
+  PAYMENT_METHOD.value = null
+  costValue.value = ""
+  Total.value = ""
+
+}
 
 onMounted(() => {
   getMonthly()
@@ -299,7 +315,7 @@ onMounted(() => {
 }
 
 .q-select{
-    margin-bottom: 20px;
+    margin-bottom: 40px;
   }
 </style>
 

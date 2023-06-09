@@ -381,8 +381,8 @@ async function putDaily() {
   console.log(index.value);
   console.log(people.value);
   const res = await useDaily.updateDaily(index.value, {
-    name: name.value,
-    description: description.value,
+    // name: name.value,
+    // description: description.value,
     hours: hours.value,
     people: people.value.value,
     farm: farm.value.value,
@@ -390,6 +390,7 @@ async function putDaily() {
     date: date.value,
   });
   console.log(res);
+  console.log("termine actualizar");
   edit.value = false;
   getListDaily();
 }

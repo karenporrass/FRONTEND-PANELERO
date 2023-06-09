@@ -6,7 +6,9 @@ export const usePackedStore = defineStore('usePackedStore', () => {
     
     const listPacked = async()=> {
       try {
-        return await requestAxios.get("/empacados/packed")
+        let r= await requestAxios.get("/empacados/packed")
+        console.log(r);
+        return r
       } catch (error) {
         console.log(error);
       }
@@ -21,7 +23,6 @@ export const usePackedStore = defineStore('usePackedStore', () => {
       } catch (error) {
         console.log(infoPacked);
         console.log(error);
-        return error
       }
     }
     

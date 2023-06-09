@@ -12,6 +12,7 @@ export const useDailyStore = defineStore(
         return await requestAxios.get("/procesoDiario/dailyProcess");
       } catch (error) {
         console.log(error);
+        notifyError('No fue posible obtener los procesos diarios');
       }
     };
 
@@ -20,8 +21,9 @@ export const useDailyStore = defineStore(
     const postDaily = async (infoDaily) => {
       console.log("post");
       try {
-        return await requestAxios.post("/procesoDiario/register", infoDaily, {
+        await requestAxios.post("/procesoDiario/register", infoDaily, {
         });
+        notifySuccess('Proceso diario registrado correctamente');
       } catch (error) {
         console.log(infoDaily);
         console.log(error);
@@ -32,9 +34,10 @@ export const useDailyStore = defineStore(
 
     async function active(id, estado) {
       try {
-        return await requestAxios.put(`/procesoDiario/state/${id}`, {
+        await requestAxios.put(`/procesoDiario/state/${id}`, {
           state: estado,
-        }); //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+        });
+        notifySuccess('Estado cambiado correctamente');
       } catch (error) {
         console.log(error);
         return error;
@@ -44,15 +47,13 @@ export const useDailyStore = defineStore(
     const updateDaily = async (id, infoDaily) => {
       console.log(infoDaily);
       try {
-        let r = await requestAxios.put(`/procesoDiario/update/${id}`,infoDaily,{
-          }
-        );
-        console.log(r);
-        return r;
+        await requestAxios.put(`/procesoDiario/update/${id}`,infoDaily,{
+          });
+          notifySuccess('Proceso diario actualizado correctamente');
       } catch (error) {
         console.log(infoDaily);
         console.log(error);
-        return error;
+        notifyError(error.response.data.errors.join(", "));
       }
     };
 

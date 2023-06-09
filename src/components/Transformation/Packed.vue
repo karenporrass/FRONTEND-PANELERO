@@ -204,7 +204,7 @@ let columns = ref([
   { 
     name: 'typePacking', 
   label: 'TIPO DE EMPAQUE', 
-  field: (row) => row.name,
+  field: (row) => row.typePacking.name, 
   align: 'center' 
 },
   { 
@@ -261,8 +261,8 @@ async function postPacked() {
     cellar: cellar.value, 
     colorPanela: colorPanela.value.value,
     formPanela: formPanela.value.value,
-    totalPanelas: totalPanelas.value, 
-    typePacking: typePacking.value
+    typePacking: typePacking.value.value,
+    totalPanelas: totalPanelas.value,
   });
   console.log(res);
   prompt.value = false;
@@ -290,7 +290,10 @@ async function activarDesactivar(data) {
 async function showInfo(data) {
   cellar.value = data.cellar;
   colorPanela.value = data.colorPanela;
-  formPanela.value = data.formPanela;
+  formPanela.value = {
+    label: data.formPanela.name,
+    value: data.formPanela._id
+  };
   totalPanelas.value = data.totalPanelas;
   typePacking.value = {
     label: data.typePacking.name,

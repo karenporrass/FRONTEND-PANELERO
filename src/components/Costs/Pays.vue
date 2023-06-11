@@ -31,7 +31,7 @@
             Pedidos clientes
           </p>
         </div>
-        <q-btn class="bg-green-10 text-white" @click="(prompt = true), vaciar()"
+        <q-btn class="bg-green-10 text-white" @click="(prompt = true), toEmpty()"
           ><span
             class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px"
@@ -423,7 +423,7 @@ const postPays = async () => {
   console.log(pays);
   getPays();
   prompt.value = false;
-  vaciar();
+  toEmpty();
 };
 
 async function getPays() {
@@ -485,7 +485,7 @@ async function putInfo() {
   edit.value = false;
 }
 
-function vaciar() {
+function toEmpty() {
   DNI.value = "";
   ROL.value = "";
   CONCEPT.value = "";

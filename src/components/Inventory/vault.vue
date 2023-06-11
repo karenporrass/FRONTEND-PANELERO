@@ -22,7 +22,7 @@
               arrow_right
             </span> Bodegas</p>
         </div>
-                <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nueva bodega</q-btn>
+                <q-btn class="bg-green-10 text-white" @click="prompt = true, toEmpty()">Crear nueva bodega</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -63,46 +63,116 @@
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+                <q-form ref="myForm" @submit.prevent.stop="postVault()" >
                 <div>
-                  <q-input  filled type="text" v-model="name_cellars" label="Digite el cantidad del gasto"></q-input>
-                    <q-input  filled type="text" v-model="content" label="Digite del contenido"></q-input>
-                  <q-input filled type="text" v-model="administrator" label="Digite el nombre del administrador"></q-input>
-                  <q-input  filled type="text" v-model="extension" label="Digite la extension"></q-input>
-                  <q-input  filled type="text" v-model="dirrecion" label="Digite la dirrecion"></q-input>
+                  <q-input  filled type="text" v-model="name_cellars" label="Digite el cantidad del gasto" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                    <q-input  filled type="text" v-model="content" label="Digite del contenido" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                  <q-input filled type="text" v-model="administrator" label="Digite el nombre del administrador" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                  <q-input  filled type="text" v-model="extension" label="Digite la extension" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                  <q-input  filled type="text" v-model="dirrecion" label="Digite la dirrecion" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
                  
 
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="postVault()" />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                
+              <div class="justify-center flex">
+                <br />
+
+                <q-btn
+                  icon="save_as"
+                  label="Actualizar"
+                  type="submit"
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+              
+                ></q-btn>
+                <q-btn
+                  type="button"
+                  class="q-mt-md q-mb-sm q-mx-sm"
+                  v-close-popup
+                  ><span
+                    class="material-symbols-outlined q-mr-sm"
+                    style="font-size: 23px"
+                  >
+                    cancel </span
+                  >CERRAR</q-btn
+                >
+              </div>
                 </div>
+              </q-form>
               </div>
             </q-card>
           </q-dialog>
 
           <q-dialog v-model="promptEdit">
-            <q-card >
+            <q-card style="width: 400px">
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
                   Actualizar Información
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+                <q-form ref="myForm" @submit.prevent.stop="putInfo()" >
                 <div>
-                    <q-input  filled type="text" v-model="name_cellars" label="Digite el cantidad del gasto"></q-input>
-                    <q-input  filled type="text" v-model="content" label="Digite del contenido"></q-input>
-                  <q-input filled type="text" v-model="administrator" label="Digite el nombre del administrador"></q-input>
-                  <q-input  filled type="text" v-model="extension" label="Digite la extension"></q-input>
-                  <q-input  filled type="text" v-model="dirrecion" label="Digite la dirrecion"></q-input>
+                  <q-input  filled type="text" v-model="name_cellars" label="Digite el cantidad del gasto" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                    <q-input  filled type="text" v-model="content" label="Digite del contenido" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                  <q-input filled type="text" v-model="administrator" label="Digite el nombre del administrador" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                  <q-input  filled type="text" v-model="extension" label="Digite la extension" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                  <q-input  filled type="text" v-model="dirrecion" label="Digite la dirrecion" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
                  
 
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10"  @click="putInfo()" />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                
+              <div class="justify-center flex">
+                <br />
+
+                <q-btn
+                  icon="save_as"
+                  label="Actualizar"
+                  type="submit"
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+              
+                ></q-btn>
+                <q-btn
+                  type="button"
+                  class="q-mt-md q-mb-sm q-mx-sm"
+                  v-close-popup
+                  ><span
+                    class="material-symbols-outlined q-mr-sm"
+                    style="font-size: 23px"
+                  >
+                    cancel </span
+                  >CERRAR</q-btn
+                >
+              </div>
                 </div>
+              </q-form>
               </div>
             </q-card>
           </q-dialog>
@@ -169,7 +239,7 @@ const postVault = async () => {
   console.log("pos");
   console.log(extension.value);
   getVault()
-  promptEdit.value = false;
+  prompt.value = false;
 
 
 }
@@ -218,15 +288,23 @@ async function putInfo() {
   console.log(index.value);
   const res = await VaultStore.putVault(index.value,
   name_cellars.value,
-content.value,
-administrator.value,
-extension.value,
-dirrecion.value
+  content.value,
+  administrator.value,
+  extension.value,
+  dirrecion.value
   )
   console.log(res);
   getVault()
+  promptEdit.value = false
 }
 
+function toEmpty() {
+  name_cellars.value = ""
+content.value
+administrator.value = ""
+extension.value = ""
+dirrecion.value = ""
+}
 
 onMounted(() => {
   getVault()

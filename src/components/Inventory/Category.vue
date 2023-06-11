@@ -22,7 +22,7 @@
               arrow_right
             </span> Categoria</p>
         </div>
-                <q-btn class="bg-green-10 text-white" @click="prompt = true, vaciar()">Crear categoria</q-btn>
+                <q-btn class="bg-green-10 text-white" @click="prompt = true, toEmpty()">Crear categoria</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -208,7 +208,7 @@ async function putInfo() {
 }
 
 
-function vaciar() {
+function toEmpty() {
   name_category.value = ""
 description.value  = ""
 

@@ -31,7 +31,7 @@
             Gastos mensuales
           </p>
         </div>
-        <q-btn class="bg-green-10 text-white" @click="(prompt = true), vaciar()"
+        <q-btn class="bg-green-10 text-white" @click="(prompt = true), toEmpty()"
           ><span
             class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px"
@@ -514,7 +514,7 @@ async function getMethod() {
   }
 }
 
-function vaciar() {
+function toEmpty() {
   Name_spent.value = "";
   Finca.value = null;
   Description.value = "";

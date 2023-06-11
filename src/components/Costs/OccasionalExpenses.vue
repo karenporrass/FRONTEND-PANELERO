@@ -34,7 +34,7 @@
         </div>
         <q-btn
           class="bg-green-10 text-white"
-          @click="(promptEdit = true), vaciar()"
+          @click="(prompt = true), toEmpty()"
           ><span
             class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px"
@@ -70,7 +70,7 @@
                   size="xs"
                   color="green-10"
                   @click="
-                    (index = props.row._id), goInfo(props.row), (prompt = true)
+                    (index = props.row._id), goInfo(props.row), (promptEdit = true)
                   "
                 ></q-btn>
                 <q-btn
@@ -107,78 +107,8 @@
       <div class="col-1"></div>
     </div>
 
-    <q-dialog v-model="promptEdit">
-      <q-card>
-        <q-card-section class="bg-green-10">
-          <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
-            DILIGENCIA LA INFORMACIÓN
-          </h5>
-        </q-card-section>
-        <div class="q-pa-md">
-          <div>
-            <q-input
-              filled
-              type="text"
-              v-model="Name_spent"
-              label="Nombre del gasto"
-            ></q-input>
-            <q-select
-              filled
-              type="text"
-              v-model="Finca"
-              :options="optionsFarm"
-              label="seleccione la finca"
-            />
-            <q-input
-              filled
-              type="text"
-              v-model="Description"
-              label="Descripcion"
-            ></q-input>
-
-            <q-select
-              filled
-              type="text"
-              v-model="PAYMENT_METHOD"
-              :options="optionsMethod"
-              label="seleccione el metodo de pago"
-            />
-            <q-input
-              filled
-              type="number"
-              v-model="costValue"
-              label="Valor del gasto"
-            ></q-input>
-            <q-input
-              filled
-              type="number"
-              v-model="Total"
-              label="Total"
-            ></q-input>
-
-            <div class="justify-center flex">
-              <br />
-
-              <q-btn
-                icon="save_as"
-                label="Actualizar"
-                type="submit"
-                class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                @click="postOccasional()"
-              ></q-btn>
-              <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" v-close-popup
-                ><span
-                  class="material-symbols-outlined q-mr-sm"
-                  style="font-size: 23px"
-                >
-                  cancel </span
-                >CERRAR</q-btn
-              >
-            </div>
-          </div>
-        </div>
-      </q-card>
-    </q-dialog>
+ 
+    <!--  Modal crear -->
 
     <q-dialog v-model="prompt">
       <q-card>
@@ -188,45 +118,182 @@
           </h5>
         </q-card-section>
         <div class="q-pa-md">
+
+          <q-form ref="myForm" @submit.prevent.stop="postOccasional ()" >
           <div>
             <q-input
               filled
               type="text"
               v-model="Name_spent"
-              label="Nombre del gasto"
+              label="Digite el nombre del gasto"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"
             ></q-input>
             <q-select
               filled
               type="text"
               v-model="Finca"
               :options="optionsFarm"
-              label="seleccione la finca"
-            />
+              label="seleccione la finca" 
+              lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
             <q-input
               filled
               type="text"
               v-model="Description"
-              label="Descripcion"
+              label="Digite la descripcion"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"
             ></q-input>
-
             <q-select
               filled
               type="text"
               v-model="PAYMENT_METHOD"
               :options="optionsMethod"
               label="seleccione el metodo de pago"
+              lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]"
             />
             <q-input
               filled
               type="number"
               v-model="costValue"
-              label="Valor del gasto"
+              label="tiempo a pagar"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"
             ></q-input>
             <q-input
               filled
               type="number"
               v-model="Total"
               label="Total"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"
+            ></q-input>
+
+            <div class="justify-center flex">
+              <br />
+
+              <q-btn
+                icon="save_as"
+                label="GUARDAR"
+                type="submit"
+                class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9" >
+              </q-btn>
+              <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" v-close-popup
+                ><span
+                  class="material-symbols-outlined q-mr-sm"
+                  style="font-size: 23px"
+                >
+                  cancel </span
+                >CERRAR</q-btn
+              >
+            </div>
+          </div>
+        </q-form>
+        </div>
+      </q-card>
+    </q-dialog>
+
+<!-- Modal editar  -->
+    <q-dialog v-model="promptEdit">
+      <q-card style="width: 400px">
+        <q-card-section class="bg-green-10">
+          <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
+            Actualizar informaciòn
+          </h5>
+        </q-card-section>
+        <div class="q-pa-md">
+          <q-form ref="myForm" @submit.prevent.stop="putInfo()" >
+          <div>
+            <q-input
+              filled
+              type="text"
+              v-model="Name_spent"
+              label="Digite el nombre del gasto"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"
+            ></q-input>
+            <q-select
+              filled
+              type="text"
+              v-model="Finca"
+              :options="optionsFarm"
+              label="seleccione la finca" 
+              lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
+            <q-input
+              filled
+              type="text"
+              v-model="Description"
+              label="Digite la descripcion"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"
+            ></q-input>
+            <q-select
+              filled
+              type="text"
+              v-model="PAYMENT_METHOD"
+              :options="optionsMethod"
+              label="seleccione el metodo de pago"
+              lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]"
+            />
+            <q-input
+              filled
+              type="number"
+              v-model="costValue"
+              label="tiempo a pagar"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"
+            ></q-input>
+            <q-input
+              filled
+              type="number"
+              v-model="Total"
+              label="Total"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"
             ></q-input>
 
             <div class="justify-center flex">
@@ -237,7 +304,7 @@
                 label="Actualizar"
                 type="submit"
                 class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-                @click="putInfo()"
+          
               ></q-btn>
               <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" v-close-popup
                 ><span
@@ -249,6 +316,7 @@
               >
             </div>
           </div>
+        </q-form>
         </div>
       </q-card>
     </q-dialog>
@@ -337,7 +405,7 @@ rows.value.forEach((row, index) => {
   row.index = index;
 });
 
-function vaciar() {
+function toEmpty() {
   Name_spent.value = "";
   Finca.value = null;
   Description.value = "";
@@ -357,7 +425,7 @@ const postOccasional = async () => {
   );
   console.log(occasional);
   getOccasional();
-  promptEdit.value = false;
+  prompt.value = false;
 };
 
 async function getOccasional() {
@@ -414,7 +482,7 @@ async function putInfo() {
   );
   console.log(res);
   getOccasional();
-  prompt.value = false;
+  promptEdit.value = false;
 }
 
 async function getMethod() {

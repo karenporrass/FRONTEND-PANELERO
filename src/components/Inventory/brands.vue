@@ -22,7 +22,7 @@
               arrow_right
             </span> Marcas</p>
         </div>
-                <q-btn class="bg-green-10 text-white" @click="prompt = true, vaciar()">Crear marca</q-btn>
+                <q-btn class="bg-green-10 text-white" @click="prompt = true, toEmpty()">Crear marca</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -208,7 +208,7 @@ creator.value,
 }
 
 
-function vaciar() {
+function toEmpty() {
   name_brands.value = ""
   description.value = ""
   creator.value = ""

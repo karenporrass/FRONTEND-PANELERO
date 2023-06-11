@@ -23,7 +23,8 @@ export const payStore = defineStore("payStore", () => {
       console.log(22);
         return await requestAxios.post('/payments', pay)
         
-      } catch (error) {
+      } 
+      catch (error) {
         return error
        
       }

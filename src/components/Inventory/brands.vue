@@ -63,41 +63,101 @@
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+                <q-form ref="myForm" @submit.prevent.stop="postBrands()" >
                 <div>
-                  <q-input  filled type="text" v-model="name_brands" label="Digite el cantidad del gasto"></q-input>
-                    <q-input  filled type="text" v-model="description" label="Digite el nombre del gasto"></q-input>
-                  <q-input filled type="text" v-model="creator" label="Escoga la finca"></q-input>
-                  
+                  <q-input  filled type="text" v-model="name_brands" label="Digite el cantidad del gasto" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                    <q-input  filled type="text" v-model="description" label="Digite el nombre del gasto" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                  <q-input filled type="text" v-model="creator" label="Escoga la finca" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+           
 
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10" @click="postBrands()"  />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                  <div class="justify-center flex">
+                <br />
+
+                <q-btn
+                  icon="save_as"
+                  label="Guardar"
+                  type="submit"
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+              
+                ></q-btn>
+                <q-btn
+                  type="button"
+                  class="q-mt-md q-mb-sm q-mx-sm"
+                  v-close-popup
+                  ><span
+                    class="material-symbols-outlined q-mr-sm"
+                    style="font-size: 23px"
+                  >
+                    cancel </span
+                  >CERRAR</q-btn
+                >
+              </div>
+
                 </div>
+              </q-form>
               </div>
             </q-card>
           </q-dialog>
 
 
           <q-dialog v-model="promptEdit">
-            <q-card >
+            <q-card style="width: 400px">
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
-                  Actualizar Información
+                  Actualizar informaciòn
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
+                <q-form ref="myForm" @submit.prevent.stop="putInfo()" >
                 <div>
-                    <q-input  filled type="text" v-model="name_brands" label="Digite el cantidad del gasto"></q-input>
-                    <q-input  filled type="text" v-model="description" label="Digite el nombre del gasto"></q-input>
-                  <q-input filled type="text" v-model="creator" label="Escoga la finca"></q-input>
-                  <div>
-                    <br />
-                    <q-btn  label="guardar" class="text-white bg-green-10" @click="putInfo()" />
-                    <q-btn class="q-ml-md" label="cerrar" v-close-popup />
-                  </div>
+                  <q-input  filled type="text" v-model="name_brands" label="Digite el cantidad del gasto" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                    <q-input  filled type="text" v-model="description" label="Digite el nombre del gasto" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+                  <q-input filled type="text" v-model="creator" label="Escoga la finca" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+           
+
+                  <div class="justify-center flex">
+                <br />
+
+                <q-btn
+                  icon="save_as"
+                  label="Actualizar"
+                  type="submit"
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+              
+                ></q-btn>
+                <q-btn
+                  type="button"
+                  class="q-mt-md q-mb-sm q-mx-sm"
+                  v-close-popup
+                  ><span
+                    class="material-symbols-outlined q-mr-sm"
+                    style="font-size: 23px"
+                  >
+                    cancel </span
+                  >CERRAR</q-btn
+                >
+              </div>
+
                 </div>
+              </q-form>
               </div>
             </q-card>
           </q-dialog>

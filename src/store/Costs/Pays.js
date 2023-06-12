@@ -78,7 +78,5 @@ export const payStore = defineStore("payStore", () => {
 
   return {  listPays, newPays, putPays, active, listPaymentsActive, listUsersActive };
 },
-{
-  persist: true,
-},
+{persist: true,},
 );

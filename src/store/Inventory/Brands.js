@@ -58,4 +58,6 @@ export const BrandsStore = defineStore("counter", () => {
   
 
   return { brands, listPBrands, newBrands, putBrands, active };
-});
+},
+{  persist: true,},
+);

@@ -93,7 +93,7 @@
 
                 <q-btn
                   icon="save_as"
-                  label="Actualizar"
+                  label="Guardar"
                   type="submit"
                   class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
               

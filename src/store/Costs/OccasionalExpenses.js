@@ -79,6 +79,5 @@ export const OccasionalStore = defineStore("counter", () => {
 
   return {  Occasional, listOccasional, newOccasional, putOccasional, active, listOccacionalActive, listFarmsActive };
 },
-{
-  persist: true,
-},);
+{persist: true,},
+);

@@ -57,4 +57,6 @@ export const CategoryStore = defineStore("CategoryStore", () => {
   
 
   return { Category, listCategory, newCategory, putCategory, active };
-});
+},
+{  persist: true,},
+);

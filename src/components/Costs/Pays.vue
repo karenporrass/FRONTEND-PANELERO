@@ -12,11 +12,7 @@
       <div class="col-1"></div>
       <div class="col-10">
         <div style="display: flex">
-          <router-link
-            to="/homeCostos"
-            style="text-decoration: none"
-            class="text-dark"
-          >
+          <router-link to="/homeCostos" style="text-decoration: none" class="text-dark">
             <p style="font-size: 20px">
               <span style="font-size: 50px" class="material-icons-outlined">
                 arrow_right
@@ -31,15 +27,11 @@
             Pedidos clientes
           </p>
         </div>
-        <q-btn class="bg-green-10 text-white" @click="(prompt = true), toEmpty()"
-          ><span
-            class="material-symbols-outlined q-mr-sm"
-            style="font-size: 20px"
-          >
+        <q-btn class="bg-green-10 text-white" @click="(prompt = true), toEmpty()"><span
+            class="material-symbols-outlined q-mr-sm" style="font-size: 20px">
             add_circle
           </span>
-          Crear nuevo pago</q-btn
-        >
+          Crear nuevo pago</q-btn>
       </div>
       <div class="col-1"></div>
     </div>
@@ -47,56 +39,22 @@
     <div class="row q-mt-md">
       <div class="col-1"></div>
       <div class="col-10">
-        <q-table
-          style="height: 400px"
-          flat
-          bordered
-          :rows="rows"
-          :columns="columns"
-          row-key="index"
-          virtual-scroll
-          v-model:pagination="pagination"
-          :rows-per-page-options="[0]"
-        >
+        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll
+          v-model:pagination="pagination" :rows-per-page-options="[0]">
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
-                <q-btn
-                  round
-                  icon="edit"
-                  class="q-mx-md"
-                  size="xs"
-                  color="green-10"
-                  @click="
-                    (index = props.row._id), goInfo(props.row), (edit = true)
-                  "
-                ></q-btn>
-                <q-btn
-                  v-if="props.row.state == 0"
-                  round
-                  size="xs"
-                  color="green-10"
-                  @click="activarDesactivar(props.row)"
-                  ><span
-                    class="material-symbols-outlined"
-                    style="font-size: 18px"
-                  >
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="
+                  (index = props.row._id), goInfo(props.row), (edit = true)
+                  "></q-btn>
+                <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
+                  @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px">
                     check
-                  </span></q-btn
-                >
-                <q-btn
-                  v-else
-                  round
-                  size="xs"
-                  color="red"
-                  @click="activarDesactivar(props.row)"
-                  ><span
-                    class="material-symbols-outlined"
-                    style="font-size: 18px"
-                  >
+                  </span></q-btn>
+                <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
+                    class="material-symbols-outlined" style="font-size: 18px">
                     close
-                  </span></q-btn
-                >
+                  </span></q-btn>
               </div>
             </q-td>
           </template>
@@ -114,97 +72,48 @@
           </h5>
         </q-card-section>
         <div class="q-pa-md">
-          <q-form ref="myForm" @submit.prevent.stop="postPays()" >
-          <div>
-            <q-input
-              filled
-              type="text"
-              v-model="DNI"
-              label="DNI"
-              lazy-rules :rules="[
+          <q-form ref="myForm" @submit.prevent.stop="postPays()">
+            <div>
+
+
+              <q-select filled v-model="DNI" :options="optionsDNI" label="seleccione el DNI" lazy-rules :rules="[
+                (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
+
+             
+
+              <q-input filled type="text" v-model="CONCEPT" label="Concepto" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"
-            ></q-input>
-            <q-select
-              filled
-              type="text"
-              v-model="ROL"
-              :options="optionsPeople"
-              label="seleccione el rol"
-              lazy-rules
-                :rules="[
+              ]"></q-input>
+              <q-select filled v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago"
+                lazy-rules :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
                     'El campo es requerido',
                 ]" />
-
-            <q-input
-              filled
-              type="text"
-              v-model="CONCEPT"
-              label="Concepto"
-              lazy-rules
-              :rules="[
+              <q-input filled type="number" v-model="TIME_TO_PAY" label="tiempo a pagar (horas)" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"
-            ></q-input>
-            <q-select
-              filled
-              type="text"
-              v-model="PAYMENT_METHOD"
-              :options="optionsMethod"
-              label="seleccione el metodo de pago"
-              lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.toString().trim().length > 0) ||
-                    'El campo es requerido',
-                ]" 
-            />
-            <q-input
-              filled
-              type="number"
-              v-model="TIME_TO_PAY"
-              label="tiempo a pagar"
-              lazy-rules :rules="[
+              ]"></q-input>
+              <q-input filled type="number" v-model="total" label="Total" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"
-            ></q-input>
-            <q-input
-              filled
-              type="number"
-              v-model="total"
-              label="Total"
-              lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"
-            ></q-input>
+              ]"></q-input>
 
-            <div class="justify-center flex">
-              <br />
+              <div class="justify-center flex">
+                <br />
 
-              <q-btn
-                icon="save_as"
-                label="GUARDAR"
-                type="submit"
-                class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-               
-              ></q-btn>
-              <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" v-close-popup
-                ><span
-                  class="material-symbols-outlined q-mr-sm"
-                  style="font-size: 23px"
-                >
-                  cancel </span
-                >CERRAR</q-btn
-              >
+                <q-btn icon="save_as" label="GUARDAR" type="submit"
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" v-close-popup><span
+                    class="material-symbols-outlined q-mr-sm" style="font-size: 23px">
+                    cancel </span>CERRAR</q-btn>
+              </div>
             </div>
-          </div>
-        </q-form>
+          </q-form>
         </div>
       </q-card>
     </q-dialog>
@@ -218,102 +127,48 @@
           </h5>
         </q-card-section>
         <div class="q-pa-md">
-          <q-form ref="myForm" @submit.prevent.stop="putInfo()" >
-          <div>
-            <q-input
-              filled
-              type="text"
-              v-model="DNI"
-              label="DNI"
-              lazy-rules :rules="[
+          <q-form ref="myForm" @submit.prevent.stop="putInfo()">
+            <div>
+              <q-select filled v-model="DNI" :options="optionsDNI" label="seleccione el DNI" lazy-rules :rules="[
+                (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
+
+            
+
+              <q-input filled type="text" v-model="CONCEPT" label="Concepto" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"
-            ></q-input>
-            <q-select
-              filled
-              type="text"
-              v-model="ROL"
-              :options="optionsPeople"
-              label="seleccione el rol"
-              lazy-rules
-                :rules="[
+              ]"></q-input>
+              <q-select filled v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago"
+                lazy-rules :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
                     'El campo es requerido',
                 ]" />
-
-            <q-input
-              filled
-              type="text"
-              v-model="CONCEPT"
-              label="Concepto"
-              lazy-rules
-              :rules="[
+              <q-input filled type="number" v-model="TIME_TO_PAY" label="tiempo a pagar (horas)" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"
-            ></q-input>
-            <q-select
-              filled
-              type="text"
-              v-model="PAYMENT_METHOD"
-              :options="optionsMethod"
-              label="seleccione el metodo de pago"
-              lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.toString().trim().length > 0) ||
-                    'El campo es requerido',
-                ]" 
-            />
-            <q-input
-              filled
-              type="number"
-              v-model="TIME_TO_PAY"
-              label="tiempo a pagar"
-              lazy-rules :rules="[
+              ]"></q-input>
+              <q-input filled type="number" v-model="total" label="Total" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"
-            ></q-input>
-            <q-input
-              filled
-              type="number"
-              v-model="total"
-              label="Total"
-              lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"
-            ></q-input>
+              ]"></q-input>
 
-            <div>
-              <div class="justify-center flex">
-                <br />
+              <div>
+                <div class="justify-center flex">
+                  <br />
 
-                <q-btn
-                  icon="save_as"
-                  label="Actualizar"
-                  type="submit"
-                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
-              
-                ></q-btn>
-                <q-btn
-                  type="button"
-                  class="q-mt-md q-mb-sm q-mx-sm"
-                  v-close-popup
-                  ><span
-                    class="material-symbols-outlined q-mr-sm"
-                    style="font-size: 23px"
-                  >
-                    cancel </span
-                  >CERRAR</q-btn
-                >
+                  <q-btn icon="save_as" label="Actualizar" type="submit"
+                    class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
+                  <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" v-close-popup><span
+                      class="material-symbols-outlined q-mr-sm" style="font-size: 23px">
+                      cancel </span>CERRAR</q-btn>
+                </div>
               </div>
             </div>
-          </div>
-        </q-form>
+          </q-form>
         </div>
       </q-card>
     </q-dialog>
@@ -331,18 +186,27 @@ let pagination = ref({
   rowsPerPage: 0,
 });
 let columns = ref([
+
   {
     name: "DNI",
-    required: true,
-    label: "NUMERO DE DOCUMENTO",
+    label: "DNI",
+    field: (row) => row.DNI.numberDocument,
+
     align: "center",
-    field: "DNI",
+  },
+
+  {
+    name: "Name",
+    required: true,
+    label: "Nombre",
+    align: "center",
+    field: (row) => row.DNI.names,
   },
 
   {
     name: "ROL",
     label: "ROL",
-    field: (row) => row.ROL.rol,
+    field: (row) => row.DNI.rol,
 
     align: "center",
   },
@@ -395,13 +259,23 @@ let columns = ref([
 
 let rows = ref([]);
 
-let DNI = ref();
+let DNI = ref([]);
 let ROL = ref([]);
 let CONCEPT = ref();
 let optionsMethod = ref([]);
+let optionsDNI = ref([]);
+
+
+
+
+
+
+
+
 let PAYMENT_METHOD = ref([]);
-let optionsPeople = ref([]);
+
 let TIME_TO_PAY = ref();
+let Name = ref([]);
 let total = ref();
 
 rows.value.forEach((row, index) => {
@@ -409,18 +283,16 @@ rows.value.forEach((row, index) => {
 });
 
 const postPays = async () => {
-  console.log("hola");
+
   const pays = await PayStore.newPays({
-    DNI: DNI.value,
+    DNI: DNI.value.value,
     ROL: ROL.value.value,
+    Name: Name.value.value,
     CONCEPT: CONCEPT.value,
     PAYMENT_METHOD: PAYMENT_METHOD.value.value,
     TIME_TO_PAY: TIME_TO_PAY.value,
     Total: total.value,
   });
-  console.log("payM", PAYMENT_METHOD.value.label);
-  console.log("creo");
-  console.log(pays);
   getPays();
   prompt.value = false;
   toEmpty();
@@ -433,8 +305,10 @@ async function getPays() {
     rows.value = res.data;
     rows.value.forEach((row, index) => {
       row.index = index + 1;
-      console.log(res);
+      console.log(rows.value);
+
     });
+
   } else {
     alert(res);
   }
@@ -444,21 +318,19 @@ async function activarDesactivar(data) {
   let res = "";
   if (data.state == 1) {
     res = await PayStore.active(data._id, 0);
-    console.log(res);
     getPays();
   } else {
     res = await PayStore.active(data._id, 1);
-    console.log(res);
     getPays();
   }
 }
 
 function goInfo(data) {
-  DNI.value = data.DNI;
-  ROL.value = {
-    label: data.ROL.rol,
-    value: data.ROL._id,
+  DNI.value = {
+    label: data.DNI.numberDocument,
+    value: data.DNI._id,
   };
+
   CONCEPT.value = data.CONCEPT;
   PAYMENT_METHOD.value = {
     label: data.PAYMENT_METHOD.name,
@@ -472,22 +344,18 @@ async function putInfo() {
   console.log(index.value);
   const res = await PayStore.putPays(
     index.value,
-    DNI.value,
-    ROL.value.value,
+    DNI.value.value,
     CONCEPT.value,
     PAYMENT_METHOD.value.value,
     TIME_TO_PAY.value,
     total.value
   );
-  console.log(res);
-  console.log(ROL.value);
   getPays();
   edit.value = false;
 }
 
 function toEmpty() {
   DNI.value = "";
-  ROL.value = "";
   CONCEPT.value = "";
   PAYMENT_METHOD.value = null;
   TIME_TO_PAY.value = "";
@@ -497,14 +365,11 @@ function toEmpty() {
 async function getMethod() {
   // optionsPeople.value=[]
   const res = await PayStore.listPaymentsActive();
-  console.log(res);
   if (res.status < 299) {
     for (let i in res.data) {
-      console.log(i);
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsMethod.value.push(object);
 
-      console.log(optionsMethod.value);
     }
   } else {
     throw new Error("Error al obtener los datos de metodo de pago");
@@ -514,21 +379,33 @@ async function getMethod() {
 async function getPeople() {
   // optionsPeople.value=[]
   const res = await PayStore.listUsersActive();
-  console.log(res);
-  if (res.status < 299) {
-    console.log("holis");
-    for (let i in res.data) {
-      console.log(i);
-      let object = { label: res.data[i].rol, value: res.data[i]._id };
-      optionsPeople.value.push(object);
 
-      console.log(optionsPeople.value);
+  if (res.status < 299) {
+
+    for (let i in res.data) {
+
+   
+      let object1 = { label: res.data[i].numberDocument, value: res.data[i]._id };
+      optionsDNI.value.push(object1);
+     
+
+      let object2 = { label: res.data[i].rol, value: res.data[i]._id };
+      ROL.value.push(object2);
+     
+
+      let object3 = { label: res.data[i].names, value: res.data[i]._id };
+      Name.value.push(object3);
+     
     }
-    return optionsPeople.value;
+    return optionsDNI.value
+  
   } else {
     throw new Error("Error al obtener los datos de people");
   }
 }
+
+
+
 
 onMounted(() => {
   getPays();
@@ -537,11 +414,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-.q-input {
-  margin-bottom: 20px;
-}
-.q-select {
-  margin-bottom: 20px;
-}
-</style>
+<style scoped></style>

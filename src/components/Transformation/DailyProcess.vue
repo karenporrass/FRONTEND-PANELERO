@@ -200,15 +200,15 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useDailyStore } from "../../store/Transformation/dailyProcess.js";
-// import { usersStore } from "../../store/Maintenance/CreateUsers";
-// import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js"
-// import { lotsStore } from "../../store/Maintenance/Lots.js"
+import { usersStore } from "../../store/Maintenance/CreateUsers";
+import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js"
+import { lotsStore } from "../../store/Maintenance/Lots.js"
 
 
-// const useFarms = farmRegistryStore();
+const useFarms = farmRegistryStore();
 const useDaily = useDailyStore();
-// const useUsers = usersStore();
-// const useLots = lotsStore()
+const useUsers = usersStore();
+const useLots = lotsStore()
 
 
 
@@ -381,8 +381,8 @@ async function putDaily() {
   console.log(index.value);
   console.log(people.value);
   const res = await useDaily.updateDaily(index.value, {
-    // name: name.value,
-    // description: description.value,
+    name: name.value,
+    description: description.value,
     hours: hours.value,
     people: people.value.value,
     farm: farm.value.value,
@@ -398,7 +398,7 @@ async function putDaily() {
 
 async function getPeople() {
   // optionsPeople.value=[]
-  const res = await useDaily.listUsersActive();
+  const res = await useUsers.listUsersActive();
   console.log(res);
   if (res.status < 299) {
     console.log("holis");
@@ -417,7 +417,7 @@ async function getPeople() {
 
 
 async function getFarms() {
-  const res = await useDaily.listFarmsActive();
+  const res = await useFarms.listFarmsActive();
   console.log(res);
   if (res.status < 299) {
     console.log("holis");
@@ -432,7 +432,7 @@ async function getFarms() {
 }
 
 async function getLots() {
-  const res = await useDaily.listlotsActive();
+  const res = await useLots.listlotsActive();
   console.log(res);
   if (res.status < 299) {
     console.log("holis");

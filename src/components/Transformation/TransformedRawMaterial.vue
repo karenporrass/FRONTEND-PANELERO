@@ -8,9 +8,27 @@
       <div class="col-1"></div>
     </div>
     <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
-    <div class="row ">
+    <div class="row">
       <div class="col-1"></div>
-      <div class="col-10 ">
+      <div class="col-10" style="display: flex">
+        <router-link to="/homeTransformacion" style="text-decoration: none; font-size: larger" class="text-dark">
+          <div class="q-mr-md">
+            <span style="font-size: 30px" class="material-icons-outlined">
+              arrow_right </span>Transformación
+          </div>
+        </router-link>
+        <div style="font-size: medium">
+          <span style="font-size: 30px" class="material-icons-outlined text-overline">
+            arrow_right
+          </span>
+          Materia prima transformada
+        </div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+    <div class="row q-mb-md">
+      <div class="col-1"></div>
+      <div class="col-10">
         <q-btn class="bg-green-10 text-white" @click="prompt = true, cleanForm()"><span class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px;">
             add_circle
@@ -19,7 +37,7 @@
       <div class="col-1"></div>
     </div>
     <!-- TABLE INFO -->
-    <div class="row q-mt-md">
+    <div class="row">
       <div class="col-1"></div>
       <div class="col-10 ">
         <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" class="my-table">

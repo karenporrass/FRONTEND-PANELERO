@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
-
-
+import { notifyError, notifySuccess } from "../../Global/notify.js";
 import {requestAxios} from "../../Global/axios.js"
 
 export const payStore = defineStore("payStore", () => {
@@ -8,11 +7,12 @@ export const payStore = defineStore("payStore", () => {
 
 
   async function listPays() {
-    console.log("listPays")
+    
     try {
       return await requestAxios.get("/payments")
     } catch (error) {
       console.log(error);
+      notifyError('No fue posible obtener los pagos');
     }
   }
 
@@ -21,16 +21,19 @@ export const payStore = defineStore("payStore", () => {
     
     try {
       console.log(22);
-        return await requestAxios.post('/payments', pay)
-        
+        return await requestAxios.post('/payments', pay, 
+        notifySuccess('Pago registrado correctamente'));
+       
       } 
       catch (error) {
-        return error
-       
+        notifyError(error.response.data.errors.join(", "));
+        
+        return error;
+        
       }
   }
 
-  async function putPays(id, DNI, ROL, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY, total) { 
+  async function putPays(id, DNI, ROL, Name, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY, total) { 
       console.log("cambiar");
     try {
         return await requestAxios.put(`/payments/update/${id}`,{
@@ -39,16 +42,24 @@ export const payStore = defineStore("payStore", () => {
           CONCEPT: CONCEPT,
           PAYMENT_METHOD: PAYMENT_METHOD,
           TIME_TO_PAY: TIME_TO_PAY,
-          Total: total
-        })  
+          Total: total,
+          Name: Name
+        },
+        notifySuccess('Pagos actualizado correctamente'));
+        
       } 
       catch (error) {
+      notifyError(error.response.data.errors.join(", "));
+      console.log(error);
       }
   }
 
   async function active(id, estado){
     try {
-      return await requestAxios.put(`/payments/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+      return await requestAxios.put(`/payments/state/${id}`, {state:estado},
+      notifySuccess('Estado cambiado correctamente')
+      );
+      
     } catch (error) {
       console.log(error);
       return error
@@ -57,7 +68,7 @@ export const payStore = defineStore("payStore", () => {
 
 
   async function listPaymentsActive() {
-    try {console.log("yes");
+    try {
       return await requestAxios.get("/metodoPago/active")
       
     } catch (error) {
@@ -66,7 +77,6 @@ export const payStore = defineStore("payStore", () => {
   }
 
   async function listUsersActive() {
-    console.log("listUsersActive");
     try {
       return await requestAxios.get("/usuarios/active");
     } catch (error) {

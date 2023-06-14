@@ -228,11 +228,11 @@ async function activarDesactivar(data) {
   let res = ""
   if (data.state == 1) {
     res = await categoryStore.active(data._id, 0)
-    console.log(res);
+
     getCategory()
   } else {
     res = await categoryStore.active(data._id, 1)
-    console.log(res);
+
     getCategory()
   }
 }
@@ -275,7 +275,4 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.q-input {
-  margin-bottom: 20px;
-}
 </style>

@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { notifyError, notifySuccess } from "../../Global/notify.js";
 import { ref } from "vue";
 
 import { requestAxios } from "../../Global/axios.js"
@@ -8,10 +9,11 @@ export const productStore = defineStore("productStore", () => {
 
 
   async function listProduct() {
-    console.log("listProduct")
+  
     try {
       return await requestAxios.get("/product")
     } catch (error) {
+      notifyError('No fue posible obtener los gastos');
       console.log(error);
     }
   }
@@ -28,8 +30,10 @@ export const productStore = defineStore("productStore", () => {
       PAYMENT_METHOD: PAYMENT_METHOD, 
       cost_value: cost_value, 
       total: total, 
-      })
+      },
+      notifySuccess('Producto registrado correctamente'))
     } catch (error) {
+      notifyError(error.response.data.errors.join(", "));
       console.log(error);
     }
   }
@@ -47,15 +51,18 @@ export const productStore = defineStore("productStore", () => {
         total: total, 
    
 
-      })
+      },
+      notifySuccess('Producto actualizado correctamente'))
     } catch (error) {
+      notifyError(error.response.data.errors.join(", "));
       console.log(error);
     }
   }
 
   async function active(id, estado) {
     try {
-      return await requestAxios.put(`/product/state/${id}`, { state: estado }) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+      return await requestAxios.put(`/product/state/${id}`, { state: estado },
+      notifySuccess('Estado cambiado correctamente')) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
     } catch (error) {
       console.log(error);
       return error
@@ -63,7 +70,7 @@ export const productStore = defineStore("productStore", () => {
   }
 
   async function listPaymentsActive() {
-    try {console.log("yes");
+    try {
       return await requestAxios.get("/metodoPago/active")
       
     } catch (error) {

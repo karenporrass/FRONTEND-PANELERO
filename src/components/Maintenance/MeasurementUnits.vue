@@ -80,7 +80,7 @@
                 ]" />
 
                  <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
-                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" @click="cleanForm()" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
                 </div>
@@ -112,7 +112,7 @@
                 ]" />
 
                  <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
-                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" @click="cleanForm()" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
                 </div>
@@ -131,7 +131,7 @@ const unitStore = unitsStore()
 let promptEdit = ref(false)
 let prompt = ref(false)
 let name = ref("")
-let acronym = ref()
+let acronym = ref("")
 let index = ref()
 let pagination = ref({
         rowsPerPage: 0
@@ -153,6 +153,7 @@ const postUnits = async ()=>{
        )
     getUnits()
     console.log(unit);
+    cleanForm()
 }
 const getUnits = async ()=>{
     const units = await unitStore.listUnits()
@@ -193,7 +194,16 @@ async function putInfo(){
    )
     console.log(res);
     getUnits()
+    cleanForm()
 }
+
+function cleanForm(){
+  name.value = ""
+  acronym.value = ""
+  index.value = null
+
+}
+
 
 onBeforeMount(()=>{
   getUnits();

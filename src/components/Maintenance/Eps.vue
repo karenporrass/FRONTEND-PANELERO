@@ -81,7 +81,7 @@
                 ]" />
 
                  <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
-                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" @click="cleanForm()" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
                 </div>
@@ -112,7 +112,7 @@
                 ]" />
 
                  <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
-                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" @click="cleanForm()" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
                 </div>
@@ -154,6 +154,7 @@ const postEps = async ()=>{
       )
     console.log(res);
     getEps()
+    cleanForm()
 }
 
 
@@ -196,7 +197,15 @@ async function putInfo(){
   attentionLine.value )
     console.log(res);
     getEps()
+    cleanForm()
 }
+
+function cleanForm(){
+  name.value = ""
+  attentionLine.value = null
+  index.value = null
+}
+
 
 
 onBeforeMount(()=>{

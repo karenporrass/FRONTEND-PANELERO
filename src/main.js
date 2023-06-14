@@ -34,7 +34,6 @@ const pinia = createPinia()
 app.use(Quasar, {
     plugins: {
         Notify,
-
     }, 
 })
 

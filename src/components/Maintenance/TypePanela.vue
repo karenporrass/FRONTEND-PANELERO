@@ -66,7 +66,7 @@
                 </h5>
               </q-card-section>
               <div class="q-pa-md " >
-                <q-form @submit="postPanela()">
+                <q-form @submit.prevent.stop="postPanela()" @reset.prevent.stop="cleanForm()">
                 <div>
                   <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la forma de la panela" lazy-rules :rules="[
                 (val) =>
@@ -80,7 +80,7 @@
                 ]" />
 
                  <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
-                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" @click="cleanForm()" v-close-popup><span
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to=""  v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
                 </div>
@@ -98,7 +98,7 @@
               </q-card-section>
               <div class="q-pa-md " >
 
-                <q-form @submit="putInfo()">
+                <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
                 <div>
                   <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la forma de la panela" lazy-rules :rules="[
                 (val) =>
@@ -113,7 +113,7 @@
 
                  <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
                   @click="putInfo()"></q-btn>
-                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" @click="cleanForm()" v-close-popup><span
+                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to=""  v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
                 </div>

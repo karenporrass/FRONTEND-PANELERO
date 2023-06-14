@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
+import { notifyError, notifySuccess } from "../../Global/notify.js";
+
 
 
 export const OrderStore = defineStore('counter', () => {
@@ -12,10 +14,11 @@ export const OrderStore = defineStore('counter', () => {
           return await requestAxios.get("/pedido");
         } catch (error) {
           console.log(error);
+          notifyError('No fue posible obtener los pedidos');
         }
       }
 
-      async function newOrder(documento, telefono, tipoPanela, cantidad, comprobantePago,
+      async function newOrder(documento, telefono, tipoPanela, cantidad, comprobantePago, saldopendiente,
         nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal,token) {
         try {
           return await requestAxios.post(
@@ -25,23 +28,26 @@ export const OrderStore = defineStore('counter', () => {
                 TipoPanela: tipoPanela,
                 Cantidad: cantidad,
                 ComprobantePago:comprobantePago ,
-                Nombre: nombre,
+                SaldoPendiente: saldopendiente,
+                Nombre: nombre, 
                 Direccion: direccion,
                 FormaPanela: formaPanela,
                 TipoEmpaque: tipoEmpaque,
                 Abono: abono,
                 ValorTotal: valorTotal,
                 token: token
-            }
-          );
+            }, 
+            notifySuccess('Pedido registrado correctamente'));
+          
         } catch (error) {
           console.log(error);
+          notifyError(error.response.data.errors.join(", "));
         }
       }
     
 
 
-      async function putOrder(id,documento, telefono, tipoPanela, cantidad, comprobantePago,nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal) { //recivir las variables 
+      async function putOrder(id,documento, telefono, tipoPanela, cantidad, comprobantePago, saldopendiente, nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal) { //recivir las variables 
         try {
 
           return await requestAxios.put(
@@ -52,15 +58,19 @@ export const OrderStore = defineStore('counter', () => {
               TipoPanela: tipoPanela,
               Cantidad: cantidad,
               ComprobantePago:comprobantePago ,
+              SaldoPendiente: saldopendiente,
               Nombre: nombre,
               Direccion: direccion,
               FormaPanela: formaPanela,
               TipoEmpaque: tipoEmpaque,
               Abono: abono,
               ValorTotal: valorTotal
-            })
+            },
+            notifySuccess('Pedido actualizado correctamente'))
+            
           } catch (error) {
             console.log(error);
+            notifyError(error.response.data.errors.join(", "));
           }
       }
     
@@ -68,15 +78,26 @@ export const OrderStore = defineStore('counter', () => {
         console.log("state");
         try {
           return await requestAxios.put(
-            `/pedido/state/${id}`,{ state: estado }); //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+            `/pedido/state/${id}`,{ state: estado },
+            notifySuccess('Estado cambiado correctamente'));
         } catch (error) {
           console.log(error);
           console.log("actualiza");
           return error;
         }
       }
+
+      async function listPanelaActive() {
+        try {
+          return await requestAxios.get("/tipoPanela/active")
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+
     
-      return { listOrders, newOrder, putOrder, active, order } },
+      return { listOrders, newOrder, putOrder, active, listPanelaActive, order } },
       {persist:true});
  
     

@@ -1,12 +1,15 @@
 <template>
     <div>
 
-<div class="row">
-    <div class="col"><h2 id="Formularios">Formularios</h2>
-        <hr class="bg-teal-9" style="width: 70%; height: 2px;">
-</div>
-    
-</div>
+        <div class="row q-mt-md">
+            <div class="col-1"></div>
+            <div class="col-10  text-center">
+                <div class="text-weight-bolder text-h4">PEDIDOS</div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
+
 
     <div class="row">
         <div 

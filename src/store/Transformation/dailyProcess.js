@@ -57,38 +57,13 @@ export const useDailyStore = defineStore(
       }
     };
 
-    async function listFarmsActive() {
-      try {
-        return await requestAxios.get("/registroFinca/active");
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    async function listUsersActive() {
-      console.log("listUsersActive");
-      try {
-        return await requestAxios.get("/usuarios/active");
-      } catch (error) {
-        console.log(error);
-      }
-    }
 
-    async function listlotsActive() {
-      try {
-        return await requestAxios.get("/lotes/active");
-      } catch (error) {
-        console.log(error);
-      }
-    }
 
     return {
       getDaily,
       active,
       postDaily,
       updateDaily,
-      listFarmsActive,
-      listUsersActive,
-      listlotsActive,
     };
   },
   {

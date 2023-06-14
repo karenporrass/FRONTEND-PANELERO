@@ -208,7 +208,6 @@ const postBrands = async () => {
   description.value,
   creator.value,
   )
-  console.log(brands);
   getBrands()
   prompt.value = false
 }
@@ -235,11 +234,9 @@ async function activarDesactivar(data) {
   let res = ""
   if (data.state == 1) {
     res = await brandStore.active(data._id, 0)
-    console.log(res);
     getBrands()
   } else {
     res = await brandStore.active(data._id, 1)
-    console.log(res);
     getBrands()
   }
 }
@@ -262,7 +259,6 @@ async function putInfo() {
 description.value,
 creator.value,
   )
-  console.log(res);
   getBrands()
   promptEdit.value = false
 }
@@ -286,7 +282,5 @@ onMounted(() => {
 
 
 <style scoped>
-.q-input {
-  margin-bottom: 20px;
-}
+
 </style>

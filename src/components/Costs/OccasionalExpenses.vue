@@ -134,7 +134,7 @@
             ></q-input>
             <q-select
               filled
-              type="text"
+             
               v-model="Finca"
               :options="optionsFarm"
               label="seleccione la finca" 
@@ -157,7 +157,7 @@
             ></q-input>
             <q-select
               filled
-              type="text"
+              
               v-model="PAYMENT_METHOD"
               :options="optionsMethod"
               label="seleccione el metodo de pago"
@@ -239,7 +239,7 @@
             ></q-input>
             <q-select
               filled
-              type="text"
+              
               v-model="Finca"
               :options="optionsFarm"
               label="seleccione la finca" 
@@ -262,7 +262,7 @@
             ></q-input>
             <q-select
               filled
-              type="text"
+              
               v-model="PAYMENT_METHOD"
               :options="optionsMethod"
               label="seleccione el metodo de pago"
@@ -430,7 +430,7 @@ const postOccasional = async () => {
 
 async function getOccasional() {
   const res = await occasionalStore.listOccasional();
-  console.log(res);
+
   if (res.status < 299) {
     rows.value = res.data;
     rows.value.forEach((row, index) => {
@@ -445,7 +445,7 @@ async function activarDesactivar(data) {
   let res = "";
   if (data.state == 1) {
     res = await occasionalStore.active(data._id, 0);
-    console.log(res);
+    
     getOccasional();
   } else {
     res = await occasionalStore.active(data._id, 1);
@@ -480,7 +480,6 @@ async function putInfo() {
     costValue.value,
     Total.value
   );
-  console.log(res);
   getOccasional();
   promptEdit.value = false;
 }
@@ -495,7 +494,6 @@ async function getMethod() {
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsMethod.value.push(object);
 
-      console.log(optionsMethod.value);
     }
   } else {
     throw new Error("Error al obtener los datos de metodo de pago");
@@ -504,11 +502,9 @@ async function getMethod() {
 
 async function getFarms() {
   const res = await occasionalStore.listFarmsActive();
-  console.log(res);
   if (res.status < 299) {
     console.log("hols");
     for (let i in res.data) {
-      console.log(i);
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsFarm.value.push(object);
 
@@ -525,10 +521,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.q-input {
-  margin-bottom: 20px;
-}
-.q-select {
-  margin-bottom: 20px;
-}
+
 </style>

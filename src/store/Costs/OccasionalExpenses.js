@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { notifyError, notifySuccess } from "../../Global/notify.js";
 
 import {requestAxios} from "../../Global/axios.js"
 
@@ -8,11 +9,12 @@ export const OccasionalStore = defineStore("counter", () => {
 
 
   async function listOccasional() {
-    console.log("listOccasional")
+
     try {
       return await requestAxios.get("/occasionalExpenses")
     } catch (error) {
       console.log(error);
+      notifyError('No fue posible obtener los gastos');
     }
   }
 
@@ -28,8 +30,12 @@ export const OccasionalStore = defineStore("counter", () => {
           PAYMENT_METHOD: PAYMENT_METHOD,
           costValue: costValue,
           Total:   Total
-        })
+        },
+        notifySuccess('Gasto registrado correctamente')
+        );
+        
       } catch (error) {
+        notifyError(error.response.data.errors.join(", "));
         console.log(error);
       }
   }
@@ -43,15 +49,20 @@ export const OccasionalStore = defineStore("counter", () => {
           PAYMENT_METHOD: PAYMENT_METHOD,
           costValue: costValue,
           Total: Total
-        })
+        },
+        notifySuccess('Gastos actualizado correctamente')
+        )
       } catch (error) {
+        notifyError(error.response.data.errors.join(", "));
         console.log(error);
       }
   }
 
   async function active(id, estado){
     try {
-      return await requestAxios.put(`/occasionalExpenses/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+      return await requestAxios.put(`/occasionalExpenses/state/${id}`, {state:estado},
+      notifySuccess('Estado cambiado correctamente')
+      ) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
     } catch (error) {
       console.log(error);
       return error
@@ -59,7 +70,7 @@ export const OccasionalStore = defineStore("counter", () => {
   }
 
   async function listOccacionalActive() {
-    try {console.log("yes");
+    try {
       return await requestAxios.get("/metodoPago/active")
       
     } catch (error) {

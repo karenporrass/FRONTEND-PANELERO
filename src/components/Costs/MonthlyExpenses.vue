@@ -236,7 +236,7 @@
             ></q-input>
             <q-select
               filled
-              type="text"
+              
               v-model="Finca"
               :options="optionsFarm"
               label="seleccione la finca" 
@@ -259,7 +259,7 @@
             ></q-input>
             <q-select
               filled
-              type="text"
+              
               v-model="PAYMENT_METHOD"
               :options="optionsMethod"
               label="seleccione el metodo de pago"
@@ -409,7 +409,6 @@ rows.value.forEach((row, index) => {
 
 const getMonthly = async () => {
   const res = await MonthlyStore.listMonthly();
-  console.log(res);
   if (res.status < 299) {
     rows.value = res.data;
     rows.value.forEach((row, index) => {
@@ -421,7 +420,7 @@ const getMonthly = async () => {
 };
 
 const postMonthly = async () => {
-  console.log("1Crea");
+
   const monthly = await MonthlyStore.newMonthly(
     Name_spent.value,
     Finca.value.value,
@@ -430,8 +429,6 @@ const postMonthly = async () => {
     costValue.value,
     Total.value
   );
-
-  console.log(monthly);
   getMonthly();
   prompt.value = false;
 };
@@ -460,8 +457,6 @@ function goInfo(data) {
       label: data.PAYMENT_METHOD.name,
       value: data.PAYMENT_METHOD._id,
     });
-
-  console.log(PAYMENT_METHOD.value);
   costValue.value = data.costValue;
   Total.value = data.Total;
 }
@@ -477,22 +472,20 @@ async function putInfo() {
     costValue.value,
     Total.value
   );
-  console.log(res);
   promptEdit.value = false;
   getMonthly();
 }
 
 async function getFarms() {
   const res = await MonthlyStore.listFarmsActive();
-  console.log(res);
+
   if (res.status < 299) {
-    console.log("hols");
+
     for (let i in res.data) {
-      console.log(i);
+
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsFarm.value.push(object);
 
-      console.log(optionsFarm.value);
     }
   }
 }
@@ -500,14 +493,14 @@ async function getFarms() {
 async function getMethod() {
   // optionsPeople.value=[]
   const res = await MonthlyStore.listMonthlyActive();
-  console.log(res);
+ 
   if (res.status < 299) {
     for (let i in res.data) {
-      console.log(i);
+
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsMethod.value.push(object);
 
-      console.log(optionsMethod.value);
+     
     }
   } else {
     throw new Error("Error al obtener los datos de metodo de pago");
@@ -531,11 +524,5 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.q-input {
-  margin-bottom: 20px;
-}
 
-.q-select {
-  margin-bottom: 20px;
-}
 </style>

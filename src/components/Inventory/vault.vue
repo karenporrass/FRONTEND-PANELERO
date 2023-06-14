@@ -189,20 +189,20 @@ let pagination = ref({
         rowsPerPage: 0
       })
       let columns = ref([
-  {name: 'name',required: true,label: 'Nombre del gasto',align: 'center',field: 'name_cellars'},
-  { name: 'content', align: 'center', label: 'content', field: 'content',align: 'center',  },
-  { name: 'administrator', label: 'administrador', field: 'administrator', align: 'center'},
+  {name: 'name',required: true,label: 'NOMBRE DEL GASTO',align: 'center',field: 'name_cellars'},
+  { name: 'Contenido', align: 'center', label: 'CONTENIDO', field: 'content',align: 'center',  },
+  { name: 'administrador', label: 'ADMINISTRADOR', field: 'administrator', align: 'center'},
   {
     name: "date",
-    label: "Fecha",
+    label: "FECHA",
     field: (row) => row.Date.slice(0, 10),
     align: "center",
   },
-  { name: 'extension', label: 'extension', field: 'extension',align: 'center' },
-  { name: 'dirrecion', label: 'dirrecion', field: 'dirrecion',align: 'center' },
+  { name: 'extension', label: 'EXTENCION', field: 'extension',align: 'center' },
+  { name: 'dirrecion', label: 'DIRRECION', field: 'dirrecion',align: 'center' },
   {
     name: "status",
-    label: "Estado",
+    label: "ESTADO",
     field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
     align: "center",
   },
@@ -316,7 +316,5 @@ onMounted(() => {
 
 
 <style scoped>
-.q-input {
-  margin-bottom: 20px;
-}
+
 </style>

@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
+import { notifyError, notifySuccess } from "../../Global/notify.js";
+
 
 export const workStore = defineStore('workStore', () => {
     const work = ref("")
@@ -9,6 +11,7 @@ export const workStore = defineStore('workStore', () => {
         return await requestAxios.get("/tipoLabor/all")
       } catch (error) {
         console.log(error);
+        notifyError('No fue posible obtener los tipos de labores');
       }
     }
 
@@ -23,11 +26,13 @@ export const workStore = defineStore('workStore', () => {
     
     async function newWork(name, area, dailyPayment) {
         try {
-            return await requestAxios.post(`/tipoLabor`,{
+             await requestAxios.post(`/tipoLabor`,{
               name: name,
               area: area,
               dailyPayment: dailyPayment
-            })
+            });
+            notifySuccess('Tipo de labor registrado correctamente');
+
           } catch (error) {
             console.log(error);
           }
@@ -35,12 +40,13 @@ export const workStore = defineStore('workStore', () => {
 
       async function putWork(id, name, area, dailyPayment) {
         try {
-            return await requestAxios.put(`/tipoLabor/update/${id}`,{
-
+             await requestAxios.put(`/tipoLabor/update/${id}`,{
               name: name,
               area: area,
               dailyPayment: dailyPayment
-            })
+            });
+            notifySuccess('Tipo de labor actualizado correctamente');
+
           } catch (error) {
             console.log(error);
           }
@@ -48,7 +54,9 @@ export const workStore = defineStore('workStore', () => {
 
     async function active(id, estado){
       try {
-        return await requestAxios.put(`/tipoLabor/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+         await requestAxios.put(`/tipoLabor/state/${id}`, {state:estado});
+         notifySuccess('Estado cambiado correctamente');
+         //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {
         console.log(error);
         return error
@@ -58,5 +66,5 @@ export const workStore = defineStore('workStore', () => {
     return { listWork, work, active, newWork, putWork, listWorkActive }
   }, {
     persist: true,
-  },
-  )
+  }
+  );

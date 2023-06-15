@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
+import { notifyError, notifySuccess } from "../../Global/notify.js";
+
 
 export const usersStore = defineStore('usersStore', () => {
     const user = ref("")
@@ -12,6 +14,8 @@ export const usersStore = defineStore('usersStore', () => {
         return await requestAxios.get("/usuarios/all")
       } catch (error) {
         console.log(error);
+        notifyError('No fue posible obtener los Usuarios');
+
       }
     }
 
@@ -34,7 +38,7 @@ export const usersStore = defineStore('usersStore', () => {
     
     async function newUsers(names, lastNames,typeDocument, numberDocument, rol,cel, address, email, emergencyPersonName, emergencyPersonPhone, token ) {
         try {
-            return await requestAxios.post(`/usuarios`,{
+             await requestAxios.post(`/usuarios`,{
              names: names,
              lastNames: lastNames,
              typeDocument: typeDocument,
@@ -47,8 +51,8 @@ export const usersStore = defineStore('usersStore', () => {
              emergencyPersonName: emergencyPersonName,
             emergencyPersonPhone: emergencyPersonPhone,
             token: token
-
-            })
+            });
+            notifySuccess('Nuevo usuario registrado correctamente');
           } catch (error) {
             console.log(error);
           }
@@ -56,7 +60,7 @@ export const usersStore = defineStore('usersStore', () => {
 
       async function putUsers(id, names, lastNames,typeDocument, numberDocument, rol,cel, address, email, password , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
         try {
-            return await requestAxios.put(`/usuarios/update/${id}`,{
+            await requestAxios.put(`/usuarios/update/${id}`,{
              names: names,
              lastNames: lastNames,
              typeDocument: typeDocument,
@@ -68,7 +72,9 @@ export const usersStore = defineStore('usersStore', () => {
              password: password,
              emergencyPersonName: emergencyPersonName,
               emergencyPersonPhone: emergencyPersonPhone
-            })
+            });
+            notifySuccess('Usuario actualizado correctamente');
+
           } catch (error) {
             console.log(error);
           }
@@ -76,7 +82,9 @@ export const usersStore = defineStore('usersStore', () => {
 
     async function active(id, estado){
       try {
-        return await requestAxios.put(`/usuarios/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+        return await requestAxios.put(`/usuarios/state/${id}`, {state:estado});
+        notifySuccess('Estado cambiado correctamente');
+        //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {
         console.log(error);
         return error
@@ -89,5 +97,5 @@ export const usersStore = defineStore('usersStore', () => {
   },
   {
     persist: true,
-  },
-  )
+  }
+  );

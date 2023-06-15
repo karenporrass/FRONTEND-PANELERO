@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
+import { notifyError, notifySuccess } from "../../Global/notify.js";
+
 
 export const typePayStore = defineStore('typePayStore', () => {
     const pay = ref("")
@@ -10,6 +12,8 @@ export const typePayStore = defineStore('typePayStore', () => {
         return await requestAxios.get("/tipoPago/all")
       } catch (error) {
         console.log(error);
+        notifyError('No fue posible obtener los tipos de pagos');
+
       }
     }
 
@@ -23,9 +27,11 @@ export const typePayStore = defineStore('typePayStore', () => {
 
     async function newTypePay(name) {
         try {
-            return await requestAxios.post(`/tipoPago`,{
+             await requestAxios.post(`/tipoPago`,{
              name: name,
-            })
+            });
+            notifySuccess('Tipo de pago registrado correctamente');
+
           } catch (error) {
             console.log(error);
           }
@@ -33,10 +39,11 @@ export const typePayStore = defineStore('typePayStore', () => {
 
     async function putTypePay(id, name) {
         try {
-            return await requestAxios.put(`/tipoPago/update/${id}`,{
+             await requestAxios.put(`/tipoPago/update/${id}`,{
              name: name,
+            });
+            notifySuccess('TIpo de panela actualizado correctamente');
 
-            })
           } catch (error) {
             console.log(error);
           }
@@ -45,7 +52,9 @@ export const typePayStore = defineStore('typePayStore', () => {
     async function active(id, estado){
       try {
 
-        return await requestAxios.put(`/tipoPago/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+         await requestAxios.put(`/tipoPago/state/${id}`, {state:estado});
+         notifySuccess('Estado cambiado correctamente');
+         //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
 
       } catch (error) {
         console.log(error);
@@ -56,5 +65,5 @@ export const typePayStore = defineStore('typePayStore', () => {
     return { listTypePay, pay, active, newTypePay, putTypePay, listTypePayActive }
   }, {
     persist: true,
-  },
-  )
+  }
+  );

@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
+import { notifyError, notifySuccess } from "../../Global/notify.js";
+
 
 export const documentStore = defineStore('documentStore', () => {
     const document = ref("")
@@ -10,6 +12,8 @@ export const documentStore = defineStore('documentStore', () => {
         return await requestAxios.get("/tipoDocumento/all")
       } catch (error) {
         console.log(error);
+        notifyError('No fue posible obtener los tipos de documentos');
+
       }
     }
 
@@ -34,10 +38,12 @@ export const documentStore = defineStore('documentStore', () => {
 
     async function putDocument(id, name, acronym) {
         try {
-            return await requestAxios.put(`/tipoDocumento/update/${id}`,{
+             await requestAxios.put(`/tipoDocumento/update/${id}`,{
               name: name,
               acronym: acronym
-            })
+            });
+            notifySuccess('Tipo de documento registrado correctamente');
+
           } catch (error) {
             console.log(error);
           }
@@ -45,7 +51,9 @@ export const documentStore = defineStore('documentStore', () => {
 
     async function active(id, estado){
       try {
-        return await requestAxios.put(`/tipoDocumento/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+         await requestAxios.put(`/tipoDocumento/state/${id}`, {state:estado});
+        notifySuccess('Estado cambiado correctamente');
+        //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {
         console.log(error);
         return error
@@ -55,4 +63,5 @@ export const documentStore = defineStore('documentStore', () => {
     return { listDocuments, document, active, newDocument, putDocument, listDocumentsActive }
   }, {
     persist: true,
-  },)
+  }
+  );

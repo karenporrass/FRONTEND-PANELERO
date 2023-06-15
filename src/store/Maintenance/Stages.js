@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
+import { notifyError, notifySuccess } from "../../Global/notify.js";
+
 
 export const stagesStore = defineStore('stagesStore', () => {
     const stage = ref("")
@@ -10,6 +12,8 @@ export const stagesStore = defineStore('stagesStore', () => {
         return await requestAxios.get("/etapas/all")
       } catch (error) {
         console.log(error);
+        notifyError('No fue posible obtener las etapas');
+
       }
     }
 
@@ -23,10 +27,12 @@ export const stagesStore = defineStore('stagesStore', () => {
 
     async function newStage(name, description) {
         try {
-            return await requestAxios.post(`/etapas`,{
+             await requestAxios.post(`/etapas`,{
               name: name,
               description: description,
-            })
+            });
+            notifySuccess('Etapa registrada correctamente');
+
           } catch (error) {
             console.log(error);
           }
@@ -34,10 +40,12 @@ export const stagesStore = defineStore('stagesStore', () => {
 
     async function putStage(id, name, description) {
         try {
-            return await requestAxios.put(`/etapas/update/${id}`,{
+             await requestAxios.put(`/etapas/update/${id}`,{
               name: name,
               description: description,
-            })
+            });
+            notifySuccess('Etapa actualizada correctamente');
+
           } catch (error) {
             console.log(error);
           }
@@ -47,7 +55,9 @@ export const stagesStore = defineStore('stagesStore', () => {
 
     async function active(id, estado){
       try {
-        return await requestAxios.put(`/etapas/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+         await requestAxios.put(`/etapas/state/${id}`, {state:estado});
+        notifySuccess('Estado cambiado correctamente');
+        //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {
         console.log(error);
         return error
@@ -58,4 +68,4 @@ export const stagesStore = defineStore('stagesStore', () => {
   },
   {
     persist: true,
-  },)
+  });

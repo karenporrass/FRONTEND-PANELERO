@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
+import { notifyError, notifySuccess } from "../../Global/notify.js";
+
 
 export const lotsStore = defineStore('lotsStore', () => {
     const lots = ref("")
@@ -10,6 +12,8 @@ export const lotsStore = defineStore('lotsStore', () => {
         return await requestAxios.get("/lotes/all")
       } catch (error) {
         console.log(error);
+        notifyError('No fue posible obtener los lotes');
+
       }
     }
 
@@ -30,22 +34,26 @@ export const lotsStore = defineStore('lotsStore', () => {
     }
     async function newlots(name, extent,farm ) {
         try {
-            return await requestAxios.post(`/lotes`,{
+             await requestAxios.post(`/lotes`,{
               name: name,
               extent: extent,
               farm: farm
-            })
+            });
+            notifySuccess('Lote registrado correctamente');
+
           } catch (error) {
             console.log(error);
           }
       }
       async function putlots(id, name, extent, farm) {
         try {
-            return await requestAxios.put(`/lotes/update/${id}`,{
+             await requestAxios.put(`/lotes/update/${id}`,{
               name: name,
               extent: extent, 
               farm: farm
-            })
+            });
+            notifySuccess('Lote actualizado correctamente');
+
           } catch (error) {
             console.log(error);
           }
@@ -53,7 +61,9 @@ export const lotsStore = defineStore('lotsStore', () => {
 
     async function active(id, estado){
       try {
-        return await requestAxios.put(`/lotes/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+         await requestAxios.put(`/lotes/state/${id}`, {state:estado});
+        notifySuccess('Estado cambiado correctamente');
+        //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {
         console.log(error);
         return error
@@ -64,5 +74,5 @@ export const lotsStore = defineStore('lotsStore', () => {
   },
   {
     persist: true,
-  },
-  )
+  }
+  );

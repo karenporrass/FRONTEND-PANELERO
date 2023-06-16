@@ -20,7 +20,7 @@ export const LoginStore = defineStore('counter', () => {
           console.log(error);
         }
     }
-    async function putLogin(id ) {
+    async function putLogin(id) {
       try {
           return await requestAxios.post(`/login/update/${id}`,{
               id: id

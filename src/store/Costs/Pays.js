@@ -27,7 +27,7 @@ export const payStore = defineStore("payStore", () => {
       } 
       catch (error) {
         notifyError(error.response.data.errors.join(", "));
-        
+        console.log(error);
         return error;
         
       }

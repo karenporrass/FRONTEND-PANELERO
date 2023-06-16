@@ -91,10 +91,11 @@
                   (val) =>
                     (val > 0) || 'El campo es requerido',
                 ]" />
-              <q-input class="q-mb-md" filled type="text" v-model="rol" label="Seleccione el rol" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]" />
+            <q-select filled v-model="rol" :options="optionsRol" label="Seleccione el rol"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
+                ]" />
               <q-input class="q-mb-md" filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules
                 :rules="[
                   (val) =>
@@ -162,10 +163,12 @@
                   (val) =>
                     (val  > 0) || 'El campo es requerido',
                 ]" />
-              <q-input class="q-mb-md" filled type="text" v-model="rol" label="Seleccione el rol" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]" />
+              
+              <q-select filled v-model="rol" :options="optionsRol" label="Seleccione el rol"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
+                ]" />
               <q-input class="q-mb-md" filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules
                 :rules="[
                   (val) =>
@@ -247,6 +250,8 @@ let isPwd=ref(true)
 let pagination = ref({
   rowsPerPage: 0
 })
+
+let optionsRol = ref(['Administrador', 'Trabajador'])
 let optionsDocument = ref([])
 let columns = ref([
   { name: 'index', label: '#', field: 'index' },

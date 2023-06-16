@@ -114,7 +114,7 @@
                   (val && val.trim().length > 0) || 'Dijite su Dirección',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
-                      <q-select filled class="q-mb-md" v-model="tipoPanela" :options="optionsPacking" label="Escoja el tipo de panela" lazy-rules :rules="[
+                      <q-select filled class="q-mb-md" v-model="TipoPanela" :options="optionsPacking" label="Escoja el tipo de panela" lazy-rules :rules="[
           (val) => (val && val.toString().trim().length > 0) || 'Llene el campo de tipo de panela',
         ]" />
                     </div>
@@ -130,9 +130,9 @@
                   (val && val.trim().length > 0) || 'Dijite la Cantidad',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
-                      <q-select filled class="q-mb-md"               v-model="tipoEmpaque" :options="options3" label="Escoga el tipo de empaque" lazy-rules :rules="[
+                      <q-select filled class="q-mb-md"               v-model="tipoEmpaque" :options="Packing" label="Escoga el tipo de empaque" lazy-rules :rules="[
                 (val) =>
-                  (val && val.trim().length > 0) || 'Llene el campo de tipo de empaque',
+                  (val && val.toString().trim().length > 0) || 'Llene el campo de tipo de empaque',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
                       <q-input  filled class="q-mb-md" type="text"   v-model="comprobantePago" label="Comprobante" lazy-rules :rules="[
@@ -214,7 +214,7 @@
         <q-input filled class="q-mb-md" type="number" v-model="saldopendiente" label="Saldo Pendiente" lazy-rules :rules="[
           (val) => (val && val.trim().length > 0) || 'Digite su documento',
         ]" />
-        <q-select filled class="q-mb-md" v-model="tipoPanela" :options="optionsPacking" label="Escoja el tipo de panela" lazy-rules :rules="[
+        <q-select filled class="q-mb-md" v-model="TipoPanela" :options="optionsPacking" label="Escoja el tipo de panela" lazy-rules :rules="[
           (val) => (val && val.toString().trim().length > 0) || 'Llene el campo de tipo de panela',
         ]" />
       </div>
@@ -226,9 +226,11 @@
         <q-input filled class="q-mb-md" type="number" v-model="cantidad" label="Cantidad" lazy-rules :rules="[
           (val) => (val && val.trim().length > 0) || 'Digite la cantidad',
         ]" />
-        <q-select filled class="q-mb-md" v-model="tipoEmpaque" :options="options3" label="Escoja el tipo de empaque" lazy-rules :rules="[
-          (val) => (val && val.toString().trim().length > 0) || 'Llene el campo de tipo de empaque',
-        ]" />
+        <q-select filled class="q-mb-md" v-model="tipoEmpaque" :options="Packing" label="Escoja el tipo de empaque" lazy-rules :rules="[
+              (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
         <q-input filled class="q-mb-md" type="text" v-model="comprobantePago" label="Comprobante" lazy-rules :rules="[
           (val) => (val && val.trim().length > 0) || 'Digite su comprobante',
         ]" />      <q-input filled class="q-mb-md" type="number" v-model="abono" label="Abono" lazy-rules :rules="[
@@ -282,10 +284,10 @@ let abrirCrear=ref(false)
 let promptEdit = ref(false)
 let index = ref()
 let optionsPacking= ref([])
-
-let tipoPanela=ref([])
+let Packing = ref([])
+let TipoPanela=ref([])
 let formaPanela=ref()
-let tipoEmpaque=ref()
+let tipoEmpaque=ref([])
  let documento=ref() 
  let telefono=ref()
  let cantidad= ref()
@@ -305,9 +307,7 @@ let tipoEmpaque=ref()
         'Bloque Rectangular', 'Cono', 'Cono Trunco','Granulada'
       ]   
       
-      let options3= [
-        'Bolsas Termoencogibles Para Panela', 'Bolsa Con Ventana Impresa', 'Empaque flowpack', 'Bolsa doypack con zipper '
-      ] 
+    
 
 
 
@@ -326,11 +326,17 @@ let columns = ref([
   { name:'comprobantePago', align:'center', label: 'COMPROBANTE DE PAGO', field: 'ComprobantePago' },
   { name:'saldoPendiente', align:'center', label: 'SALDO PENDIENTE', field: 'SaldoPendiente' },
   { name:'direccion', align:'center', label: 'DIRECCION', field: 'Direccion' },
-  {name: "tipoPanela",
+  {name: "TipoPanela",
     label: "TIPO DE PANELA",
-    field: (row) => row.tipoPanela,
+    field: (row) => row.TipoPanela.name,
     align: "center",
   }, 
+  { 
+    name: 'typePacking', 
+  label: 'TIPO DE EMPAQUE', 
+  field: (row) => row.Packing.name, 
+  align: 'center' 
+},
   { name:'abono', align:'center', label: 'ABONO', field: 'Abono' },
   { name:'valorTotal', align:'center', label: 'VALOR TOTAL', field: 'ValorTotal' },
   {
@@ -371,7 +377,10 @@ function goInfo(data){
       nombre.value= data.Nombre
       direccion.value= data.Direccion
       formaPanela.value=data.FormaPanela
-      tipoEmpaque.value= data.TipoEmpaque
+      tipoEmpaque.value=  {
+    label: data.tipoEmpaque.name,
+    value: data.tipoEmpaque._id
+  };
       abono.value=data.Abono 
       valorTotal.value= data.ValorTotal
 }
@@ -386,6 +395,7 @@ async function orderGet(){
   })
   } else {
     alert(res)
+   
   }
 }
 
@@ -393,14 +403,14 @@ async function orderPost(){
   const order = await orderStore.newOrder(
     documento.value, 
     telefono.value, 
-    tipoPanela.value.value, 
+    TipoPanela.value.value, 
     cantidad.value, 
     comprobantePago.value,
     saldopendiente.value=valorTotal.value-abono.value,
     nombre.value,
     direccion.value,
     formaPanela.value,
-    tipoEmpaque.value,
+    tipoEmpaque.value.value,
     abono.value,
     valorTotal.value,
     loginStore.token
@@ -424,7 +434,7 @@ async function putInfo() {
     nombre.value,
     direccion.value,
     formaPanela.value,
-    tipoEmpaque.value,
+    tipoEmpaque.value.value,
     abono.value,
     valorTotal.value 
   )
@@ -436,6 +446,7 @@ async function putInfo() {
 onMounted(() => {
   orderGet()
   getTypePanela()
+  getPackaingPanela()
 })
 
 
@@ -457,7 +468,7 @@ async function activarDesactivar(data) {
 function limpiar() {
       documento.value=""
       telefono.value =""
-      tipoPanela.value=""
+      TipoPanela.value=""
       cantidad.value=""
       comprobantePago.value =""
       saldopendiente.value =""
@@ -483,6 +494,23 @@ async function getTypePanela() {
       console.log("222", optionsPacking.value);
     }
     return optionsPacking.value
+  } else {
+    throw new Error ("Error al obtener los datos de people")
+  }
+}
+
+async function getPackaingPanela() {
+  const res = await orderStore.listPackagingActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      Packing.value.push(object);
+      console.log(Packing.value);
+    }
+    return Packing.value
   } else {
     throw new Error ("Error al obtener los datos de people")
   }

@@ -2,7 +2,9 @@
     <div>
       <div class="row justify-center" style="margin-top: 40px;">
         <div class="col-10 text-center text-weight-bold text-h5">
-          <div>Imagenes corporativas</div>
+          <div>Imagenes corporativas</div>          
+          <div>BIENVENIDOS</div>
+
         </div>
       </div>
         <div class="row justify-center q-my-xl">

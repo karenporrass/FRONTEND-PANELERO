@@ -95,9 +95,17 @@ export const OrderStore = defineStore('counter', () => {
         }
       }
 
+      async function listPackagingActive() {
+        try {
+          return await requestAxios.get("/tipoEmpaque/active")
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
 
     
-      return { listOrders, newOrder, putOrder, active, listPanelaActive, order } },
+      return { listOrders, newOrder, putOrder, active, listPanelaActive, order, listPackagingActive } },
       {persist:true});
  
     

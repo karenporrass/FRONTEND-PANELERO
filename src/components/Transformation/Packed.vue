@@ -8,6 +8,24 @@
       <div class="col-1"></div>
     </div>
     <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
+    <div class="row q-mb-sm">
+      <div class="col-1"></div>
+      <div class="col-10" style="display: flex">
+        <router-link to="/homeTransformacion" style="text-decoration: none; font-size: medium" class="text-dark">
+          <div class="q-mr-md">
+            <span style="font-size: 30px" class="material-icons-outlined">
+              arrow_right </span>Transformación
+          </div>
+        </router-link>
+        <div style="font-size: medium">
+          <span style="font-size: 30px" class="material-icons-outlined text-overline">
+            arrow_right
+          </span>Empaquetado
+        </div>
+      </div>
+      <div class="col-1"></div>
+    </div>
+
     <div class="row ">
       <div class="col-1"></div>
       <div class="col-10 ">
@@ -58,29 +76,35 @@
             <div>
               <q-select filled v-model="cellar" :options="optionsColorPanela" label="Seleccione la bodega" lazy-rules :rules="[
                   (val) =>
-                    ((val) => val !== null || val !== '' || val !== undefined) ||
-                    'El campo es requerido',
-                ]" />
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
+
 
               <q-select filled v-model="colorPanela" :options="optionsColorPanela" label="Seleccione el color de la panela" lazy-rules :rules="[
-                  (val) =>
-                    ((val) => val !== null || val !== '' || val !== undefined) ||
-                    'El campo es requerido',
-                ]" />
+                 (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
+
 
               <q-select filled v-model="formPanela" :options="optionsFormPanela" label="Seleccione la forma de la panela" lazy-rules :rules="[
                 (val) =>
-                ((val) => val !== null || val !== '' || val !== undefined) || 'El campo es requerido',
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
               ]" />
+
               
               <q-select filled v-model="typePacking" :options="optionsPacking" label="Seleccione el empaque" :rules="[
-                (val) =>
-                ((val) => val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
-              ]"/>
+               (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
+
               
               <q-input v-model="totalPanelas" filled type="number" label="Digite la cantidad total de las panelas" :rules="[
                 (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
+                ((val) => val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
                 ((val) => val > 0) || 'El campo debe ser mayor a 0',
               ]"/>
 
@@ -108,31 +132,33 @@
           <q-form @submit.prevent.stop="putPacked()">
             <div>
               <q-select filled v-model="cellar" :options="optionsCellar" label="Seleccione la bodega" lazy-rules :rules="[
-                  (val) =>
-                    ((val) => val !== null || val !== '' || val !== undefined) ||
-                    'El campo es requerido',
-                ]" />
+                 (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
 
               <q-select filled v-model="colorPanela" :options="optionsColorPanela" label="Seleccione el color de la panela" lazy-rules :rules="[
-                  (val) =>
-                    ((val) => val !== null || val !== '' || val !== undefined) ||
-                    'El campo es requerido',
-                ]" />
+                (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
 
               <q-select filled v-model="formPanela" :options="optionsFormPanela" label="Seleccione la forma de la panela" lazy-rules :rules="[
                 (val) =>
-                ((val) => val !== null || val !== '' || val !== undefined) || 'El campo es requerido',
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
               ]" />
               
               <q-select filled v-model="typePacking" :options="optionsPacking" label="Seleccione el empaque" lazy-rules :rules="[
-                (val) =>
-                ((val) => val !== null || val !== '' || val !== undefined) || 'El campo es requerido',
-              ]"/>
-              
+              (val) =>
+                  (val && val.toString().trim().length > 0) ||
+                  'El campo es requerido',
+              ]" />
+
               <q-input v-model="totalPanelas" filled type="number" label="Digite la cantidad total de las panelas" lazy-rules :rules="[
                 (val) =>
-                ((val) => val !== null && val !== '') || 'El campo es requerido',
-                ((val) => val > 0) || 'El campo debe ser mayor a 0',
+                (val && val > 0) ||
+                'El campo debe ser mayor a 0',
               ]"/>
 
 
@@ -226,11 +252,17 @@ let columns = ref([
     label: 'OPCIONES', 
     align: 'center' 
   },
-
-
 ])
 
 let rows = ref([])
+
+onMounted(
+  () => {
+  getPacked()
+  getFormPanela()
+  getPackaingPanela() 
+})
+
 
 // get registros empaques
 async function getPacked() {
@@ -247,13 +279,6 @@ async function getPacked() {
 }
 
 
-onMounted(
-  () => {
-  getPacked()
-  getFormPanela()
-  getPackaingPanela() 
-})
-
 //post empaques
 async function postPacked() {
   console.log("hola post");
@@ -266,6 +291,7 @@ async function postPacked() {
   });
   console.log(res);
   prompt.value = false;
+  cleanForm();
   getPacked()
 }
 
@@ -286,7 +312,6 @@ async function activarDesactivar(data) {
 }
 
 
-
 async function showInfo(data) {
   cellar.value = data.cellar;
   colorPanela.value = data.colorPanela;
@@ -299,9 +324,9 @@ async function showInfo(data) {
     label: data.typePacking.name,
     value: data.typePacking._id
   };
-  console.log(date.value);
 } 
 
+// put empaquetados
 async function putPacked(){
   const res= await usePacked.updatePacked(index.value, {    
     cellar: cellar.value, 
@@ -311,7 +336,8 @@ async function putPacked(){
     totalPanelas: totalPanelas.value, 
   });
   console.log(res);
-  getPacked()
+  cleanForm();
+  getPacked();
   edit.value = false;
 }
 
@@ -325,7 +351,6 @@ async function getFormPanela() {
       console.log(i);
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsFormPanela.value.push(object);
-
       console.log(optionsFormPanela.value);
     }
     return optionsFormPanela.value
@@ -333,7 +358,6 @@ async function getFormPanela() {
     throw new Error ("Error al obtener los datos del tipo de panela")
   }
 }
-
 
 
 async function getPackaingPanela() {
@@ -345,7 +369,6 @@ async function getPackaingPanela() {
       console.log(i);
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsPacking.value.push(object);
-
       console.log(optionsPacking.value);
     }
     return optionsPacking.value

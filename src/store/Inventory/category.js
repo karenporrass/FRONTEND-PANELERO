@@ -9,7 +9,6 @@ export const CategoryStore = defineStore("CategoryStore", () => {
 
 
   async function listCategory() {
-    console.log("listCategory")
     try {
       return await requestAxios.get("/category")
     } catch (error) {

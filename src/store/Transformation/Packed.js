@@ -1,5 +1,7 @@
-import { defineStore } from 'pinia'
-import { requestAxios } from '../../Global/axios'
+import { defineStore } from 'pinia';
+import { requestAxios } from '../../Global/axios';
+import { notifyError, notifySuccess } from "../../Global/notify.js";
+
 
 
 export const usePackedStore = defineStore('usePackedStore', () => {
@@ -11,6 +13,7 @@ export const usePackedStore = defineStore('usePackedStore', () => {
         return r
       } catch (error) {
         console.log(error);
+        notifyError("No fue posible obtener los empacados")
       }
     }
     
@@ -18,17 +21,21 @@ export const usePackedStore = defineStore('usePackedStore', () => {
     const postPacked = async (infoPacked) => {
       console.log("post");
       try {
-        return await requestAxios.post("/empacados/register",infoPacked, {
+        await requestAxios.post("/empacados/register",infoPacked, {
         });
+        notifySuccess("Nuevo empaquetado guardado correctamente")
       } catch (error) {
         console.log(infoPacked);
         console.log(error);
+        notifyError(error.response.data.errors.join(', '))
       }
     }
     
         async function active(id, estado){
           try {
-            return await requestAxios.put(`/empacados/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+          await requestAxios.put(`/empacados/state/${id}`, {state:estado}); 
+           //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+          notifySuccess("Estado cambiado correctamente")
           } catch (error) {
             console.log(error);
             return error
@@ -38,14 +45,13 @@ export const usePackedStore = defineStore('usePackedStore', () => {
         const updatePacked = async (id, infoPacked) => {
           console.log(infoPacked);
           try {
-            return await requestAxios.put(`/empacados/update/${id}`, infoPacked, {
-              // headers: {
-              //   token,
-              // },
+            await requestAxios.put(`/empacados/update/${id}`, infoPacked, {
             });
+            notifySuccess("Empaquetado editado correctamente")
           } catch (error) {
             console.log(infoPacked);
             console.log(error);
+            notifyError(error.response.data.errors.join(', '))
           }
         };
 
@@ -64,10 +70,6 @@ export const usePackedStore = defineStore('usePackedStore', () => {
             console.log(error);
           }
         }
-
-        
-
-      
 
 
     return { listPacked, postPacked, active,  updatePacked, listPackagingActive, listPanelaActive }

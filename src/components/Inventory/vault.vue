@@ -189,7 +189,7 @@ let pagination = ref({
         rowsPerPage: 0
       })
       let columns = ref([
-  {name: 'name',required: true,label: 'NOMBRE DEL GASTO',align: 'center',field: 'name_cellars'},
+  {name: 'name',required: true,label: 'NOMBRE BODEGA',align: 'center',field: 'name_cellars'},
   { name: 'Contenido', align: 'center', label: 'CONTENIDO', field: 'content',align: 'center',  },
   { name: 'administrador', label: 'ADMINISTRADOR', field: 'administrator', align: 'center'},
   {
@@ -249,7 +249,7 @@ const postVault = async () => {
 
 async function getVault() {
     const res = await VaultStore.listVault()
-    console.log(res);
+   
     if (res.status < 299) {
     rows.value = res.data
     rows.value.forEach((row, index) => {

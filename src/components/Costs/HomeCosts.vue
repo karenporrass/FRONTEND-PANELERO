@@ -11,8 +11,8 @@
 
         <div class="row q-mt-xl">
             <div class="col-2"></div>
-            <div class="col-2 q-mt-xl ">
-                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 8px;">
+            <div class="col-2 text-center q-mt-xl ">
+                <q-card class="my-card   q-py-lg" >
                     <q-card-section>
                         <div class="text-center">
                             <span class="material-symbols-outlined" style="font-size: 50px; color: black; font-weight:bold; ">
@@ -32,7 +32,7 @@
             <div class="col-1"></div>
 
             <div class="col-2 text-center  q-mt-xl ">
-                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 8px;">
+                <q-card class="my-card  q-py-lg" >
                     <q-card-section>
                         <div class="text-center"><span class="material-symbols-outlined" style="font-size: 50px; color: black; font-weight:bold;">
 credit_score
@@ -43,7 +43,7 @@ credit_score
                  
 
                     <router-link to="/gastosMensuales" style="text-decoration: none;" class="text-dark" >
-                   <q-card-actions vertical align="center" class="q-pt-none">
+                   <q-card-actions vertical align="center" >
                          <q-btn flat >Gastos Mensuales </q-btn>
                     </q-card-actions>
                 </router-link>
@@ -51,7 +51,7 @@ credit_score
             </div>
             <div class="col-1"></div>
             <div class="col-2 text-center  q-mt-xl ">
-                <q-card class="my-card  shadow-8 q-py-lg" style="border: solid; border-color: darkgreen; border-radius: 8px;">
+                <q-card class="my-card   q-py-lg" >
                     <q-card-section>
                         <div class="text-center"><span class="material-symbols-outlined" style="font-size: 50px; color: black; font-weight:bold;">
                             other_admission
@@ -72,3 +72,9 @@ credit_score
     </div>
 </template>
 
+<style scoped>
+.my-card{
+   border-style: solid; border-color: darkgreen; border-radius: 10px
+}
+
+</style>

@@ -30,7 +30,7 @@
     <div class="row ">
       <div class="col-1"></div>
       <div class="col-10 ">
-        <q-btn class="bg-green-10 text-white" @click="prompt = true">Crear nuevo usuario</q-btn>
+        <q-btn class="bg-green-10 text-white" @click="cleanForm(), prompt = true">Crear nuevo usuario</q-btn>
       </div>
       <div class="col-1"></div>
     </div>
@@ -44,7 +44,7 @@
             <q-td :props="props">
               <div>
                 <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10"
-                  @click="index = props.row._id, goInfo(props.row), promptEdit = true"></q-btn>
+                  @click="cleanForm(), index = props.row._id, goInfo(props.row), promptEdit = true"></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -91,10 +91,11 @@
                   (val) =>
                     (val > 0) || 'El campo es requerido',
                 ]" />
-              <q-input class="q-mb-md" filled type="text" v-model="rol" label="Seleccione el rol" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]" />
+            <q-select filled v-model="rol" :options="optionsRol" label="Seleccione el rol"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
+                ]" />
               <q-input class="q-mb-md" filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules
                 :rules="[
                   (val) =>
@@ -120,12 +121,9 @@
                 ]" />
 
 
-
               <div class="justify-center flex">
-                <!-- <q-btn class="button_style q-mt-md" :loading="useInstructors.loading" color="secondary" type="submit" label="GUARDAR" /> -->
-
                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
-                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to=""   v-close-popup><span
+                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to=""   v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
               </div>
@@ -165,10 +163,12 @@
                   (val) =>
                     (val  > 0) || 'El campo es requerido',
                 ]" />
-              <q-input class="q-mb-md" filled type="text" v-model="rol" label="Seleccione el rol" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]" />
+              
+              <q-select filled v-model="rol" :options="optionsRol" label="Seleccione el rol"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
+                ]" />
               <q-input class="q-mb-md" filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules
                 :rules="[
                   (val) =>
@@ -205,11 +205,9 @@
 
 
               <div class="justify-center flex">
-                <!-- <q-btn class="button_style q-mt-md" :loading="useInstructors.loading" color="secondary" type="submit" label="GUARDAR" /> -->
-
                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
                  ></q-btn>
-                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
               </div>
@@ -222,7 +220,7 @@
 </template>
   
 <script setup>
-import { ref, onBeforeMount, onMounted } from 'vue'
+import { ref, onBeforeMount} from 'vue'
 import { usersStore } from "../../store/Maintenance/CreateUsers.js"
 import { LoginStore } from '../../store/Login/login';
 
@@ -252,12 +250,14 @@ let isPwd=ref(true)
 let pagination = ref({
   rowsPerPage: 0
 })
+
+let optionsRol = ref(['Administrador', 'Trabajador'])
 let optionsDocument = ref([])
 let columns = ref([
   { name: 'index', label: '#', field: 'index' },
   { name: 'name', label: 'NOMBRE', field: 'names', align: 'center' },
   { name: 'lastNames', label: 'APELLIDOS', align: 'center', field: row => row.lastNames, format: val => `${val}`, sortable: true },
-  { name: 'typeDocument', align: 'center', label: 'TIPO DE DOCUMENTO', field: 'typeDocument', align: 'center', sortable: true },
+  { name: 'typeDocument', align: 'center', label: 'TIPO DE DOCUMENTO', field: (row)=> row.typeDocument.acronym, align: 'center', sortable: true },
   { name: 'numberDocument', align: 'center', label: 'NUMERO DOCUMENTO', field: 'numberDocument', align: 'center', sortable: true },
   { name: 'rol', label: 'ROL', field: 'rol', align: 'center' },
   { name: 'cel', label: 'CELULAR', field: 'cel', align: 'center' },
@@ -291,6 +291,7 @@ const postUser = async () => {
   )
   console.log(res);
   getUsers()
+  prompt.value = false
   cleanForm()
 }
 
@@ -371,6 +372,7 @@ async function putInfo() {
   )
   console.log(res);
   getUsers()
+  promptEdit.value = false
   cleanForm()
 }
 

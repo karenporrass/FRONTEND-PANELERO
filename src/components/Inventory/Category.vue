@@ -211,7 +211,7 @@ const postCategory = async () => {
 
 async function getCategory() {
     const res = await categoryStore.listCategory()
-    console.log(res);
+    
     if (res.status < 299) {
     rows.value = res.data
     rows.value.forEach((row, index) => {

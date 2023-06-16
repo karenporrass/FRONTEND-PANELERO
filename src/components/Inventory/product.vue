@@ -277,7 +277,6 @@ total.value,
 async function getProduct() {
   
     const res = await ProductStore.listProduct()
-    console.log(res);
     if (res.status < 299) {
     rows.value = res.data
     rows.value.forEach((row, index) => {
@@ -341,14 +340,10 @@ total.value,
 async function getMethod() {
   // optionsPeople.value=[]
   const res = await ProductStore.listPaymentsActive();
-  console.log(res);
   if (res.status < 299) {
     for (let i in res.data) {
-      console.log(i);
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsMethod.value.push(object);
-
-      console.log(optionsMethod.value);
     }
 
    
@@ -360,15 +355,10 @@ async function getMethod() {
 
 async function getFarms() {
   const res = await ProductStore.listFarmsActive();
-  console.log(res);
   if (res.status < 299) {
-    console.log("hols");
     for (let i in res.data) {
-      console.log(i);
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsFarm.value.push(object);
-
-      console.log(optionsFarm.value);
     }
   }
 }

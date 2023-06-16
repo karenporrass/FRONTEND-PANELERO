@@ -305,7 +305,7 @@ async function getPays() {
     rows.value = res.data;
     rows.value.forEach((row, index) => {
       row.index = index + 1;
-      console.log(rows.value);
+    
 
     });
 

@@ -470,7 +470,6 @@ function goInfo(data) {
 }
 
 async function putInfo() {
-  console.log(index.value);
   const res = await occasionalStore.putOccasional(
     index.value,
     Name_spent.value,
@@ -487,10 +486,8 @@ async function putInfo() {
 async function getMethod() {
   // optionsPeople.value=[]
   const res = await occasionalStore.listOccacionalActive();
-  console.log(res);
   if (res.status < 299) {
     for (let i in res.data) {
-      console.log(i);
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsMethod.value.push(object);
 
@@ -503,12 +500,9 @@ async function getMethod() {
 async function getFarms() {
   const res = await occasionalStore.listFarmsActive();
   if (res.status < 299) {
-    console.log("hols");
     for (let i in res.data) {
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsFarm.value.push(object);
-
-      console.log(optionsFarm.value);
     }
   }
 }

@@ -1,11 +1,9 @@
 <template>
   <div>
-    <div class="row q-mt-md">
-      <div class="col-1"></div>
-      <div class="col-10 text-center">
+    <div class="row q-mt-md justify-center">
+      <div class="col-10  text-center q-mt-md q-mb-md">
         <div class="text-weight-bolder text-h4">PROCESO DIARIO</div>
       </div>
-      <div class="col-1"></div>
     </div>
     <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
     <div class="row q-mb-sm">
@@ -59,14 +57,6 @@
               </div>
             </q-td>
           </template>
-          <!-- <template v-slot:body-cell-people="props">
-            <td v-if="props.row.people" v-text="props.row.people.names">
-            </td>
-          </template> -->
-          <!-- <template v-slot:body-cell-labor="props">
-            <td v-if="props.row.labor" v-text="props.row.labor.name">
-            </td>
-          </template> -->
         </q-table>
       </div>
       <div class="col-1"></div>

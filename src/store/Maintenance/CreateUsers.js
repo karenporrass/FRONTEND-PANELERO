@@ -82,7 +82,7 @@ export const usersStore = defineStore('usersStore', () => {
 
     async function active(id, estado){
       try {
-        return await requestAxios.put(`/usuarios/state/${id}`, {state:estado});
+       await requestAxios.put(`/usuarios/state/${id}`, {state:estado});
         notifySuccess('Estado cambiado correctamente');
         //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

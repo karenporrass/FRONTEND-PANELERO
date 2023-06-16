@@ -114,7 +114,7 @@
                   (val && val.trim().length > 0) || 'Dijite su Dirección',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
-                      <q-select filled class="q-mb-md" v-model="tipoPanela" :options="optionsPacking" label="Escoja el tipo de panela" lazy-rules :rules="[
+                      <q-select filled class="q-mb-md" v-model="TipoPanela" :options="optionsPacking" label="Escoja el tipo de panela" lazy-rules :rules="[
           (val) => (val && val.toString().trim().length > 0) || 'Llene el campo de tipo de panela',
         ]" />
                     </div>
@@ -214,7 +214,7 @@
         <q-input filled class="q-mb-md" type="number" v-model="saldopendiente" label="Saldo Pendiente" lazy-rules :rules="[
           (val) => (val && val.trim().length > 0) || 'Digite su documento',
         ]" />
-        <q-select filled class="q-mb-md" v-model="tipoPanela" :options="optionsPacking" label="Escoja el tipo de panela" lazy-rules :rules="[
+        <q-select filled class="q-mb-md" v-model="TipoPanela" :options="optionsPacking" label="Escoja el tipo de panela" lazy-rules :rules="[
           (val) => (val && val.toString().trim().length > 0) || 'Llene el campo de tipo de panela',
         ]" />
       </div>
@@ -283,7 +283,7 @@ let promptEdit = ref(false)
 let index = ref()
 let optionsPacking= ref([])
 
-let tipoPanela=ref([])
+let TipoPanela=ref([])
 let formaPanela=ref()
 let tipoEmpaque=ref()
  let documento=ref() 
@@ -326,9 +326,9 @@ let columns = ref([
   { name:'comprobantePago', align:'center', label: 'COMPROBANTE DE PAGO', field: 'ComprobantePago' },
   { name:'saldoPendiente', align:'center', label: 'SALDO PENDIENTE', field: 'SaldoPendiente' },
   { name:'direccion', align:'center', label: 'DIRECCION', field: 'Direccion' },
-  {name: "tipoPanela",
+  {name: "TipoPanela",
     label: "TIPO DE PANELA",
-    field: (row) => row.tipoPanela,
+    field: (row) => row.TipoPanela.name,
     align: "center",
   }, 
   { name:'abono', align:'center', label: 'ABONO', field: 'Abono' },

@@ -12,9 +12,12 @@
                     </div>
                     <div id="div-login">
                         <p id="text-ingresar"><strong>INGRESAR</strong></p>
-                        <q-icon id="icon" name="account_circle" />
+                        <div id="div_icon">
+                            <q-icon id="icon" name="account_circle" />
+                        </div>
+                        
                         <p id="p-usuario"><strong>USUARIO</strong> </p>
-                        <q-input id="input-usuario" filled v-model="user" label="DIGITE SU USUARIO" stack-label
+                        <q-input  id="input-usuario" filled v-model="user" label="DIGITE SU USUARIO" stack-label
                             :dense="dense" /><br>
                         <p id="p-contraseña"><strong>CONTRASEÑA</strong></p>
                         <q-input id="input-contraseña" type="password" filled v-model="password" label="DIGITE SU CONTRASEÑA" stack-label
@@ -145,8 +148,8 @@ function validar() {
 
 #div-login {
     margin: 0% auto;
-    padding-top: 100px;
-    width: 400px;
+    padding-top: 70px;
+    width: 30%;
 }
 
 #text-ingresar {
@@ -156,11 +159,16 @@ function validar() {
     font-size: 30px;
 }
 
+#div_icon{
+    margin: 0px auto;
+ 
+    width: 100px;
+}
+
 #icon {
     color: black;
     font-size: 100px;
-    margin-left: 150px;
-    margin-bottom: 30px;
+   
 }
 
 #p-usuario {
@@ -187,16 +195,16 @@ function validar() {
 
 #p-olvido {
     color: black;
+    margin-bottom: 40px;
 }
 
 #div-boton {
-    width: 29%;
+    width: 40%;
     margin: 0px auto;
-    margin-top: 0px;
+  
 }
 
 #boton-ingresar {
-    border-radius: 10px;
     width: 120px;
     font-size: 15px;
 }

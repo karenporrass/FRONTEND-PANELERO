@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+ import { defineStore } from "pinia";
 import { ref } from "vue";
 import { notifyError, notifySuccess } from "../../Global/notify.js";
 
@@ -66,6 +66,5 @@ export const BrandsStore = defineStore("counter", () => {
   
 
   return { brands, listPBrands, newBrands, putBrands, active };
-},
-{  persist: true,},
+},{  persist: true,},
 );

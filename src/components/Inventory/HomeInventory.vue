@@ -14,8 +14,8 @@
 
 
             <div class="col-2 q-mt-xl ">
-                <q-card class="my-card  shadow-8 q-py-lg "
-                    style="border: solid; border-color: darkgreen; border-radius: 5px;">
+                <q-card class="my-card  q-py-lg "
+                 >
                     <q-card-section>
                         <div class="text-center"> <span class="material-symbols-outlined" style="font-size: 50px;">
                                 add_business
@@ -37,7 +37,7 @@
             <div class="col-2"></div>
 
             <div class="col-2 q-mt-xl ">
-                <q-card class="my-card  shadow-8 q-py-lg  "  style="border: solid; border-color: darkgreen; border-radius: 5px;">
+                <q-card class="my-card   q-py-lg  "  >
                   
                     <q-card-section>
                         <div class="text-center"><span class="material-symbols-outlined" style="font-size: 50px;">
@@ -66,8 +66,8 @@
             <div class="col-3"></div>
 
             <div class="col-2 q-mt-xl ">
-                <q-card class="my-card  shadow-8  q-py-lg "
-                    style="border: solid; border-color: darkgreen; border-radius: 5px;">
+                <q-card class="my-card   q-py-lg "
+                    >
                     <q-card-section>
                         <div class="text-center"> <span class="material-symbols-outlined" style="font-size: 50px;">
                                 category
@@ -88,8 +88,8 @@
 
 
             <div class="col-2 q-mt-xl ">
-                <q-card class="my-card  shadow-8 q-py-lg "
-                    style="border: solid; border-color: darkgreen; border-radius: 5px;">
+                <q-card class="my-card   q-py-lg "
+                   >
                     <q-card-section>
                         <div class="text-center"> <span class="material-symbols-outlined" style="font-size: 50px;">
                                 inventory_2
@@ -125,6 +125,10 @@
         flex-wrap: nowrap;
         font-size: 90%;
         
+}
+
+.my-card{
+   border-style: solid; border-color: darkgreen; border-radius: 10px
 }
 
 

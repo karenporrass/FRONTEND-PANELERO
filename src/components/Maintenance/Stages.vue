@@ -27,7 +27,7 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="text-capitalize bg-green-10 text-white" @click="prompt = true">Crear nueva etapa</q-btn>
+                <q-btn class="text-capitalize bg-green-10 text-white" @click="cleanForm(), prompt = true">Crear nueva etapa</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -40,7 +40,7 @@
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
               <div>
-                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
+                <q-btn round icon="edit" class="q-mx-md" size="xs" color="green-10" @click="cleanForm(), index = props.row._id, goInfo(props.row),  promptEdit = true "></q-btn>
                 <q-btn v-if="props.row.state == 0" round size="xs" color="green-10"
                   @click="activarDesactivar(props.row)"><span class="material-symbols-outlined" style="font-size: 18px;">
                     check
@@ -80,7 +80,7 @@
                 ]" />
 
                  <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
-                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to=""  v-close-popup><span
+                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to=""  v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
                 </div>
@@ -111,7 +111,7 @@
                 ]" />
 
                  <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
-                <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to=""  v-close-popup><span
+                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to=""  v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
                 </div>
@@ -152,6 +152,7 @@ const postStages = async ()=>{
       )
     getStages()
     console.log(stage);
+    prompt.value = false
     cleanForm()
 }
 
@@ -194,6 +195,7 @@ async function putInfo(){
   )
     console.log(res);
     getStages()
+    promptEdit.value = false
     cleanForm()
 }
 

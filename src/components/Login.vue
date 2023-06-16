@@ -37,7 +37,7 @@
 
 <script setup>
 import { ref } from "vue";
-import axios from "axios"
+import {requestAxios} from "../Global/axios.js"
 import {useRouter} from "vue-router"
 import {LoginStore} from '../store/Login/login.js'
 
@@ -60,7 +60,7 @@ let usuario = ref([
 const addUser = async()=>{
     try {
 
-        const newuser = await axios.post("http://localhost:3500/login/login",{
+        const newuser = await requestAxios.post("/login/login",{
             user:user.value,
             password:password.value 
             

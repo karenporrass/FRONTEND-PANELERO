@@ -1,11 +1,9 @@
 <template>
   <div>
-    <div class="row q-mt-md">
-      <div class="col-1"></div>
-      <div class="col-10  text-center">
+    <div class="row q-mt-md justify-center">
+      <div class="col-10  text-center q-mt-md q-mb-md">
         <div class="text-weight-bolder text-h4">MATERIA PRIMA TRANSFORMADA</div>
       </div>
-      <div class="col-1"></div>
     </div>
     <hr class="bg-green-10 q-mb-xl" style="width: 70%; height: 2px" />
     <div class="row">

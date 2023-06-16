@@ -11,7 +11,7 @@
 
         <div class="row" style="margin-top: 150px">
             <div class="col-2"></div>
-            <div class="col-xl-2 col-sm-2" >
+            <div class="col-2 col-sm-2">
                 <router-link to="/procesoDiario" style="text-decoration: none; color: black">
                 <q-card class="my-card" style="border-style: solid; border-color: green; border-radius: 10px">
                     <q-card-section class="text-center">
@@ -25,10 +25,9 @@
                     </q-card>
                 </router-link>
             </div>
-
             <div class="col-1"></div>
 
-            <div class="col-xl-2 col-sm-2">
+            <div class="col-2 col-lg-3 col-xl-2 col-sm-2">
                 <router-link to="/materiaTransformada" style="text-decoration: none; color: black">
                 <q-card class="my-card" style="border-style: solid; border-color: green; border-radius: 10px">
                     <q-card-section class="text-center">
@@ -37,13 +36,14 @@
                         </span> </q-card-section>
                     <q-separator class="bg-green-10" style="height: 2px" />
                         <q-card-section >
-                            <div class="text-center q-mt-md">MATERIA PRIMA TRANSFORMADA</div>
+                            <div class="text-center q-mt-md q-my-md">MATERIA PRIMA TRANSFORMADA</div>
                         </q-card-section>
                     </q-card>
                 </router-link>
             </div>
+
             <div class="col-1"></div>
-            <div class="col-xl-2 col-sm-2">
+            <div class="col-2 col-sm-2">
                 <router-link to="/empacado" style="text-decoration: none; color: black">
                 <q-card class="my-card" style="border-style: solid; border-color: green; border-radius: 10px">
                     <q-card-section class="text-center">

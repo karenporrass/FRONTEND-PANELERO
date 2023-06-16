@@ -12,6 +12,7 @@ export const storeTransformed = defineStore('storeTransformed', () => {
         );
       } catch (error) {
         console.log(error);
+        notifyError("No fue posible obtener las materias primas transformadas")
         return error
       }
     }
@@ -35,7 +36,9 @@ export const storeTransformed = defineStore('storeTransformed', () => {
     
         const active = async (id, estado)=>{ 
           try {
-            return await requestAxios.put(`/materiaTransformada/state/${id}`, {state:estado}) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+            await requestAxios.put(`/materiaTransformada/state/${id}`, {state:estado});
+            //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+            notifySuccess("Estado cambiado correctamente")
           } catch (error) {
             console.log(error);
             return error

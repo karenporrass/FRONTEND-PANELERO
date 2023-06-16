@@ -7,22 +7,31 @@
                     <!-- Imagen -->
                     <div id="div-img">
                         <img id="imagen3"
-                            src="https://images.pexels.com/photos/4086273/pexels-photo-4086273.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                        
+                            src="https://blog.dia.es/wp-content/uploads/2016/05/QUE-ES-LA-PANELA-1.jpg"
                             alt="">
                     </div>
                     <div id="div-login">
+                        <q-form ref="myForm" @submit.prevent.stop="validar()">
                         <p id="text-ingresar"><strong>INGRESAR</strong></p>
                         <q-icon id="icon" name="account_circle" />
                         <p id="p-usuario"><strong>USUARIO</strong> </p>
                         <q-input id="input-usuario" filled v-model="user" label="DIGITE SU USUARIO" stack-label
-                            :dense="dense" /><br>
+                            :dense="dense" lazy-rules :rules="[
+                        (val) =>
+                        (val && val.trim().length > 0) || 'Dijite su usuario',
+                        ]"/> /><br>
                         <p id="p-contraseña"><strong>CONTRASEÑA</strong></p>
                         <q-input id="input-contraseña" type="password" filled v-model="password" label="DIGITE SU CONTRASEÑA" stack-label
-                            :dense="dense" /><br>
+                            :dense="dense" lazy-rules :rules="[
+                        (val) =>
+                        (val && val.trim().length > 0) || 'Dijite su contraseña',
+                        ]"/> /><br>
                         <p id="p-olvido">¿Olvido su contraseña?</p>
                         <div id="div-boton">
-                        <q-btn @click="validar() " id="boton-ingresar" color="teal-10" label="INGRESAR " />
+                        <q-btn type="submit" id="boton-ingresar" color="teal-10" label="INGRESAR " />
                         </div>
+                    </q-form>
                     </div>
                 </div>
                 <div class="col-1"></div>
@@ -141,6 +150,7 @@ function validar() {
     height: 100%;
     border-right: 2px solid black;
     border-radius: 10px;
+    background-size: 100%;
 }
 
 #div-login {

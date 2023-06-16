@@ -44,10 +44,6 @@
     </div>
 
 
-   <!-- modal crear  -->
-  
-   
-
     <!-- TABLE INFO -->
     <div class="row q-mt-md">
       <div class="col-1"></div>
@@ -68,8 +64,14 @@
                 <q-btn v-else round size="xs" color="red" @click="activarDesactivar(props.row)"><span
                     class="material-symbols-outlined" style="font-size: 18px;">
                     close
-                  </span></q-btn>
-                <q-btn round class="q-mx-md" size="xs" color="green-10"><span style="font-size: 20px;" class="material-icons-outlined">request_quote</span></q-btn>
+                  </span>
+                </q-btn>
+                
+                <router-link style="text-decoration:  none; color: black;" to="/factura">
+                <q-btn round class="q-mx-md" size="xs" color="green-10" 
+                @click="index = props.row._id, goInfo(props.row)">
+                <span style="font-size: 20px;" class="material-icons-outlined">request_quote</span>
+                </q-btn></router-link>
 
 
 
@@ -275,6 +277,9 @@ import { ref, onMounted} from "vue";
 import { OrderStore } from "../../store/Orders/TablesOrders.js"
 import { LoginStore } from "../../store/Login/login.js";
 
+
+
+
 const orderStore = OrderStore()
 const loginStore = LoginStore()
 
@@ -374,6 +379,7 @@ function goInfo(data){
       tipoEmpaque.value= data.TipoEmpaque
       abono.value=data.Abono 
       valorTotal.value= data.ValorTotal
+
 }
 
 
@@ -487,6 +493,13 @@ async function getTypePanela() {
     throw new Error ("Error al obtener los datos de people")
   }
 }
+
+
+
+
+
+
+ 
 
 </script>
 

@@ -4,7 +4,7 @@ import Login from '../src/components/Login.vue'
 import Home from '../src/components/Home.vue'
 //ORDERS
 import orders from '../src/components/orders/Orders.vue'
-
+import Factura from '../src/components/orders/Factura.vue'
 import tablesOrders from '../src/components/orders/TablesOrders.vue'
 //COSTS
 import homeCosts from '../src/components/Costs/HomeCosts.vue'
@@ -55,6 +55,7 @@ export const routes=[
     {path:"/category", component:category},
     {path:"/product", component:product },
     {path:"/pedidosDos", component:tablesOrders},
+    {path:"/factura", component:Factura},
     {path:"/homeCostos", component: homeCosts},
     {path:"/usuarios", component:users},
     {path:"/tipoDocumento", component:typeDocument},

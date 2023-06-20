@@ -19,7 +19,7 @@ export const OrderStore = defineStore('counter', () => {
       }
 
       async function newOrder(documento, telefono, tipoPanela, cantidad, comprobantePago, saldopendiente,
-        nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal,token) {
+        nombre,direccion,tipoEmpaque,abono,valorTotal,token) {
         try {
           return await requestAxios.post(
             '/pedido',         {
@@ -31,7 +31,6 @@ export const OrderStore = defineStore('counter', () => {
                 SaldoPendiente: saldopendiente,
                 Nombre: nombre, 
                 Direccion: direccion,
-                FormaPanela: formaPanela,
                 TipoEmpaque: tipoEmpaque,
                 Abono: abono,
                 ValorTotal: valorTotal,
@@ -47,7 +46,7 @@ export const OrderStore = defineStore('counter', () => {
     
 
 
-      async function putOrder(id,documento, telefono, tipoPanela, cantidad, comprobantePago, saldopendiente, nombre,direccion,formaPanela,tipoEmpaque,abono,valorTotal) { //recivir las variables 
+      async function putOrder(id,documento, telefono, tipoPanela, cantidad, comprobantePago, saldopendiente, nombre,direccion,tipoEmpaque,abono,valorTotal) { //recivir las variables 
         try {
 
           return await requestAxios.put(
@@ -61,7 +60,6 @@ export const OrderStore = defineStore('counter', () => {
               SaldoPendiente: saldopendiente,
               Nombre: nombre,
               Direccion: direccion,
-              FormaPanela: formaPanela,
               TipoEmpaque: tipoEmpaque,
               Abono: abono,
               ValorTotal: valorTotal

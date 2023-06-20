@@ -19,12 +19,6 @@
                         </div>
                         
                         <p id="p-usuario"><strong>USUARIO</strong> </p>
-
-                        <q-input id="input-usuario" filled v-model="user" label="DIGITE SU USUARIO" stack-label
-                            :dense="dense" lazy-rules :rules="[
-                        (val) =>
-                        (val && val.trim().length > 0) || 'Dijite su usuario',
-                        ]"/> /><br>
                         <q-input  id="input-usuario" filled v-model="user" label="DIGITE SU USUARIO" stack-label
                             :dense="dense" /><br>
                         <p id="p-contraseña"><strong>CONTRASEÑA</strong></p>

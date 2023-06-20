@@ -6,15 +6,8 @@
           <q-toolbar>
             <q-btn flat @click="toggleLeftDrawer" round dense
               icon="menu"><q-toolbar-title>MENU</q-toolbar-title></q-btn>
-           
             <q-space></q-space>
-            <q-btn flat icon="fa-regular fa-user" class="q-mr-sm" />
-            <!-- <router-link to="/" style="text-decoration: none; color: white;"> -->
-            <q-btn flat>
-             <span class="fa-sharp fa-solid fa-arrow-up-from-bracket fa-rotate-270" style="font-size: 25px;"> 
-                
-              </span>
-            
+            <q-btn flat icon="fa-regular fa-user" class="q-mr-sm">
               <q-menu>
                 <div class="row no-wrap q-pa-md">
                   <div class="col-6 column items-center">
@@ -22,21 +15,19 @@
                       <img
                         src="https://www.kindpng.com/picc/m/163-1636340_user-avatar-icon-avatar-transparent-user-icon-png.png">
                     </q-avatar>
-
                     <q-btn color="teal-8" label="Logout" push size="sm" v-close-popup />
                   </div>
-
                   <div class="col-6">
                     <div class="text-h6 q-mt-sm">Pepita Perez</div>
                     <q-toggle label="Use Mobile Data" />
                     <q-toggle label="Bluetooth" />
                   </div>
-
-
                 </div>
               </q-menu>
             </q-btn>
-            <!-- </router-link> -->
+            <router-link to="/" style="text-decoration: none; color: white;">
+              <q-btn flat icon="fa-solid fa-arrow-right-from-bracket" class="" style="font-size: 15px;"> </q-btn>
+            </router-link>
 
 
           </q-toolbar>
@@ -150,7 +141,7 @@
 
 
           <q-img class="absolute-top"
-            src="../public/images/IMAGEN_TRAPICHE.png"
+            src="/images/IMAGEN_TRAPICHE.png"
             style="height: 170px;">
             <div class="absolute-bottom bg-transparent column items-center text-black">
               <div class="text-weight-bolder text-center">Usuario123@gmail.com</div>

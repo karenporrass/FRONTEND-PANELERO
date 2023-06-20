@@ -122,11 +122,6 @@
                     </div>
 
                     <div id="inputs">
-                      <q-select filled class="q-mb-md"  v-model="formaPanela" :options="options2" label="Escoga la forma de la panela" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Llene el campo de forma de la panela',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
                       <q-input  filled class="q-mb-md" type="number" v-model="cantidad" label="Cantidad" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'Dijite la Cantidad',
@@ -137,9 +132,9 @@
                   (val && val.toString().trim().length > 0) || 'Llene el campo de tipo de empaque',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
-                      <q-input  filled class="q-mb-md" type="text"   v-model="comprobantePago" label="Comprobante" lazy-rules :rules="[
+                 <q-select filled class="q-mb-md"   v-model="comprobantePago" :options="options2" label="Comprobante" lazy-rules :rules="[
                 (val) =>
-                  (val && val.trim().length > 0) || 'Dijite su Comprobante',
+                  (val && val.toString().trim().length > 0) || 'Escoja el comprobante de pago',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
                       <q-input  filled class="q-mb-md" type="number"   v-model="abono" label="Abono" lazy-rules :rules="[
@@ -222,9 +217,6 @@
       </div>
 
       <div id="inputs" style="min-width: 200px; margin-left: 30px;margin-top: 20px;">
-        <q-select filled class="q-mb-md" v-model="formaPanela" :options="options2" label="Escoja la forma de la panela" lazy-rules :rules="[
-          (val) => (val && val.toString().trim().length > 0) || 'Llene el campo de forma de la panela',
-        ]" />
         <q-input filled class="q-mb-md" type="number" v-model="cantidad" label="Cantidad" lazy-rules :rules="[
           (val) => (val && val.trim().length > 0) || 'Digite la cantidad',
         ]" />
@@ -233,9 +225,12 @@
                   (val && val.toString().trim().length > 0) ||
                   'El campo es requerido',
               ]" />
-        <q-input filled class="q-mb-md" type="text" v-model="comprobantePago" label="Comprobante" lazy-rules :rules="[
-          (val) => (val && val.trim().length > 0) || 'Digite su comprobante',
-        ]" />      <q-input filled class="q-mb-md" type="number" v-model="abono" label="Abono" lazy-rules :rules="[
+        <q-select filled class="q-mb-md"   v-model="comprobantePago" :options="options2" label="Comprobante" lazy-rules :rules="[
+                (val) =>
+                  (val && val.toString().trim().length > 0) || 'Escoja el comprobante de pago',
+                /* val => val > 0 && val < 100 || 'Please type a real age' */
+              ]"/>
+         <q-input filled class="q-mb-md" type="number" v-model="abono" label="Abono" lazy-rules :rules="[
           (val) => (val && val.trim().length > 0) || 'Digite el abono',
         ]" />
         <q-input filled class="q-mb-md" type="number" v-model="valorTotal" label="Valor Total" lazy-rules :rules="[
@@ -291,7 +286,6 @@ let index = ref()
 let optionsPacking= ref([])
 let Packing = ref([])
 let TipoPanela=ref([])
-let formaPanela=ref()
 let tipoEmpaque=ref([])
  let documento=ref() 
  let telefono=ref()
@@ -309,7 +303,7 @@ let tipoEmpaque=ref([])
 
 
       let options2= [
-        'Bloque Rectangular', 'Cono', 'Cono Trunco','Granulada'
+        'Si', 'No'
       ]   
       
     
@@ -339,7 +333,7 @@ let columns = ref([
   { 
     name: 'typePacking', 
   label: 'TIPO DE EMPAQUE', 
-  field: (row) => row.Packing.name, 
+  field: (row) => row.Packing, 
   align: 'center' 
 },
   { name:'abono', align:'center', label: 'ABONO', field: 'Abono' },
@@ -372,7 +366,7 @@ rows.value.forEach((row, index) => {
 function goInfo(data){
       documento.value =data.Documento
       telefono.value= data.Telefono 
-      tipoPanela.value= {
+      TipoPanela.value= {
         label: data.tipoPanela.name,
         value: data.tipoPanela._id,
       }
@@ -381,7 +375,6 @@ function goInfo(data){
       saldopendiente.value=data.SaldoPendiente
       nombre.value= data.Nombre
       direccion.value= data.Direccion
-      formaPanela.value=data.FormaPanela
       tipoEmpaque.value=  {
     label: data.tipoEmpaque.name,
     value: data.tipoEmpaque._id
@@ -415,7 +408,6 @@ async function orderPost(){
     saldopendiente.value=valorTotal.value-abono.value,
     nombre.value,
     direccion.value,
-    formaPanela.value,
     tipoEmpaque.value.value,
     abono.value,
     valorTotal.value,
@@ -439,7 +431,6 @@ async function putInfo() {
     saldopendiente.value=valorTotal.value-abono.value,
     nombre.value,
     direccion.value,
-    formaPanela.value,
     tipoEmpaque.value.value,
     abono.value,
     valorTotal.value 
@@ -480,7 +471,6 @@ function limpiar() {
       saldopendiente.value =""
       nombre.value=""
       direccion.value=""
-      formaPanela.value=""
       tipoEmpaque.value=""
       abono.value=""
       valorTotal.value =""

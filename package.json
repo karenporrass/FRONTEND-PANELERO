@@ -15,6 +15,7 @@
     "fs": "^0.0.1-security",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.29",
+    "jwt-decode": "^3.1.2",
     "ninja": "^3.0.8",
     "pdfkit": "^0.13.0",
     "pdfkit-browserify": "^0.8.3-R2",

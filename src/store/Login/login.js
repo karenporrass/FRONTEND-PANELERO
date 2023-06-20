@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import {ref} from "vue"
+import jwt_decode from "jwt-decode";
 import {requestAxios} from "../../Global/axios.js"
 
 export const LoginStore = defineStore('counter', () => {
@@ -10,14 +11,18 @@ export const LoginStore = defineStore('counter', () => {
    this.token = token
   }
 
-  async function newLogin(name, attentionLine) {
+  async function newLogin(dataUser) {
       try {
-          return await requestAxios.post(`/login`,{
-              name: name,
-              attentionLine: attentionLine
-          })
+          const response =  await requestAxios.post(`/login`,dataUser)
+          const decoded = jwt_decode(response.data.token);
+
+          console.log(decoded)
+
+          return response
+
         } catch (error) {
-          console.log(error);
+          console.log('errrrr',error);
+          throw new Error(error)
         }
     }
     async function putLogin(id) {

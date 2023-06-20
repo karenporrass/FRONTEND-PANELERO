@@ -25,7 +25,7 @@
                         (val) =>
                         (val && val.trim().length > 0) || 'Dijite su usuario',
                         ]"/> /><br>
-                        <q-input  id="input-usuario" filled v-model="user" label="DIGITE SU USUARIO" stack-label
+                        <q-input type="text"  id="input-usuario" filled v-model="user" label="DIGITE SU USUARIO" stack-label
                             :dense="dense" /><br>
                         <p id="p-contraseña"><strong>CONTRASEÑA</strong></p>
                         <q-input id="input-contraseña" type="password" filled v-model="password" label="DIGITE SU CONTRASEÑA" stack-label
@@ -60,17 +60,9 @@ const store = LoginStore()
 
 let router= useRouter();
 let dense = ref(false)
-let user = ref("daniel")
-let password = ref("123")
+let user = ref()
+let password = ref()
 let index   = ref(0)
-let usuario = ref([
-    {
-        nameUser: "daniel",
-        password: "123",
-      }
-    ])
-
-
 
 const addUser = async()=>{
     try {
@@ -97,19 +89,15 @@ function pasarHome() {
     
 
 }
-function validar() {
-        for (let i = 0; i < usuario.value.length; i++) {
-            index.value = i
-            if (user.value == usuario.value[index.value].nameUser && password.value == usuario.value[index.value].password) {
-            console.log("se logio con exito");
-            addUser()
-            pasarHome()
-            }   
-            else{
-                console.log("No es correcto");
-            }
-            console.log("pos ", i);
-        }}
+async function validar() {
+
+    await store.newLogin({
+        user: user.value,
+        password: password.value
+    }).then((res)=>{
+         pasarHome()
+    })
+    }
        
 
 </script>

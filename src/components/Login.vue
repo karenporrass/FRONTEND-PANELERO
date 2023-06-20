@@ -1,117 +1,123 @@
 <template>
-    <div class="fullscreen">
-        <div id="imagen-fondo" >
-            <div class="row" id="contendor-imagen2">
-                <div class="col-1"></div>
-                <div id="contenedor-col2" class="col-10">
-                    <!-- Imagen -->
-                    <div id="div-img">
-                        <img id="imagen3"
-                        
-                            src="https://blog.dia.es/wp-content/uploads/2016/05/QUE-ES-LA-PANELA-1.jpg"
-                            alt="">
-                    </div>
-                    <div id="div-login">
-                        <q-form ref="myForm" @submit.prevent.stop="validar()">
-                        <p id="text-ingresar"><strong>INGRESAR</strong></p>
-                        <div id="div_icon">
-                            <q-icon id="icon" name="account_circle" />
-                        </div>
-                        
-                        <p id="p-usuario"><strong>USUARIO</strong> </p>
-
-                        <q-input id="input-usuario" filled v-model="user" label="DIGITE SU USUARIO" stack-label
-                            :dense="dense" lazy-rules :rules="[
-                        (val) =>
-                        (val && val.trim().length > 0) || 'Dijite su usuario',
-                        ]"/> /><br>
-                        <q-input  id="input-usuario" filled v-model="user" label="DIGITE SU USUARIO" stack-label
-                            :dense="dense" /><br>
-                        <p id="p-contraseña"><strong>CONTRASEÑA</strong></p>
-                        <q-input id="input-contraseña" type="password" filled v-model="password" label="DIGITE SU CONTRASEÑA" stack-label
-                            :dense="dense" lazy-rules :rules="[
-                        (val) =>
-                        (val && val.trim().length > 0) || 'Dijite su contraseña',
-                        ]"/> /><br>
-                        <p id="p-olvido">¿Olvido su contraseña?</p>
-                        <div id="div-boton">
-                        <q-btn type="submit" id="boton-ingresar" color="teal-10" label="INGRESAR " />
-                        </div>
-                    </q-form>
-                    </div>
-                </div>
-                <div class="col-1"></div>
-
-            </div>
+  <div class="fullscreen">
+    <div id="imagen-fondo">
+      <div class="row" id="contendor-imagen2">
+        <div class="col-1"></div>
+        <div id="contenedor-col2" class="col-10">
+          <!-- Imagen -->
+          <div id="div-img">
+            <img
+              id="imagen3"
+              src="images/PANELA.jpg"
+              alt=""
+            />
+          </div>
+          <div id="div-login">
+            <q-form ref="myForm" @submit.prevent.stop="validar()">
+              <p id="text-ingresar"><strong>INGRESAR</strong></p>
+              <div id="div_icon">
+                <q-icon id="icon" name="account_circle" />
+              </div>
+              <p id="p-usuario"><strong>USUARIO</strong></p>
+              <q-input
+                id="input-usuario"
+                filled
+                v-model="user"
+                label="DIGITE SU USUARIO"
+                stack-label
+                :dense="dense"
+               
+              />
+              <br />
+              <p id="p-contraseña"><strong>CONTRASEÑA</strong></p>
+              <q-input
+                id="input-contraseña"
+                type="password"
+                filled
+                v-model="password"
+                label="DIGITE SU CONTRASEÑA"
+                stack-label
+                :dense="dense"
+             
+              />
+              /><br />
+              <p id="p-olvido">¿Olvido su contraseña?</p>
+              <div id="div-boton">
+                <q-btn
+                  type="submit"
+                  id="boton-ingresar"
+                  color="teal-10"
+                  label="INGRESAR "
+                />
+              </div>
+            </q-form>
+          </div>
         </div>
-        <!-- termina div que contiene todo -->
+        <div class="col-1"></div>
+      </div>
     </div>
+    <!-- termina div que contiene todo -->
+  </div>
 </template>
 
 
 
 <script setup>
 import { ref } from "vue";
-import {requestAxios} from "../Global/axios.js"
-import {useRouter} from "vue-router"
-import {LoginStore} from '../store/Login/login.js'
+import { requestAxios } from "../Global/axios.js";
+import { useRouter } from "vue-router";
+import { LoginStore } from "../store/Login/login.js";
 
-const store = LoginStore()
+const store = LoginStore();
 
-let router= useRouter();
-let dense = ref(false)
-let user = ref("daniel")
-let password = ref("123")
-let index   = ref(0)
+let router = useRouter();
+let dense = ref(false);
+let user = ref("daniel");
+let password = ref("123");
+let index = ref(0);
 let usuario = ref([
-    {
-        nameUser: "daniel",
-        password: "123",
-      }
-    ])
+  {
+    nameUser: "daniel",
+    password: "123",
+  },
+]);
 
+const addUser = async () => {
+  try {
+    const newuser = await requestAxios.post("/login/login", {
+      user: user.value,
+      password: password.value,
+    });
 
+    store.getToken(newuser.data);
 
-const addUser = async()=>{
-    try {
-
-        const newuser = await requestAxios.post("/login/login",{
-            user:user.value,
-            password:password.value 
-            
-
-        })
-        
-        store.getToken(newuser.data);
-
-       console.log("Se genero token")
-    } catch (error) {
-        console.log(error);
-    }
-}
+    console.log("Se genero token");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 function pasarHome() {
-    if (store.token==store.token) {
-        router.push("/home")
-    }
-    
-
+  if (store.token == store.token) {
+    router.push("/home");
+  }
 }
 function validar() {
-        for (let i = 0; i < usuario.value.length; i++) {
-            index.value = i
-            if (user.value == usuario.value[index.value].nameUser && password.value == usuario.value[index.value].password) {
-            console.log("se logio con exito");
-            addUser()
-            pasarHome()
-            }   
-            else{
-                console.log("No es correcto");
-            }
-            console.log("pos ", i);
-        }}
-       
-
+  for (let i = 0; i < usuario.value.length; i++) {
+    index.value = i;
+    if (
+      user.value == usuario.value[index.value].nameUser &&
+      password.value == usuario.value[index.value].password
+    ) {
+      console.log("se logio con exito");
+      addUser();
+      pasarHome();
+    } else {
+      console.log("No es correcto");
+    }
+    console.log("pos ", i);
+  }
+}
 </script>
 
 
@@ -123,132 +129,125 @@ function validar() {
 <style>
 #imagen-fondo {
   min-height: 100vh;
-  background-image: url(https://images.pexels.com/photos/4086273/pexels-photo-4086273.jpeg?auto=compress&cs=tinysrgb&w=1600);
+  background-image: url("images/FONDO.jpg") ;
   background-repeat: no-repeat;
   background-size: cover;
   align-items: center;
 }
 
 #contendor-imagen2 {
-
-    min-height: 90vh;
-
+  min-height: 90vh;
 }
 
 #contenedor-col2 {
-    background-color: white;
-    margin-top: 45px;
-    color: white;
-    margin-bottom: 10px;
-    display: flex;
-    border-radius: 10px;
-    border: 1px solid black;
-
+  background-color: white;
+  margin-top: 45px;
+  color: white;
+  margin-bottom: 10px;
+  display: flex;
+  border-radius: 10px;
+  border: 1px solid black;
 }
 
 #div-img {
-    width: 60%;
-    height: 100%;
+  width: 60%;
+  height: 100%;
 }
 
 #imagen3 {
-    width: 100%;
-    height: 100%;
-    border-right: 2px solid black;
-    border-radius: 10px;
-    background-size: 100%;
+  width: 100%;
+  height: 100%;
+  border-right: 2px solid black;
+  border-radius: 10px;
+  background-size: 100%;
 }
 
 #div-login {
-    margin: 0% auto;
-    padding-top: 70px;
-    width: 30%;
+  margin: 0% auto;
+  padding-top: 70px;
+  width: 30%;
 }
 
 #text-ingresar {
-    color: black;
-    text-align: center;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 30px;
+  color: black;
+  text-align: center;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 30px;
 }
 
-#div_icon{
-    margin: 0px auto;
- 
-    width: 100px;
+#div_icon {
+  margin: 0px auto;
+
+  width: 100px;
 }
 
 #icon {
-    color: black;
-    font-size: 100px;
-   
+  color: black;
+  font-size: 100px;
 }
 
 #p-usuario {
-    color: black;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: black;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 #p-contraseña {
-    color: black;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: black;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 #input-usuario {
-    background-color: white;
-    width: 90%;
-    border-radius: 10px;
+  background-color: white;
+  width: 90%;
+  border-radius: 10px;
 }
 
 #input-contraseña {
-    background-color: white;
-    width: 90%;
-    border-radius: 10px;
+  background-color: white;
+  width: 90%;
+  border-radius: 10px;
 }
 
 #p-olvido {
-    color: black;
-    margin-bottom: 40px;
+  color: black;
+  margin-bottom: 40px;
 }
 
 #div-boton {
-    width: 40%;
-    margin: 0px auto;
-  
+  width: 40%;
+  margin: 0px auto;
 }
 
 #boton-ingresar {
-    width: 120px;
-    font-size: 15px;
+  width: 120px;
+  font-size: 15px;
 }
 
 @media (max-height: 720px) {
-    #contenedor-col2{
-        height: 620px;
-        
-    }
-    #boton-ingresar {
+  #contenedor-col2 {
+    height: 620px;
+  }
+  #boton-ingresar {
     border-radius: 10px;
     width: 100px;
     font-size: 12px;
-    }
-    #p-olvido {
+  }
+  #p-olvido {
     color: black;
     font-size: 12px;
-}
-#p-usuario {
+  }
+  #p-usuario {
     color: black;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
     font-size: 11px;
-    
-}
+  }
 
-#p-contraseña {
+  #p-contraseña {
     color: black;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
     font-size: 11px;
+  }
 }
-}
-
-
 </style>

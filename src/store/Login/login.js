@@ -6,6 +6,7 @@ import {requestAxios} from "../../Global/axios.js"
 export const LoginStore = defineStore('counter', () => {
   const login = ref("")
   const token = ref()
+  const rol = ref()
   
   function getToken(token) {
    this.token = token
@@ -15,9 +16,9 @@ export const LoginStore = defineStore('counter', () => {
       try {
           const response =  await requestAxios.post(`/login`,dataUser)
           const decoded = jwt_decode(response.data.token);
-
-          console.log(decoded)
-
+          token.value = response.data.token
+          rol.value = decoded.rol 
+          
           return response
 
         } catch (error) {

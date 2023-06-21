@@ -65,7 +65,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { requestAxios } from "../Global/axios.js";
+
 import { useRouter } from "vue-router";
 import { LoginStore } from "../store/Login/login.js";
 
@@ -79,11 +79,6 @@ let password = ref()
 let index   = ref(0)
 
 
-    console.log("Se genero token");
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 function pasarHome() {
   if (store.token == store.token) {
@@ -91,21 +86,31 @@ function pasarHome() {
   }
 }
 
-function validar() {
-  for (let i = 0; i < usuario.value.length; i++) {
-    index.value = i;
-    if (
-      user.value == usuario.value[index.value].nameUser &&
-      password.value == usuario.value[index.value].password
-    ) {
-      console.log("se logio con exito");
-      addUser();
-      pasarHome();
-    } else {
-      console.log("No es correcto");
-    }
-    console.log("pos ", i);
-  }
+// function validar() {
+//   for (let i = 0; i < usuario.value.length; i++) {
+//     index.value = i;
+//     if (
+//       user.value == usuario.value[index.value].nameUser &&
+//       password.value == usuario.value[index.value].password
+//     ) {
+//       console.log("se logio con exito");
+//       addUser();
+//       pasarHome();
+//     } else {
+//       console.log("No es correcto");
+//     }
+//     console.log("pos ", i);
+//   }
+// }
+
+async function validar() {
+
+await store.newLogin({
+    user: user.value,
+    password: password.value
+}).then((res)=>{
+     pasarHome()
+})
 }
 
 </script>

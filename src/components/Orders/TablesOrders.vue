@@ -220,7 +220,7 @@
         <q-input filled class="q-mb-md" type="number" v-model="cantidad" label="Cantidad" lazy-rules :rules="[
           (val) => (val && val.trim().length > 0) || 'Digite la cantidad',
         ]" />
-        <q-select filled class="q-mb-md" v-model="tipoEmpaque" :options="Packing" label="Escoja el tipo de empaque" lazy-rules :rules="[
+        <q-select filled class="q-mb-md" v-model="TipoEmpaque" :options="Packing" label="Escoja el tipo de empaque" lazy-rules :rules="[
               (val) =>
                   (val && val.toString().trim().length > 0) ||
                   'El campo es requerido',

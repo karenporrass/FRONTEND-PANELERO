@@ -260,9 +260,10 @@
 </template>
 
 <script setup>
+import {usersStore} from "../../store/Maintenance/CreateUsers.js"
 import {ref} from "vue"
 
-
+const useUsers= usersStore()
 
 let abrirDescargar=ref(false)
 let abrirDescargar3=ref(false)
@@ -329,6 +330,7 @@ function downloadPdfPersonas(x) {
               { text: 'NUMERO DE CONTACTO', style: 'tableHeader' }
             ],
             ...this.rifa.map((item, index) => [
+              
               { text: `${index + 1}`, style: index % 2 === 0 ? 'even' : 'odd' },
               { text: item.name, style: 'tableBody' },
               { text: item.lastNames, style: 'tableBody' }, 

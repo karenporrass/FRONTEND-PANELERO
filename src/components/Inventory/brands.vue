@@ -176,9 +176,9 @@ let pagination = ref({
         rowsPerPage: 0
       })
       let columns = ref([
-  {name: 'name_Spent',label: 'Nombre marca',field: 'name_brands',align: 'center'},
-  {name: 'Descripcion',required: true,label: 'Descripcion',align: 'center',field: 'description',},
-  { name: 'creator', align: 'center', label: 'Creador', field: 'creator',align: 'center', },
+  {name: 'name_Spent',label: 'NOMBRE DE MARCA',field: 'name_brands',align: 'center'},
+  {name: 'DESCRIPTION',required: true,label: 'DESCRIPCION',align: 'center',field: 'description',},
+  { name: 'creator', align: 'center', label: 'CREADOR', field: 'creator',align: 'center', },
   {
     name: "status",
     label: "ESTADO",

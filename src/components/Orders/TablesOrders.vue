@@ -127,7 +127,7 @@
                   (val && val.trim().length > 0) || 'Dijite la Cantidad',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
-                      <q-select filled class="q-mb-md"               v-model="tipoEmpaque" :options="Packing" label="Escoga el tipo de empaque" lazy-rules :rules="[
+                      <q-select filled class="q-mb-md"   v-model="TipoEmpaque" :options="Packing" label="Escoga el tipo de empaque" lazy-rules :rules="[
                 (val) =>
                   (val && val.toString().trim().length > 0) || 'Llene el campo de tipo de empaque',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
@@ -220,7 +220,7 @@
         <q-input filled class="q-mb-md" type="number" v-model="cantidad" label="Cantidad" lazy-rules :rules="[
           (val) => (val && val.trim().length > 0) || 'Digite la cantidad',
         ]" />
-        <q-select filled class="q-mb-md" v-model="tipoEmpaque" :options="Packing" label="Escoja el tipo de empaque" lazy-rules :rules="[
+        <q-select filled class="q-mb-md" v-model="TipoEmpaque" :options="Packing" label="Escoja el tipo de empaque" lazy-rules :rules="[
               (val) =>
                   (val && val.toString().trim().length > 0) ||
                   'El campo es requerido',
@@ -286,7 +286,7 @@ let index = ref()
 let optionsPacking= ref([])
 let Packing = ref([])
 let TipoPanela=ref([])
-let tipoEmpaque=ref([])
+let TipoEmpaque=ref([])
  let documento=ref() 
  let telefono=ref()
  let cantidad= ref()
@@ -333,7 +333,7 @@ let columns = ref([
   { 
     name: 'typePacking', 
   label: 'TIPO DE EMPAQUE', 
-  field: (row) => row.Packing, 
+  field: (row) => row.TipoEmpaque.name, 
   align: 'center' 
 },
   { name:'abono', align:'center', label: 'ABONO', field: 'Abono' },
@@ -367,17 +367,17 @@ function goInfo(data){
       documento.value =data.Documento
       telefono.value= data.Telefono 
       TipoPanela.value= {
-        label: data.tipoPanela.name,
-        value: data.tipoPanela._id,
+        label: data.TipoPanela.name,
+        value: data.TipoPanela._id,
       }
       cantidad.value= data.Cantidad
       comprobantePago.value=data.ComprobantePago 
       saldopendiente.value=data.SaldoPendiente
       nombre.value= data.Nombre
       direccion.value= data.Direccion
-      tipoEmpaque.value=  {
-    label: data.tipoEmpaque.name,
-    value: data.tipoEmpaque._id
+      TipoEmpaque.value=  {
+    label: data.TipoEmpaque.name,
+    value: data.TipoEmpaque._id
   };
       abono.value=data.Abono 
       valorTotal.value= data.ValorTotal
@@ -408,7 +408,7 @@ async function orderPost(){
     saldopendiente.value=valorTotal.value-abono.value,
     nombre.value,
     direccion.value,
-    tipoEmpaque.value.value,
+    TipoEmpaque.value.value,
     abono.value,
     valorTotal.value,
     loginStore.token
@@ -425,13 +425,13 @@ async function putInfo() {
   const res = await orderStore.putOrder(index.value,
     documento.value, 
     telefono.value, 
-    tipoPanela.value.value, 
+    TipoPanela.value.value, 
     cantidad.value, 
     comprobantePago.value,
     saldopendiente.value=valorTotal.value-abono.value,
     nombre.value,
     direccion.value,
-    tipoEmpaque.value.value,
+    TipoEmpaque.value.value,
     abono.value,
     valorTotal.value 
   )
@@ -471,7 +471,7 @@ function limpiar() {
       saldopendiente.value =""
       nombre.value=""
       direccion.value=""
-      tipoEmpaque.value=""
+      TipoEmpaque.value=""
       abono.value=""
       valorTotal.value =""
 }

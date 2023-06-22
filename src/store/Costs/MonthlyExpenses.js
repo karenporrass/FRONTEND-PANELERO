@@ -20,7 +20,7 @@ export const monthlyStore = defineStore("monthlyStore", () => {
 
   
 
-  async function newMonthly(Name_spent, Finca, Description, PAYMENT_METHOD, costValue, Total ) {
+  async function newMonthly(Name_spent, Finca, Description, PAYMENT_METHOD, Total ) {
      
     try {
         return await requestAxios.post(`/monthlyExpenses`,{
@@ -28,7 +28,6 @@ export const monthlyStore = defineStore("monthlyStore", () => {
           Finca: Finca,
           Description: Description,
           PAYMENT_METHOD: PAYMENT_METHOD,
-          costValue: costValue,
           Total: Total
         },
         notifySuccess('Gasto registrado correctamente'))
@@ -38,7 +37,7 @@ export const monthlyStore = defineStore("monthlyStore", () => {
       }
   }
 
-  async function putMonthly(id, Name_spent, Finca, Description, PAYMENT_METHOD, costValue, Total ) {
+  async function putMonthly(id, Name_spent, Finca, Description, PAYMENT_METHOD,  Total ) {
     
     try {
         return await requestAxios.put(`/monthlyExpenses/update/${id}`,{
@@ -46,7 +45,7 @@ export const monthlyStore = defineStore("monthlyStore", () => {
           Finca: Finca,
           Description: Description,
           PAYMENT_METHOD: PAYMENT_METHOD,
-          costValue: costValue,
+          
           Total: Total
         },
         notifySuccess('Gastos actualizado correctamente'))

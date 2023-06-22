@@ -65,36 +65,28 @@
         </q-card-section>
         <div class="q-pa-md ">
           <q-form @submit.prevent.stop="postProduct()">
-
+          
             <div>
-              <q-input  filled type="number" v-model="amount" label="Digite el cantidad del gasto" lazy-rules :rules="[
+              <q-input  filled type="text" v-model="nameProduct" label="Digite el nombre del producto" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
-                    <q-input  filled type="text" v-model="expense_name" label="Digite el nombre del gasto" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
-                    <q-input  filled type="text" v-model="administrator" label="Digite el nombre del administrador" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
-                  <q-select filled  v-model="Finca" :options="optionsFarm"
-              label="seleccione la finca" lazy-rules
+              ]"></q-input> 
+                <q-select filled  v-model="marca" :options="OpBrands"
+              label="seleccione la marca" lazy-rules
               :rules="[val => val && val.toString().trim().length > 0 || 'El campo es requerido']" />
-                  <q-input  filled type="text" v-model="description" label="Digite la descripcion" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
-                  <q-select filled v-model="PAYMENT_METHOD" :options="optionsMethod"
-              label="seleccione el metodo de pago" lazy-rules
+              <q-select filled  v-model="categoria" :options="OpCategory"
+              label="seleccione la categoria" lazy-rules
               :rules="[val => val && val.toString().trim().length > 0 || 'El campo es requerido']" />
-
-                  <q-input filled type="number" v-model="cost_value" label="Digite el valor del gasto" lazy-rules :rules="[
+                   <q-input  filled type="text" v-model="Cantidad" label="Digite la cantidad" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-                  <q-input  filled type="number" v-model="total" label="Digite el total" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="timeUseful" label="Digite la vida util" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+            
+                  <q-input  filled type="text" v-model="timeUsed" label="Digite el tiempo utilizado" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
@@ -138,33 +130,26 @@
           <q-form @submit.prevent.stop="putInfo()">
 
             <div>
-              <q-input  filled type="number" v-model="amount" label="Digite el cantidad del gasto" lazy-rules :rules="[
+              <q-input  filled type="text" v-model="nameProduct" label="Digite el nombre del producto" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
-                    <q-input  filled type="text" v-model="expense_name" label="Digite el nombre del gasto" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
-                    <q-input  filled type="text" v-model="administrator" label="Digite el nombre del administrador" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
-                  <q-select filled  v-model="Finca" :options="optionsFarm"
-              label="seleccione el metodo de pago" lazy-rules
+              ]"></q-input> 
+                <q-select filled  v-model="marca" :options="OpBrands"
+              label="seleccione la marca" lazy-rules
               :rules="[val => val && val.toString().trim().length > 0 || 'El campo es requerido']" />
-                  <q-input  filled type="text" v-model="description" label="Digite el descripcion" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"></q-input>
-                  <q-select filled  v-model="PAYMENT_METHOD" :options="optionsMethod"
-              label="seleccione el metodo de pago" lazy-rules
+              <q-select filled  v-model="categoria" :options="OpCategory"
+              label="seleccione la categoria" lazy-rules
               :rules="[val => val && val.toString().trim().length > 0 || 'El campo es requerido']" />
-                  <q-input filled type="number" v-model="cost_value" label="Digite el valor del gasto" lazy-rules :rules="[
+                   <q-input  filled type="text" v-model="Cantidad" label="Digite la cantidad" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-                  <q-input  filled type="number" v-model="total" label="Digite el total" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="timeUseful" label="Digite la vida util" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+            
+                  <q-input  filled type="text" v-model="timeUsed" label="Digite el tiempo utilizado" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
@@ -205,46 +190,50 @@ import { productStore } from "../../store/Inventory/Product.js"
 const ProductStore = productStore()
 let prompt = ref(false)
 let index = ref();
-let optionsMethod = ref([])
-let optionsFarm = ref([])
+
 let edit = ref(false)
-let amount = ref()
-let expense_name = ref()
-let administrator = ref()
-let Finca = ref([])
-let description = ref()
-let PAYMENT_METHOD = ref([])
-let cost_value = ref()
-let total = ref()
+let OpBrands = ref([]);
+let OpCategory= ref([]);
+let nameProduct = ref()
+let marca = ref([])
+let categoria = ref([])
+let Cantidad = ref()
+let timeUseful = ref()
+let timeUsed = ref()
 let pagination = ref({
         rowsPerPage: 0
       })
       let columns = ref([
-  {name: 'amount',label: 'Cantidad',field: 'amount',align: 'center'},
-  {name: 'name',required: true,label: 'Nombre de gasto',align: 'center',field: "expense_name",},
-  { name: 'administrador', align: 'center', label: 'Administrador', field: 'administrator',align: 'center', },
+  {name: 'Nombre producto',label: 'NOMBRE',field: 'nameProduct',align: 'center'},
   {
-    name: "finca",
-    label: "Finca",
-    field: (row) => row.Finca.name,
+    name: "categoria",
+    label: "CATEGORIA",
+    field: (row) => row.categoria.name_category,
+    align: "center",
+  }, 
+  {
+    name: "marca",
+    label: "MARCA",
+    field: (row) => row.marca.name_brands,
+    align: "center",
+  }, 
+  { name: 'Cantidad', align: 'center', label: 'CANTIDAD', field: 'Cantidad',align: 'center', },
+  { name: 'timeUseful', label: 'TIEMPO DE VIDA UTIL', field: 'timeUseful',align: 'center' },
+  
+  { name: 'timeUsed', label: 'TIEMPO DE USO', field: 'timeUsed',align: 'center' },
+  {
+    name: "date",
+    label: "FECHA",
+    field: (row) => row.Date.slice(0, 10),
     align: "center",
   },
-  { name: 'description', label: 'Descripcion', field: 'description',align: 'center' },
-  {
-    name: "PAYMENT_METHOD",
-    label: "Metodo de pago",
-    field: (row) => row.PAYMENT_METHOD.name,
-    align: "center",
-  },
-  { name: 'cost_value', label: 'Valor del gasto', field: 'cost_value',align: 'center' },
-  { name: 'total', label: 'Total', field: 'total',align: 'center',},
   {
     name: "status",
-    label: "Estado",
+    label: "ESTADO",
     field: (row) => row.state == 1 ? 'Activo' : 'Inactivo',
     align: "center",
   },
-  { name: 'options', align: 'center', label: 'Opciones', align: 'center', sortable: true },
+  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
   
 ])
 
@@ -256,16 +245,14 @@ rows.value.forEach((row, index) => {
 
 const postProduct = async () => {
   console.log("hola");
-  const product = await ProductStore.newProduct(
-amount.value,
-expense_name.value,
-administrator.value,
-Finca.value.value,
-description.value,
-PAYMENT_METHOD.value.value,
-cost_value.value,
-total.value,
-)
+  const product = await ProductStore.newProduct({
+   nameProduct: nameProduct.value,
+   marca: marca.value.value,
+   categoria: categoria.value.value,
+   Cantidad: Cantidad.value,
+   timeUseful: timeUseful.value,
+   timeUsed: timeUsed.value,
+  })
   console.log("pos");
   console.log(product);
   getProduct()
@@ -303,81 +290,79 @@ async function activarDesactivar(data) {
 }
 
 function goInfo(data) {
-    
-amount.value = data.amount 
-expense_name.value = data.expense_name 
-administrator.value = data.administrator 
-Finca.value  = {
-    label: data.Finca.name,
-    value: data.Finca._id,
+  
+nameProduct.value = data.nameProduct
+   marca.value = {
+    label: data.marca.name_brands,
+    value: data.marca._id,
   };
-description.value = data.description 
-PAYMENT_METHOD.value = {
-    label: data.PAYMENT_METHOD.name,
-    value: data.PAYMENT_METHOD._id
+   categoria.value = {
+    label: data.categoria.name_category,
+    value: data.categoria._id,
   };
-  cost_value.value = data.cost_value 
-total.value = data.total 
+   Cantidad.value = data.Cantidad
+   timeUseful.value = data.timeUseful
+   timeUsed.value = data.timeUsed
+
 }
 
 async function putInfo() {
   console.log(index.value);
-  const res = await ProductStore.putProduct(index.value,
-amount.value,
-expense_name.value,
-administrator.value,
-Finca.value.value,
-description.value,
-PAYMENT_METHOD.value.value,
-cost_value.value,
-total.value,
-  )
+  const res = await ProductStore.putProduct(index.value,{
+  nameProduct: nameProduct.value,
+   marca: marca.value.value,
+   categoria: categoria.value.value,
+   Cantidad: Cantidad.value,
+   timeUseful: timeUseful.value,
+   timeUsed: timeUsed.value,
+})
   console.log(res);
   getProduct()
   edit.value = false
 }
 
-async function getMethod() {
-  // optionsPeople.value=[]
-  const res = await ProductStore.listPaymentsActive();
+
+
+
+async function getBrands() {
+  const res = await ProductStore.listBrandsActive();
   if (res.status < 299) {
     for (let i in res.data) {
-      let object = { label: res.data[i].name, value: res.data[i]._id };
-      optionsMethod.value.push(object);
+      let object = { label: res.data[i].name_brands, value: res.data[i]._id };
+      OpBrands.value.push(object);
+
+      console.log("b", OpBrands.value);
+
     }
-
-   
-
-  } else {
-    throw new Error("Error al obtener los datos de metodo de pago")
   }
 }
 
-async function getFarms() {
-  const res = await ProductStore.listFarmsActive();
+async function getCategory() {
+  const res = await ProductStore.listCategoryActive();
   if (res.status < 299) {
     for (let i in res.data) {
-      let object = { label: res.data[i].name, value: res.data[i]._id };
-      optionsFarm.value.push(object);
+      let object = { label: res.data[i].name_category, value: res.data[i]._id };
+      OpCategory.value.push(object);
+
+      console.log("c", OpCategory.value);
+
     }
   }
 }
 
 function toEmpty() {
-  amount.value = ""
-expense_name.value = ""
-administrator.value = ""
-Finca.value = ""
-description.value = ""
-PAYMENT_METHOD.value = ""
-cost_value.value = ""
-total.value = ""
+  nameProduct.value = ""
+   marca.value = ""
+   categoria.value = ""
+   Cantidad.value = ""
+   timeUseful.value = ""
+   timeUsed.value = ""
 }
 
 onMounted(() => {
   getProduct()
-  getMethod()
-  getFarms()
+  getBrands()
+  getCategory()
 })
 
 

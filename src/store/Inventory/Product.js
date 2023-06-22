@@ -13,45 +13,25 @@ export const productStore = defineStore("productStore", () => {
     try {
       return await requestAxios.get("/product")
     } catch (error) {
-      notifyError('No fue posible obtener los gastos');
+      notifyError('No fue posible obtener los productos');
       console.log(error);
     }
   }
 
 
-  async function newProduct(amount, expense_name,  administrator, Finca, description, PAYMENT_METHOD, cost_value, total  ) {
+  async function newProduct(infoProduct ) {
     try {
-      return await requestAxios.post("/product", {
-      amount: amount, 
-      expense_name: expense_name, 
-      administrator: administrator, 
-      Finca: Finca, 
-      description: description, 
-      PAYMENT_METHOD: PAYMENT_METHOD, 
-      cost_value: cost_value, 
-      total: total, 
-      },
-      notifySuccess('Producto registrado correctamente'))
+      return await requestAxios.post("/product", infoProduct, {}),
+     notifySuccess('Producto registrado correctamente')
     } catch (error) {
       notifyError(error.response.data.errors.join(", "));
       console.log(error);
     }
   }
 
-  async function putProduct(id, amount,expense_name,  administrator, Finca, description, PAYMENT_METHOD, cost_value, total) { //recivir las variables 
+  async function putProduct(id, infoProduct) { //recivir las variables 
     try {
-      return await requestAxios.put(`/product/update/${id}`, {
-        amount: amount, 
-        expense_name: expense_name, 
-        administrator: administrator, 
-        Finca: Finca, 
-        description: description, 
-        PAYMENT_METHOD: PAYMENT_METHOD, 
-        cost_value: cost_value, 
-        total: total, 
-   
-
-      },
+      return await requestAxios.put(`/product/update/${id}`, infoProduct, { },
       notifySuccess('Producto actualizado correctamente'))
     } catch (error) {
       notifyError(error.response.data.errors.join(", "));
@@ -87,10 +67,24 @@ export const productStore = defineStore("productStore", () => {
     }
   }
   
+  async function listCategoryActive() {
+    try {
+      return await requestAxios.get("/category/active")
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function listBrandsActive() {
+    try {
+      return await requestAxios.get("/brands/active")
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
 
-
-  return { product, listProduct, newProduct, putProduct, active, listPaymentsActive, listFarmsActive };},
+  return { product, listProduct, newProduct, putProduct, active, listPaymentsActive, listFarmsActive, listCategoryActive, listBrandsActive };},
 {  persist: true,},
 );
   

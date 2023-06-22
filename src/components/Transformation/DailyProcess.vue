@@ -246,7 +246,7 @@ let columns = ref([
   {
     name: "people",
     label: "PERSONA ENCARGADA",
-    field: (row) => row.people.names,
+    field: (row) => row.people,
     align: "center",
   },
   {
@@ -312,7 +312,7 @@ getListDaily();
 async function postDailyProcess() {
   console.log("hola post");
   await useDaily.postDaily({
-    // name: name.value,
+    name: name.value,
     description: description.value,
     hours: hours.value,
     people: people.value.value,

@@ -94,7 +94,7 @@
                     (val && val.toString().trim().length > 0) ||
                     'El campo es requerido',
                 ]" />
-              <q-input filled type="number" v-model="TIME_TO_PAY" label="tiempo a pagar (horas)" lazy-rules :rules="[
+              <q-input filled type="date" v-model="TIME_TO_PAY" label="tiempo limite a pagar" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
@@ -198,7 +198,7 @@ let columns = ref([
   {
     name: "Name",
     required: true,
-    label: "Nombre",
+    label: "NOMBRE",
     align: "center",
     field: (row) => row.DNI.names,
   },
@@ -225,7 +225,7 @@ let columns = ref([
   },
   {
     name: "PAYMENT_METHOD",
-    label: "Metodo de pago",
+    label: "METODO DE PAGO",
     field: (row) => row.PAYMENT_METHOD.name,
     align: "center",
   },

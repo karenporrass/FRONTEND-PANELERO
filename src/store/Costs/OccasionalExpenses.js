@@ -19,7 +19,7 @@ export const OccasionalStore = defineStore("counter", () => {
   }
 
 
-  async function newOccasional(Name_spent, Finca, Description, PAYMENT_METHOD, costValue,   Total ) {
+  async function newOccasional(Name_spent, Finca, Description, PAYMENT_METHOD,   Total ) {
     try {
         return await requestAxios.post(`/occasionalExpenses`,{
          
@@ -28,7 +28,7 @@ export const OccasionalStore = defineStore("counter", () => {
           Finca: Finca,
           Description: Description,
           PAYMENT_METHOD: PAYMENT_METHOD,
-          costValue: costValue,
+       
           Total:   Total
         },
         notifySuccess('Gasto registrado correctamente')
@@ -40,14 +40,14 @@ export const OccasionalStore = defineStore("counter", () => {
       }
   }
 
-  async function putOccasional(id, Name_spent, Finca, Description, PAYMENT_METHOD, costValue, Total ) { //recivir las variables 
+  async function putOccasional(id, Name_spent, Finca, Description, PAYMENT_METHOD, Total ) { //recivir las variables 
     try {
         return await requestAxios.put(`/occasionalExpenses/update/${id}`,{
           Name_spent: Name_spent,
           Finca: Finca,
           Description: Description,
           PAYMENT_METHOD: PAYMENT_METHOD,
-          costValue: costValue,
+        
           Total: Total
         },
         notifySuccess('Gastos actualizado correctamente')

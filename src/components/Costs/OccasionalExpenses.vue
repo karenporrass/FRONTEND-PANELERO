@@ -168,17 +168,7 @@
                     'El campo es requerido',
                 ]"
             />
-            <q-input
-              filled
-              type="number"
-              v-model="costValue"
-              label="tiempo a pagar"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"
-            ></q-input>
+            
             <q-input
               filled
               type="number"
@@ -273,17 +263,7 @@
                     'El campo es requerido',
                 ]"
             />
-            <q-input
-              filled
-              type="number"
-              v-model="costValue"
-              label="tiempo a pagar"
-              lazy-rules
-              :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]"
-            ></q-input>
+           
             <q-input
               filled
               type="number"
@@ -336,7 +316,7 @@ let pagination = ref({
 let columns = ref([
   {
     name: "Name_spent",
-    label: "Nombre del gasto",
+    label: "NOMBRE DEL GASTO",
     field: "Name_spent",
     align: "center",
   },
@@ -360,16 +340,11 @@ let columns = ref([
   },
   {
     name: "PAYMENT_METHOD",
-    label: "Metodo de pago",
+    label: "METODO DE PAGO",
     field: (row) => row.PAYMENT_METHOD.name,
     align: "center",
   },
-  {
-    name: "costValue",
-    label: "VALOR DEL GASTO",
-    field: "costValue",
-    align: "center",
-  },
+  
   {
     name: "total",
     label: "TOTAL A PAGAR",
@@ -395,7 +370,7 @@ let Name_spent = ref();
 let Finca = ref([]);
 let Description = ref();
 let PAYMENT_METHOD = ref([]);
-let costValue = ref();
+
 let optionsMethod = ref([]);
 let optionsFarm = ref([]);
 let Total = ref();
@@ -410,7 +385,7 @@ function toEmpty() {
   Finca.value = null;
   Description.value = "";
   PAYMENT_METHOD.value = null;
-  costValue.value = "";
+
   Total.value = "";
 }
 
@@ -420,7 +395,7 @@ const postOccasional = async () => {
     Finca.value.value,
     Description.value,
     PAYMENT_METHOD.value.value,
-    costValue.value,
+
     Total.value
   );
   console.log(occasional);
@@ -465,7 +440,7 @@ function goInfo(data) {
     label: data.PAYMENT_METHOD.name,
     value: data.PAYMENT_METHOD._id,
   };
-  costValue.value = data.costValue;
+ 
   Total.value = data.Total;
 }
 
@@ -476,7 +451,7 @@ async function putInfo() {
     Finca.value.value,
     Description.value,
     PAYMENT_METHOD.value.value,
-    costValue.value,
+
     Total.value
   );
   getOccasional();

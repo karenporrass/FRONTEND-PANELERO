@@ -165,8 +165,8 @@ let pagination = ref({
         rowsPerPage: 0
       })
       let columns = ref([
-  {name: 'name_category',label: 'nombre categoria',field: 'name_category',align: 'center'},
-  {name: 'description',required: true, label: 'description',align: 'center',field: 'description'},
+  {name: 'name_category',label: 'NOMBRE DE LA CATEGORIA',field: 'name_category',align: 'center'},
+  {name: 'description',required: true, label: 'DESCRIPCION',align: 'center',field: 'description'},
   {
     name: "status",
     label: "ESTADO",

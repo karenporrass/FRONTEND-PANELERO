@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { notifyError, notifySuccess } from "../../Global/notify.js";
 import {requestAxios} from "../../Global/axios.js"
+import { log } from "pdfkit-browserify";
 
 export const payStore = defineStore("payStore", () => {
 
@@ -18,39 +19,32 @@ export const payStore = defineStore("payStore", () => {
 
 
   async function newPays(pay) {
-    
     try {
-      console.log(22);
-        return await requestAxios.post('/payments', pay, 
-        notifySuccess('Pago registrado correctamente'));
-       
-      } 
-      catch (error) {
+      console.log("hola post");
+       let r= await requestAxios.post('/payments/register', pay, {
+        });
+        notifySuccess('Pago registrado correctamente'),
+        console.log(r);
+      } catch (error) {
+        console.log(pay);
+        console.log(r);
         notifyError(error.response.data.errors.join(", "));
         console.log(error);
-        return error;
-        
       }
   }
 
-  async function putPays(id, DNI, ROL, Name, CONCEPT,  PAYMENT_METHOD,  TIME_TO_PAY, total) { 
+  async function putPays(id, inforPays) { 
       console.log("cambiar");
+      console.log(inforPays);
     try {
-        return await requestAxios.put(`/payments/update/${id}`,{
-          DNI: DNI,
-          ROL: ROL,
-          CONCEPT: CONCEPT,
-          PAYMENT_METHOD: PAYMENT_METHOD,
-          TIME_TO_PAY: TIME_TO_PAY,
-          Total: total,
-          Name: Name
-        },
-        notifySuccess('Pagos actualizado correctamente'));
-        
-      } 
-      catch (error) {
-      notifyError(error.response.data.errors.join(", "));
-      console.log(error);
+       await requestAxios.put(`/payments/update/${id}`,inforPays,{
+       }),
+      notifySuccess('Pagos actualizado correctamente');
+      }catch (error) {
+        console.log(inforPays);
+        console.log(error);
+        notifyError(error.response.data.errors.join(", "));
+        return error
       }
   }
 

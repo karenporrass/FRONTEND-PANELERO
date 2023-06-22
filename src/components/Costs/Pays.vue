@@ -213,7 +213,6 @@ let columns = ref([
   {
     name: "CONCEPT",
     label: "CONCEPTO",
-    sortable: true,
     align: "center",
     field: "CONCEPT",
   },
@@ -258,22 +257,12 @@ let columns = ref([
 ]);
 
 let rows = ref([]);
-
 let DNI = ref([]);
 let ROL = ref([]);
 let CONCEPT = ref();
 let optionsMethod = ref([]);
 let optionsDNI = ref([]);
-
-
-
-
-
-
-
-
 let PAYMENT_METHOD = ref([]);
-
 let TIME_TO_PAY = ref();
 let Name = ref([]);
 let total = ref();
@@ -283,16 +272,15 @@ rows.value.forEach((row, index) => {
 });
 
 const postPays = async () => {
-
+  console.log("hola soy pays en vue");
   const pays = await PayStore.newPays({
     DNI: DNI.value.value,
-    ROL: ROL.value.value,
-    Name: Name.value.value,
     CONCEPT: CONCEPT.value,
     PAYMENT_METHOD: PAYMENT_METHOD.value.value,
     TIME_TO_PAY: TIME_TO_PAY.value,
     Total: total.value,
   });
+  console.log(pays);
   getPays();
   prompt.value = false;
   toEmpty();
@@ -305,10 +293,7 @@ async function getPays() {
     rows.value = res.data;
     rows.value.forEach((row, index) => {
       row.index = index + 1;
-    
-
     });
-
   } else {
     alert(res);
   }
@@ -330,7 +315,6 @@ function goInfo(data) {
     label: data.DNI.numberDocument,
     value: data.DNI._id,
   };
-
   CONCEPT.value = data.CONCEPT;
   PAYMENT_METHOD.value = {
     label: data.PAYMENT_METHOD.name,
@@ -342,14 +326,16 @@ function goInfo(data) {
 
 async function putInfo() {
   console.log(index.value);
-  const res = await PayStore.putPays(
-    index.value,
-    DNI.value.value,
-    CONCEPT.value,
-    PAYMENT_METHOD.value.value,
-    TIME_TO_PAY.value,
-    total.value
-  );
+  const res = await PayStore.putPays(index.value,{
+    DNI: DNI.value.value,
+    CONCEPT: CONCEPT.value,
+    PAYMENT_METHOD: PAYMENT_METHOD.value.value,
+    TIME_TO_PAY: TIME_TO_PAY.value,
+    Total: total.value,
+  });
+  console.log(ROL.value);
+  console.log(res);
+  console.log("termine actualizar");
   getPays();
   edit.value = false;
 }

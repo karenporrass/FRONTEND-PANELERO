@@ -325,7 +325,7 @@ async function postDailyProcess() {
   prompt.value = false;
   // console.log(res);
   getListDaily();
-  reset()
+  // reset()
 }
 
 // activar y desactivar proceso diario

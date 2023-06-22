@@ -244,9 +244,6 @@ const postVault = async () => {
 
 }
 
-
-
-
 async function getVault() {
     const res = await VaultStore.listVault()
    
@@ -259,7 +256,6 @@ async function getVault() {
     alert(res)
   }
 }
-
 
 
 async function activarDesactivar(data) {
@@ -294,8 +290,8 @@ async function putInfo() {
   dirrecion.value
   )
   console.log(res);
-  getVault()
   promptEdit.value = false
+  getVault()
 }
 
 function toEmpty() {

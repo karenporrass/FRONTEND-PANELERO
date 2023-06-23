@@ -172,10 +172,15 @@ import { storeTransformed } from "../../store/Transformation/TransformedRawMater
 import {lotsStore} from "../../store/Maintenance/Lots.js"
 import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js"
 import {unitsStore} from "../../store/Maintenance/MeasurementUnits.js"
+import {useDailyStore} from "../../store/Transformation/dailyProcess.js"
+
+
 const useTransformed = storeTransformed()
 const useLots = lotsStore()
 const useFarms = farmRegistryStore();
-const useTypes = unitsStore()
+const useTypes = unitsStore();
+const useDaily = useDailyStore();
+
 
 
 let prompt = ref(false);

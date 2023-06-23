@@ -126,6 +126,7 @@
                 lazy-rules
                 use-input
                 input-debounce="0"
+                @update:model-value="setName(administrator)"
                 :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
@@ -229,6 +230,36 @@
         <div class="q-pa-md">
           <q-form ref="myForm" @submit.prevent.stop="putInfo()">
             <div>
+              <q-select
+                filled
+                v-model="administrator"
+                :options="optionsDNI"
+                label="seleccione el DNI del administrador"
+                lazy-rules
+                use-input
+                input-debounce="0"
+                @update:model-value="setName(administrator)"
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]"
+              />
+
+              <q-input
+                disable
+                filled
+                type="text"
+                v-model="nameUsers"
+                label="Nombre del administrador"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]"
+              />
+
               <q-input
                 filled
                 type="text"
@@ -244,26 +275,13 @@
                 filled
                 type="text"
                 v-model="content"
-                label="Digite del contenido"
+                label="Digite el contenido de la bodega"
                 lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]"
               ></q-input>
-
-              <q-select
-                filled
-                v-model="administrator"
-                :options="optionsDNI"
-                label="seleccione el DNI del administrador"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.toString().trim().length > 0) ||
-                    'El campo es requerido',
-                ]"
-              />
 
               <q-input
                 filled
@@ -320,6 +338,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { vaultStore } from "../../store/Inventory/vault.js";
+import {usersStore} from "../../store/Maintenance/CreateUsers.js";
+
+const useU= usersStore()
 const VaultStore = vaultStore();
 let prompt = ref(false);
 
@@ -396,12 +417,10 @@ rows.value.forEach((row, index) => {
   row.index = index;
 });
 
-// function setName(info){
-//   administrator.value = {
-//     label: info.value.administrator.name,
-//     value: info.value.administrator._id
-//   }
-// };
+function setName(info){
+  console.log(info);
+  nameUsers=info.value
+};
 
 
 const postVault = async () => {
@@ -428,7 +447,7 @@ async function getVault() {
       row.index = index + 1;
     });
   } else {
-    return res;
+    console.log(res);  
   }
 }
 

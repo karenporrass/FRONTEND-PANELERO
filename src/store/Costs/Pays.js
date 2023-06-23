@@ -10,7 +10,11 @@ export const payStore = defineStore("payStore", () => {
   async function listPays() {
     
     try {
-      return await requestAxios.get("/payments")
+      return await requestAxios.get("/payments",{
+        headers: {
+          token: useToken.token,
+        },
+      })
     } catch (error) {
       console.log(error);
       notifyError('No fue posible obtener los pagos');

@@ -1,23 +1,26 @@
 import { defineStore } from 'pinia'
-import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 import { notifyError, notifySuccess } from "../../Global/notify.js";
 import {LoginStore} from "../../store/Login/login.js"
 
 
-
 export const usersStore = defineStore('usersStore', () => {
-    const user = ref("")
-    const useToken = LoginStore();
+  const useToken = LoginStore();
+
+
+
+
     
     async function listUsers() {
       console.log("listUsers")
       console.log(useToken.token);
       try {
-        return await requestAxios.get("/usuarios/all",{
-           headers: {
-          token: useToken.token,
-        },})
+        return await requestAxios.get("/usuarios/all", {
+          headers: {
+            token: useToken.token,
+          },
+      });
+
       } catch (error) {
         console.log(error);
         notifyError('No fue posible obtener los Usuarios');
@@ -28,11 +31,16 @@ export const usersStore = defineStore('usersStore', () => {
     async function listUsersActive() {
       console.log("listUsersActive")
       try {
-        return await requestAxios.get("/usuarios/active",{ headers: {
-          token: useToken.token,
-        },})
+        let r= await requestAxios.get("/usuarios/active", {
+          headers: {
+            token: useToken.token,
+          },
+      });
+      console.log("hola users");
+      return r
       } catch (error) {
         console.log(error);
+        return error
       }
     }
 
@@ -113,7 +121,7 @@ export const usersStore = defineStore('usersStore', () => {
   
     
 
-    return { listUsers, user, active, newUsers, putUsers, listDocuments, listUsersActive}
+    return { listUsers, active, newUsers, putUsers, listDocuments, listUsersActive}
   },
   {
     persist: true,

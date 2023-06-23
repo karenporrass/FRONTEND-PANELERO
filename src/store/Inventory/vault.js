@@ -72,8 +72,15 @@ export const vaultStore = defineStore("vaultStore", () => {
   }
 
   
+  async function listUsersActive() {
+    try {
+      return await requestAxios.get("/usuarios/active");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  return {  vault, listVault, newVault, putVault,  listVaultActive, active };
+  return {  vault, listVault, newVault, putVault,  listVaultActive, active, listUsersActive };
 },
 {
   persist: true,

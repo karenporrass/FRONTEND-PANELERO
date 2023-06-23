@@ -81,12 +81,12 @@
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-                  <q-input  filled type="text" v-model="timeUseful" label="Digite la vida util" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="timeUseful" label="Digite la vida util (años)" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
             
-                  <q-input  filled type="text" v-model="timeUsed" label="Digite el tiempo utilizado" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="timeUsed" label="Digite el tiempo utilizado (años)"  lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
@@ -144,12 +144,12 @@
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-                  <q-input  filled type="text" v-model="timeUseful" label="Digite la vida util" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="timeUseful" label="Digite la vida util (años)" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
             
-                  <q-input  filled type="text" v-model="timeUsed" label="Digite el tiempo utilizado" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="timeUsed" label="Digite el tiempo utilizado (años)" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>

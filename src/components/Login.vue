@@ -57,7 +57,7 @@
         <div class="col-1"></div>
       </div>
     </div>
-    <!-- termina div que contiene todo -->
+
   </div>
 </template>
 
@@ -86,22 +86,7 @@ function pasarHome() {
   }
 }
 
-// function validar() {
-//   for (let i = 0; i < usuario.value.length; i++) {
-//     index.value = i;
-//     if (
-//       user.value == usuario.value[index.value].nameUser &&
-//       password.value == usuario.value[index.value].password
-//     ) {
-//       console.log("se logio con exito");
-//       addUser();
-//       pasarHome();
-//     } else {
-//       console.log("No es correcto");
-//     }
-//     console.log("pos ", i);
-//   }
-// }
+
 
 async function validar() {
 
@@ -115,16 +100,10 @@ await store.newLogin({
 
 </script>
 
-
-
-
-
-
-
 <style>
 #imagen-fondo {
   min-height: 100vh;
-  background-image: url("images/FONDO.jpg") ;
+  background-image: url("/images/FONDO.jpg") ;
   background-repeat: no-repeat;
   background-size: cover;
   align-items: center;

@@ -221,7 +221,11 @@ async function activarDesactivar(data) {
 function goInfo(data){
     name.value = data.name 
     extent.value = data.extent
-    farm.value = data.farm
+    farm.value = {
+      label: data.farm.name,
+      value: data.farm._id
+    }
+
 }
 
 async function putInfo(){

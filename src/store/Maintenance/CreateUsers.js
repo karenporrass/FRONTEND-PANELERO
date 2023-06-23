@@ -7,15 +7,20 @@ import {LoginStore} from "../../store/Login/login.js"
 export const usersStore = defineStore('usersStore', () => {
   const useToken = LoginStore();
 
+
+
+
     
     async function listUsers() {
       console.log("listUsers")
+      console.log(useToken.token);
       try {
         return await requestAxios.get("/usuarios/all", {
           headers: {
             token: useToken.token,
           },
       });
+
       } catch (error) {
         console.log(error);
         notifyError('No fue posible obtener los Usuarios');
@@ -41,7 +46,9 @@ export const usersStore = defineStore('usersStore', () => {
 
     async function listDocuments() {
       try {
-        return await requestAxios.get("/tipoDocumento/active")
+        return await requestAxios.get("/tipoDocumento/active",{ headers: {
+          token: useToken.token,
+        },})
       } catch (error) {
         console.log(error);
       }
@@ -49,7 +56,11 @@ export const usersStore = defineStore('usersStore', () => {
     
     async function newUsers(names,typeDocument, numberDocument, rol,cel, address, email, emergencyPersonName, emergencyPersonPhone, token ) {
         try {
-             await requestAxios.post(`/usuarios`,{
+             await requestAxios.post(`/usuarios`,{ headers: {
+              token: useToken.token,
+            },
+          }
+          ,{
              names: names,
              typeDocument: typeDocument,
              numberDocument: numberDocument,
@@ -70,7 +81,11 @@ export const usersStore = defineStore('usersStore', () => {
 
       async function putUsers(id, names, typeDocument, numberDocument, rol,cel, address, email, password , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
         try {
-            await requestAxios.put(`/usuarios/update/${id}`,{
+            await requestAxios.put(`/usuarios/update/${id}`,{ headers: {
+              token: useToken.token,
+            },
+          },
+            {
              names: names,
              typeDocument: typeDocument,
              numberDocument: numberDocument,
@@ -91,7 +106,11 @@ export const usersStore = defineStore('usersStore', () => {
 
     async function active(id, estado){
       try {
-       await requestAxios.put(`/usuarios/state/${id}`, {state:estado});
+       await requestAxios.put(`/usuarios/state/${id}`,{ headers: {
+        token: useToken.token,
+      },
+    },
+       {state:estado});
         notifySuccess('Estado cambiado correctamente');
         //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

@@ -79,8 +79,8 @@
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]" />
 <div class="justify-center flex">
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
-                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to=""  v-close-popup><span
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
+                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm " to=""  v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
                 </div></div>
@@ -111,8 +111,8 @@
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]" />
 <div class="justify-center flex">
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
-                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to=""  v-close-popup><span
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
+                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm " to=""  v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
                 </div>

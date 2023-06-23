@@ -1,15 +1,19 @@
 import { defineStore } from 'pinia'
 import { requestAxios } from '../../Global/axios'
 import { notifyError, notifySuccess } from "../../Global/notify.js";
-
+import {LoginStore} from "../../store/Login/login.js"
 
 
 export const storeTransformed = defineStore('storeTransformed', () => {
-    
+  const useToken = LoginStore();
+
     const listTransformed = async ()=>{
       try {
-        return await requestAxios.get("/materiaTransformada/transformed"
-        );
+        return await requestAxios.get("/materiaTransformada/transformed", {
+          headers: {
+            token: useToken.token,
+          },
+      });
       } catch (error) {
         console.log(error);
         notifyError("No fue posible obtener las materias primas transformadas")

@@ -212,6 +212,7 @@ let lot = ref([]);
 let farm = ref([]);
 let date = ref();
 let index = ref();
+let fullname= ref();
 let optionsPeople = ref([]);
 let optionsFarm = ref([]);
 let optionsLot = ref([]);
@@ -246,7 +247,7 @@ let columns = ref([
   {
     name: "people",
     label: "PERSONA ENCARGADA",
-    field: (row) => row.people,
+    field: (row) => row.people.names,
     align: "center",
   },
   {
@@ -299,7 +300,13 @@ async function getListDaily() {
     rows.value = res.data;
     rows.value.forEach((row, index) => {
       row.index = index + 1;
+      // como concatenar dos variables que vienen de data 
+      // let names =""
+      // fullname.value= names.concat(row.people.names," ", row.people.lastNames)
+      // console.log(fullname.value);
+      // row.fullname = fullname.value
     });
+  
   } else {
     console.log(res);
   }
@@ -363,8 +370,6 @@ async function showInfo(data) {
   console.log(date.value);
   console.log(lot.value);
 }
-
-
 
 
 async function putDaily() {

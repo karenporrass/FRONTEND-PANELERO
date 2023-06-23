@@ -1,16 +1,13 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
 import { notifyError, notifySuccess } from "../../Global/notify.js";
 import {requestAxios} from "../../Global/axios.js"
 
 export const vaultStore = defineStore("vaultStore", () => {
-  const vault = ref("");
-
 
   async function listVault() {
-    
     try {
-      return await requestAxios.get("/cellars")
+      let res=  await requestAxios.get("/cellars")
+      console.log(res);
     } catch (error) {
       notifyError('No fue posible obtener los datos de bodegas');
       console.log(error);
@@ -19,9 +16,7 @@ export const vaultStore = defineStore("vaultStore", () => {
 
 
   async function newVault(vault ) {
-    console.log(newVault)
     try {
-     
         let r = await requestAxios.post('/cellars',vault);
         notifySuccess('La bodega fue registrada correctamente')
         console.log(r);
@@ -65,7 +60,6 @@ export const vaultStore = defineStore("vaultStore", () => {
   async function listVaultActive() {
     try {
       return await requestAxios.get("/metodoPago/active")
-      
     } catch (error) {
       console.log(error);
     }
@@ -73,14 +67,16 @@ export const vaultStore = defineStore("vaultStore", () => {
 
   
   async function listUsersActive() {
+    console.log("listUsersActive")
     try {
-      return await requestAxios.get("/usuarios/active");
+      return await requestAxios.get("/usuarios/active")
     } catch (error) {
       console.log(error);
+      return error
     }
   }
 
-  return {  vault, listVault, newVault, putVault,  listVaultActive, active, listUsersActive };
+  return { listVault, newVault, putVault,  listVaultActive, active, listUsersActive };
 },
 {
   persist: true,

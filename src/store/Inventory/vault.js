@@ -9,7 +9,11 @@ export const vaultStore = defineStore("vaultStore", () => {
 
   async function listVault() {
     try {
-      let res=  await requestAxios.get("/cellars")
+      let res=  await requestAxios.get("/cellars",{
+        headers: {
+          token: useToken.token,
+        },
+      })
       console.log(res);
       return res
     } catch (error) {

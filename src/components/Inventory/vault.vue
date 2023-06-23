@@ -230,6 +230,36 @@
         <div class="q-pa-md">
           <q-form ref="myForm" @submit.prevent.stop="putInfo()">
             <div>
+              <q-select
+                filled
+                v-model="administrator"
+                :options="optionsDNI"
+                label="seleccione el DNI del administrador"
+                lazy-rules
+                use-input
+                input-debounce="0"
+                @update:model-value="setName(administrator)"
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]"
+              />
+
+              <q-input
+                disable
+                filled
+                type="text"
+                v-model="nameUsers"
+                label="Nombre del administrador"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]"
+              />
+
               <q-input
                 filled
                 type="text"
@@ -245,26 +275,13 @@
                 filled
                 type="text"
                 v-model="content"
-                label="Digite del contenido"
+                label="Digite el contenido de la bodega"
                 lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]"
               ></q-input>
-
-              <q-select
-                filled
-                v-model="administrator"
-                :options="optionsDNI"
-                label="seleccione el DNI del administrador"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.toString().trim().length > 0) ||
-                    'El campo es requerido',
-                ]"
-              />
 
               <q-input
                 filled
@@ -488,7 +505,7 @@ async function getPeople() {
     for (let i in res.data) {
       let object1 = {
         label: res.data[i].numberDocument,
-        value: res.data[i]._id,
+        value: res.data[i].names,
       };
       optionsDNI.value.push(object1);
     }

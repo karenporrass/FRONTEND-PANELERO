@@ -8,7 +8,11 @@ export const monthlyStore = defineStore("monthlyStore", () => {
   async function listMonthly() {
 
     try {
-      let r= await requestAxios.get("/monthlyExpenses")
+      let r= await requestAxios.get("/monthlyExpenses",{
+        headers: {
+          token: useToken.token,
+        },
+      })
       
       return r
     } catch (error) {

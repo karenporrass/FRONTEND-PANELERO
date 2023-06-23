@@ -1,17 +1,21 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { notifyError, notifySuccess } from "../../Global/notify.js";
-
+import {LoginStore} from "../../store/Login/login.js"
 import {requestAxios} from "../../Global/axios.js"
 
 export const OccasionalStore = defineStore("counter", () => {
-  const Occasional = ref("");
 
+  const useToken = LoginStore();
 
   async function listOccasional() {
 
     try {
-      return await requestAxios.get("/occasionalExpenses")
+      return await requestAxios.get("/occasionalExpenses",{
+        headers: {
+          token: useToken.token,
+        },
+      })
     } catch (error) {
       console.log(error);
       notifyError('No fue posible obtener los gastos');

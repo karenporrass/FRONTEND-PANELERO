@@ -254,7 +254,6 @@ const postProduct = async () => {
    timeUsed: timeUsed.value,
   })
   console.log("pos");
-  console.log(product);
   getProduct()
   prompt.value = false;
 

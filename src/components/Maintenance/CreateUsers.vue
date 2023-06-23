@@ -63,7 +63,7 @@
     </div>
 
     <q-dialog v-model="prompt">
-      <q-card style="height: 60%;">
+      <q-card class="my-card" >
         <q-card-section class="bg-green-9 q-px-lg">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
             DILIGENCIA LA INFORMACIÓN
@@ -72,21 +72,16 @@
         <div class="q-pa-md">
           <q-form  @submit.prevent.stop="postUser()" @reset.prevent.stop="cleanForm()">
             <div>
-              <q-input class="q-mb-md" filled type="text" v-model="names" label="Digite el nombre" lazy-rules :rules="[
+              <q-input  filled type="text" v-model="names" label="Digite el nombre" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
-              <q-input class="q-mb-md" filled type="text" v-model="lastNames" label="Digite los apellidos" lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
-                ]" />
               <q-select filled v-model="typeDocument" :options="optionsDocument" label="Seleccione el tipo documento"
                 lazy-rules :rules="[
                   (val) =>
                     (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
                 ]" />
-              <q-input class="q-mb-md" filled type="number" v-model="numberDocument" label="Digite el numero de documento"
+              <q-input  filled type="number" v-model="numberDocument" label="Digite el numero de documento"
                 lazy-rules :rules="[
                   (val) =>
                     (val > 0) || 'El campo es requerido',
@@ -96,20 +91,20 @@
                   (val) =>
                     (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
                 ]" />
-              <q-input class="q-mb-md" filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules
+              <q-input  filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules
                 :rules="[
                   (val) =>
                     (val !== 0 && val > 0) || 'El campo es requerido',
                 ]" />
-              <q-input class="q-mb-md" filled type="text" v-model="address" label="Digite la direccion" lazy-rules :rules="[
+              <q-input  filled type="text" v-model="address" label="Digite la direccion" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
-              <q-input class="q-mb-md" filled type="text" v-model="email" label="Digite el email" lazy-rules :rules="[
+              <q-input  filled type="text" v-model="email" label="Digite el email" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
-              <q-input class="q-mb-md" filled type="text" v-model="emergencyPersonName"
+              <q-input  filled type="text" v-model="emergencyPersonName"
                 label="Digite el nombre de una persona de emergencia" lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
@@ -122,8 +117,8 @@
 
 
               <div class="justify-center flex">
-                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
-                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to=""   v-close-popup><span
+                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9" text-white></q-btn>
+                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm " to=""   v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
               </div>
@@ -135,8 +130,8 @@
 
 
     <q-dialog v-model="promptEdit">
-      <q-card class="my-card">
-        <q-card-section class="bg-green-10">
+      <q-card class="my-card" style="height: 60%;">
+        <q-card-section class="bg-green-10 ">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
             EDITAR LA INFORMACIÓN
           </h5>
@@ -144,21 +139,16 @@
         <div class="q-pa-md ">
           <q-form    @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
             <div>
-              <q-input class="q-mb-md" filled type="text" v-model="names" label="Digite el nombre" lazy-rules :rules="[
+              <q-input  filled type="text" v-model="names" label="Digite el nombre" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
-              <q-input class="q-mb-md" filled type="text" v-model="lastNames" label="Digite los apellidos" lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
-                ]" />
               <q-select filled v-model="typeDocument" :options="optionsDocument" label="Seleccione el tipo documento"
                 lazy-rules :rules="[
                   (val) =>
                     (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
                 ]" />
-              <q-input class="q-mb-md" filled type="number" v-model="numberDocument" label="Digite el numero de documento"
+              <q-input  filled type="number" v-model="numberDocument" label="Digite el numero de documento"
                 lazy-rules :rules="[
                   (val) =>
                     (val  > 0) || 'El campo es requerido',
@@ -169,20 +159,20 @@
                   (val) =>
                     (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
                 ]" />
-              <q-input class="q-mb-md" filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules
+              <q-input  filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules
                 :rules="[
                   (val) =>
                     (val !== 0 && val > 0) || 'El campo es requerido',
                 ]" />
-              <q-input class="q-mb-md" filled type="text" v-model="address" label="Digite la direccion" lazy-rules :rules="[
+              <q-input  filled type="text" v-model="address" label="Digite la direccion" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
-              <q-input class="q-mb-md" filled type="text" v-model="email" label="Digite el email" lazy-rules :rules="[
+              <q-input  filled type="text" v-model="email" label="Digite el email" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
-              <q-input class="q-mb-md" filled :type="isPwd ? 'password' : 'text'" v-model="password"
+              <q-input  filled :type="isPwd ? 'password' : 'text'" v-model="password"
                 label="Digite la contraseña" lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
@@ -191,7 +181,7 @@
                     @click="isPwd = !isPwd" />
                 </template>
               </q-input>
-              <q-input class="q-mb-md" filled type="text" v-model="emergencyPersonName"
+              <q-input  filled type="text" v-model="emergencyPersonName"
                 label="Digite el nombre de una persona de emergencia" lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
@@ -205,9 +195,9 @@
 
 
               <div class="justify-center flex">
-                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"
                  ></q-btn>
-                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm bg-green-9" to="" v-close-popup><span
+                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
               </div>
@@ -232,7 +222,6 @@ const loginStore = LoginStore()
 let prompt = ref(false)
 let promptEdit = ref(false)
 let names = ref("")
-let lastNames = ref("")
 let typeDocument = ref("")
 let numberDocument = ref()
 let rol = ref("")
@@ -342,8 +331,9 @@ const getDocument = async () => {
 
 function goInfo(data) {
   names.value = data.names
-  lastNames.value = data.lastNames
-  typeDocument.value = data.typeDocument
+  typeDocument.value = {
+    label: data.typeDocument.name,
+  value: data.typeDocument._id},
   numberDocument.value = data.numberDocument
   rol.value = data.rol
   cel.value = data.cel
@@ -358,7 +348,6 @@ async function putInfo() {
   console.log(index.value);
   const res = await userStore.putUsers(index.value,
     names.value,
-    lastNames.value,
     typeDocument.value.value,
     numberDocument.value,
     rol.value,
@@ -378,7 +367,6 @@ async function putInfo() {
 
 function cleanForm(){
   names.value = ""
-  lastNames.value = ""
   typeDocument.value = ""
   numberDocument.value= null
   rol.value = ""
@@ -399,9 +387,10 @@ onBeforeMount(() => {
 
 
 </script>
-<!-- 
+
 <style scoped>
-.my-card
-  height: 60%
-  max-height: 80%
-</style> -->
+.my-card{
+  height: 60%;
+  max-height: 80%;
+  width: 47%;}
+</style>

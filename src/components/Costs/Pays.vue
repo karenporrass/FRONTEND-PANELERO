@@ -147,7 +147,7 @@
                     (val && val.toString().trim().length > 0) ||
                     'El campo es requerido',
                 ]" />
-              <q-input filled type="number" v-model="TIME_TO_PAY" label="tiempo a pagar (horas)" lazy-rules :rules="[
+              <q-input filled type="date" v-model="TIME_TO_PAY" label="tiempo a pagar (horas)" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
@@ -333,7 +333,6 @@ async function putInfo() {
     TIME_TO_PAY: TIME_TO_PAY.value,
     Total: total.value,
   });
-  console.log(ROL.value);
   console.log(res);
   console.log("termine actualizar");
   getPays();
@@ -365,26 +364,16 @@ async function getMethod() {
 async function getPeople() {
   // optionsPeople.value=[]
   const res = await PayStore.listUsersActive();
-
   if (res.status < 299) {
-
     for (let i in res.data) {
-
-   
       let object1 = { label: res.data[i].numberDocument, value: res.data[i]._id };
       optionsDNI.value.push(object1);
-     
-
       let object2 = { label: res.data[i].rol, value: res.data[i]._id };
-      ROL.value.push(object2);
-     
-
+      ROL.value.push(object2);    
       let object3 = { label: res.data[i].names, value: res.data[i]._id };
-      Name.value.push(object3);
-     
+      Name.value.push(object3);     
     }
-    return optionsDNI.value
-  
+    return optionsDNI.value  
   } else {
     throw new Error("Error al obtener los datos de people");
   }

@@ -22,7 +22,10 @@
               arrow_right
             </span> Marcas</p>
         </div>
-                <q-btn class="bg-green-10 text-white" @click="prompt = true, toEmpty()">Crear marca</q-btn>
+                <q-btn class="bg-green-10 text-white" @click="prompt = true, toEmpty()"><span
+            class="material-symbols-outlined q-mr-sm" style="font-size: 20px">
+            add_circle
+          </span>Crear marca</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -119,15 +122,15 @@
               <div class="q-pa-md " >
                 <q-form ref="myForm" @submit.prevent.stop="putInfo()" >
                 <div>
-                  <q-input  filled type="text" v-model="name_brands" label="Digite el cantidad del gasto" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name_brands" label="Digite el nombre de la marca" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-                    <q-input  filled type="text" v-model="description" label="Digite el nombre del gasto" lazy-rules :rules="[
+                    <q-input  filled type="text" v-model="description" label="Digite la descripción" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-                  <q-input filled type="text" v-model="creator" label="Escoga la finca" lazy-rules :rules="[
+                  <q-input filled type="text" v-model="creator" label="Digite el nombre del creador" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>

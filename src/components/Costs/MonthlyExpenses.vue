@@ -355,7 +355,7 @@ let columns = ref([
   {
     name: "Total",
     align: "center",
-    label: "TOTAL",
+    label: "VALOR A PAGAR",
     align: "center",
     sortable: true,
     field: "Total",

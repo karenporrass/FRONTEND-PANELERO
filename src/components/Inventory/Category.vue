@@ -22,7 +22,10 @@
               arrow_right
             </span> Categoria</p>
         </div>
-                <q-btn class="bg-green-10 text-white" @click="prompt = true, toEmpty()">Crear categoria</q-btn>
+                <q-btn class="bg-green-10 text-white" @click="prompt = true, toEmpty()"><span
+            class="material-symbols-outlined q-mr-sm" style="font-size: 20px">
+            add_circle
+          </span>Crear categoria</q-btn>
             </div>
             <div class="col-1"></div>
         </div>

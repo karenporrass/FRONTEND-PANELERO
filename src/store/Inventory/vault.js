@@ -1,16 +1,21 @@
 import { defineStore } from "pinia";
 import { notifyError, notifySuccess } from "../../Global/notify.js";
 import {requestAxios} from "../../Global/axios.js"
+import {LoginStore} from "../../store/Login/login.js"
+
 
 export const vaultStore = defineStore("vaultStore", () => {
+  const useToken = LoginStore();
 
   async function listVault() {
     try {
       let res=  await requestAxios.get("/cellars")
       console.log(res);
+      return res
     } catch (error) {
       notifyError('No fue posible obtener los datos de bodegas');
       console.log(error);
+      return error
     }
   }
 
@@ -68,8 +73,13 @@ export const vaultStore = defineStore("vaultStore", () => {
   
   async function listUsersActive() {
     console.log("listUsersActive")
+    console.log(useToken.token)
     try {
-      return await requestAxios.get("/usuarios/active")
+      return await requestAxios.get("/usuarios/active",{
+        headers: {
+          token: useToken.token,
+        },
+    });
     } catch (error) {
       console.log(error);
       return error

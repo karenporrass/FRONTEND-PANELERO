@@ -126,6 +126,7 @@
                 lazy-rules
                 use-input
                 input-debounce="0"
+                @update:model-value="setName(administrator)"
                 :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
@@ -320,6 +321,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { vaultStore } from "../../store/Inventory/vault.js";
+import {usersStore} from "../../store/Maintenance/CreateUsers.js";
+
+const useU= usersStore()
 const VaultStore = vaultStore();
 let prompt = ref(false);
 
@@ -396,12 +400,10 @@ rows.value.forEach((row, index) => {
   row.index = index;
 });
 
-// function setName(info){
-//   administrator.value = {
-//     label: info.value.administrator.name,
-//     value: info.value.administrator._id
-//   }
-// };
+function setName(info){
+  console.log(info);
+  nameUsers=info.value
+};
 
 
 const postVault = async () => {
@@ -428,7 +430,7 @@ async function getVault() {
       row.index = index + 1;
     });
   } else {
-    return res;
+    console.log(res);  
   }
 }
 
@@ -486,7 +488,7 @@ async function getPeople() {
     for (let i in res.data) {
       let object1 = {
         label: res.data[i].numberDocument,
-        value: res.data[i].names,
+        value: res.data[i]._id,
       };
       optionsDNI.value.push(object1);
     }

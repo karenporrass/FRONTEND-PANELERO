@@ -2,14 +2,20 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 import { notifyError, notifySuccess } from "../../Global/notify.js";
+import {LoginStore} from "../../store/Login/login.js"
 
 
 export const epsStore = defineStore('epsStore', () => {
     const eps = ref("")
+    const useToken = LoginStore();
     
     async function listEps() {
       try {
-        return await requestAxios.get("/eps/all")
+        return await requestAxios.get("/eps/all",
+        {
+          headers: {
+         token: useToken.token,
+       },})
       } catch (error) {
         console.log(error);
         notifyError('No fue posible obtener la eps');
@@ -19,7 +25,10 @@ export const epsStore = defineStore('epsStore', () => {
 
     async function listEpsActive() {
       try {
-        return await requestAxios.get("/eps/aactive")
+        return await requestAxios.get("/eps/active",{
+          headers: {
+         token: useToken.token,
+       },})
       } catch (error) {
         console.log(error);
       }
@@ -28,6 +37,9 @@ export const epsStore = defineStore('epsStore', () => {
     async function newEps(name, attentionLine) {
         try {
              await requestAxios.post(`/eps`,{
+              headers: {
+             token: useToken.token,
+           },},{
                 name: name,
                 attentionLine: attentionLine
             });
@@ -40,6 +52,9 @@ export const epsStore = defineStore('epsStore', () => {
       async function putEps(id, name, attentionLine) {
         try {
             await requestAxios.put(`/eps/update/${id}`,{
+              headers: {
+             token: useToken.token,
+           },},{
                 name: name,
                 attentionLine: attentionLine
             });
@@ -52,7 +67,11 @@ export const epsStore = defineStore('epsStore', () => {
 
     async function active(id, estado){
       try {
-       await requestAxios.put(`/eps/state/${id}`, {state:estado});
+       await requestAxios.put(`/eps/state/${id}`, {
+        headers: {
+       token: useToken.token,
+     },},
+     {state:estado});
        notifySuccess('Estado cambiado correctamente');
        //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

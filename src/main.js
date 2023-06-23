@@ -27,9 +27,12 @@ import { Quasar, Notify } from 'quasar'
 import {createRouter, createWebHashHistory} from 'vue-router'
 import {routes} from "../routes/routes.js"
 import { createPinia } from "pinia"
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
 const app = createApp(App)
 
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 
 app.use(Quasar, {
     plugins: {

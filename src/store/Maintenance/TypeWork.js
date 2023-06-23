@@ -2,13 +2,19 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 import { notifyError, notifySuccess } from "../../Global/notify.js";
+import {LoginStore} from "../../store/Login/login.js"
 
 
 export const workStore = defineStore('workStore', () => {
-    const work = ref("")
+    const work = ref("")    
+    const useToken = LoginStore();
     async function listWork() {
       try {
-        return await requestAxios.get("/tipoLabor/all")
+        return await requestAxios.get("/tipoLabor/all",
+        {
+          headers: {
+         token: useToken.token,
+       },})
       } catch (error) {
         console.log(error);
         notifyError('No fue posible obtener los tipos de labores');
@@ -17,7 +23,11 @@ export const workStore = defineStore('workStore', () => {
 
     async function listWorkActive() {
       try {
-        return await requestAxios.get("/tipoLabor/Active")
+        return await requestAxios.get("/tipoLabor/Active",
+        {
+          headers: {
+         token: useToken.token,
+       },})
       } catch (error) {
         console.log(error);
       }
@@ -27,6 +37,9 @@ export const workStore = defineStore('workStore', () => {
     async function newWork(name, area, dailyPayment) {
         try {
              await requestAxios.post(`/tipoLabor`,{
+              headers: {
+             token: useToken.token,
+           },},{
               name: name,
               area: area,
               dailyPayment: dailyPayment

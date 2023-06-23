@@ -8,15 +8,13 @@ export const LoginStore = defineStore('counter', () => {
   const token = ref()
   const rol = ref()
   
-  function getToken(token) {
-   this.token = token
-  }
 
   async function newLogin(dataUser) {
       try {
           const response =  await requestAxios.post(`/login`,dataUser)
           const decoded = jwt_decode(response.data.token);
           token.value = response.data.token
+          console.log(token.value);
           rol.value = decoded.rol 
           
           return response
@@ -26,16 +24,18 @@ export const LoginStore = defineStore('counter', () => {
           throw new Error(error)
         }
     }
-    async function putLogin(id) {
-      try {
-          return await requestAxios.post(`/login/update/${id}`,{
-              id: id
-          })
-        } catch (error) {
-          console.log(error);
-        }
-    }
+    // async function putLogin(id) {
+    //   try {
+    //       return await requestAxios.post(`/login/update/${id}`,{
+    //           id: id
+    //       })
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    // }
 
 
-  return {  newLogin, putLogin, login, getToken } },
-  {persist:true});
+  return {  newLogin, login, token,rol } },
+  {
+    persist: true,
+  },);

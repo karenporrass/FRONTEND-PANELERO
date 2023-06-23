@@ -36,11 +36,10 @@ export const usersStore = defineStore('usersStore', () => {
       }
     }
     
-    async function newUsers(names, lastNames,typeDocument, numberDocument, rol,cel, address, email, emergencyPersonName, emergencyPersonPhone, token ) {
+    async function newUsers(names,typeDocument, numberDocument, rol,cel, address, email, emergencyPersonName, emergencyPersonPhone, token ) {
         try {
              await requestAxios.post(`/usuarios`,{
              names: names,
-             lastNames: lastNames,
              typeDocument: typeDocument,
              numberDocument: numberDocument,
              rol: rol,
@@ -58,11 +57,10 @@ export const usersStore = defineStore('usersStore', () => {
           }
       }
 
-      async function putUsers(id, names, lastNames,typeDocument, numberDocument, rol,cel, address, email, password , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
+      async function putUsers(id, names, typeDocument, numberDocument, rol,cel, address, email, password , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
         try {
             await requestAxios.put(`/usuarios/update/${id}`,{
              names: names,
-             lastNames: lastNames,
              typeDocument: typeDocument,
              numberDocument: numberDocument,
              rol: rol,

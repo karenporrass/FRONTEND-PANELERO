@@ -76,11 +76,6 @@
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
-              <q-input  filled type="text" v-model="lastNames" label="Digite los apellidos" lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
-                ]" />
               <q-select filled v-model="typeDocument" :options="optionsDocument" label="Seleccione el tipo documento"
                 lazy-rules :rules="[
                   (val) =>
@@ -148,11 +143,6 @@
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
-              <q-input  filled type="text" v-model="lastNames" label="Digite los apellidos" lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
-                ]" />
               <q-select filled v-model="typeDocument" :options="optionsDocument" label="Seleccione el tipo documento"
                 lazy-rules :rules="[
                   (val) =>
@@ -232,7 +222,6 @@ const loginStore = LoginStore()
 let prompt = ref(false)
 let promptEdit = ref(false)
 let names = ref("")
-let lastNames = ref("")
 let typeDocument = ref("")
 let numberDocument = ref()
 let rol = ref("")
@@ -342,7 +331,6 @@ const getDocument = async () => {
 
 function goInfo(data) {
   names.value = data.names
-  lastNames.value = data.lastNames
   typeDocument.value = {
     label: data.typeDocument.name,
   value: data.typeDocument._id},
@@ -360,7 +348,6 @@ async function putInfo() {
   console.log(index.value);
   const res = await userStore.putUsers(index.value,
     names.value,
-    lastNames.value,
     typeDocument.value.value,
     numberDocument.value,
     rol.value,
@@ -380,7 +367,6 @@ async function putInfo() {
 
 function cleanForm(){
   names.value = ""
-  lastNames.value = ""
   typeDocument.value = ""
   numberDocument.value= null
   rol.value = ""

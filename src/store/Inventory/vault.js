@@ -9,13 +9,8 @@ export const vaultStore = defineStore("vaultStore", () => {
 
   async function listVault() {
     try {
-      let res=  await requestAxios.get("/cellars",{
-        headers: {
-          token: useToken.token,
-        },
-      })
-      console.log(res);
-      return res
+      return  await requestAxios.get("/cellars")
+     
     } catch (error) {
       notifyError('No fue posible obtener los datos de bodegas');
       console.log(error);

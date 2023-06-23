@@ -11,11 +11,7 @@ export const productStore = defineStore("productStore", () => {
   async function listProduct() {
   
     try {
-      return await requestAxios.get("/product",{
-        headers: {
-          token: useToken.token,
-        },
-      })
+      return await requestAxios.get("/product")
     } catch (error) {
       notifyError('No fue posible obtener los productos');
       console.log(error);

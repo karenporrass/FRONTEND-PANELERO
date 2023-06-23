@@ -11,11 +11,7 @@ export const BrandsStore = defineStore("counter", () => {
   async function listPBrands() {
     
     try {
-      return await requestAxios.get("/brands",{
-        headers: {
-          token: useToken.token,
-        },
-      })
+      return await requestAxios.get("/brands")
     } catch (error) {
       console.log(error);
       notifyError('No fue posible obtener las marcas');

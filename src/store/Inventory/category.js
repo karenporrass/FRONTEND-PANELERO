@@ -10,11 +10,8 @@ export const CategoryStore = defineStore("CategoryStore", () => {
 
   async function listCategory() {
     try {
-      return await requestAxios.get("/category",{
-        headers: {
-          token: useToken.token,
-        },
-      })
+      return await requestAxios.get("/category")
+      
     } catch (error) {
       notifyError('No fue posible obtener las categorias');
       console.log(error);

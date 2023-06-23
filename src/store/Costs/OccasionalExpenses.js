@@ -11,11 +11,7 @@ export const OccasionalStore = defineStore("counter", () => {
   async function listOccasional() {
 
     try {
-      return await requestAxios.get("/occasionalExpenses",{
-        headers: {
-          token: useToken.token,
-        },
-      })
+      return await requestAxios.get("/occasionalExpenses")
     } catch (error) {
       console.log(error);
       notifyError('No fue posible obtener los gastos');

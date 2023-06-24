@@ -47,7 +47,7 @@
                 </q-item>
               </router-link>
 
-              <router-link to="/homeMantenimiento" style="text-decoration: none;">
+              <router-link to="/homeMantenimiento" style="text-decoration: none;" v-show="privateMol == false">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md"
                   style="border-radius: 12px; width: 230px;">
 
@@ -62,11 +62,9 @@
                 </q-item>
               </router-link>
 
-              <router-link to="/homeCostos" style="text-decoration: none;">
+              <router-link to="/homeCostos" style="text-decoration: none;" v-show="privateMol == false">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md"
                   style="border-radius: 12px; width: 230px;">
-
-
 
                   <q-item-section avatar style=" min-width: 1px;">
                     <span class="material-symbols-outlined" style="font-size: 28px;">
@@ -169,23 +167,45 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeMount} from 'vue'
+import { requestAxios } from "./Global/axios";
+import {LoginStore} from "./store/Login/login.js"
+
+ const storelogin = LoginStore()
+ let privateMol = ref(false)
+//  let per = ref()
+
+
+//  console.log(storelogin.user);
+
+function validar(){
+  // console.log(storelogin.user);
+  console.log(storelogin.rol);
+  if(storelogin.rol == "Trabajador"){
+    privateMol.value = false
+  }
+  else{
+    privateMol.value = true
+  }
+}
+
+// async function userId(){
+//   let users = await requestAxios.get(`/usuarios/user/${storelogin.user}`)
+//   console.log(users);
+//   per.value = users.data.email
+// }
 
 const leftDrawerOpen = ref(false)
-let TituloPedidos = ref(false)
-let TituloInventory = ref(false)
-
-function MenuAPedidos() {
-  TituloPedidos = true
-}
-
-function MenuInventory() {
-  TituloInventory = true
-}
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
+onBeforeMount(() => {
+validar()
+// userId()
+})
+
 
 
 

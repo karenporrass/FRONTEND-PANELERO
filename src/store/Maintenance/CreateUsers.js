@@ -6,14 +6,9 @@ import {LoginStore} from "../../store/Login/login.js"
 
 export const usersStore = defineStore('usersStore', () => {
   const useToken = LoginStore();
-
-
-
-
-    
+  
     async function listUsers() {
       console.log("listUsers")
-      console.log(useToken.token);
       try {
         return await requestAxios.get("/usuarios/all", {
           headers: {

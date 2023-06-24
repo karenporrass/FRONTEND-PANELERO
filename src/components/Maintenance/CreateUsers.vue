@@ -244,8 +244,7 @@ let optionsRol = ref(['Administrador', 'Trabajador'])
 let optionsDocument = ref([])
 let columns = ref([
   { name: 'index', label: '#', field: 'index' },
-  { name: 'name', label: 'NOMBRE', field: 'names', align: 'center' },
-  { name: 'lastNames', label: 'APELLIDOS', align: 'center', field: row => row.lastNames, format: val => `${val}`, sortable: true },
+  { name: 'name', label: 'NOMBRES', field: 'names', align: 'center' },
   { name: 'typeDocument', align: 'center', label: 'TIPO DE DOCUMENTO', field: (row)=> row.typeDocument.acronym, align: 'center', sortable: true },
   { name: 'numberDocument', align: 'center', label: 'NUMERO DOCUMENTO', field: 'numberDocument', align: 'center', sortable: true },
   { name: 'rol', label: 'ROL', field: 'rol', align: 'center' },
@@ -261,13 +260,10 @@ let columns = ref([
 let rows = ref([])
 
 
-
-
 const postUser = async () => {
   console.log("hola");
   const res = await userStore.newUsers(
     names.value,
-    lastNames.value,
     typeDocument.value.value,
     numberDocument.value,
     rol.value,
@@ -339,7 +335,7 @@ function goInfo(data) {
   cel.value = data.cel
   address.value = data.address
   email.value = data.email
-  password.value = data.password
+  password.value = ""
   emergencyPersonName.value = data.emergencyPersonName
   emergencyPersonPhone.value = data.emergencyPersonPhone
 }
@@ -376,7 +372,7 @@ function cleanForm(){
   index.value = null
   emergencyPersonName.value = ""
   emergencyPersonPhone.value = null
-  password.value = ""
+  password.value = null
 }
 
 

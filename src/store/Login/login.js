@@ -7,6 +7,7 @@ export const LoginStore = defineStore('counter', () => {
   const login = ref("")
   const token = ref()
   const rol = ref()
+  const user = ref()
   
 
   async function newLogin(dataUser) {
@@ -15,7 +16,10 @@ export const LoginStore = defineStore('counter', () => {
           const decoded = jwt_decode(response.data.token);
           token.value = response.data.token
           console.log(token.value);
+         console.log(decoded);
           rol.value = decoded.rol 
+          user.value = decoded.user
+          console.log(decoded.user);
           
           return response
 

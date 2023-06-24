@@ -100,4 +100,4 @@ export const storeTransformed = defineStore('storeTransformed', () => {
     {
       persist: true,
     },
-    )
+  )

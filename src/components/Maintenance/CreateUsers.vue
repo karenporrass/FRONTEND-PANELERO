@@ -29,8 +29,14 @@
 
     <div class="row ">
       <div class="col-1"></div>
-      <div class="col-10 ">
-        <q-btn class="bg-green-10 text-white" @click="cleanForm(), prompt = true">Crear nuevo usuario</q-btn>
+      <div class="col-10">
+        <q-btn class="bg-green-10 text-white" @click="cleanForm(), prompt = true"><span class="material-symbols-outlined q-mr-sm"
+            style="font-size: 20px;">
+            add_circle
+          </span>
+          <spam class="q-mt-xs">
+            Crear nuevo usuario
+          </spam></q-btn>
       </div>
       <div class="col-1"></div>
     </div>

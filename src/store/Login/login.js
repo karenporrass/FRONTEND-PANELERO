@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import {ref} from "vue"
 import jwt_decode from "jwt-decode";
 import {requestAxios} from "../../Global/axios.js"
+import { notifyError, notifySuccess } from "../../Global/notify.js";
+
 
 export const LoginStore = defineStore('LoginStore', () => {
   const login = ref("")
@@ -20,12 +22,15 @@ export const LoginStore = defineStore('LoginStore', () => {
           rol.value = decoded.rol 
           user.value = decoded.user
           console.log(decoded.user);
-          
+          notifySuccess('Logeado correctamente');
           return response
+
 
         } catch (error) {
           console.log('errrrr',error);
+          notifyError(error.response.data.errors);
           throw new Error(error)
+
         }
     }
     // async function putLogin(id) {

@@ -42,13 +42,18 @@
               />
               /><br />
               <p id="p-olvido">¿Olvido su contraseña?</p>
-              <div id="div-boton">
+              <div class="column items-center">
                 <q-btn
                   type="submit"
                   id="boton-ingresar"
+                  :loading="loading"
                   color="teal-10"
-                  label="INGRESAR "
-                />
+                  label="INICIAR SESIÓN">
+                  <template v-slot:loading>
+                <q-spinner-oval color="white" size="1em" />
+              </template>
+                </q-btn>
+                
               </div>
             </q-form>
           </div>
@@ -77,6 +82,7 @@ let dense = ref(false)
 let user = ref()
 let password = ref()
 let index   = ref(0)
+let loading= ref(false)
 
 
 
@@ -87,15 +93,16 @@ function pasarHome() {
 }
 
 
-
 async function validar() {
-
+  loading.value = true;
 await store.newLogin({
     user: user.value,
     password: password.value
-}).then((res)=>{
-     pasarHome()
-})
+  }
+  ).then((res)=>{
+    pasarHome()
+  })
+  loading.value = false
 }
 
 </script>
@@ -115,7 +122,8 @@ await store.newLogin({
 
 #contenedor-col2 {
   background-color: white;
-  margin-top: 45px;
+  margin-top: 35px;
+  margin-bottom: 10px;
   color: white;
   margin-bottom: 10px;
   display: flex;
@@ -151,7 +159,6 @@ await store.newLogin({
 
 #div_icon {
   margin: 0px auto;
-
   width: 100px;
 }
 
@@ -187,24 +194,20 @@ await store.newLogin({
   margin-bottom: 40px;
 }
 
-#div-boton {
-  width: 40%;
-  margin: 0px auto;
-}
-
 #boton-ingresar {
-  width: 120px;
+  width: 150px;
   font-size: 15px;
+  margin-bottom: 30px;
 }
-
-@media (max-height: 720px) {
+/* 
+@media (max-height: 1200px) {
   #contenedor-col2 {
     height: 620px;
   }
   #boton-ingresar {
     border-radius: 10px;
     width: 100px;
-    font-size: 12px;
+    font-size: 15px;
   }
   #p-olvido {
     color: black;
@@ -223,5 +226,5 @@ await store.newLogin({
       sans-serif;
     font-size: 11px;
   }
-}
+} */
 </style>

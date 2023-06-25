@@ -19,8 +19,6 @@
                   </div>
                   <div class="col-6">
                     <div class="text-h6 q-mt-sm">Pepita Perez</div>
-                    <q-toggle label="Use Mobile Data" />
-                    <q-toggle label="Bluetooth" />
                   </div>
                 </div>
               </q-menu>
@@ -182,10 +180,10 @@ function validar(){
   // console.log(storelogin.user);
   console.log(storelogin.rol);
   if(storelogin.rol == "Trabajador"){
-    privateMol.value = false
+    privateMol.value = true
   }
   else{
-    privateMol.value = true
+    privateMol.value = false
   }
 }
 

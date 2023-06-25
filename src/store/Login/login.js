@@ -3,7 +3,7 @@ import {ref} from "vue"
 import jwt_decode from "jwt-decode";
 import {requestAxios} from "../../Global/axios.js"
 
-export const LoginStore = defineStore('counter', () => {
+export const LoginStore = defineStore('LoginStore', () => {
   const login = ref("")
   const token = ref()
   const rol = ref()

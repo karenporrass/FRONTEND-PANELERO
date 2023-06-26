@@ -87,7 +87,7 @@
                 (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules
+              <q-select filled v-model="users" :options="optionsPeople" label="Seleccione las personas" lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
@@ -149,7 +149,7 @@
                 (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="people" :options="optionsPeople" label="Seleccione las personas" lazy-rules
+              <q-select filled v-model="users" :options="optionsPeople" label="Seleccione las personas" lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
@@ -207,12 +207,11 @@ let edit = ref(false);
 let name = ref("");
 let description = ref("");
 let hours = ref();
-let people = ref([]);
-let lot = ref([]);
-let farm = ref([]);
+let users = ref();
+let lot = ref();
+let farm = ref();
 let date = ref();
 let index = ref();
-let fullname= ref();
 let optionsPeople = ref([]);
 let optionsFarm = ref([]);
 let optionsLot = ref([]);
@@ -322,17 +321,15 @@ async function postDailyProcess() {
     name: name.value,
     description: description.value,
     hours: hours.value,
-    people: people.value.value,
+    people: users.value.value,
     farm: farm.value.value,
     lot: lot.value.value,
     date: date.value,
   });
   console.log("paseeeeee ");
-  console.log(people.value.value);
+  console.log(people.value.label);
   prompt.value = false;
-  // console.log(res);
   getListDaily();
-  // reset()
 }
 
 // activar y desactivar proceso diario
@@ -354,7 +351,7 @@ async function showInfo(data) {
   name.value = data.name;
   description.value = data.description;
   hours.value = data.hours;
-  people.value = {
+  users.value = {
     label: data.people.names,
     value: data.people._id
   };
@@ -374,12 +371,11 @@ async function showInfo(data) {
 
 async function putDaily() {
   console.log(index.value);
-  console.log(people.value);
   const res = await useDaily.updateDaily(index.value, {
     name: name.value,
     description: description.value,
     hours: hours.value,
-    people: people.value.value,
+    people: users.value.value,
     farm: farm.value.value,
     lot: lot.value.value,
     date: date.value,
@@ -392,21 +388,18 @@ async function putDaily() {
 
 
 async function getPeople() {
-  // optionsPeople.value=[]
   const res = await useUsers.listUsersActive();
   console.log(res);
   if (res.status < 299) {
-    console.log("holis");
     for (let i in res.data) {
       console.log(i);
       let object = { label: res.data[i].names, value: res.data[i]._id };
       optionsPeople.value.push(object);
-
       console.log(optionsPeople.value);
     }
     return optionsPeople.value
   } else {
-    throw new Error("Error al obtener los datos de people")
+    throw new Error("Error al obtener los datos de los usuarios")
   }
 }
 
@@ -415,12 +408,10 @@ async function getFarms() {
   const res = await useFarms.listFarmsActive();
   console.log(res);
   if (res.status < 299) {
-    console.log("holis");
     for (let i in res.data) {
       console.log(i);
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsFarm.value.push(object);
-
       console.log(optionsFarm.value);
     }
   }
@@ -450,9 +441,9 @@ function cleanForm() {
     name.value = "",
     description.value = "",
     hours.value = "",
-    people.value = "",
-    farm.value = "",
-    lot.value = "",
+    users.value = null,
+    farm.value = null,
+    lot.value = null,
     date.value = ""
 }
 
@@ -463,6 +454,6 @@ function cleanForm() {
 
 <style scoped>
 .q-field__control {
-  color: rgb(248, 244, 5) !important;
+  color: rgb(217, 0, 0) ! important;
 }
 </style>

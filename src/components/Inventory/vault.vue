@@ -122,25 +122,10 @@
                 filled
                 v-model="administrator"
                 :options="optionsDNI"
-                label="seleccione el DNI del administrador"
+                label="seleccione el administrador"
                 lazy-rules
                 use-input
                 input-debounce="0"
-                @update:model-value="setName(administrator)"
-                :rules="[
-                  (val) =>
-                    (val && val.toString().trim().length > 0) ||
-                    'El campo es requerido',
-                ]"
-              />
-
-              <q-input
-                disable
-                filled
-                type="text"
-                v-model="nameUsers"
-                label="Nombre del administrador"
-                lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
@@ -234,25 +219,10 @@
                 filled
                 v-model="administrator"
                 :options="optionsDNI"
-                label="seleccione el DNI del administrador"
+                label="seleccione el administrador"
                 lazy-rules
                 use-input
                 input-debounce="0"
-                @update:model-value="setName(administrator)"
-                :rules="[
-                  (val) =>
-                    (val && val.toString().trim().length > 0) ||
-                    'El campo es requerido',
-                ]"
-              />
-
-              <q-input
-                disable
-                filled
-                type="text"
-                v-model="nameUsers"
-                label="Nombre del administrador"
-                lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
@@ -308,7 +278,6 @@
 
               <div class="justify-center flex">
                 <br />
-
                 <q-btn
                   icon="save_as"
                   label="Actualizar"
@@ -358,7 +327,7 @@ let columns = ref([
   {
     name: "Contenido",
     align: "center",
-    label: "CONTENIDO",
+    label: "CONTENIDO DE LA BODEGA",
     field: "content",
     align: "center",
   },
@@ -367,12 +336,6 @@ let columns = ref([
     label: "ADMINISTRADOR",
     field: (row) => row.administrator.names,
 
-    align: "center",
-  },
-  {
-    name: "date",
-    label: "FECHA",
-    field: (row) => row.Date.slice(0, 10),
     align: "center",
   },
   {
@@ -385,6 +348,12 @@ let columns = ref([
     name: "dirrecion",
     label: "DIRRECION",
     field: "dirrecion",
+    align: "center",
+  },
+  {
+    name: "date",
+    label: "FECHA",
+    field: (row) => row.Date.slice(0, 10),
     align: "center",
   },
   {
@@ -409,35 +378,12 @@ let extension = ref();
 let dirrecion = ref();
 let promptEdit = ref(false);
 let index = ref();
-let nameUsers = ref();
 let optionsDNI = ref([]);
 let rows = ref([]);
 
 rows.value.forEach((row, index) => {
   row.index = index;
 });
-
-function setName(info){
-  console.log(info);
-  nameUsers=info.value
-};
-
-
-const postVault = async () => {
-  console.log("hola");
-  const vault = await VaultStore.newVault({
-    name_cellars: name_cellars.value,
-    content: content.value,
-    administrator: administrator.value.value,
-    extension: extension.value,
-    dirrecion: dirrecion.value,
-  });
-
-  console.log("pos");
-  console.log(extension.value);
-  getVault();
-  prompt.value = false;
-};
 
 async function getVault() {
   const res = await VaultStore.listVault();
@@ -449,7 +395,25 @@ async function getVault() {
   } else {
     console.log(res);  
   }
+  console.log(res);
 }
+
+const postVault = async () => {
+  console.log("hola");
+  const vault = await VaultStore.newVault({
+    name_cellars: name_cellars.value,
+    content: content.value,
+    administrator: administrator.value.value,
+    extension: extension.value,
+    dirrecion: dirrecion.value,
+  });
+console.log(vault);
+  console.log("pos");
+  console.log(extension.value);
+  getVault();
+  prompt.value = false;
+};
+
 
 async function activarDesactivar(data) {
   let res = "";
@@ -468,9 +432,10 @@ function goInfo(data) {
   name_cellars.value = data.name_cellars;
   content.value = data.content;
   administrator.value = {
-    label: data.administrator.numberDocument,
+    label: data.administrator.names,
     value: data.administrator._id,
   };
+  nameUsers.value = data.administrator.names
   extension.value = data.extension;
   dirrecion.value = data.dirrecion;
   console.log(administrator.value);
@@ -504,8 +469,7 @@ async function getPeople() {
   if (res.status < 299) {
     for (let i in res.data) {
       let object1 = {
-        label: res.data[i].numberDocument,
-        value: res.data[i].names,
+        label: res.data[i].names, value: res.data[i]._id,
       };
       optionsDNI.value.push(object1);
     }
@@ -514,6 +478,9 @@ async function getPeople() {
     throw new Error("Error al obtener los datos de people");
   }
 }
+
+
+
 
 onMounted(() => {
   getVault();

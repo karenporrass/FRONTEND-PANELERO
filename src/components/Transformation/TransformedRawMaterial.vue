@@ -250,10 +250,11 @@ let columns = ref([
 let rows = ref([])
 
 onMounted(() => {
-  getTransformed()
-  getFarms()
-  getLots()
-  getTypes()
+  getTransformed();
+  getFarms();
+  getLots();
+  getTypes();
+  getProcess();
 })
 
 
@@ -371,6 +372,22 @@ async function getLots() {
 
 async function getTypes() {
   const res = await useTypes.listUnitsActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsTypes.value.push(object);
+
+      console.log(optionsTypes.value);
+    }
+  }
+}
+
+
+async function getProcess() {
+  const res = await useDaily.getDaily();
   console.log(res);
   if (res.status < 299) {
     console.log("holis");

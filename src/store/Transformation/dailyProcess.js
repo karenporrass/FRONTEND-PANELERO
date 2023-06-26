@@ -17,6 +17,21 @@ export const useDailyStore = defineStore(
     };
 
 
+    async function listDailyActive() {
+      try {
+        let r= await requestAxios.get("/procesoDiario/dailyProcess/active", {
+          headers: {
+            token: useToken.token,
+          },
+      });
+      return r
+      } catch (error) {
+        console.log(error);
+        return error
+      }
+    };
+
+
     
     const postDaily = async (infoDaily) => {
       console.log("post");
@@ -64,6 +79,7 @@ export const useDailyStore = defineStore(
       active,
       postDaily,
       updateDaily,
+      listDailyActive
     };
   },
   {

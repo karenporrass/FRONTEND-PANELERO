@@ -35,11 +35,12 @@ export const paymentStore = defineStore('paymentStore', () => {
     async function newPayment(name) {
         try {
              await requestAxios.post(`/metodoPago`,{
+             name: name,
+            },
+            {
               headers: {
              token: useToken.token,
-           },},{
-             name: name,
-            });
+           }});
             notifySuccess('Metodo de pago registrado correctamente');
 
           } catch (error) {
@@ -50,11 +51,11 @@ export const paymentStore = defineStore('paymentStore', () => {
       async function putPayment(id, name) {
         try {
              await requestAxios.put(`/metodoPago/update/${id}`,{
+             name: name,
+            },{
               headers: {
              token: useToken.token,
-           },},{
-             name: name,
-            });
+           }});
             notifySuccess('Unidad de medida actualizada correctamente');
 
           } catch (error) {
@@ -64,10 +65,11 @@ export const paymentStore = defineStore('paymentStore', () => {
 
     async function active(id, estado){
       try {
-         await requestAxios.put(`/metodoPago/state/${id}`,{
+         await requestAxios.put(`/metodoPago/state/${id}`,{state:estado},
+         {
           headers: {
          token: useToken.token,
-       },}, {state:estado});
+       }});
         notifySuccess('Estado cambiado correctamente');
         //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

@@ -51,11 +51,7 @@ export const usersStore = defineStore('usersStore', () => {
     
     async function newUsers(names,typeDocument, numberDocument, rol,cel, address, email, emergencyPersonName, emergencyPersonPhone, token ) {
         try {
-             await requestAxios.post(`/usuarios`,{ headers: {
-              token: useToken.token,
-            },
-          }
-          ,{
+             await requestAxios.post(`/usuarios`,{
              names: names,
              typeDocument: typeDocument,
              numberDocument: numberDocument,
@@ -65,9 +61,12 @@ export const usersStore = defineStore('usersStore', () => {
              email: email,
              password: numberDocument,
              emergencyPersonName: emergencyPersonName,
-            emergencyPersonPhone: emergencyPersonPhone,
-            token: token
-            });
+            emergencyPersonPhone: emergencyPersonPhone
+            },
+            { headers: {
+              token: useToken.token,
+            },
+          });
             notifySuccess('Nuevo usuario registrado correctamente');
           } catch (error) {
             console.log(error);
@@ -76,10 +75,7 @@ export const usersStore = defineStore('usersStore', () => {
 
       async function putUsers(id, names, typeDocument, numberDocument, rol,cel, address, email, password , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
         try {
-            await requestAxios.put(`/usuarios/update/${id}`,{ headers: {
-              token: useToken.token,
-            },
-          },
+            await requestAxios.put(`/usuarios/update/${id}`,
             {
              names: names,
              typeDocument: typeDocument,
@@ -91,7 +87,11 @@ export const usersStore = defineStore('usersStore', () => {
              password: password,
              emergencyPersonName: emergencyPersonName,
               emergencyPersonPhone: emergencyPersonPhone
-            });
+            },
+            { headers: {
+              token: useToken.token,
+            },
+          });
             notifySuccess('Usuario actualizado correctamente');
 
           } catch (error) {
@@ -101,11 +101,12 @@ export const usersStore = defineStore('usersStore', () => {
 
     async function active(id, estado){
       try {
-       await requestAxios.put(`/usuarios/state/${id}`,{ headers: {
-        token: useToken.token,
-      },
-    },
-       {state:estado});
+       await requestAxios.put(`/usuarios/state/${id}`,
+       {state:estado},
+       {
+        headers: {
+       token: useToken.token,
+     }});
         notifySuccess('Estado cambiado correctamente');
         //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

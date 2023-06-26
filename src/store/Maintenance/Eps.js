@@ -37,12 +37,12 @@ export const epsStore = defineStore('epsStore', () => {
     async function newEps(name, attentionLine) {
         try {
              await requestAxios.post(`/eps`,{
-              headers: {
-             token: useToken.token,
-           },},{
                 name: name,
                 attentionLine: attentionLine
-            });
+            },{
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('Eps registrada correctamente');
 
           } catch (error) {
@@ -52,12 +52,12 @@ export const epsStore = defineStore('epsStore', () => {
       async function putEps(id, name, attentionLine) {
         try {
             await requestAxios.put(`/eps/update/${id}`,{
-              headers: {
-             token: useToken.token,
-           },},{
                 name: name,
                 attentionLine: attentionLine
-            });
+            },{
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('Eps actualizada correctamente');
 
           } catch (error) {
@@ -67,11 +67,11 @@ export const epsStore = defineStore('epsStore', () => {
 
     async function active(id, estado){
       try {
+
        await requestAxios.put(`/eps/state/${id}`, {
-        headers: {
-       token: useToken.token,
-     },},
+        headers: { token: useToken.token, },},
      {state:estado});
+
        notifySuccess('Estado cambiado correctamente');
        //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

@@ -35,12 +35,13 @@ export const panelaStore = defineStore('panelaStore', () => {
     async function newPanela(name, price) {
         try {
              await requestAxios.post(`/tipoPanela`, {
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               price: price
-            });
+            }, {
+              headers: {
+             token: useToken.token,
+           }}
+           );
             notifySuccess('Tipo de panela registrado correctamente');
 
           } catch (error) {
@@ -51,12 +52,13 @@ export const panelaStore = defineStore('panelaStore', () => {
     async function putPanela(id, name, price) {
         try {
              await requestAxios.put(`/tipoPanela/update/${id}`,{
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               price: price
-            });
+            },
+            {
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('TIpo de panela actualizado correctamente');
 
           } catch (error) {
@@ -66,10 +68,10 @@ export const panelaStore = defineStore('panelaStore', () => {
 
     async function active(id, estado){
       try {
-         await requestAxios.put(`/tipoPanela/state/${id}`,{
+         await requestAxios.put(`/tipoPanela/state/${id}`, {state:estado}, {
           headers: {
          token: useToken.token,
-       },}, {state:estado});
+       }});
          notifySuccess('Estado cambiado correctamente');
          //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

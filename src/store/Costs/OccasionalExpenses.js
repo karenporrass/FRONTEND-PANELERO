@@ -11,7 +11,10 @@ export const OccasionalStore = defineStore("counter", () => {
   async function listOccasional() {
 
     try {
-      return await requestAxios.get("/occasionalExpenses")
+      return await requestAxios.get("/occasionalExpenses", {
+        headers: {
+          token: useToken.token,
+        }})
     } catch (error) {
       console.log(error);
       notifyError('No fue posible obtener los gastos');
@@ -31,6 +34,7 @@ export const OccasionalStore = defineStore("counter", () => {
        
           Total:   Total
         },
+        
         notifySuccess('Gasto registrado correctamente')
         );
         
@@ -60,7 +64,7 @@ export const OccasionalStore = defineStore("counter", () => {
 
   async function active(id, estado){
     try {
-      return await requestAxios.put(`/occasionalExpenses/state/${id}`, {state:estado},
+      return await requestAxios.put(`/occasionalExpenses/state/${id}`, {state:estado}, {  headers: {token: useToken.token,},},
       notifySuccess('Estado cambiado correctamente')
       ) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
     } catch (error) {
@@ -71,7 +75,7 @@ export const OccasionalStore = defineStore("counter", () => {
 
   async function listOccacionalActive() {
     try {
-      return await requestAxios.get("/metodoPago/active")
+      return await requestAxios.get("/metodoPago/active", {  headers: {token: useToken.token,}})
       
     } catch (error) {
       console.log(error);
@@ -81,14 +85,14 @@ export const OccasionalStore = defineStore("counter", () => {
 
   async function listFarmsActive() {
     try {
-      return await requestAxios.get("/registroFinca/active");
+      return await requestAxios.get("/registroFinca/active" , {  headers: {token: useToken.token,}});
     } catch (error) {
       console.log(error);
     }
   }
   
 
-  return {  Occasional, listOccasional, newOccasional, putOccasional, active, listOccacionalActive, listFarmsActive };
+  return {  listOccasional, newOccasional, putOccasional, active, listOccacionalActive, listFarmsActive };
 },
 {persist: true,},
 );

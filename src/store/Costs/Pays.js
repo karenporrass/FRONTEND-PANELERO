@@ -62,11 +62,8 @@ export const payStore = defineStore("payStore", () => {
 
   async function active(id, estado){
     try {
-      return await requestAxios.put(`/payments/state/${id}`, {  headers: {
-        token: useToken.token,
-      },
-    },
-      {state:estado}),
+      return await requestAxios.put(`/payments/state/${id}`,{state:estado}, {  headers: {token: useToken.token,},
+    },),
       notifySuccess('Estado cambiado correctamente')
       
       

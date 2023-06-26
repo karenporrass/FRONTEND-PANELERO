@@ -36,13 +36,14 @@ export const farmRegistryStore = defineStore('farmRegistryStore', () => {
     async function newFarm(name, registrationNumber, extent) {
         try {
              await requestAxios.post(`/registroFinca`,{
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               registrationNumber: registrationNumber,
              extent: extent
-            });
+            },
+            {
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('Finca registrada correctamente');
 
           } catch (error) {
@@ -53,13 +54,13 @@ export const farmRegistryStore = defineStore('farmRegistryStore', () => {
       async function putFarm(id, name, registrationNumber, extent) {
         try {
              await requestAxios.put(`/registroFinca/update/${id}`,{
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               registrationNumber: registrationNumber,
              extent: extent
-            });
+            },{
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('Proceso diario actualizado correctamente');
           } catch (error) {
             console.log(error);
@@ -68,10 +69,10 @@ export const farmRegistryStore = defineStore('farmRegistryStore', () => {
 
     async function active(id, estado){
       try {
-       await requestAxios.put(`/registroFinca/state/${id}`, {
+       await requestAxios.put(`/registroFinca/state/${id}`, {state:estado}, {
         headers: {
        token: useToken.token,
-     },}, {state:estado});
+     }});
         notifySuccess('Estado cambiado correctamente');
         //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

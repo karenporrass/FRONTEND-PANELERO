@@ -37,13 +37,13 @@ export const packagingStore = defineStore('packagingStore', () => {
     async function newPackaging(name, maxWeight, units) {
         try {
              await requestAxios.post(`/tipoEmpaque`,{
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               maxWeigth: maxWeight,
               unitsPerBox: units
-            });
+            },{
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('Tipo de empaque registrado correctamente');
 
           } catch (error) {
@@ -54,13 +54,14 @@ export const packagingStore = defineStore('packagingStore', () => {
     async function putPackaging(id, name, maxWeight, units) {
         try {
              await requestAxios.put(`/tipoEmpaque/update/${id}`,{
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               maxWeigth: maxWeight,
               unitsPerBox: units
-            });
+            },
+            {
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('TIpo de empaque actualizado correctamente');
 
           } catch (error) {
@@ -70,10 +71,10 @@ export const packagingStore = defineStore('packagingStore', () => {
 
     async function active(id, estado){
       try {
-         await requestAxios.put(`/tipoEmpaque/state/${id}`,{
+         await requestAxios.put(`/tipoEmpaque/state/${id}`, {state:estado}, {
           headers: {
          token: useToken.token,
-       },}, {state:estado});
+       }});
         notifySuccess('Estado cambiado correctamente');
         //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

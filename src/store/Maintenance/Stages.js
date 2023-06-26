@@ -36,12 +36,12 @@ export const stagesStore = defineStore('stagesStore', () => {
     async function newStage(name, description) {
         try {
              await requestAxios.post(`/etapas`,{
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               description: description,
-            });
+            }, {
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('Etapa registrada correctamente');
 
           } catch (error) {
@@ -52,12 +52,13 @@ export const stagesStore = defineStore('stagesStore', () => {
     async function putStage(id, name, description) {
         try {
              await requestAxios.put(`/etapas/update/${id}`, {
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               description: description,
-            });
+            }, {
+              headers: {
+             token: useToken.token,
+           }});
+
             notifySuccess('Etapa actualizada correctamente');
 
           } catch (error) {
@@ -69,10 +70,10 @@ export const stagesStore = defineStore('stagesStore', () => {
 
     async function active(id, estado){
       try {
-         await requestAxios.put(`/etapas/state/${id}`,{
+         await requestAxios.put(`/etapas/state/${id}`, {state:estado}, {
           headers: {
          token: useToken.token,
-       },}, {state:estado});
+       }});
         notifySuccess('Estado cambiado correctamente');
         //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

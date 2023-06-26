@@ -37,13 +37,14 @@ export const workStore = defineStore('workStore', () => {
     async function newWork(name, area, dailyPayment) {
         try {
              await requestAxios.post(`/tipoLabor`,{
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               area: area,
               dailyPayment: dailyPayment
-            });
+            },
+            {
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('Tipo de labor registrado correctamente');
 
           } catch (error) {
@@ -57,7 +58,11 @@ export const workStore = defineStore('workStore', () => {
               name: name,
               area: area,
               dailyPayment: dailyPayment
-            });
+            },
+            {
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('Tipo de labor actualizado correctamente');
 
           } catch (error) {
@@ -67,7 +72,10 @@ export const workStore = defineStore('workStore', () => {
 
     async function active(id, estado){
       try {
-         await requestAxios.put(`/tipoLabor/state/${id}`, {state:estado});
+         await requestAxios.put(`/tipoLabor/state/${id}`, {state:estado}, {
+          headers: {
+         token: useToken.token,
+       }});
          notifySuccess('Estado cambiado correctamente');
          //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

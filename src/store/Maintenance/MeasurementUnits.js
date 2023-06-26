@@ -37,12 +37,13 @@ export const unitsStore = defineStore('unitsStore', () => {
     async function newUnits(name,acronym) {
         try {
              await requestAxios.post(`/unidadesMedida`,{
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               acronym: acronym
-            });
+            },
+            {
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('Unidad de medida registrada correctamente');
 
           } catch (error) {
@@ -53,13 +54,14 @@ export const unitsStore = defineStore('unitsStore', () => {
      async function putUnits(id,name,acronym) {
         try {
              await requestAxios.put(`/unidadesMedida/update/${id}`,{
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               acronym: acronym
-            });
-            notifySuccess('Unidad de medida actualizads correctamente');
+            },
+            {
+              headers: {
+             token: useToken.token,
+           }});
+            notifySuccess('Unidad de medida actualizada correctamente');
 
 
           } catch (error) {
@@ -69,10 +71,11 @@ export const unitsStore = defineStore('unitsStore', () => {
 
     async function active(id, estado){
       try {
-         await requestAxios.put(`/unidadesMedida/state/${id}`,{
+         await requestAxios.put(`/unidadesMedida/state/${id}`, {state:estado},
+         {
           headers: {
          token: useToken.token,
-       },}, {state:estado});
+       }});
         notifySuccess('Estado cambiado correctamente');
         //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

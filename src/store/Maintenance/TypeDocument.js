@@ -35,12 +35,13 @@ export const documentStore = defineStore('documentStore', () => {
     async function newDocument(name, acronym) {
         try {
             return await requestAxios.post(`/tipoDocumento`,{
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               acronym: acronym
-            })
+            },
+            {
+              headers: {
+             token: useToken.token,
+           }})
           } catch (error) {
             console.log(error);
           }
@@ -49,12 +50,12 @@ export const documentStore = defineStore('documentStore', () => {
     async function putDocument(id, name, acronym) {
         try {
              await requestAxios.put(`/tipoDocumento/update/${id}`,{
-              headers: {
-             token: useToken.token,
-           },},{
               name: name,
               acronym: acronym
-            });
+            },{
+              headers: {
+             token: useToken.token,
+           }});
             notifySuccess('Tipo de documento registrado correctamente');
 
           } catch (error) {
@@ -64,10 +65,10 @@ export const documentStore = defineStore('documentStore', () => {
 
     async function active(id, estado){
       try {
-         await requestAxios.put(`/tipoDocumento/state/${id}`,{
+         await requestAxios.put(`/tipoDocumento/state/${id}`, {state:estado}, {
           headers: {
          token: useToken.token,
-       },}, {state:estado});
+       }});
         notifySuccess('Estado cambiado correctamente');
         //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
       } catch (error) {

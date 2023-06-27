@@ -9,7 +9,10 @@ export const vaultStore = defineStore("vaultStore", () => {
 
   async function listVault() {
     try {
-      return  await requestAxios.get("/cellars")
+      return  await requestAxios.get("/cellars",  {
+        headers: {
+          token: useToken.token,
+        }})
      
     } catch (error) {
       notifyError('No fue posible obtener los datos de bodegas');
@@ -52,7 +55,10 @@ export const vaultStore = defineStore("vaultStore", () => {
 
   async function active(id, estado){
     try {
-      return await requestAxios.put(`/cellars/state/${id}`, {state:estado},
+      return await requestAxios.put(`/cellars/state/${id}`, {state:estado}, {
+        headers: {
+          token: useToken.token,
+        }},
       notifySuccess('Estado cambiado correctamente')) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
     } catch (error) {
       console.log(error);
@@ -63,7 +69,10 @@ export const vaultStore = defineStore("vaultStore", () => {
 
   async function listVaultActive() {
     try {
-      return await requestAxios.get("/metodoPago/active")
+      return await requestAxios.get("/metodoPago/active", {
+        headers: {
+          token: useToken.token,
+        }})
     } catch (error) {
       console.log(error);
     }

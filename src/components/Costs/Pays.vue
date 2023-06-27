@@ -368,10 +368,7 @@ async function getPeople() {
     for (let i in res.data) {
       let object1 = { label: res.data[i].numberDocument, value: res.data[i]._id };
       optionsDNI.value.push(object1);
-      let object2 = { label: res.data[i].rol, value: res.data[i]._id };
-      ROL.value.push(object2);    
-      let object3 = { label: res.data[i].names, value: res.data[i]._id };
-      Name.value.push(object3);     
+   
     }
     return optionsDNI.value  
   } else {

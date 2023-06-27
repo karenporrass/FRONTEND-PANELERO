@@ -153,7 +153,7 @@ let pagination = ref({
   rowsPerPage: 0
 })
 let columns = ref([
-  { name: 'index', label: 'N°', field: 'index' },
+  { name: 'index', label: '#', field: 'index' },
   { name: 'name', label: 'NOMBRE LABOR', field: 'name', align: 'center' },
   { name: 'area', label: 'AREA A EJERCER', align: 'center', field: row => row.area, format: val => `${val}`, sortable: true },
   { name: 'dailyPayment', align: 'center', label: 'PAGO DIARIO', field: 'dailyPayment', align: 'center', sortable: true },

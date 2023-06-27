@@ -36,12 +36,15 @@ export const OrderStore = defineStore('counter', () => {
                 ValorTotal: valorTotal,
                 token: token
             }, 
-            notifySuccess('Pedido registrado correctamente'));
-          
-        } catch (error) {
-          console.log(error);
-          notifyError(error.response.data.errors.join(", "));
-        }
+            { headers: {
+              token: useToken.token,
+            },
+          });
+            notifySuccess('Pedido registrado correctamente');
+            }catch (error) {
+            console.log(error);
+            notifyError(error.response.data.errors.join(", "));
+            }
       }
     
 
@@ -64,7 +67,12 @@ export const OrderStore = defineStore('counter', () => {
               Abono: abono,
               ValorTotal: valorTotal
             },
-            notifySuccess('Pedido actualizado correctamente'))
+            { 
+              headers: {
+              token: useToken.token,
+            },
+          });
+            notifySuccess('Pedido actualizado correctamente')
             
           } catch (error) {
             console.log(error);
@@ -76,8 +84,13 @@ export const OrderStore = defineStore('counter', () => {
         console.log("state");
         try {
           return await requestAxios.put(
-            `/pedido/state/${id}`,{ state: estado },
-            notifySuccess('Estado cambiado correctamente'));
+            `/pedido/state/${id}`,
+            { state: estado },
+            { 
+              headers: {
+              token: useToken.token,
+            }});
+            notifySuccess('Estado cambiado correctamente');
         } catch (error) {
           console.log(error);
           console.log("actualiza");

@@ -273,12 +273,14 @@
 import { ref, onMounted} from "vue";
 import { OrderStore } from "../../store/Orders/TablesOrders.js"
 import { LoginStore } from "../../store/Login/login.js";
+import {packagingStore} from "../../store/Maintenance/TypePackaging.js"
 
 
 
 
 const orderStore = OrderStore()
 const loginStore = LoginStore()
+const usePacking= packagingStore()
 
 let abrirCrear=ref(false)
 let promptEdit = ref(false)
@@ -481,31 +483,23 @@ async function getTypePanela() {
   const res = await orderStore.listPanelaActive();
   console.log(res);
   if (res.status < 299) {
-    console.log("holis");
     for (let i in res.data) {
       console.log(i);
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsPacking.value.push(object);
 
-      console.log("222", optionsPacking.value);
+      console.log(optionsPacking.value);
     }
     return optionsPacking.value
   } else {
     throw new Error ("Error al obtener los datos de people")
   }
 }
-
-
-
-
-
-
  
 async function getPackaingPanela() {
   const res = await orderStore.listPackagingActive();
   console.log(res);
   if (res.status < 299) {
-    console.log("holis");
     for (let i in res.data) {
       console.log(i);
       let object = { label: res.data[i].name, value: res.data[i]._id };

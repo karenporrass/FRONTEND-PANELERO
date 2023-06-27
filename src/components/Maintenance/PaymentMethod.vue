@@ -78,7 +78,7 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 <div class="justify-center flex">
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-sm q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
                 <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm " to=""  v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -103,7 +103,7 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 <div class="justify-center flex">
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-sm q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
                 <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm " to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -129,7 +129,7 @@ let pagination = ref({
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
-  {name: 'name',label: 'NOMBRE METODO',field: 'name',align: 'center'},
+  {name: 'name',label: 'NOMBRE DEL MÉTODO DE PAGO',field: 'name',align: 'center'},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 

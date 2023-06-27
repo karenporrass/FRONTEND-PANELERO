@@ -25,7 +25,6 @@ export const OccasionalStore = defineStore("counter", () => {
   async function newOccasional(Name_spent, Finca, Description, PAYMENT_METHOD,   Total ) {
     try {
         return await requestAxios.post(`/occasionalExpenses`,{
-         
 
           Name_spent: Name_spent,
           Finca: Finca,

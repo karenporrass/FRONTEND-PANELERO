@@ -216,13 +216,6 @@ let columns = ref([
     align: "center",
     field: "CONCEPT",
   },
-
-  {
-    name: "date",
-    label: "FECHA",
-    field: (row) => row.Date.slice(0, 10),
-    align: "center",
-  },
   {
     name: "PAYMENT_METHOD",
     label: "METODO DE PAGO",
@@ -231,7 +224,7 @@ let columns = ref([
   },
   {
     name: "TIME_TO_PAY",
-    label: "TIEMPO A PAGAR",
+    label: "MES A PAGAR",
     align: "center",
     field: "TIME_TO_PAY",
   },
@@ -240,6 +233,12 @@ let columns = ref([
     label: "TOTAL A PAGAR",
     align: "center",
     field: "Total",
+  },
+  {
+    name: "date",
+    label: "FECHA",
+    field: (row) => row.Date.slice(0, 10),
+    align: "center",
   },
   {
     name: "status",

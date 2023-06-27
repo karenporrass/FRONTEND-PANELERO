@@ -186,7 +186,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { payStore } from "../../store/Costs/Pays.js";
-import moment from 'moment';
+
 
 const PayStore = payStore();
 let prompt = ref(false);

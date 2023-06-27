@@ -371,7 +371,6 @@ function cleanForm(){
   index.value = null
   emergencyPersonName.value = ""
   emergencyPersonPhone.value = null
-  password.value = null
 }
 
 

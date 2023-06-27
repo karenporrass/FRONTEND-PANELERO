@@ -71,7 +71,8 @@ export const epsStore = defineStore('epsStore', () => {
        await requestAxios.put(`/eps/state/${id}`, 
      {state:estado},
      {
-      headers: { token: useToken.token, }});
+      headers: { token: useToken.token, }
+    });
 
        notifySuccess('Estado cambiado correctamente');
        //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion

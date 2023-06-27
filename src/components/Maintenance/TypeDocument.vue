@@ -71,12 +71,12 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="postTypeDocument()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del Tipo de documento" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre del Tipo de documento" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="text" v-model="acronym" label="Digite el acronimo"
+               <q-input  filled type="text" v-model="acronym" label="Digite el acronimo"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
@@ -104,12 +104,12 @@
 
                 <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del Tipo de documento" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre del Tipo de documento" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="text" v-model="acronym" label="Digite el acronimo"
+               <q-input  filled type="text" v-model="acronym" label="Digite el acronimo"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',

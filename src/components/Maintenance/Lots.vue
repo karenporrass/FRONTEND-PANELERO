@@ -74,12 +74,12 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="postLots()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Finca" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre de la Finca" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="number" v-model="extent" label="Digite en metros la estencion de terreno"
+               <q-input  filled type="number" v-model="extent" label="Digite en metros la estencion de terreno"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
@@ -112,12 +112,12 @@
 
                 <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Finca" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre de la Finca" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="number" v-model="extent" label="Digite en metros la estencion de terreno"
+               <q-input  filled type="number" v-model="extent" label="Digite en metros la estencion de terreno"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
@@ -258,9 +258,3 @@ onBeforeMount(()=>{
  })
 
 </script>
-<style scoped>
-.my-card{
-  max-height: 80%;
-  min-height: 70%;
-}
-</style>

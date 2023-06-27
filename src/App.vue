@@ -170,7 +170,7 @@ import { requestAxios } from "./Global/axios";
 import {LoginStore} from "./store/Login/login.js"
 
  const storelogin = LoginStore()
- let privateMol = ref(false)
+ let privateMol = ref()
 //  let per = ref()
 
 

@@ -1,14 +1,19 @@
 import { defineStore } from 'pinia';
 import { requestAxios } from '../../Global/axios';
 import { notifyError, notifySuccess } from "../../Global/notify.js";
-
+import { LoginStore } from "../../store/Login/login.js";
 
 
 export const usePackedStore = defineStore('usePackedStore', () => {
-    
+      const useToken = LoginStore();
+
     const listPacked = async()=> {
       try {
-        let r= await requestAxios.get("/empacados/packed")
+        let r= await requestAxios.get("/empacados/packed" , {
+          headers: {
+            token: useToken.token,
+          },
+        });
         console.log(r);
         return r
       } catch (error) {
@@ -22,6 +27,9 @@ export const usePackedStore = defineStore('usePackedStore', () => {
       console.log("post");
       try {
         await requestAxios.post("/empacados/register",infoPacked, {
+          headers: {
+            token: useToken.token,
+          },
         });
         notifySuccess("Nuevo empaquetado guardado correctamente")
       } catch (error) {
@@ -33,8 +41,11 @@ export const usePackedStore = defineStore('usePackedStore', () => {
     
         async function active(id, estado){
           try {
-          await requestAxios.put(`/empacados/state/${id}`, {state:estado}); 
-           //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+          await requestAxios.put(`/empacados/state/${id}`, {state:estado}, {
+          headers: {
+            token: useToken.token,
+          },
+        });
           notifySuccess("Estado cambiado correctamente")
           } catch (error) {
             console.log(error);
@@ -46,7 +57,10 @@ export const usePackedStore = defineStore('usePackedStore', () => {
           console.log(infoPacked);
           try {
             await requestAxios.put(`/empacados/update/${id}`, infoPacked, {
-            });
+          headers: {
+            token: useToken.token,
+          },
+        });
             notifySuccess("Empaquetado editado correctamente")
           } catch (error) {
             console.log(infoPacked);
@@ -57,7 +71,11 @@ export const usePackedStore = defineStore('usePackedStore', () => {
 
         async function listPackagingActive() {
           try {
-            return await requestAxios.get("/tipoEmpaque/active")
+            return await requestAxios.get("/tipoEmpaque/active", {
+          headers: {
+            token: useToken.token,
+          },
+        });
           } catch (error) {
             console.log(error);
           }
@@ -65,7 +83,11 @@ export const usePackedStore = defineStore('usePackedStore', () => {
       
         async function listPanelaActive() {
           try {
-            return await requestAxios.get("/tipoPanela/active")
+            return await requestAxios.get("/tipoPanela/active" , {
+          headers: {
+            token: useToken.token,
+          },
+        });
           } catch (error) {
             console.log(error);
           }

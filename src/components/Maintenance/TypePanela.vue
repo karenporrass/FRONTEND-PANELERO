@@ -71,12 +71,12 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="postPanela()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la forma de la panela" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre de la forma de la panela" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="number" v-model="price" label="Digite el precio por unidad"
+               <q-input  filled type="number" v-model="price" label="Digite el precio por unidad"
                 lazy-rules :rules="[
                   (val) =>
                     (val > 0) || 'El campo es requerido',
@@ -103,12 +103,12 @@
 
                 <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la forma de la panela" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre de la forma de la panela" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="number" v-model="price" label="Digite el precio por unidad"
+               <q-input  filled type="number" v-model="price" label="Digite el precio por unidad"
                 lazy-rules :rules="[
                   (val) =>
                     (val  > 0) || 'El campo es requerido',

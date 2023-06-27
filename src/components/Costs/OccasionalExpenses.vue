@@ -314,6 +314,12 @@ let pagination = ref({
   rowsPerPage: 0,
 });
 let columns = ref([
+{
+    name: "index",
+    label: "#",
+    field: "index",
+    align: "center",
+  },
   {
     name: "Name_spent",
     label: "NOMBRE DEL GASTO",
@@ -333,12 +339,6 @@ let columns = ref([
     align: "center",
   },
   {
-    name: "date",
-    label: "FECHA",
-    field: (row) => row.Date.slice(0, 10),
-    align: "center",
-  },
-  {
     name: "PAYMENT_METHOD",
     label: "METODO DE PAGO",
     field: (row) => row.PAYMENT_METHOD.name,
@@ -350,6 +350,12 @@ let columns = ref([
     label: "TOTAL A PAGAR",
     align: "center",
     field: "Total",
+  },
+  {
+    name: "date",
+    label: "FECHA",
+    field: (row) => row.Date.slice(0, 10),
+    align: "center",
   },
   {
     name: "status",

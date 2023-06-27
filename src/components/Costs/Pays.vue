@@ -226,13 +226,6 @@ let columns = ref([
     align: "center",
     field: "CONCEPT",
   },
-
-  {
-    name: "date",
-    label: "FECHA",
-    field: (row) => row.Date.slice(0, 10),
-    align: "center",
-  },
   {
     name: "PAYMENT_METHOD",
     label: "METODO DE PAGO",
@@ -240,6 +233,7 @@ let columns = ref([
     align: "center",
   },
   {
+
     name: "START_WORK",
     label: "INICIO DE TRABAJO",
     align: "center",
@@ -256,6 +250,12 @@ let columns = ref([
     label: "TOTAL A PAGAR",
     align: "center",
     field: "Total",
+  },
+  {
+    name: "date",
+    label: "FECHA",
+    field: (row) => row.Date.slice(0, 10),
+    align: "center",
   },
   {
     name: "status",

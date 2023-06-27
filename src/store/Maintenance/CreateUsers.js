@@ -23,6 +23,22 @@ export const usersStore = defineStore('usersStore', () => {
       }
     }
 
+    async function checkAdmi() {
+      console.log("admi")
+      try {
+        return await requestAxios.get("/usuarios/admi", {
+          headers: {
+            token: useToken.token,
+          },
+      });
+
+      } catch (error) {
+        console.log(error);
+        notifyError('No fue posible obtener el administrador');
+
+      }
+    }
+
     async function listUsersActive() {
       console.log("listUsersActive")
       try {
@@ -73,7 +89,7 @@ export const usersStore = defineStore('usersStore', () => {
           }
       }
 
-      async function putUsers(id, names, typeDocument, numberDocument, rol,cel, address, email, password , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
+      async function putUsers(id, names, typeDocument, numberDocument, rol,cel, address, email , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
         try {
             await requestAxios.put(`/usuarios/update/${id}`,
             {
@@ -81,6 +97,30 @@ export const usersStore = defineStore('usersStore', () => {
              typeDocument: typeDocument,
              numberDocument: numberDocument,
              rol: rol,
+             cel: cel,
+             address: address,
+             email: email,
+             emergencyPersonName: emergencyPersonName,
+              emergencyPersonPhone: emergencyPersonPhone
+            },
+            { headers: {
+              token: useToken.token,
+            },
+          });
+            notifySuccess('Usuario actualizado correctamente');
+
+          } catch (error) {
+            console.log(error);
+          }
+      }
+
+      async function putUsersProfile(id, names, typeDocument, numberDocument, cel, address, email, password , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
+        try {
+            await requestAxios.put(`/usuarios/updateProfile/${id}`,
+            {
+             names: names,
+             typeDocument: typeDocument,
+             numberDocument: numberDocument,
              cel: cel,
              address: address,
              email: email,
@@ -117,7 +157,7 @@ export const usersStore = defineStore('usersStore', () => {
   
     
 
-    return { listUsers, active, newUsers, putUsers, listDocuments, listUsersActive}
+    return { listUsers, active, newUsers, putUsers, listDocuments, listUsersActive, putUsersProfile, checkAdmi}
   },
   {
     persist: true,

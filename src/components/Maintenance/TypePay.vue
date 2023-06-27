@@ -38,7 +38,7 @@
        <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10 ">
-              <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
+              <q-table style="height: 50vh" flat bordered :rows="rows" :columns="columns" row-key="index">
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>

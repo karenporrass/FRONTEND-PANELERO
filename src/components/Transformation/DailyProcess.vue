@@ -220,7 +220,7 @@ let optionsLot = ref([]);
 let columns = ref([
   {
     name: "index",
-    label: "N°",
+    label: "#",
     field: "index",
     align: "center",
   },

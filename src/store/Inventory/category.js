@@ -1,16 +1,19 @@
 import { defineStore } from "pinia";
 import { notifyError, notifySuccess } from "../../Global/notify.js";
 import { ref } from "vue";
-
+import {LoginStore} from "../../store/Login/login.js"
 import {requestAxios} from "../../Global/axios.js"
 
 export const CategoryStore = defineStore("CategoryStore", () => {
   const Category = ref("");
-
+  const useToken = LoginStore();
 
   async function listCategory() {
     try {
-      return await requestAxios.get("/category")
+      return await requestAxios.get("/category", {
+        headers: {
+          token: useToken.token,
+        }})
       
     } catch (error) {
       notifyError('No fue posible obtener las categorias');
@@ -52,7 +55,7 @@ export const CategoryStore = defineStore("CategoryStore", () => {
 
   async function active(id, estado){
     try {
-      return await requestAxios.put(`/category/state/${id}`, {state:estado},
+      return await requestAxios.put(`/category/state/${id}`, {state:estado},c, {  headers: {token: useToken.token,}},
       notifySuccess('Estado cambiado correctamente')
       ) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
     } catch (error) {

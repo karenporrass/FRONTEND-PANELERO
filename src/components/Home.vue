@@ -8,7 +8,8 @@
         </div>
       </div>
         <div class="row justify-center q-my-xl">
-            <div class="col-10"  style="padding: 0px; ">
+          <div class="col-1"></div>
+            <div class="col-10"  style="padding: 0px;  ">
                 <div style="padding: 0px; ">
     <q-carousel 
       animated
@@ -16,7 +17,7 @@
       arrows
       navigation
       infinite
-      style="height: 500px;"
+      style="height: 70vh;"
     >
       <q-carousel-slide :name="1" img-src="/images/panela1.jpg" />
       <q-carousel-slide :name="2" img-src="/images/panela2.jpg" />
@@ -24,6 +25,7 @@
     </q-carousel>
   </div>
             </div>
+            <div class="col-1"></div>
            
         </div>
 

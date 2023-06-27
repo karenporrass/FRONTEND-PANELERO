@@ -70,7 +70,7 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="postTypePay()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del tipo de pago (jornal, detajo, contrato)" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre del tipo de pago (jornal, detajo, contrato)" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
@@ -95,7 +95,7 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del tipo de pago (jornal, detajo, contrato)" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre del tipo de pago (jornal, detajo, contrato)" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />

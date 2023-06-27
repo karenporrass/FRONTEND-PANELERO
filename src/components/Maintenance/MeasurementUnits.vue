@@ -143,7 +143,7 @@ let pagination = ref({
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE DE LA UNIDAD DE MEDIDA',field: 'name',align: 'center'},
-  {name: 'weight',label: 'ACRONIMO',align: 'center',field: row => row.format,format: val => `${val}`,sortable: true},
+  {name: 'weight',label: 'ACRONIMO',align: 'center',field: row => row.acronym ,format: val => `${val}`,sortable: true},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])

@@ -41,9 +41,11 @@
       <div class="col-1"></div>
     </div>
     <!-- TABLE INFO -->
-    <div class="row q-mt-md justify-center">
-      <div class="col-11">
-        <q-table style="height: 400px" flat bordered  ref="tableRef" :rows="rows" :columns="columns" row-key="index" virtual-scroll  :virtual-scroll-item-size="48"
+    <div class="row q-mt-md ">
+      <div class="col-1"></div>
+
+      <div class="col-10">
+        <q-table style="height: 50vh" flat bordered  ref="tableRef" :rows="rows" :columns="columns" row-key="index" virtual-scroll  :virtual-scroll-item-size="48"
           :pagination="pagination" :rows-per-page-options="[0]"    >
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
@@ -64,6 +66,8 @@
           </template>
         </q-table>
       </div>
+      <div class="col-1"></div>
+
     </div>
 
     <q-dialog v-model="prompt">
@@ -390,6 +394,9 @@ onBeforeMount(() => {
 
 <style scoped>
 .my-card{
-  max-height: 90%;
-  width: 35%;}
+  max-height: 80%;
+  min-height: 70%;
+
+}
+
 </style>

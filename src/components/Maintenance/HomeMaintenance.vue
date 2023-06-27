@@ -215,7 +215,7 @@
                 </router-link>
             </div>
 
-            <div class="col-2 q-px-md">
+            <div class="col-2 q-px-md q-mb-xl">
                 <router-link to="/tipoPanela" style="text-decoration: none; color: black;">
                     <q-card class="my-card" style="border-style: solid; border-color: green; border-radius: 10px;">
                         <q-card-section style="display: flex;  justify-content: center;">

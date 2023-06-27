@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <q-layout view="hHh lpR fFf" container class="shadow-2 fullscreen">
+      <q-layout view="hHh lpR fff" container class="shadow-2 fullscreen">
         <q-header elevated class="bg-green-10">
           <q-toolbar>
             <q-btn flat @click="toggleLeftDrawer" round dense
@@ -40,7 +40,7 @@
                     <i class="fa-solid fa-house-user" style="font-size: 20px; "></i>
                   </q-item-section>
                   <q-item-section style="font-size: medium;">
-                    HOME
+                    INICIO
                   </q-item-section>
                 </q-item>
               </router-link>

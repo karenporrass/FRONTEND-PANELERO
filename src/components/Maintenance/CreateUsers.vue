@@ -41,9 +41,8 @@
       <div class="col-1"></div>
     </div>
     <!-- TABLE INFO -->
-    <div class="row q-mt-md">
-      <div class="col-1"></div>
-      <div class="col-10 ">
+    <div class="row q-mt-md justify-center">
+      <div class="col-11">
         <q-table style="height: 400px" flat bordered  ref="tableRef" :rows="rows" :columns="columns" row-key="index" virtual-scroll  :virtual-scroll-item-size="48"
           :pagination="pagination" :rows-per-page-options="[0]"    >
           <template v-slot:body-cell-options="props">
@@ -65,7 +64,6 @@
           </template>
         </q-table>
       </div>
-      <div class="col-1"></div>
     </div>
 
     <q-dialog v-model="prompt">
@@ -123,7 +121,7 @@
 
 
               <div class="justify-center flex">
-                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9" text-white></q-btn>
+                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white" ></q-btn>
                 <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm " to=""   v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -136,7 +134,7 @@
 
 
     <q-dialog v-model="promptEdit">
-      <q-card class="my-card" style="height: 60%;">
+      <q-card class="my-card">
         <q-card-section class="bg-green-10 ">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
             EDITAR LA INFORMACIÓN
@@ -249,10 +247,10 @@ let pagination = ref({
 let optionsRol = ref(['Administrador', 'Trabajador'])
 let optionsDocument = ref([])
 let columns = ref([
-  { name: 'index', label: '#', field: 'index' },
+  { name: 'index', label: '#', field: 'index'},
   { name: 'name', label: 'NOMBRES', field: 'names', align: 'center' },
   { name: 'typeDocument', align: 'center', label: 'TIPO DE DOCUMENTO', field: (row)=> row.typeDocument.acronym, align: 'center', sortable: true },
-  { name: 'numberDocument', align: 'center', label: 'NUMERO DOCUMENTO', field: 'numberDocument', align: 'center', sortable: true },
+  { name: 'numberDocument', align: 'center', label: 'N° DOCUMENTO', field: 'numberDocument', align: 'center', sortable: true },
   { name: 'rol', label: 'ROL', field: 'rol', align: 'center' },
   { name: 'cel', label: 'CELULAR', field: 'cel', align: 'center' },
   { name: 'address', label: 'DIRECCION', field: 'address', align: 'center' },
@@ -392,7 +390,6 @@ onBeforeMount(() => {
 
 <style scoped>
 .my-card{
-  height: 60%;
-  max-height: 80%;
-  width: 47%;}
+  max-height: 90%;
+  width: 35%;}
 </style>

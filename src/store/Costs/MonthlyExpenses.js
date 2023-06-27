@@ -1,14 +1,18 @@
 import { defineStore } from "pinia";
 import {requestAxios} from "../../Global/axios.js"
 import { notifyError, notifySuccess } from "../../Global/notify.js";
+import {LoginStore} from "../../store/Login/login.js"
 
 export const monthlyStore = defineStore("monthlyStore", () => {
-
+  const useToken = LoginStore();
 
   async function listMonthly() {
 
     try {
-      let r= await requestAxios.get("/monthlyExpenses")
+      let r= await requestAxios.get("/monthlyExpenses", {
+        headers: {
+          token: useToken.token,
+        }})
       
       return r
     } catch (error) {
@@ -57,7 +61,7 @@ export const monthlyStore = defineStore("monthlyStore", () => {
 
   async function active(id, estado){
     try {
-      return await requestAxios.put(`/monthlyExpenses/state/${id}`, {state:estado}, 
+      return await requestAxios.put(`/monthlyExpenses/state/${id}`, {state:estado},  {  headers: {token: useToken.token,},},
       notifySuccess('Estado cambiado correctamente')) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
     } catch (error) {
       console.log(error);
@@ -68,7 +72,7 @@ export const monthlyStore = defineStore("monthlyStore", () => {
 
   async function listMonthlyActive() {
     try {
-      return await requestAxios.get("/metodoPago/active")
+      return await requestAxios.get("/metodoPago/active", {  headers: {token: useToken.token,},},)
       
     } catch (error) {
       console.log(error);
@@ -77,7 +81,7 @@ export const monthlyStore = defineStore("monthlyStore", () => {
 
   async function listFarmsActive() {
     try {
-      return await requestAxios.get("/registroFinca/active");
+      return await requestAxios.get("/registroFinca/active", {  headers: {token: useToken.token,},},);
     } catch (error) {
       console.log(error);
     }

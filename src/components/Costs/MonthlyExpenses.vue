@@ -129,23 +129,11 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"
             ></q-input>
-            <q-select
-              filled
-              type="text"
-              v-model="Finca"
-              :options="optionsFarm"
-              label="seleccione la finca" 
-              lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.toString().trim().length > 0) ||
-                    'El campo es requerido',
-                ]" />
             <q-input
               filled
               type="text"
               v-model="Description"
-              label="Digite la descripcion"
+              label="Digite una descripción"
               lazy-rules
               :rules="[
                 (val) =>
@@ -155,9 +143,21 @@
             <q-select
               filled
               type="text"
+              v-model="Finca"
+              :options="optionsFarm"
+              label="Seleccione la finca" 
+              lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
+            <q-select
+              filled
+              type="text"
               v-model="PAYMENT_METHOD"
               :options="optionsMethod"
-              label="seleccione el metodo de pago"
+              label="Seleccione el método de pago"
               lazy-rules
                 :rules="[
                   (val) =>
@@ -224,23 +224,11 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"
             ></q-input>
-            <q-select
-              filled
-              
-              v-model="Finca"
-              :options="optionsFarm"
-              label="seleccione la finca" 
-              lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.toString().trim().length > 0) ||
-                    'El campo es requerido',
-                ]" />
             <q-input
               filled
               type="text"
               v-model="Description"
-              label="Digite la descripcion"
+              label="Digite una descripción"
               lazy-rules
               :rules="[
                 (val) =>
@@ -249,10 +237,22 @@
             ></q-input>
             <q-select
               filled
-              
+              type="text"
+              v-model="Finca"
+              :options="optionsFarm"
+              label="Seleccione la finca" 
+              lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
+            <q-select
+              filled
+              type="text"
               v-model="PAYMENT_METHOD"
               :options="optionsMethod"
-              label="seleccione el metodo de pago"
+              label="Seleccione el método de pago"
               lazy-rules
                 :rules="[
                   (val) =>
@@ -260,7 +260,7 @@
                     'El campo es requerido',
                 ]"
             />
-            
+           
             <q-input
               filled
               type="number"
@@ -321,6 +321,12 @@ let pagination = ref({
   rowsPerPage: 0,
 });
 let columns = ref([
+{
+    name: "index",
+    label: "#",
+    field: "index",
+    align: "center",
+  },
   {
     name: "Name_spent",
     label: "NOMBRE DEL GASTO",

@@ -28,7 +28,10 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="text-capitalize bg-green-10 text-white" @click=" cleanForm(), prompt = true">Crear nuevo metodo de pago</q-btn>
+                <q-btn class="text-capitalize bg-green-10 text-white" @click=" cleanForm(), prompt = true"><span class="material-symbols-outlined q-mr-sm"
+            style="font-size: 20px">
+            add_circle
+          </span>Crear nuevo metodo de pago</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -36,7 +39,7 @@
        <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
+                <q-table style="height: 50vh" flat bordered  :rows="rows" :columns="columns" row-key="index"
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
@@ -70,12 +73,12 @@
 
                 <q-form @submit.prevent.stop="postPayment()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del tipo de pago" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre del tipo de pago" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 <div class="justify-center flex">
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-sm q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
                 <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm " to=""  v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
@@ -95,12 +98,12 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del medtod de pago" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre del medtod de pago" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 <div class="justify-center flex">
-                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
+                 <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-sm q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
                 <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm " to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>

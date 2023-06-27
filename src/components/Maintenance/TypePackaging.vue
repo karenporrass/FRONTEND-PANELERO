@@ -39,7 +39,7 @@
        <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10 ">
-              <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
+              <q-table style="height: 50vh" flat bordered :rows="rows" :columns="columns" row-key="index">
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>
@@ -72,18 +72,18 @@
         <div class="q-pa-md ">
           <q-form @submit.prevent.stop="postTypePackaging()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del empaque" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="number" v-model="maxWeigth" label="Peso maximo"
+               <q-input  filled type="number" v-model="maxWeigth" label="Peso maximo"
                 lazy-rules :rules="[
                   (val) =>
                     (val  > 0) || 'El campo es requerido',
                 ]" />
 
-                <q-input class="q-mb-md" filled type="number" v-model="unitsPerBox" label="Dijite la cantidad de unidades por caja"
+                <q-input  filled type="number" v-model="unitsPerBox" label="Dijite la cantidad de unidades por caja"
                 lazy-rules :rules="[
                   (val) =>
                     (val  > 0) || 'El campo es requerido',
@@ -110,18 +110,18 @@
 
           <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre del empaque" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre del empaque" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="number" v-model="maxWeigth" label="Peso maximo"
+               <q-input  filled type="number" v-model="maxWeigth" label="Peso maximo"
                 lazy-rules :rules="[
                   (val) =>
                     (val  > 0) || 'El campo es requerido',
                 ]" />
 
-                <q-input class="q-mb-md" filled type="number" v-model="unitsPerBox" label="Dijite la cantidad de unidades por caja"
+                <q-input  filled type="number" v-model="unitsPerBox" label="Dijite la cantidad de unidades por caja"
                 lazy-rules :rules="[
                   (val) =>
                     (val  > 0) || 'El campo es requerido',

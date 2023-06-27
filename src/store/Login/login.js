@@ -33,15 +33,7 @@ export const LoginStore = defineStore('LoginStore', () => {
 
         }
     }
-    // async function putLogin(id) {
-    //   try {
-    //       return await requestAxios.post(`/login/update/${id}`,{
-    //           id: id
-    //       })
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    // }
+
 
 
   return {  newLogin, login, token,rol } },

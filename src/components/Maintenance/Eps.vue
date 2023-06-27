@@ -28,7 +28,10 @@
     <div class="row ">
       <div class="col-1"></div>
       <div class="col-10 ">
-        <q-btn class="bg-green-10 text-white text-capitalize" style="" @click="cleanForm(), prompt = true">Crear nueva
+        <q-btn class="bg-green-10 text-white text-capitalize" style="" @click="cleanForm(), prompt = true"><span class="material-symbols-outlined q-mr-sm"
+            style="font-size: 20px">
+            add_circle
+          </span>Crear nueva
           eps</q-btn>
       </div>
       <div class="col-1"></div>
@@ -37,7 +40,7 @@
     <div class="row q-mt-md">
       <div class="col-1"></div>
       <div class="col-10 ">
-        <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll
+        <q-table style="height: 50vh" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll
           v-model:pagination="pagination" :rows-per-page-options="[0]">
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
@@ -62,7 +65,7 @@
     </div>
 
     <q-dialog v-model="prompt">
-      <q-card>
+      <q-card class="my-card">
         <q-card-section class="bg-green-10">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
             DILIGENCIA LA INFORMACIÓN
@@ -71,13 +74,13 @@
         <div class="q-pa-md ">
           <q-form @submit.prevent.stop="postEps()" @reset.prevent.stop="cleanForm()">
             <div>
-              <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Eps" lazy-rules
+              <q-input  filled type="text" v-model="name" label="Digite el nombre de la Eps" lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]" />
 
-              <q-input class="q-mb-md" filled type="number" v-model="attentionLine" label="Digite el numero de atencion"
+              <q-input  filled type="number" v-model="attentionLine" label="Digite el numero de atencion"
                 lazy-rules :rules="[
                   (val) =>
                     (val > 0) || 'El campo es requerido',
@@ -96,7 +99,7 @@
     </q-dialog>
 
     <q-dialog v-model="promptEdit">
-      <q-card>
+      <q-card class="my-card">
         <q-card-section class="bg-green-10">
           <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
             DILIGENCIA LA INFORMACIÓN
@@ -105,13 +108,13 @@
         <div class="q-pa-md ">
           <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
             <div>
-              <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Eps" lazy-rules
+              <q-input  filled type="text" v-model="name" label="Digite el nombre de la Eps" lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]" />
 
-              <q-input class="q-mb-md" filled type="number" v-model="attentionLine" label="Digite el numero de atencion"
+              <q-input  filled type="number" v-model="attentionLine" label="Digite el numero de atencion"
                 lazy-rules :rules="[
                   (val) =>
                     (val > 0) || 'El campo es requerido',
@@ -223,3 +226,5 @@ onBeforeMount(() => {
 })
 
 </script>
+<style scoped>
+</style>

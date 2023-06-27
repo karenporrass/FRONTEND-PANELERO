@@ -31,7 +31,7 @@
             class="text-dark"
           >
             <q-card-actions vertical align="center">
-              <q-btn flat>Pagos</q-btn>
+              <q-btn flat>Pagos empleados</q-btn>
             </q-card-actions></router-link
           >
         </q-card>

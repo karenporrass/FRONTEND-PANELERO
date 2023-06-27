@@ -27,7 +27,10 @@
         <div class="row ">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-btn class="text-capitalize bg-green-10 text-white" @click="cleanForm(), prompt = true">Crear nueva etapa</q-btn>
+                <q-btn class="text-capitalize bg-green-10 text-white" @click="cleanForm(), prompt = true"><span class="material-symbols-outlined q-mr-sm"
+            style="font-size: 20px">
+            add_circle
+          </span>Crear nueva etapa</q-btn>
             </div>
             <div class="col-1"></div>
         </div>
@@ -35,7 +38,7 @@
        <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10 ">
-                <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
+                <q-table style="height: 50vh" flat bordered  :rows="rows" :columns="columns" row-key="index"
                     virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" >
                     <template v-slot:body-cell-options="props" >
             <q-td :props="props">
@@ -68,12 +71,12 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="postStages()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Etapa" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre de la Etapa" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="text" v-model="description" label="Digite una descripcion"
+               <q-input  filled type="text" v-model="description" label="Digite una descripcion"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
@@ -100,12 +103,12 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Etapa" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre de la Etapa" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="text" v-model="description" label="Digite una descripcion"
+               <q-input  filled type="text" v-model="description" label="Digite una descripcion"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',

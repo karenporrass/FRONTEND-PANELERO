@@ -215,13 +215,12 @@ let index = ref();
 let optionsPeople = ref([]);
 let optionsFarm = ref([]);
 let optionsLot = ref([]);
-// let filterOptions = ref(optionsPeople);
 
 
 let columns = ref([
   {
     name: "index",
-    label: "N°",
+    label: "#",
     field: "index",
     align: "center",
   },
@@ -327,7 +326,6 @@ async function postDailyProcess() {
     date: date.value,
   });
   console.log("paseeeeee ");
-  console.log(people.value.label);
   prompt.value = false;
   getListDaily();
 }

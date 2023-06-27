@@ -94,7 +94,11 @@
                     (val && val.toString().trim().length > 0) ||
                     'El campo es requerido',
                 ]" />
-              <q-input filled type="date" v-model="TIME_TO_PAY" label="tiempo limite a pagar" lazy-rules :rules="[
+              <q-input filled type="date" v-model="START_WORK" label="Inicio de trabajo" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+              <q-input filled type="date" v-model="END_WORK" label="Fin de trabajo" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
@@ -147,7 +151,11 @@
                     (val && val.toString().trim().length > 0) ||
                     'El campo es requerido',
                 ]" />
-              <q-input filled type="date" v-model="TIME_TO_PAY" label="tiempo a pagar (horas)" lazy-rules :rules="[
+              <q-input filled type="date" v-model="START_WORK" label="Inicio de trabajo" lazy-rules :rules="[
+                (val) =>
+                  (val && val.trim().length > 0) || 'El campo es requerido',
+              ]"></q-input>
+              <q-input filled type="date" v-model="END_WORK" label="Fin de trabajo" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
@@ -178,6 +186,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { payStore } from "../../store/Costs/Pays.js";
+
+
 const PayStore = payStore();
 let prompt = ref(false);
 let edit = ref(false);
@@ -216,13 +226,6 @@ let columns = ref([
     align: "center",
     field: "CONCEPT",
   },
-
-  {
-    name: "date",
-    label: "FECHA",
-    field: (row) => row.Date.slice(0, 10),
-    align: "center",
-  },
   {
     name: "PAYMENT_METHOD",
     label: "METODO DE PAGO",
@@ -230,16 +233,29 @@ let columns = ref([
     align: "center",
   },
   {
-    name: "TIME_TO_PAY",
-    label: "TIEMPO A PAGAR",
+
+    name: "START_WORK",
+    label: "INICIO DE TRABAJO",
     align: "center",
-    field: "TIME_TO_PAY",
+    field: "START_WORK",
+  },
+  {
+    name: "END_WORK",
+    label: "FIN DE TRABAJO",
+    align: "center",
+    field: "END_WORK",
   },
   {
     name: "total",
     label: "TOTAL A PAGAR",
     align: "center",
     field: "Total",
+  },
+  {
+    name: "date",
+    label: "FECHA",
+    field: (row) => row.Date.slice(0, 10),
+    align: "center",
   },
   {
     name: "status",
@@ -263,7 +279,8 @@ let CONCEPT = ref();
 let optionsMethod = ref([]);
 let optionsDNI = ref([]);
 let PAYMENT_METHOD = ref([]);
-let TIME_TO_PAY = ref();
+let START_WORK = ref();
+let END_WORK = ref();
 let Name = ref([]);
 let total = ref();
 
@@ -272,18 +289,27 @@ rows.value.forEach((row, index) => {
 });
 
 const postPays = async () => {
-  console.log("hola soy pays en vue");
-  const pays = await PayStore.newPays({
+
+  if (START_WORK.value < END_WORK.value) {
+      console.log('si');
+      const pays = await PayStore.newPays({
     DNI: DNI.value.value,
     CONCEPT: CONCEPT.value,
     PAYMENT_METHOD: PAYMENT_METHOD.value.value,
-    TIME_TO_PAY: TIME_TO_PAY.value,
+    START_WORK: START_WORK.value,
+    END_WORK: END_WORK.value,
     Total: total.value,
   });
   console.log(pays);
   getPays();
   prompt.value = false;
   toEmpty();
+    } else {
+      // La fecha1 es menor o igual a la fecha2
+      console.log('no');
+    }
+
+  
 };
 
 async function getPays() {
@@ -320,7 +346,8 @@ function goInfo(data) {
     label: data.PAYMENT_METHOD.name,
     value: data.PAYMENT_METHOD._id,
   };
-  TIME_TO_PAY.value = data.TIME_TO_PAY;
+  START_WORK.value = data.START_WORK;
+  END_WORK.value = data.END_WORK;
   total.value = data.Total;
 }
 
@@ -330,7 +357,8 @@ async function putInfo() {
     DNI: DNI.value.value,
     CONCEPT: CONCEPT.value,
     PAYMENT_METHOD: PAYMENT_METHOD.value.value,
-    TIME_TO_PAY: TIME_TO_PAY.value,
+    START_WORK: START_WORK.value,
+    END_WORK: END_WORK.value,
     Total: total.value,
   });
   console.log(res);
@@ -343,7 +371,8 @@ function toEmpty() {
   DNI.value = "";
   CONCEPT.value = "";
   PAYMENT_METHOD.value = null;
-  TIME_TO_PAY.value = "";
+  START_WORK.value = "";
+  END_WORK
   total.value = "";
 }
 
@@ -354,6 +383,7 @@ async function getMethod() {
     for (let i in res.data) {
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsMethod.value.push(object);
+     
 
     }
   } else {
@@ -368,10 +398,7 @@ async function getPeople() {
     for (let i in res.data) {
       let object1 = { label: res.data[i].numberDocument, value: res.data[i]._id };
       optionsDNI.value.push(object1);
-      let object2 = { label: res.data[i].rol, value: res.data[i]._id };
-      ROL.value.push(object2);    
-      let object3 = { label: res.data[i].names, value: res.data[i]._id };
-      Name.value.push(object3);     
+   
     }
     return optionsDNI.value  
   } else {

@@ -34,16 +34,18 @@
             style="font-size: 20px;">
             add_circle
           </span>
-          <spam class="q-mt-xs">
+          <span class="q-mt-xs">
             Crear nuevo usuario
-          </spam></q-btn>
+          </span></q-btn>
       </div>
       <div class="col-1"></div>
     </div>
     <!-- TABLE INFO -->
-    <div class="row q-mt-md justify-center">
-      <div class="col-11">
-        <q-table style="height: 400px" flat bordered  ref="tableRef" :rows="rows" :columns="columns" row-key="index" virtual-scroll  :virtual-scroll-item-size="48"
+    <div class="row q-mt-md ">
+      <div class="col-1"></div>
+
+      <div class="col-10">
+        <q-table style="height: 50vh" flat bordered  ref="tableRef" :rows="rows" :columns="columns" row-key="index" virtual-scroll  :virtual-scroll-item-size="48"
           :pagination="pagination" :rows-per-page-options="[0]"    >
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
@@ -64,6 +66,8 @@
           </template>
         </q-table>
       </div>
+      <div class="col-1"></div>
+
     </div>
 
     <q-dialog v-model="prompt">
@@ -120,9 +124,9 @@
                 ]" />
 
 
-              <div class="justify-center flex">
-                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white" ></q-btn>
-                <q-btn type="reset" class="q-mt-md q-mb-sm q-mx-sm " to=""   v-close-popup><span
+              <div class="justify-center flex q-mt-sm q-mb-sm ">
+                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mx-sm save_as bg-green-9 text-white" ></q-btn>
+                <q-btn type="reset" to="" class="q-mx-sm"   v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px;"> cancel
                   </span>CERRAR</q-btn>
               </div>
@@ -176,15 +180,7 @@
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
-              <q-input  filled :type="isPwd ? 'password' : 'text'" v-model="password"
-                label="Digite la contraseña" lazy-rules :rules="[
-                  (val) =>
-                    (val && val.trim().length > 0) || 'El campo es requerido',
-                ]"> <template v-slot:append>
-                  <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-                    @click="isPwd = !isPwd" />
-                </template>
-              </q-input>
+              
               <q-input  filled type="text" v-model="emergencyPersonName"
                 label="Digite el nombre de una persona de emergencia" lazy-rules :rules="[
                   (val) =>
@@ -221,8 +217,6 @@ import { LoginStore } from '../../store/Login/login';
 const userStore = usersStore()
 const loginStore = LoginStore()
 
-
-
 let prompt = ref(false)
 let promptEdit = ref(false)
 let names = ref("")
@@ -235,14 +229,7 @@ let email = ref("")
 let index = ref()
 let emergencyPersonName = ref("")
 let emergencyPersonPhone = ref()
-let password = ref("")
-let isPwd=ref(true)
 
-
-
-let pagination = ref({
-  rowsPerPage: 0
-})
 
 let optionsRol = ref(['Administrador', 'Trabajador'])
 let optionsDocument = ref([])
@@ -312,6 +299,16 @@ async function getUsers() {
   }
 }
 
+async function getAdmis() {
+  const res = await userStore.checkAdmi()
+  console.log(res);
+  if (res.status < 299) {
+    optionsRol = [ 'Trabajador']
+  } else {
+    optionsRol = ['Administrador', 'Trabajador']
+  }
+}
+
 const getDocument = async () => {
   const res = await userStore.listDocuments()
   console.log(res.data);
@@ -339,7 +336,6 @@ function goInfo(data) {
   cel.value = data.cel
   address.value = data.address
   email.value = data.email
-  password.value = ""
   emergencyPersonName.value = data.emergencyPersonName
   emergencyPersonPhone.value = data.emergencyPersonPhone
 }
@@ -354,7 +350,6 @@ async function putInfo() {
     cel.value,
     address.value,
     email.value,
-    password.value,
     emergencyPersonName.value,
     emergencyPersonPhone.value
 
@@ -376,13 +371,13 @@ function cleanForm(){
   index.value = null
   emergencyPersonName.value = ""
   emergencyPersonPhone.value = null
-  password.value = null
 }
 
 
 onBeforeMount(() => {
   getUsers();
   getDocument();
+  getAdmis();
 })
 
 
@@ -390,6 +385,9 @@ onBeforeMount(() => {
 
 <style scoped>
 .my-card{
-  max-height: 90%;
-  width: 35%;}
+  max-height: 80%;
+  min-height: 70%;
+
+}
+
 </style>

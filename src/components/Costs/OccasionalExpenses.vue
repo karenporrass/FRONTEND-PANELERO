@@ -188,7 +188,7 @@
                 icon="save_as"
                 label="GUARDAR"
                 type="submit"
-                class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9" >
+                class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white" >
               </q-btn>
               <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" v-close-popup
                 ><span
@@ -283,7 +283,7 @@
                 icon="save_as"
                 label="Actualizar"
                 type="submit"
-                class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"
           
               ></q-btn>
               <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" v-close-popup

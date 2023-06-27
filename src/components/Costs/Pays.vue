@@ -24,7 +24,7 @@
             <span style="font-size: 50px" class="material-icons-outlined">
               arrow_right
             </span>
-            Pedidos clientes
+            Pagos
           </p>
         </div>
         <q-btn class="bg-green-10 text-white" @click="(prompt = true), toEmpty()"><span
@@ -107,7 +107,7 @@
                 <br />
 
                 <q-btn icon="save_as" label="GUARDAR" type="submit"
-                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px">
                     cancel </span>CERRAR</q-btn>

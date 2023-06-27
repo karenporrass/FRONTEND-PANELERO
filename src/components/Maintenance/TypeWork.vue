@@ -70,18 +70,18 @@
               <div class="q-pa-md " >
                 <q-form ref="myForm" @submit.prevent.stop="postTypeWork()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la labor" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre de la labor" lazy-rules :rules="[
                 (val) =>
                   (val && val.toString().trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="text" v-model="area" label="Digite el area"
+               <q-input  filled type="text" v-model="area" label="Digite el area"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) || 'El campo es requerido',
                 ]" />
 
-                <q-input class="q-mb-md" filled type="number" v-model="dailyPayment" label="Dijite el pago diario"
+                <q-input  filled type="number" v-model="dailyPayment" label="Dijite el pago diario"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.length > 0) || 'El campo es requerido',
@@ -107,18 +107,18 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la labor" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre de la labor" lazy-rules :rules="[
                 (val) =>
                   (val && val.toString().trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="text" v-model="area" label="Digite el area"
+               <q-input  filled type="text" v-model="area" label="Digite el area"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) || 'El campo es requerido',
                 ]" />
 
-                <q-input class="q-mb-md" filled type="number" v-model="dailyPayment" label="Dijite el pago diario"
+                <q-input  filled type="number" v-model="dailyPayment" label="Dijite el pago diario"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.length > 0) || 'El campo es requerido',

@@ -71,12 +71,12 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="postStages()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Etapa" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre de la Etapa" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="text" v-model="description" label="Digite una descripcion"
+               <q-input  filled type="text" v-model="description" label="Digite una descripcion"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
@@ -103,12 +103,12 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Etapa" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre de la Etapa" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input class="q-mb-md" filled type="text" v-model="description" label="Digite una descripcion"
+               <q-input  filled type="text" v-model="description" label="Digite una descripcion"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',

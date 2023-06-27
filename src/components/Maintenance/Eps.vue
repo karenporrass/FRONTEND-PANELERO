@@ -74,13 +74,13 @@
         <div class="q-pa-md ">
           <q-form @submit.prevent.stop="postEps()" @reset.prevent.stop="cleanForm()">
             <div>
-              <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Eps" lazy-rules
+              <q-input  filled type="text" v-model="name" label="Digite el nombre de la Eps" lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]" />
 
-              <q-input class="q-mb-md" filled type="number" v-model="attentionLine" label="Digite el numero de atencion"
+              <q-input  filled type="number" v-model="attentionLine" label="Digite el numero de atencion"
                 lazy-rules :rules="[
                   (val) =>
                     (val > 0) || 'El campo es requerido',
@@ -108,13 +108,13 @@
         <div class="q-pa-md ">
           <q-form @submit.prevent.stop="putInfo()" @reset.prevent.stop="cleanForm()">
             <div>
-              <q-input class="q-mb-md" filled type="text" v-model="name" label="Digite el nombre de la Eps" lazy-rules
+              <q-input  filled type="text" v-model="name" label="Digite el nombre de la Eps" lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
                 ]" />
 
-              <q-input class="q-mb-md" filled type="number" v-model="attentionLine" label="Digite el numero de atencion"
+              <q-input  filled type="number" v-model="attentionLine" label="Digite el numero de atencion"
                 lazy-rules :rules="[
                   (val) =>
                     (val > 0) || 'El campo es requerido',
@@ -227,8 +227,4 @@ onBeforeMount(() => {
 
 </script>
 <style scoped>
-.my-card{
-  max-height: 80%;
-  min-height: 70%;
-}
 </style>

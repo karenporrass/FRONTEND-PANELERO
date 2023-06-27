@@ -24,7 +24,10 @@ export const storeTransformed = defineStore('storeTransformed', () => {
     
     const addTransformed = async (infoTrans)=>  {
       try {
-        await requestAxios.post(`/materiaTransformada/register`, infoTrans,{
+        await requestAxios.post(`/materiaTransformada/register`, infoTrans, {
+          headers: {
+            token: useToken.token,
+          },
         });
         console.log(infoTrans);
         notifySuccess('Materia prima transformada registrada correctamente ')
@@ -40,8 +43,11 @@ export const storeTransformed = defineStore('storeTransformed', () => {
     
         const active = async (id, estado)=>{ 
           try {
-            await requestAxios.put(`/materiaTransformada/state/${id}`, {state:estado});
-            //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
+            await requestAxios.put(`/materiaTransformada/state/${id}`, {state:estado}, {
+              headers: {
+                token: useToken.token,
+              },
+            });
             notifySuccess("Estado cambiado correctamente")
           } catch (error) {
             console.log(error);
@@ -54,6 +60,9 @@ export const storeTransformed = defineStore('storeTransformed', () => {
       console.log(infoTrans);
       try {
         await requestAxios.put(`/materiaTransformada/update/${id}`, infoTrans, {
+          headers: {
+            token: useToken.token,
+          },
         });
         console.log(infoTrans);
         notifySuccess('Materia prima transformada editada correctamente')
@@ -69,7 +78,11 @@ export const storeTransformed = defineStore('storeTransformed', () => {
 
     async function listUnitsActive() {
       try {
-        return await requestAxios.get("/unidadesMedida/active")
+        return await requestAxios.get("/unidadesMedida/active", {
+          headers: {
+            token: useToken.token,
+          },
+        });
       } catch (error) {
         console.log(error);
       }
@@ -78,7 +91,11 @@ export const storeTransformed = defineStore('storeTransformed', () => {
 
     async function listFarmsActive() {
       try {
-        return await requestAxios.get("/registroFinca/active")
+        return await requestAxios.get("/registroFinca/active", {
+          headers: {
+            token: useToken.token,
+          },
+        });
       } catch (error) {
         console.log(error);
       }
@@ -86,7 +103,11 @@ export const storeTransformed = defineStore('storeTransformed', () => {
 
     async function listlotsActive() {
       try {
-        return await requestAxios.get("/lotes/active")
+        return await requestAxios.get("/lotes/active" , {
+          headers: {
+            token: useToken.token,
+          },
+        });
       } catch (error) {
         console.log(error);
       }

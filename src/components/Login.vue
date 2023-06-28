@@ -94,11 +94,7 @@ let loading= ref(false)
 
 
 
-function pasarHome() {
-  if (store.token == store.token) {
-    router.push("/home");
-  }
-}
+
 
 
 async function validar() {
@@ -111,6 +107,12 @@ await store.newLogin({
     pasarHome()
   })
   loading.value = false
+}
+
+function pasarHome() {
+  if (store.token == store.token) {
+    router.push("/home");
+  }
 }
 
 </script>

@@ -61,7 +61,7 @@
         </div> 
 
         <q-dialog v-model="prompt">
-            <q-card >
+            <q-card class="prompt">
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
                   DILIGENCIA LA INFORMACIÓN
@@ -86,7 +86,7 @@
           </q-dialog>
 
           <q-dialog v-model="promptEdit">
-            <q-card >
+            <q-card class="prompt">
               <q-card-section class="bg-green-10">
                 <h5 class="q-mt-sm q-mb-sm text-white text-center text-weight-bold">
                   DILIGENCIA LA INFORMACIÓN
@@ -126,7 +126,7 @@ let pagination = ref({
         rowsPerPage: 0
       })
 let columns = ref([
-{ name: 'index', label: 'N°',field: 'index'},
+{ name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE TIPO PAGO',field: 'name',align: 'center'},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
@@ -204,3 +204,9 @@ onBeforeMount(()=>{
 })
 
 </script>
+
+<style scoped>
+.prompt{
+  width: 50% !important
+}
+</style>

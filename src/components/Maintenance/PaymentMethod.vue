@@ -129,7 +129,7 @@ let pagination = ref({
       })
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
-  {name: 'name',label: 'NOMBRE METODO',field: 'name',align: 'center'},
+  {name: 'name',label: 'NOMBRE DEL MÉTODO DE PAGO',field: 'name',align: 'center'},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 

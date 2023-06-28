@@ -271,12 +271,8 @@ let abrirDescargar4=ref(false)
 let abrirDescargar5=ref(false)
 let abrirDescargar6=ref(false)
 
-
 let TipoModulo=ref("null")
 let tipo=ref(null)
-
-
-
 
 let options2= ref([
         'Personas', 'Labores', 'Método de pago', 'Tipo de pago', 'Unidad de medida', 'Eps', 'Tipo de documento', 'Lotes', 'Etapas', 'Fincas' , 
@@ -300,16 +296,24 @@ let options6= ref([
       ]   )
 
 
+function validateDate(){
+  
+}
+
+
+
+
+
+
+
+
+
+
+
 
 function downloadPdfPersonas(x) {
-
-
-
   const docDefinition = {
     
-
-
-
     content: [
       { text: 'Reporte Mantenimiento:Personas', style: 'header' },
       {

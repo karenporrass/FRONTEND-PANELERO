@@ -150,7 +150,7 @@ let pagination = ref({
 let columns = ref([
   { name: 'index', label: '#', field: 'index' },
   { name: 'name', label: 'NOMBRE EPS', field: 'name', align: 'center' },
-  { name: 'attentionline', label: 'NUMERO DE ATENCION', align: 'center', field: row => row.attentionLine, format: val => `${val}`, sortable: true },
+  { name: 'attentionline', label: 'NÚMERO DE ATENCIÓN', align: 'center', field: row => row.attentionLine, format: val => `${val}`, sortable: true },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 

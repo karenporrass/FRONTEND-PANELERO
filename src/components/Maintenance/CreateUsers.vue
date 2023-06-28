@@ -46,7 +46,7 @@
 
       <div class="col-10">
         <q-table style="height: 50vh" flat bordered  ref="tableRef" :rows="rows" :columns="columns" row-key="index" virtual-scroll  :virtual-scroll-item-size="48"
-          :pagination="pagination" :rows-per-page-options="[0]"    >
+             >
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
               <div>

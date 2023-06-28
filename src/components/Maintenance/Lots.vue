@@ -159,7 +159,7 @@ let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE LOTE',field: 'name',align: 'center'},
   {name: 'weight',label: 'EXTENCION',align: 'center',field: row => row.extent,format: val => `${val}`,sortable: true},
-  {name: 'farm',label: 'NOMBRE FINCA',field: (row)=> row.farm, align: 'center'},
+  {name: 'farm',label: 'NOMBRE FINCA',field: (row)=> row.farm.name, align: 'center'},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])

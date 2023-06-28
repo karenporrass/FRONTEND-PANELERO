@@ -101,6 +101,12 @@ await store.newLogin({
   loading.value = false
 }
 
+function pasarHome() {
+  if (store.token == store.token) {
+    router.push("/home");
+  }
+}
+
 </script>
 
 <style>

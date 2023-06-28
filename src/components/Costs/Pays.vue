@@ -76,7 +76,7 @@
             <div>
 
 
-              <q-select filled v-model="DNI" :options="optionsDNI" label="seleccione el DNI" lazy-rules :rules="[
+              <q-select filled v-model="DNI" :options="optionsDNI" label="Seleccione el DNI" lazy-rules :rules="[
                 (val) =>
                   (val && val.toString().trim().length > 0) ||
                   'El campo es requerido',
@@ -88,17 +88,17 @@
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-              <q-select filled v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago"
+              <q-select filled v-model="PAYMENT_METHOD" :options="optionsMethod" label="Seleccione el método de pago"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
                     'El campo es requerido',
                 ]" />
-              <q-input filled type="date" v-model="START_WORK" label="Inicio de trabajo" lazy-rules :rules="[
+              <q-input filled type="date" v-model="START_WORK" label="Fecha inicio" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-              <q-input filled type="date" v-model="END_WORK" label="Fin de trabajo" lazy-rules :rules="[
+              <q-input filled type="date" v-model="END_WORK" label="Fecha fin" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
@@ -133,7 +133,7 @@
         <div class="q-pa-md">
           <q-form ref="myForm" @submit.prevent.stop="putInfo()">
             <div>
-              <q-select filled v-model="DNI" :options="optionsDNI" label="seleccione el DNI" lazy-rules :rules="[
+              <q-select filled v-model="DNI" :options="optionsDNI" label="Seleccione el DNI" lazy-rules :rules="[
                 (val) =>
                   (val && val.toString().trim().length > 0) ||
                   'El campo es requerido',
@@ -145,17 +145,17 @@
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-              <q-select filled v-model="PAYMENT_METHOD" :options="optionsMethod" label="seleccione el metodo de pago"
+              <q-select filled v-model="PAYMENT_METHOD" :options="optionsMethod" label="Seleccione el método de pago"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
                     'El campo es requerido',
                 ]" />
-              <q-input filled type="date" v-model="START_WORK" label="Inicio de trabajo" lazy-rules :rules="[
+              <q-input filled type="date" v-model="START_WORK" label="Fecha inicio" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
-              <q-input filled type="date" v-model="END_WORK" label="Fin de trabajo" lazy-rules :rules="[
+              <q-input filled type="date" v-model="END_WORK" label="Fecha fin" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
@@ -235,13 +235,13 @@ let columns = ref([
   {
 
     name: "START_WORK",
-    label: "INICIO DE TRABAJO",
+    label: "FECHA INICIO",
     align: "center",
     field: "START_WORK",
   },
   {
     name: "END_WORK",
-    label: "FIN DE TRABAJO",
+    label: "FECHA FIN",
     align: "center",
     field: "END_WORK",
   },
@@ -253,7 +253,7 @@ let columns = ref([
   },
   {
     name: "date",
-    label: "FECHA",
+    label: "FECHA DEL PAGO",
     field: (row) => row.Date.slice(0, 10),
     align: "center",
   },

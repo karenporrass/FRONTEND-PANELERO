@@ -74,12 +74,12 @@
               <div class="q-pa-md " >
                 <q-form @submit.prevent.stop="postLots()" @reset.prevent.stop="cleanForm()">
                 <div>
-                  <q-input  filled type="text" v-model="name" label="Digite el nombre de la Finca" lazy-rules :rules="[
+                  <q-input  filled type="text" v-model="name" label="Digite el nombre del Lote" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input  filled type="number" v-model="extent" label="Digite en metros la estencion de terreno"
+               <q-input  filled type="number" v-model="extent" label="Digite en metros la extención del terreno"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
@@ -159,7 +159,7 @@ let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE LOTE',field: 'name',align: 'center'},
   {name: 'weight',label: 'EXTENCION',align: 'center',field: row => row.extent,format: val => `${val}`,sortable: true},
-  {name: 'farm',label: 'NOMBRE FINCA',field: (i)=> i.farm.name,align: 'center'},
+  {name: 'farm',label: 'NOMBRE FINCA',field: (row)=> row.farm, align: 'center'},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])
@@ -245,7 +245,7 @@ async function putInfo(){
 
 function cleanForm(){
   name.value = ""
-  extent.value = 0
+  extent.value = ""
   farm.value = ""
   index.value = null
 }

@@ -87,7 +87,7 @@
                 (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="users" :options="optionsPeople" label="Seleccione las personas" lazy-rules
+              <q-select filled v-model="users" :options="optionsPeople" label="Seleccione las personas involucradas" lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
@@ -106,7 +106,7 @@
                   'El campo es requerido',
               ]" />
 
-              <q-input v-model="date" filled type="date" label="Seleccione la fecha" lazy-rules :rules="[
+              <q-input v-model="date" filled type="date" label="Seleccione la fecha del proceso" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
@@ -149,7 +149,7 @@
                 (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="users" :options="optionsPeople" label="Seleccione las personas" lazy-rules
+              <q-select filled v-model="users" :options="optionsPeople" label="Seleccione las personas involucradas" lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
@@ -168,7 +168,7 @@
                   'El campo es requerido',
               ]" />
 
-              <q-input v-model="date" filled type="date" label="Seleccione la fecha" :rules="[
+              <q-input v-model="date" filled type="date" label="Seleccione la fecha del proceso" :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />

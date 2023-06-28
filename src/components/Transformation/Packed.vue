@@ -74,7 +74,7 @@
         <div class="q-pa-md">
           <q-form @submit.prevent.stop="postPacked()">
             <div>
-              <q-select filled v-model="cellar" :options="optionsColorPanela" label="Seleccione la bodega" lazy-rules :rules="[
+              <q-select filled v-model="cellar" :options="optionsCellar" label="Seleccione la bodega" lazy-rules :rules="[
                   (val) =>
                   (val && val.toString().trim().length > 0) ||
                   'El campo es requerido',
@@ -180,8 +180,10 @@
 <script setup>
 import { ref, onMounted } from "vue"
 import { usePackedStore } from "../../store/Transformation/Packed.js"
+import {vaultStore} from "../../store/Inventory/vault.js"
 
 const usePacked= usePackedStore()
+const useVault = vaultStore()
 
 let prompt = ref(false)
 let edit= ref(false)
@@ -224,7 +226,7 @@ let columns = ref([
   { 
     name: 'formPanela', 
   label: 'FORMA DE LA PANELA', 
-  field: (row) => row.formPanela.name,
+  field: (row) => row.formPanela,
   align: 'center' 
 },
   { 
@@ -261,6 +263,7 @@ onMounted(
   getPacked()
   getFormPanela()
   getPackaingPanela() 
+  getCellars()
 })
 
 
@@ -370,6 +373,23 @@ async function getPackaingPanela() {
       let object = { label: res.data[i].name, value: res.data[i]._id };
       optionsPacking.value.push(object);
       console.log(optionsPacking.value);
+    }
+    return optionsPacking.value
+  } else {
+    throw new Error ("Error al obtener los datos de people")
+  }
+}
+
+async function getCellars() {
+  const res = await useVault.listVaultActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsCellar.value.push(object);
+      console.log(optionsCellar.value);
     }
     return optionsPacking.value
   } else {

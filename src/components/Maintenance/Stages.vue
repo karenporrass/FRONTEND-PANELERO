@@ -3,7 +3,7 @@
         <div class="row q-mt-md">
             <div class="col-1"></div>
             <div class="col-10  text-center">
-                <div style="font-size:xx-large;" class="text-weight-bolder">ETAPAS DE PRODUCCION</div>
+                <div style="font-size:xx-large;" class="text-weight-bolder">ETAPAS DE PRODUCCIÓN</div>
             </div>
             <div class="col-1"></div>
         </div>
@@ -76,7 +76,7 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input  filled type="text" v-model="description" label="Digite una descripcion"
+               <q-input  filled type="text" v-model="description" label="Digite una descripción"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
@@ -108,7 +108,7 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input  filled type="text" v-model="description" label="Digite una descripcion"
+               <q-input  filled type="text" v-model="description" label="Digite una descripción"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.trim().length > 0) || 'El campo es requerido',
@@ -143,7 +143,7 @@ let pagination = ref({
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE ETAPA',field: 'name',align: 'center'},
-  {name: 'description',label: 'DESCRIPCION',align: 'center',field: row => row.description,format: val => `${val}`,sortable: true},
+  {name: 'description',label: 'DESCRIPCIÓN',align: 'center',field: row => row.description,format: val => `${val}`,sortable: true},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])

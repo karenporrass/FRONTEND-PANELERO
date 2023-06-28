@@ -1,6 +1,7 @@
 <template>
   <div class="fullscreen">
     <div id="imagen-fondo">
+      <img url="/images/FONDO.jpg" alt="">
       <div class="row" id="contendor-imagen2">
         <div class="col-1"></div>
         <div id="contenedor-col2" class="col-10">
@@ -26,6 +27,10 @@
                 label="DIGITE SU USUARIO"
                 stack-label
                 :dense="dense"
+                lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Digite su usuario',
+        ]" />
+                
                
               />
               <br />
@@ -38,6 +43,10 @@
                 label="DIGITE SU CONTRASEÑA"
                 stack-label
                 :dense="dense"
+                lazy-rules :rules="[
+          (val) => (val && val.trim().length > 0) || 'Digite su contraseña',
+        ]" />
+                
              
               />
               /><br />
@@ -79,8 +88,8 @@ const store = LoginStore();
 
 let router= useRouter();
 let dense = ref(false)
-let user = ref("maria123@gmail.com")
-let password = ref(12345678)
+let user = ref()
+let password = ref()
 let index   = ref(0)
 let loading= ref(false)
 
@@ -110,7 +119,6 @@ await store.newLogin({
 <style>
 #imagen-fondo {
   min-height: 100vh;
-  background-image: url("/images/FONDO.jpg") ;
   background-repeat: no-repeat;
   background-size: cover;
   align-items: center;

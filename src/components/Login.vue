@@ -1,7 +1,6 @@
 <template>
   <div class="fullscreen">
-    <div id="imagen-fondo">
-      <img url="/images/FONDO.jpg" alt="">
+    <div id="imagen-fondo" style="background-image:url(/images/FONDO.jpg)">
       <div class="row" id="contendor-imagen2">
         <div class="col-1"></div>
         <div id="contenedor-col2" class="col-10">

@@ -312,7 +312,6 @@ let Name_spent = ref();
 let Finca = ref([]);
 let Description = ref();
 let PAYMENT_METHOD = ref();
-
 let Total = ref();
 let optionsMethod = ref([]);
 let optionsFarm = ref([]);
@@ -407,7 +406,6 @@ const postMonthly = async () => {
     Finca.value.value,
     Description.value,
     PAYMENT_METHOD.value.value,
- 
     Total.value
   );
   getMonthly();
@@ -433,24 +431,21 @@ function goInfo(data) {
     label: data.Finca.name,
     value: data.Finca._id,
   };
-  (Description.value = data.Description),
-    (PAYMENT_METHOD.value = {
+  Description.value = data.Description,
+    PAYMENT_METHOD.value = {
       label: data.PAYMENT_METHOD.name,
       value: data.PAYMENT_METHOD._id,
-    });
-  
+    };
   Total.value = data.Total;
 }
 
 async function putInfo() {
   console.log(index.value);
-  const res = await MonthlyStore.putMonthly(
-    index.value,
+  const res = await MonthlyStore.putMonthly(index.value,
     Name_spent.value,
     Finca.value.value,
     Description.value,
     PAYMENT_METHOD.value.value,
-  
     Total.value
   );
   promptEdit.value = false;

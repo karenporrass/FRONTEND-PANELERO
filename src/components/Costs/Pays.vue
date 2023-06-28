@@ -186,7 +186,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { payStore } from "../../store/Costs/Pays.js";
-
+import { notifyError, notifySuccess } from "../../Global/notify.js";
 
 const PayStore = payStore();
 let prompt = ref(false);
@@ -305,8 +305,7 @@ const postPays = async () => {
   prompt.value = false;
   toEmpty();
     } else {
-      // La fecha1 es menor o igual a la fecha2
-      console.log('no');
+      notifyError('La fecha de fin del trabajo no puede ser menor a la de inicio');
     }
 
   

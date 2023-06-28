@@ -51,10 +51,10 @@ export const payStore = defineStore("payStore", () => {
        }),
       notifySuccess('Pagos actualizado correctamente');
       }catch (error) {
-        
+        notifyError(error.response.data.errors.join(", "));
         console.log(inforPays);
         console.log(error);
-        notifyError(error.response.data.errors.join(", "));
+        
         return error
         
       }

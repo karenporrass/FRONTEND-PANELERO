@@ -331,19 +331,14 @@ if(tipo.value=="Personas"){
   )
 }
 descargarPdf()
-  // asing()
 }
 else( console.log('hola')
 )
-// asing()
+
 }
 
-// function asing (){
-
-// }
 
 function descargarPdf() {
-    // validate()
     pdf.value = new jsPDF();
     pdf.value.setFont("helvetica", "bold");
     pdf.value.setFontSize(16);
@@ -353,107 +348,16 @@ function descargarPdf() {
     pdf.value.setFont("helvetica", "normal");
     pdf.value.setFontSize(12);
 
-    // var columns = ["N° Balota", "Nombre", "Celular", "Direccion", "Estado", "Metodo de pago"];
-    // var rows = [];
-    // for (i in copiNumeros.value) {
-    //   console.log(i);
-    //   rows.push([copiNumeros.value[i].Id, copiNumeros.value[i].nombreComprador, copiNumeros.value[i].celularComprador, copiNumeros.value[i].direccionComprador, copiNumeros.value[i].estado, copiNumeros.value[i].Tipodepago]);
-    // }
     console.log(columns);
     console.log(rows);
     pdf.value.autoTable({
       head: [columns],
       body: rows,
-      startY: 20,// posición Y donde se iniciará la tabla
+      startY: 20,
 
     });
     pdf.value.save("Reporte.pdf");
   }
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-// function downloadPdfPersonas(x) {
-//   const docDefinition = {
-  
-//     content: [
-//       { text: 'Reporte Mantenimiento:Personas', style: 'header' },
-//       {
-//         style: 'table',
-//         table: {
-//           headerRows: 1,
-//           widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-//           body: [
-//             [
-//               { text: 'NOMBRE', style: 'tableHeader' },
-//               { text: 'APELLIDOS', style: 'tableHeader' },
-//               { text: 'TIPO DE DOCUMENTO', style: 'tableHeader' },
-//               { text: 'ROL', style: 'tableHeader' },
-//               { text: 'CELULAR', style: 'tableHeader' },
-//               { text: 'DIRECCIÓN', style: 'tableHeader' },
-//               { text: 'CORREO', style: 'tableHeader' },
-//               { text: 'PERSONA EMERGENCIA', style: 'tableHeader' },
-//               { text: 'NUMERO DE CONTACTO', style: 'tableHeader' }
-//             ],
-//             ...this.rifa.map((item, index) => [
-            
-//               { text: `${index + 1}`, style: index % 2 === 0 ? 'even' : 'odd' },
-//               { text: item.name, style: 'tableBody' },
-//               { text: item.lastNames, style: 'tableBody' }, 
-//               { text: item.typeDocument, style: 'tableBody' },
-//               { text: item.numberDocument ? 'Activo' : 'Inactivo' , style: 'tableBody' },
-//               { text: item.rol, style: 'tableBody' },
-//               { text: item.cel, style: 'tableBody' },
-//               { text: item.address, style: 'tableBody' },
-//               { text: item.email, style: 'tableBody' },
-//               { text: item.emergencyPersonName, style: 'tableBody' },
-//               { text: item.emergencyPersonPhone, style: 'tableBody' }
-
-//             ])
-//           ]
-//         }
-//       }
-//     ],
-//     styles: {
-//       header: {
-//         fontSize: 18,
-//         bold: true,
-//         margin: [0, 0, 0, 10]
-//       },
-//       tableHeader: {
-//         bold: true,
-//         fontSize: 13,
-//         color: 'white',
-//         fillColor: '#2d4154'
-//       },
-//       tableBody: {
-//         fontSize: 11
-//       },
-//       odd: {
-//         fillColor: '#f2f2f2'
-//       },
-//       even: {
-//         fillColor: '#dddddd'
-//       },
-//       table: {
-//         margin: [0, 5, 0, 10]
-//       }
-//     }
-//   };
-
-//   pdfMake.createPdf(docDefinition).download('Tu Rifa.pdf');
-// }    
-
 
 
   // function descargarPdf() {

@@ -142,7 +142,7 @@ let pagination = ref({
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE TIPO PANELA',field: 'name',align: 'center'},
-  {name: 'price',label: 'PRICE',align: 'center',field: row => row.price,format: val => `${val}`,sortable: true},
+  {name: 'price',label: 'PRECIO',align: 'center',field: row => row.price,format: val => `${val}`,sortable: true},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 

@@ -143,7 +143,9 @@ let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE TIPO PANELA',field: 'name',align: 'center'},
   {name: 'price',label: 'PRECIO',align: 'center',field: row => row.price,format: val => `${val}`,sortable: true},
+  {name: 'price',label: 'PRICE',align: 'center',field: row => row.price,format: val => `${val}`,sortable: true},
   {name: "status",label: "ESTADO",field: (row) => (row.state == 1 ? "Activo" : "Inactivo"),align: "center",},
+
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 

@@ -366,6 +366,8 @@ let options6= ref([
 async function validate(){
 console.log(tipo.value);
 if(tipo.value=="Personas"){
+  rows=[]
+  columns=[]
   res = await useUsers.listUsers() 
   console.log(res.data);
 
@@ -387,6 +389,8 @@ descargarPdf()
 }
 
 if(tipo.value=="Labores"){
+  rows=[]
+  columns=[]
   res = await useTypeWork.listWork() 
   console.log(res.data);
 
@@ -665,8 +669,12 @@ descargarPdf()
 
 
 if(tipo.value=="Pagos Empleados"){
+  rows=[]
+  columns=[]
   res = await PayStore.listPays() 
   console.log(res.data);
+
+
 
   for(let i in res.data ){
   let dates = res.data[i].date

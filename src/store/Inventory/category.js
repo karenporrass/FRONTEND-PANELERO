@@ -55,7 +55,7 @@ export const CategoryStore = defineStore("CategoryStore", () => {
 
   async function active(id, estado){
     try {
-      return await requestAxios.put(`/category/state/${id}`, {state:estado},c, {  headers: {token: useToken.token,}},
+      return await requestAxios.put(`/category/state/${id}`, {state:estado}, {  headers: {token: useToken.token,}},
       notifySuccess('Estado cambiado correctamente')
       ) //asi es como se pasa por el body el state es como se llama en el backend y estado es el nombre de mi variable que le puse en la funcion
     } catch (error) {

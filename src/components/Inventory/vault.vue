@@ -435,7 +435,6 @@ function goInfo(data) {
     label: data.administrator.names,
     value: data.administrator._id,
   };
-  nameUsers.value = data.administrator.names
   extension.value = data.extension;
   dirrecion.value = data.dirrecion;
   console.log(administrator.value);

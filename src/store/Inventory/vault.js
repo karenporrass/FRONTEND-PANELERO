@@ -39,10 +39,12 @@ export const vaultStore = defineStore("vaultStore", () => {
 
   async function newVault(vault) {
     try {
-        let r = await requestAxios.post('/cellars', vault);
+      return await requestAxios.post('/cellars', vault, {
+        headers: {
+          token: useToken.token,
+        }}),
         notifySuccess('La bodega fue registrada correctamente')
-        console.log(r);
-        return r
+      
       } catch (error) { 
         notifyError(error.response.data.errors.join(", "));
         console.log(error)
@@ -59,7 +61,10 @@ export const vaultStore = defineStore("vaultStore", () => {
           administrator: administrator,
           extension: extension,
           dirrecion: dirrecion,
-        },
+        }, {
+          headers: {
+            token: useToken.token,
+          }},
         notifySuccess('la bodega fue actualizada correctamente')
         )
       } catch (error) {

@@ -65,12 +65,13 @@ export const usersStore = defineStore('usersStore', () => {
       }
     }
     
-    async function newUsers(names,typeDocument, numberDocument, rol,cel, address, email, emergencyPersonName, emergencyPersonPhone, token ) {
+    async function newUsers(names,typeDocument, numberDocument,eps, rol,cel, address, email, emergencyPersonName, emergencyPersonPhone, token ) {
         try {
              await requestAxios.post(`/usuarios`,{
              names: names,
              typeDocument: typeDocument,
              numberDocument: numberDocument,
+             eps: eps,
              rol: rol,
              cel: cel,
              address: address,
@@ -89,13 +90,14 @@ export const usersStore = defineStore('usersStore', () => {
           }
       }
 
-      async function putUsers(id, names, typeDocument, numberDocument, rol,cel, address, email , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
+      async function putUsers(id, names, typeDocument, numberDocument, eps, rol,cel, address, email , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
         try {
             await requestAxios.put(`/usuarios/update/${id}`,
             {
              names: names,
              typeDocument: typeDocument,
              numberDocument: numberDocument,
+             eps: eps,
              rol: rol,
              cel: cel,
              address: address,
@@ -114,13 +116,14 @@ export const usersStore = defineStore('usersStore', () => {
           }
       }
 
-      async function putUsersProfile(id, names, typeDocument, numberDocument, cel, address, email, password , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
+      async function putUsersProfile(id, names, typeDocument, numberDocument,eps, cel, address, email, password , emergencyPersonName, emergencyPersonPhone ) { //recivir las variables 
         try {
             await requestAxios.put(`/usuarios/updateProfile/${id}`,
             {
              names: names,
              typeDocument: typeDocument,
              numberDocument: numberDocument,
+             eps: eps,
              cel: cel,
              address: address,
              email: email,

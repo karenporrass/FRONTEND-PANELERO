@@ -99,6 +99,11 @@
                   (val) =>
                     (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
                 ]" />
+                <q-select filled v-model="eps" :options="optionsEps" label="Seleccione la Eps"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
+                ]" />
               <q-input  filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules
                 :rules="[
                   (val) =>
@@ -167,6 +172,11 @@
                   (val) =>
                     (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
                 ]" />
+                 <q-select filled v-model="eps" :options="optionsEps" label="Seleccione la Eps"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
+                ]" />
               <q-input  filled type="number" v-model="cel" label="Digite el numero celular" lazy-rules
                 :rules="[
                   (val) =>
@@ -213,6 +223,8 @@
 import { ref, onBeforeMount} from 'vue'
 import { usersStore } from "../../store/Maintenance/CreateUsers.js"
 import { LoginStore } from '../../store/Login/login';
+import { epsStore } from "../../store/Maintenance/Eps.js"
+const epsStores = epsStore()
 
 const userStore = usersStore()
 const loginStore = LoginStore()
@@ -229,8 +241,9 @@ let email = ref("")
 let index = ref()
 let emergencyPersonName = ref("")
 let emergencyPersonPhone = ref()
+let eps = ref()
 
-
+let optionsEps = ref([])
 let optionsRol = ref(['Administrador', 'Trabajador'])
 let optionsDocument = ref([])
 let columns = ref([
@@ -238,6 +251,7 @@ let columns = ref([
   { name: 'name', label: 'NOMBRES', field: 'names', align: 'center' },
   { name: 'typeDocument', align: 'center', label: 'TIPO DE DOCUMENTO', field: (row)=> row.typeDocument.acronym, align: 'center', sortable: true },
   { name: 'numberDocument', align: 'center', label: 'N° DOCUMENTO', field: 'numberDocument', align: 'center', sortable: true },
+  { name: 'eps', label: 'Eps', field: (row)=> row.eps.name, align: 'center' },
   { name: 'rol', label: 'ROL', field: 'rol', align: 'center' },
   { name: 'cel', label: 'CELULAR', field: 'cel', align: 'center' },
   { name: 'address', label: 'DIRECCION', field: 'address', align: 'center' },
@@ -257,6 +271,7 @@ const postUser = async () => {
     names.value,
     typeDocument.value.value,
     numberDocument.value,
+    eps.value.value,
     rol.value,
     cel.value,
     address.value,
@@ -299,15 +314,15 @@ async function getUsers() {
   }
 }
 
-async function getAdmis() {
-  const res = await userStore.checkAdmi()
-  console.log(res);
-  if (res.status < 299) {
-    optionsRol = [ 'Trabajador']
-  } else {
-    optionsRol = ['Administrador', 'Trabajador']
-  }
-}
+// async function getAdmis() {
+//   const res = await userStore.checkAdmi()
+//   console.log(res);
+//   if (res.status < 299) {
+//     optionsRol = [ 'Trabajador']
+//   } else {
+//     optionsRol = ['Administrador', 'Trabajador']
+//   }
+// }
 
 const getDocument = async () => {
   const res = await userStore.listDocuments()
@@ -325,13 +340,31 @@ const getDocument = async () => {
   }
 }
 
+const getEps = async () => {
+  const res = await epsStores.listEpsActive()
+  console.log(res.data);
+  optionsEps.value = [];
+  if (res.status < 299) {
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsEps.value.push(object)
+    }
+    console.log(optionsEps.value);
+  } else {
+    alert(res)
+  }
+}
 
 function goInfo(data) {
   names.value = data.names
   typeDocument.value = {
-    label: data.typeDocument.name,
+    label: data.typeDocument.acronym,
   value: data.typeDocument._id},
   numberDocument.value = data.numberDocument
+  eps.value = {
+    label: data.eps.name,
+  value: data.eps._id},
   rol.value = data.rol
   cel.value = data.cel
   address.value = data.address
@@ -346,6 +379,7 @@ async function putInfo() {
     names.value,
     typeDocument.value.value,
     numberDocument.value,
+    eps.value.value,
     rol.value,
     cel.value,
     address.value,
@@ -364,6 +398,7 @@ function cleanForm(){
   names.value = ""
   typeDocument.value = ""
   numberDocument.value= null
+  eps.value = ""
   rol.value = ""
   cel.value = ""
   address.value= ""
@@ -377,7 +412,8 @@ function cleanForm(){
 onBeforeMount(() => {
   getUsers();
   getDocument();
-  getAdmis();
+  // getAdmis();
+  getEps();
 })
 
 

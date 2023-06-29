@@ -272,14 +272,14 @@
 <script setup>
 import { ref, onMounted} from "vue";
 import { OrderStore } from "../../store/Orders/TablesOrders.js"
-
+import { LoginStore } from "../../store/Login/login.js";
 import {packagingStore} from "../../store/Maintenance/TypePackaging.js"
 
 
 
 
 const orderStore = OrderStore()
-
+const loginStore = LoginStore()
 const usePacking= packagingStore()
 
 let abrirCrear=ref(false)
@@ -386,28 +386,6 @@ function goInfo(data){
 
 }
 
-async function orderPost(){
-  const order = await orderStore.newOrder(
-    documento.value, 
-    telefono.value, 
-    TipoPanela.value.value, 
-    cantidad.value, 
-    comprobantePago.value,
-    saldopendiente.value=valorTotal.value-abono.value,
-    nombre.value,
-    direccion.value,
-    TipoEmpaque.value.value,
-    abono.value,
-    valorTotal.value,
-
-  )
-
-  abrirCrear.value=false
-
-  orderGet()
-  limpiar()
-  
-}
 
 async function orderGet(){
   const res = await orderStore.listOrders()
@@ -422,6 +400,28 @@ async function orderGet(){
   }
 }
 
+async function orderPost(){
+  const order = await orderStore.newOrder(
+    documento.value, 
+    telefono.value, 
+    TipoPanela.value.value, 
+    cantidad.value, 
+    comprobantePago.value,
+    saldopendiente.value=valorTotal.value-abono.value,
+    nombre.value,
+    direccion.value,
+    TipoEmpaque.value.value,
+    abono.value,
+    valorTotal.value,
+    loginStore.token
+  )
+
+  abrirCrear.value=false
+
+  orderGet()
+  limpiar()
+  
+}
 
 async function putInfo() {
   const res = await orderStore.putOrder(index.value,

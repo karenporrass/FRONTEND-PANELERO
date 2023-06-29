@@ -279,7 +279,7 @@ const postUser = async () => {
     email.value,
     emergencyPersonName.value,
     emergencyPersonPhone.value,
-    loginStore.token
+    // loginStore.token
   )
   console.log(res);
   getUsers()
@@ -376,7 +376,8 @@ function goInfo(data) {
 
 async function putInfo() {
   console.log(index.value);
-  const res = await userStore.putUsers(index.value,
+  console.log(rol.value);
+  const re = await userStore.putUsers(index.value,
     names.value,
     typeDocument.value.value,
     numberDocument.value,
@@ -389,7 +390,7 @@ async function putInfo() {
     emergencyPersonPhone.value
 
   )
-  console.log(res);
+  console.log(re);
   getUsers()
   promptEdit.value = false
   cleanForm()

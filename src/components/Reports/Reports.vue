@@ -268,10 +268,50 @@
 <script setup>
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'
+
+// matenimiento 
 import {usersStore} from "../../store/Maintenance/CreateUsers.js"
+import {workStore} from "../../store/Maintenance/TypeWork.js"
+import {paymentStore} from "../../store/Maintenance/PaymentMethod.js"
+import { typePayStore} from "../../store/Maintenance/TypePay.js"
+import {unitsStore} from "../../store/Maintenance/MeasurementUnits.js"
+import { epsStore } from "../../store/Maintenance/Eps.js"
+import { documentStore} from "../../store/Maintenance/TypeDocument.js"
+import {lotsStore} from "../../store/Maintenance/Lots.js"
+import {stagesStore} from "../../store/Maintenance/Stages.js"
+import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js";
+import {packagingStore} from "../../store/Maintenance/TypePackaging.js"
+import { panelaStore } from "../../store/Maintenance/TypePanela.js"
+
+// costos 
+import { monthlyStore } from "../../store/Costs/MonthlyExpenses.js";
+import { OccasionalStore } from "../../store/Costs/OccasionalExpenses.js";
+import { payStore } from "../../store/Costs/Pays.js";
+
+
+
 import {ref} from "vue"
 
+// matenimiento 
 const useUsers= usersStore()
+const useTypeWork = workStore()
+const paymentStores = paymentStore()
+const useTypePay= typePayStore()
+const unitStore = unitsStore()
+const epsStores = epsStore()
+const documentsStores = documentStore()
+const lotsStores = lotsStore()
+const stageStore = stagesStore()
+const farmStore = farmRegistryStore();
+const usePackaging = packagingStore()
+const panelasStore = panelaStore()
+  
+// costos 
+const MonthlyStore = monthlyStore();
+const occasionalStore = OccasionalStore();
+const PayStore = payStore();
+
+
 
 let abrirDescargar=ref(false)
 let abrirDescargar3=ref(false)
@@ -288,11 +328,22 @@ var columns = ""
 var rows = []
 
 let fechas = ref([
-{label:'Enero', value: '06'}
+{label:'Enero', value: '01'},
+{label:'Febrero', value: '02'},
+{label:'Marzo', value: '03'},
+{label:'Abril', value: '04'},
+{label:'Mayo', value: '05'},
+{label:'Junio', value: '06'},
+{label:'Julio', value: '07'},
+{label:'Agosto', value: '08'},
+{label:'Septiembre', value: '09'},
+{label:'Octubre', value: '10'},
+{label:'Noviembre', value: '11'},
+{label:'Diciembre', value: '12'}
 ])
 let options2= ref([
       'Personas', 'Labores', 'Método de pago', 'Tipo de pago', 'Unidad de medida', 'Eps', 'Tipo de documento', 'Lotes', 'Etapas', 'Fincas' , 
-      'Empaques', 'Soporte'
+      'Empaques', 'Tipo de panela'
     ]   )
 
 let options3= ref([
@@ -325,18 +376,323 @@ if(tipo.value=="Personas"){
   if(now == fecha.value.value){
     console.log('si');
     rows.push([res.data[i].names, res.data[i].typeDocument.acronym, res.data[i].numberDocument, res.data[i].rol, res.data[i].cel, res.data[i].email]);
-     columns = ["Nombres", "Tipo de documento", "Numero documento", "Rol", "Cel", "Email"];
+     columns = ["NOMBRES", "TIPO DE DOCUMENTO", "NUMERO DOCUMENTO", "ROL", "CEL", "EMAIL"];
   }
+
   else(
     console.log("no")
   )
 }
 descargarPdf()
 }
-else( console.log('hola')
+
+if(tipo.value=="Labores"){
+  res = await useTypeWork.listWork() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name, res.data[i].area, res.data[i].dailyPayment]);
+     columns = ["LABOR", "AREA A EJERCER", "PAGO DIARIO"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+if(tipo.value=="Método de pago"){
+  res = await paymentStores.listPayments() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name]);
+     columns = ["MÉTODO DE PAGO"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+if(tipo.value=="Tipo de pago"){
+  res = await useTypePay.listTypePay() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name]);
+     columns = ["TIPO DE PAGO"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+if(tipo.value=="Unidad de medida"){
+  res = await unitStore.listUnits() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name, res.data[i].acronym]);
+     columns = ["UNIDAD DE MEDIDA", "ACRONIMO"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+if(tipo.value=="Eps"){
+  res = await epsStores.listEps() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name, res.data[i].attentionLine]);
+     columns = ["EPS", "NÚMERO DE ATENCIÓN"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+if(tipo.value=="Tipo de documento"){
+  res = await documentsStores.listDocuments() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name, res.data[i].acronym]);
+     columns = ["TIPO DE DOCUMENTO", "ACRONIMO"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+if(tipo.value=="Lotes"){
+  res = await lotsStores.listlots() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name, res.data[i].extent, res.data[i].farm]);
+     columns = ["NOMBRE DEL LOTE", "EXTENSIÓN", "NOMBRE FINCA"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+if(tipo.value=="Etapas"){
+  res = await stageStore.listStages() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name, res.data[i].description]);
+     columns = ["ETAPA", "DESCRIPCIÓN"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+if(tipo.value=="Fincas"){
+  res = await farmStore.listFarms() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name, res.data[i].registrationNumber, res.data[i].extent]);
+     columns = ["FINCA", "NÚMERO DE MATRICULA", "EXTENSIÓN EN METROS"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+if(tipo.value=="Empaques"){
+  res = await usePackaging.listPackaging() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name, res.data[i].maxWeigth, res.data[i].unitsPerBox]);
+     columns = ["EMPAQUE", "PESO MÁXIMO", "UNIDADES POR CAJA"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+if(tipo.value=="Tipo de panela"){
+  res = await panelasStore.listPanela() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name, res.data[i].price]);
+     columns = ["TIPO DE PANELA", "PRECIO"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+// costos 
+
+if(tipo.value=="Gastos Mensuales"){
+  res = await MonthlyStore.listMonthly() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].Name_spent, res.data[i].Finca, res.data[i].Description,res.data[i].PAYMENT_METHOD, res.data[i].Total]);
+     columns = ["GASTO","FINCA","DESCRIPCIÓN","METODO DE PAGO","VALOR A PAGAR"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+
+if(tipo.value=="Gastos Ocasionales"){
+  res = await occasionalStore.listOccasional() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].Name_spent, res.data[i].Finca, res.data[i].Description, res.data[i].PAYMENT_METHOD, res.data[i].Total]);
+     columns = ["GASTO","FINCA","DESCRIPCIÓN","METODO DE PAGO","TOTAL A PAGAR"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+
+
+if(tipo.value=="Pagos Empleados"){
+  res = await PayStore.listPays() 
+  console.log(res.data);
+
+  for(let i in res.data ){
+  let dates = res.data[i].date
+  now = dates.substring(5,7);
+  console.log(now);
+  if(now == fecha.value.value){
+    console.log('si');
+    rows.push([res.data[i].name, res.data[i].rol, res.data[i].CONCEPT, res.data[i].PAYMENT_METHOD, res.data[i].START_WORK, res.data[i].END_WORK,res.data[i].total]);
+     columns = ["NOMBRE", "ROL","CONCEPTO","METODO DE PAGO","FECHA INICIO","FECHA FIN","TOTAL A PAGAR"];
+  }
+
+  else(
+    console.log("no")
+  )
+}
+descargarPdf()
+}
+
+else( console.log('no')
 )
 
 }
+
+
+
+
 
 
 function descargarPdf() {

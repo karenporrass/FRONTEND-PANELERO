@@ -23,9 +23,9 @@
                 </div>
               </q-menu>
             </q-btn>
-            <router-link to="/" style="text-decoration: none; color: white;">
-              <q-btn flat icon="fa-solid fa-arrow-right-from-bracket" class="" style="font-size: 15px;"> </q-btn>
-            </router-link>
+            <!-- <router-link to="/" style="text-decoration: none; color: white;"> -->
+              <q-btn flat icon="fa-solid fa-arrow-right-from-bracket" class=""  @click="logout" style="font-size: 15px;"> </q-btn>
+            <!-- </router-link> -->
 
 
           </q-toolbar>
@@ -140,7 +140,7 @@
             src="/images/IMAGEN_TRAPICHE.png"
             style="height: 170px;">
             <div class="absolute-bottom bg-transparent column items-center text-black">
-              <div class="text-weight-bolder text-center">Usuario123@gmail.com</div>
+              <div class="text-weight-bolder text-center">{{ per }}</div>
               <div class="text-subtitle2 text-center">Usuario</div>
             </div>
           </q-img>
@@ -168,16 +168,16 @@
 import { ref, onBeforeMount} from 'vue'
 import { requestAxios } from "./Global/axios";
 import {LoginStore} from "./store/Login/login.js"
+import { useRouter } from 'vue-router';
 
- const storelogin = LoginStore()
- let privateMol = ref()
-//  let per = ref()
+ const storelogin = LoginStore();
+ const router = useRouter();
+ let privateMol = ref();
+ let per = ref(storelogin.email)
 
 
-//  console.log(storelogin.user);
 
 function validar(){
-  // console.log(storelogin.user);
   console.log(storelogin.rol);
   if(storelogin.rol == "Trabajador"){
     privateMol.value = true
@@ -187,16 +187,26 @@ function validar(){
   }
 }
 
-// async function userId(){
-//   let users = await requestAxios.get(`/usuarios/user/${storelogin.user}`)
-//   console.log(users);
-//   per.value = users.data.email
-// }
 
 const leftDrawerOpen = ref(false)
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
+}
+
+const logout = () => {
+  console.log('borrando token');
+  storelogin.logoutUser();
+  leftDrawerOpen.value = false;
+  router.replace({ path: "/" });
+};
+
+const currentDate = new Date();
+const dateLogin = new Date(storelogin.dateLogin);
+
+//si la fecha actual es mayor a la fecha de inicio de sesion + 1 dia
+if (currentDate > dateLogin.setDate(dateLogin.getDate() + 1)) {
+  logout();
 }
 
 onBeforeMount(() => {

@@ -104,28 +104,8 @@
             </q-card-section>
             <div class="q-pa-md " >
             
-                <!-- <q-input filled type="date"  label="Fecha"  lazy-rules :rules="[
-              (val) =>
-                (val && val.trim().length > 0) || 'Dijite la fecha',
-              /* val => val > 0 && val < 100 || 'Please type a real age' */
-            ]"/> -->
-              <q-select filled v-model="fecha" :options="fechas" label="Seleccione la fecha"
-              lazy-rules :rules="[
-                (val) =>
-                  (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
-              ]" />
-            
-                <q-select filled v-model="tipo" :options="options2" label="Escoja"  lazy-rules :rules="[
-              (val) =>
-                (val && val.trim().length > 0) || 'El campo es requerido',
-              /* val => val > 0 && val < 100 || 'Please type a real age' */
-            ]"/>
+          
                 <div>
-                  <!-- <q-input filled type="date"  label="Fecha"  lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite la fecha',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/> -->
                 <q-select filled v-model="fecha" :options="fechas" label="Seleccione la fecha"
                 lazy-rules :rules="[
                   (val) =>
@@ -344,7 +324,7 @@ if(tipo.value=="Personas"){
   console.log(now);
   if(now == fecha.value.value){
     console.log('si');
-    rows.push([res.data[i].names, res.data[i].typeDocument, res.data[i].numberDocument, res.data[i].rol, res.data[i].cel, res.data[i].email]);
+    rows.push([res.data[i].names, res.data[i].typeDocument.acronym, res.data[i].numberDocument, res.data[i].rol, res.data[i].cel, res.data[i].email]);
      columns = ["Nombres", "Tipo de documento", "Numero documento", "Rol", "Cel", "Email"];
   }
   else(

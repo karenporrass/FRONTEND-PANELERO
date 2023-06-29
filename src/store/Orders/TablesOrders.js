@@ -1,13 +1,12 @@
 import { defineStore } from 'pinia'
-import {ref} from "vue"
 import {requestAxios} from "../../Global/axios.js"
 import { notifyError, notifySuccess } from "../../Global/notify.js";
 import {LoginStore} from "../../store/Login/login.js"
 
 
 
-export const OrderStore = defineStore('counter', () => {
-    const order = ref("")
+export const OrderStore = defineStore("OrderStore", () => {
+ 
     const useToken = LoginStore();
 
     async function listOrders() {
@@ -16,7 +15,7 @@ export const OrderStore = defineStore('counter', () => {
           return await requestAxios.get("/pedido", {
             headers: {
               token: useToken.token,
-            }});
+            }})
         } catch (error) {
           console.log(error);
           notifyError('No fue posible obtener los pedidos');
@@ -127,7 +126,7 @@ export const OrderStore = defineStore('counter', () => {
 
 
     
-      return { listOrders, newOrder, putOrder, active, listPanelaActive, order, listPackagingActive } },
+      return { listOrders, newOrder, putOrder, active, listPanelaActive,  listPackagingActive } },
       {persist:true});
  
     

@@ -104,11 +104,7 @@
             </q-card-section>
             <div class="q-pa-md " >
             
-                <!-- <q-input filled type="date"  label="Fecha"  lazy-rules :rules="[
-              (val) =>
-                (val && val.trim().length > 0) || 'Dijite la fecha',
-              /* val => val > 0 && val < 100 || 'Please type a real age' */
-            ]"/> -->
+          
               <q-select filled v-model="fecha" :options="fechas" label="Seleccione la fecha"
               lazy-rules :rules="[
                 (val) =>
@@ -121,23 +117,7 @@
               /* val => val > 0 && val < 100 || 'Please type a real age' */
             ]"/>
                 <div>
-                  <!-- <q-input filled type="date"  label="Fecha"  lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'Dijite la fecha',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/> -->
-                <q-select filled v-model="fecha" :options="fechas" label="Seleccione la fecha"
-                lazy-rules :rules="[
-                  (val) =>
-                    (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
-                ]" />
-              
-                  <q-select filled v-model="tipo" :options="options2" label="Escoja"  lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-                /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/>
-                  <div>
+         
                 
 
               
@@ -145,7 +125,6 @@
                   <q-btn class="q-ml-md" label="cerrar" v-close-popup />
 
                 </div>
-              </div>
             </div>
           </q-card>
         </q-dialog>

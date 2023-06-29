@@ -158,6 +158,8 @@ let columns = ref([
   {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
   {name: 'maxWeight',label: 'PESO MÁXIMO ',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
   { name: 'unitsPerBox', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
+  {name: "status",label: "ESTADO",field: (row) => (row.state == 1 ? "Activo" : "Inactivo"),align: "center",},
+
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])
 

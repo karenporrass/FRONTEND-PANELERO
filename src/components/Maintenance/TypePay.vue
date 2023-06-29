@@ -128,7 +128,8 @@ let pagination = ref({
 let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE TIPO PAGO',field: 'name',align: 'center'},
-  { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
+ {name: "status",label: "ESTADO",field: (row) => (row.state == 1 ? "Activo" : "Inactivo"),align: "center",},
+{ name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])
 

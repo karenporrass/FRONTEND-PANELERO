@@ -77,7 +77,7 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input  filled type="number" v-model="maxWeigth" label="Peso maximo"
+               <q-input  filled type="number" v-model="maxWeigth" label="Peso máximo"
                 lazy-rules :rules="[
                   (val) =>
                     (val  > 0) || 'El campo es requerido',
@@ -115,7 +115,7 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
-               <q-input  filled type="number" v-model="maxWeigth" label="Peso maximo"
+               <q-input  filled type="number" v-model="maxWeigth" label="Peso máximo"
                 lazy-rules :rules="[
                   (val) =>
                     (val  > 0) || 'El campo es requerido',
@@ -154,9 +154,9 @@ let index = ref()
 // })
 let columns = ref([
 
-{ name: 'index', label: 'N°',field: 'index'},
+{ name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE EMPAQUE',field: 'name',align: 'center'},
-  {name: 'maxWeight',label: 'PESO MAXIMO ',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
+  {name: 'maxWeight',label: 'PESO MÁXIMO ',align: 'center',field: row => row.maxWeigth,format: val => `${val}`,sortable: true},
   { name: 'unitsPerBox', align: 'center', label: 'UNIDADES POR CAJA', field: 'unitsPerBox',align: 'center', sortable: true },
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 ])

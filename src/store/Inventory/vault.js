@@ -22,9 +22,24 @@ export const vaultStore = defineStore("vaultStore", () => {
   }
 
 
-  async function newVault(vault ) {
+  async function listVaultActive() {
     try {
-        let r = await requestAxios.post('/cellars',vault);
+      return  await requestAxios.get("/cellars/active",  {
+        headers: {
+          token: useToken.token,
+        }})
+     
+    } catch (error) {
+      notifyError('No fue posible obtener los datos de bodegas');
+      console.log(error);
+      return error
+    }
+  }
+
+
+  async function newVault(vault) {
+    try {
+        let r = await requestAxios.post('/cellars', vault);
         notifySuccess('La bodega fue registrada correctamente')
         console.log(r);
         return r
@@ -67,7 +82,7 @@ export const vaultStore = defineStore("vaultStore", () => {
   }
 
 
-  async function listVaultActive() {
+  async function listMethods() {
     try {
       return await requestAxios.get("/metodoPago/active", {
         headers: {
@@ -94,7 +109,7 @@ export const vaultStore = defineStore("vaultStore", () => {
     }
   }
 
-  return { listVault, newVault, putVault,  listVaultActive, active, listUsersActive };
+  return { listVault, newVault, putVault,  listVaultActive, active, listUsersActive, listMethods };
 },
 {
   persist: true,

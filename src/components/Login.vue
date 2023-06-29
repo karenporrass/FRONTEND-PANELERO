@@ -1,16 +1,12 @@
 <template>
   <div class="fullscreen">
-    <div id="imagen-fondo">
+    <div id="imagen-fondo" style="background-image: url(/images/FONDO.jpg)">
       <div class="row" id="contendor-imagen2">
         <div class="col-1"></div>
         <div id="contenedor-col2" class="col-10">
           <!-- Imagen -->
           <div id="div-img">
-            <img
-              id="imagen3"
-              src="images/PANELA.jpg"
-              alt=""
-            />
+            <img id="imagen3" src="images/PANELA.jpg" alt="" />
           </div>
           <div id="div-login">
             <q-form ref="myForm" @submit.prevent.stop="validar()">
@@ -25,8 +21,9 @@
                 v-model="user"
                 label="DIGITE SU USUARIO"
                 stack-label
-                :dense="dense"
-               
+                
+              />
+
               />
               <br />
               <p id="p-contraseña"><strong>CONTRASEÑA</strong></p>
@@ -37,10 +34,10 @@
                 v-model="password"
                 label="DIGITE SU CONTRASEÑA"
                 stack-label
-                :dense="dense"
-             
+               
               />
-              /><br />
+
+              /> /><br />
               <p id="p-olvido">¿Olvido su contraseña?</p>
               <div class="column items-center">
                 <q-btn
@@ -48,21 +45,19 @@
                   id="boton-ingresar"
                   :loading="loading"
                   color="teal-10"
-                  label="INICIAR SESIÓN">
+                  label="INICIAR SESIÓN"
+                >
                   <template v-slot:loading>
-                <q-spinner-oval color="white" size="1em" />
-              </template>
+                    <q-spinner-oval color="white" size="1em" />
+                  </template>
                 </q-btn>
-                
               </div>
             </q-form>
           </div>
-
         </div>
         <div class="col-1"></div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -70,37 +65,30 @@
 
 <script setup>
 import { ref } from "vue";
-
 import { useRouter } from "vue-router";
 import { LoginStore } from "../store/Login/login.js";
 
 const store = LoginStore();
 
-
-let router= useRouter();
-let dense = ref(false)
-let user = ref("maria123@gmail.com")
-let password = ref(12345678)
-let index   = ref(0)
-let loading= ref(false)
-
-
-
-
-
+let router = useRouter();
+let dense = ref(false);
+let user = ref("lilis@gmail.com");
+let password = ref("123");
+let index = ref(0);
+let loading = ref(false);
 
 async function validar() {
   loading.value = true;
-await store.newLogin({
-    user: user.value,
-    password: password.value
-  }
-  ).then((res)=>{
-    pasarHome()
-  })
-  loading.value = false
+  await store
+    .newLogin({
+      user: user.value,
+      password: password.value,
+    })
+    .then((res) => {
+      pasarHome();
+    });
+  loading.value = false;
 }
-
 
 
 function pasarHome() {
@@ -114,7 +102,6 @@ function pasarHome() {
 <style>
 #imagen-fondo {
   min-height: 100vh;
-  background-image: url("/images/FONDO.jpg") ;
   background-repeat: no-repeat;
   background-size: cover;
   align-items: center;

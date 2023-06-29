@@ -17,7 +17,7 @@
       arrows
       navigation
       infinite
-      style="height: 70vh;"
+      style="height: 65vh;"
     >
       <q-carousel-slide :name="1" img-src="/images/panela1.jpg" />
       <q-carousel-slide :name="2" img-src="/images/panela2.jpg" />

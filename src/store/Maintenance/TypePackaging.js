@@ -34,12 +34,12 @@ export const packagingStore = defineStore('packagingStore', () => {
     }
   }
 
-    async function newPackaging(name, maxWeight, units) {
+    async function newPackaging(name, maxWeight, unitsPerBox) {
         try {
              await requestAxios.post(`/tipoEmpaque`,{
               name: name,
               maxWeigth: maxWeight,
-              unitsPerBox: units
+              unitsPerBox: unitsPerBox
             },{
               headers: {
              token: useToken.token,
@@ -51,12 +51,12 @@ export const packagingStore = defineStore('packagingStore', () => {
           }
       }
 
-    async function putPackaging(id, name, maxWeight, units) {
+    async function putPackaging(id, name, maxWeight, unitsPerBox) {
         try {
              await requestAxios.put(`/tipoEmpaque/update/${id}`,{
               name: name,
               maxWeigth: maxWeight,
-              unitsPerBox: units
+              unitsPerBox:unitsPerBox
             },
             {
               headers: {

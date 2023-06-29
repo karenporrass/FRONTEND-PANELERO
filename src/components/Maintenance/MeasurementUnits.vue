@@ -144,6 +144,7 @@ let columns = ref([
 { name: 'index', label: '#',field: 'index'},
   {name: 'name',label: 'NOMBRE DE LA UNIDAD DE MEDIDA',field: 'name',align: 'center'},
   {name: 'weight',label: 'ACRONIMO',align: 'center',field: row => row.acronym ,format: val => `${val}`,sortable: true},
+  {name: "status",label: "ESTADO",field: (row) => (row.state == 1 ? "Activo" : "Inactivo"),align: "center",},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])

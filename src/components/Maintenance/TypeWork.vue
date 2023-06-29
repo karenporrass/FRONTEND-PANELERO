@@ -157,6 +157,7 @@ let columns = ref([
   { name: 'name', label: 'NOMBRE LABOR', field: 'name', align: 'center' },
   { name: 'area', label: 'AREA A EJERCER', align: 'center', field: row => row.area, format: val => `${val}`, sortable: true },
   { name: 'dailyPayment', align: 'center', label: 'PAGO DIARIO', field: 'dailyPayment', align: 'center', sortable: true },
+  {name: "status",label: "ESTADO",field: (row) => (row.state == 1 ? "Activo" : "Inactivo"),align: "center",},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])

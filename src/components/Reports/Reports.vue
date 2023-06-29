@@ -105,7 +105,7 @@
             <div class="q-pa-md " >
             
           
-                <div>
+
                 <q-select filled v-model="fecha" :options="fechas" label="Seleccione la fecha"
                 lazy-rules :rules="[
                   (val) =>
@@ -117,15 +117,15 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
-                  <div>
+            
+
                 
 
               
                   <q-btn @click="validate()" label="Descargar pdf" class="text-white bg-green-10"  />
                   <q-btn class="q-ml-md" label="cerrar" v-close-popup />
 
-                </div>
-              </div>
+               
             </div>
           </q-card>
         </q-dialog>

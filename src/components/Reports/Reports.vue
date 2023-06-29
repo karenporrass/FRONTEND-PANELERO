@@ -104,18 +104,24 @@
               </q-card-section>
               <div class="q-pa-md " >
                 <div>
-                  <q-input filled type="date"  label="Fecha"  lazy-rules :rules="[
+                  <!-- <q-input filled type="date"  label="Fecha"  lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'Dijite la fecha',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
-              ]"/><br>
+              ]"/> -->
+                <q-select filled v-model="fecha" :options="fechas" label="Seleccione la fecha"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val !== null && val !== '' && val !== undefined) || 'El campo es requerido',
+                ]" />
+              
                   <q-select filled v-model="tipo" :options="options2" label="Escoja"  lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
                 /* val => val > 0 && val < 100 || 'Please type a real age' */
               ]"/>
                   <div>
-                    <br />
+                
                     <q-btn @click="descargarPdf()" label="Descargar pdf" class="text-white bg-green-10"  />
                     <q-btn class="q-ml-md" label="cerrar" v-close-popup />
                   </div>
@@ -260,6 +266,8 @@
 </template>
 
 <script setup>
+import jsPDF from 'jspdf';
+import 'jspdf-autotable'
 import {usersStore} from "../../store/Maintenance/CreateUsers.js"
 import {ref} from "vue"
 
@@ -270,10 +278,17 @@ let abrirDescargar3=ref(false)
 let abrirDescargar4=ref(false)
 let abrirDescargar5=ref(false)
 let abrirDescargar6=ref(false)
-
-let TipoModulo=ref("null")
+let pdf = ref()
+let res = ""
 let tipo=ref(null)
+let fecha = ref()
+let now = ""
+let columns = ""
+let rows = []
 
+let fechas = ref([
+  {label:'Enero', value: '01'}
+])
 let options2= ref([
         'Personas', 'Labores', 'Método de pago', 'Tipo de pago', 'Unidad de medida', 'Eps', 'Tipo de documento', 'Lotes', 'Etapas', 'Fincas' , 
         'Empaques', 'Soporte'
@@ -296,98 +311,148 @@ let options6= ref([
       ]   )
 
 
-function validateDate(){
-  
+async function validate(){
+  console.log(tipo.value);
+  if(tipo.value=="Personas"){
+    res = await useUsers.listUsers() 
+    console.log(res.data);
+    asing()
+  }
+  else( console.log('hola')
+  )
+  asing()
 }
 
-
-
-
-
-
-
-
-
-
-
-
-function downloadPdfPersonas(x) {
-  const docDefinition = {
-    
-    content: [
-      { text: 'Reporte Mantenimiento:Personas', style: 'header' },
-      {
-        style: 'table',
-        table: {
-          headerRows: 1,
-          widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-          body: [
-            [
-              { text: 'NOMBRE', style: 'tableHeader' },
-              { text: 'APELLIDOS', style: 'tableHeader' },
-              { text: 'TIPO DE DOCUMENTO', style: 'tableHeader' },
-              { text: 'ROL', style: 'tableHeader' },
-              { text: 'CELULAR', style: 'tableHeader' },
-              { text: 'DIRECCIÓN', style: 'tableHeader' },
-              { text: 'CORREO', style: 'tableHeader' },
-              { text: 'PERSONA EMERGENCIA', style: 'tableHeader' },
-              { text: 'NUMERO DE CONTACTO', style: 'tableHeader' }
-            ],
-            ...this.rifa.map((item, index) => [
-              
-              { text: `${index + 1}`, style: index % 2 === 0 ? 'even' : 'odd' },
-              { text: item.name, style: 'tableBody' },
-              { text: item.lastNames, style: 'tableBody' }, 
-              { text: item.typeDocument, style: 'tableBody' },
-              { text: item.numberDocument ? 'Activo' : 'Inactivo' , style: 'tableBody' },
-              { text: item.rol, style: 'tableBody' },
-              { text: item.cel, style: 'tableBody' },
-              { text: item.address, style: 'tableBody' },
-              { text: item.email, style: 'tableBody' },
-              { text: item.emergencyPersonName, style: 'tableBody' },
-              { text: item.emergencyPersonPhone, style: 'tableBody' }
-
-            ])
-          ]
-        }
-      }
-    ],
-    styles: {
-      header: {
-        fontSize: 18,
-        bold: true,
-        margin: [0, 0, 0, 10]
-      },
-      tableHeader: {
-        bold: true,
-        fontSize: 13,
-        color: 'white',
-        fillColor: '#2d4154'
-      },
-      tableBody: {
-        fontSize: 11
-      },
-      odd: {
-        fillColor: '#f2f2f2'
-      },
-      even: {
-        fillColor: '#dddddd'
-      },
-      table: {
-        margin: [0, 5, 0, 10]
-      }
+function asing (){
+  for(let i in res.data ){
+    let dates = res.data[i].date
+    now = dates.substring(5,7);
+    console.log(now);
+    if(now == fecha.value){
+      console.log('si');
+      rows.push([res.data[i].names, res.data[i].typeDocument, res.data[i].numberDocument, res.data[i].rol, res.data[i].cel, res.data[i].email]);
+      columns = ["Nombres", "Tipo de documento", "Numero documento", "Rol", "Cel", "Email"];
     }
-  };
+    else(
+      console.log("no")
+    )
+  }
+}
 
-  pdfMake.createPdf(docDefinition).download('Tu Rifa.pdf');
-}    
+function descargarPdf() {
+      validate()
+      pdf.value = new jsPDF();
+      pdf.value.setFont("helvetica", "bold");
+      pdf.value.setFontSize(16);
+
+      pdf.value.text(`Informacion ${tipo.value}`, 10, 10); 
+
+      pdf.value.setFont("helvetica", "normal");
+      pdf.value.setFontSize(12);
+
+      // var columns = ["N° Balota", "Nombre", "Celular", "Direccion", "Estado", "Metodo de pago"];
+      // var rows = [];
+      // for (i in copiNumeros.value) {
+      //   console.log(i);
+      //   rows.push([copiNumeros.value[i].Id, copiNumeros.value[i].nombreComprador, copiNumeros.value[i].celularComprador, copiNumeros.value[i].direccionComprador, copiNumeros.value[i].estado, copiNumeros.value[i].Tipodepago]);
+      // }
+      pdf.value.autoTable({
+        head: [columns],
+        body: rows,
+        startY: 20,// posición Y donde se iniciará la tabla
+
+      });
+      pdf.value.save("Reporte.pdf");
+    }
 
 
 
-    function descargarPdf() {
-        if (tipo.value=="Personas") {
-            downloadPdfPersonas()
-        }
+
+
+
+
+
+
+
+
+
+// function downloadPdfPersonas(x) {
+//   const docDefinition = {
+    
+//     content: [
+//       { text: 'Reporte Mantenimiento:Personas', style: 'header' },
+//       {
+//         style: 'table',
+//         table: {
+//           headerRows: 1,
+//           widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+//           body: [
+//             [
+//               { text: 'NOMBRE', style: 'tableHeader' },
+//               { text: 'APELLIDOS', style: 'tableHeader' },
+//               { text: 'TIPO DE DOCUMENTO', style: 'tableHeader' },
+//               { text: 'ROL', style: 'tableHeader' },
+//               { text: 'CELULAR', style: 'tableHeader' },
+//               { text: 'DIRECCIÓN', style: 'tableHeader' },
+//               { text: 'CORREO', style: 'tableHeader' },
+//               { text: 'PERSONA EMERGENCIA', style: 'tableHeader' },
+//               { text: 'NUMERO DE CONTACTO', style: 'tableHeader' }
+//             ],
+//             ...this.rifa.map((item, index) => [
+              
+//               { text: `${index + 1}`, style: index % 2 === 0 ? 'even' : 'odd' },
+//               { text: item.name, style: 'tableBody' },
+//               { text: item.lastNames, style: 'tableBody' }, 
+//               { text: item.typeDocument, style: 'tableBody' },
+//               { text: item.numberDocument ? 'Activo' : 'Inactivo' , style: 'tableBody' },
+//               { text: item.rol, style: 'tableBody' },
+//               { text: item.cel, style: 'tableBody' },
+//               { text: item.address, style: 'tableBody' },
+//               { text: item.email, style: 'tableBody' },
+//               { text: item.emergencyPersonName, style: 'tableBody' },
+//               { text: item.emergencyPersonPhone, style: 'tableBody' }
+
+//             ])
+//           ]
+//         }
+//       }
+//     ],
+//     styles: {
+//       header: {
+//         fontSize: 18,
+//         bold: true,
+//         margin: [0, 0, 0, 10]
+//       },
+//       tableHeader: {
+//         bold: true,
+//         fontSize: 13,
+//         color: 'white',
+//         fillColor: '#2d4154'
+//       },
+//       tableBody: {
+//         fontSize: 11
+//       },
+//       odd: {
+//         fillColor: '#f2f2f2'
+//       },
+//       even: {
+//         fillColor: '#dddddd'
+//       },
+//       table: {
+//         margin: [0, 5, 0, 10]
+//       }
+//     }
+//   };
+
+//   pdfMake.createPdf(docDefinition).download('Tu Rifa.pdf');
+// }    
+
+
+
+    // function descargarPdf() {
+    //     if (tipo.value=="Personas") {
+    //         downloadPdfPersonas()
+    //     }
         // if (tipo.value=="Labores") {
         //     downloadPdfPersonas()
         // }if (tipo.value=="Método de pago") {
@@ -437,7 +502,7 @@ function downloadPdfPersonas(x) {
         // }if (tipo.value=="Personas") {
         //     downloadPdfPersonas()
         // }
-    }
+    // }
 
  
 

@@ -94,6 +94,12 @@
                     (val && val.toString().trim().length > 0) ||
                     'El campo es requerido',
                 ]" />
+                   <q-select filled v-model="TypePays" :options="optionsType" label="Seleccione el tipo de pago"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
               <q-input filled type="date" v-model="START_WORK" label="Fecha inicio" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
@@ -146,6 +152,12 @@
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]"></q-input>
               <q-select filled v-model="PAYMENT_METHOD" :options="optionsMethod" label="Seleccione el método de pago"
+                lazy-rules :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
+                <q-select filled v-model="TypePays" :options="optionsType" label="Seleccione el tipo de pago"
                 lazy-rules :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
@@ -233,6 +245,14 @@ let columns = ref([
     align: "center",
   },
   {
+    name: "TypePays",
+    label: "TIPO DE PAGO",
+    field: (row) => row.TypePays.name,
+    align: "center",
+  },
+
+  
+  {
 
     name: "START_WORK",
     label: "FECHA INICIO",
@@ -283,7 +303,8 @@ let START_WORK = ref();
 let END_WORK = ref();
 let Name = ref([]);
 let total = ref();
-
+let optionsType = ref([]);
+let TypePays = ref([]);
 rows.value.forEach((row, index) => {
   row.index = index;
 });
@@ -296,6 +317,7 @@ const postPays = async () => {
     DNI: DNI.value.value,
     CONCEPT: CONCEPT.value,
     PAYMENT_METHOD: PAYMENT_METHOD.value.value,
+    TypePays: TypePays.value.value,
     START_WORK: START_WORK.value,
     END_WORK: END_WORK.value,
     Total: total.value,
@@ -345,6 +367,11 @@ function goInfo(data) {
     label: data.PAYMENT_METHOD.name,
     value: data.PAYMENT_METHOD._id,
   };
+  TypePays.value = {
+    label: data.TypePays.name,
+    value: data.TypePays._id,
+  };
+
   START_WORK.value = data.START_WORK;
   END_WORK.value = data.END_WORK;
   total.value = data.Total;
@@ -356,6 +383,7 @@ async function putInfo() {
     DNI: DNI.value.value,
     CONCEPT: CONCEPT.value,
     PAYMENT_METHOD: PAYMENT_METHOD.value.value,
+    TypePays: TypePays.value.value,
     START_WORK: START_WORK.value,
     END_WORK: END_WORK.value,
     Total: total.value,
@@ -370,6 +398,7 @@ function toEmpty() {
   DNI.value = "";
   CONCEPT.value = "";
   PAYMENT_METHOD.value = null;
+  TypePays.value = null;
   START_WORK.value = "";
   END_WORK
   total.value = "";
@@ -406,9 +435,25 @@ async function getPeople() {
 }
 
 
+async function getTypePay() {
+  // optionsPeople.value=[]
+  const res = await PayStore.listTypePayActive();
+  if (res.status < 299) {
+    for (let i in res.data) {
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsType.value.push(object);
+     console.log(optionsType.value);
+
+    }
+  } else {
+    throw new Error("Error al obtener los datos de metodo de pago");
+  }
+}
+
 
 
 onMounted(() => {
+  getTypePay() 
   getPays();
   getPeople();
   getMethod();

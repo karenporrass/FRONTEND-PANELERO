@@ -258,6 +258,7 @@ let columns = ref([
   { name: 'email', label: 'CORREO', field: 'email', align: 'center' },
   { name: 'namePerson', label: 'PERSONA EMERGENCIA', field: 'emergencyPersonName', align: 'center' },
   { name: 'phonePerson', label: 'NUMERO DE CONCTATO', field: 'emergencyPersonPhone', align: 'center' },
+  {name: "status",label: "ESTADO",field: (row) => (row.state == 1 ? "Activo" : "Inactivo"),align: "center",},
   { name: 'options', align: 'center', label: 'OPCIONES', align: 'center', sortable: true },
 
 ])

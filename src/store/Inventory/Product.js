@@ -24,7 +24,11 @@ export const productStore = defineStore("productStore", () => {
 
   async function newProduct(infoProduct ) {
     try {
-      return await requestAxios.post("/product", infoProduct, {}),
+      return await requestAxios.post("/product", infoProduct,  {
+        headers: {
+          token: useToken.token,
+        }
+        }),
      notifySuccess('Producto registrado correctamente')
     } catch (error) {
       notifyError(error.response.data.errors.join(", "));
@@ -34,8 +38,12 @@ export const productStore = defineStore("productStore", () => {
 
   async function putProduct(id, infoProduct) { 
     try {
-      return await requestAxios.put(`/product/update/${id}`, infoProduct, { },
-      notifySuccess('Producto actualizado correctamente'))
+      return await requestAxios.put(`/product/update/${id}`, infoProduct, {
+        headers: {
+          token: useToken.token,
+        }
+        },
+            notifySuccess('Producto actualizado correctamente'))
     } catch (error) {
       notifyError(error.response.data.errors.join(", "));
       console.log(error);

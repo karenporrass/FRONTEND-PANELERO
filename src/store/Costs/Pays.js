@@ -99,8 +99,20 @@ export const payStore = defineStore("payStore", () => {
   }
 
   
+  async function listTypePayActive() {
+    try {
+      return await requestAxios.get("/tipoPago/active", {
+        headers: {
+       token: useToken.token,
+     },})
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  return {  listPays, newPays, putPays, active, listPaymentsActive, listUsersActive };
+  
+
+  return {  listPays, newPays, putPays, active, listPaymentsActive, listUsersActive, listTypePayActive };
 },
 {persist: true,},
 )

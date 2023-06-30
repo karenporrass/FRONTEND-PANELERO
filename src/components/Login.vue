@@ -72,21 +72,26 @@ const store = LoginStore();
 
 let router = useRouter();
 let dense = ref(false);
-let user = ref("lilis@gmail.com");
-let password = ref("123");
+let user = ref("sandygarcia2105@gmail.com");
+let password = ref("123456789");
 let index = ref(0);
 let loading = ref(false);
 
 async function validar() {
-  loading.value = true;
-  await store
-    .newLogin({
-      user: user.value,
-      password: password.value,
-    })
-    .then((res) => {
-      pasarHome();
-    });
+  try{
+    loading.value = true;
+    return await store
+      .newLogin({
+        user: user.value,
+        password: password.value,
+      })
+      .then((res) => {
+        pasarHome();
+      })
+    }catch(error){
+      console.log(error);
+      loading.value = false;
+  }   
   loading.value = false;
 }
 

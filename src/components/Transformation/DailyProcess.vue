@@ -72,22 +72,32 @@
         <div class="q-pa-md">
           <q-form ref="myForm" @submit.prevent.stop="postDailyProcess()">
             <div>
-              <q-input filled type="text" v-model="name" label="Nombre del proceso" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]" />
+              <q-select filled v-model="labor" :options="optionsLabor" label="Seleccione la labor" lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
+
 
               <q-input filled type="text" v-model="description" label="Descripción del proceso" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
+              <q-select filled v-model="stage" :options="optionsStage" label="Seleccione la etapa" lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
+
               <q-input filled type="number" v-model="hours" label="Cuántas horas tomó el proceso" lazy-rules :rules="[
                 (val) => val != ' ' || 'El campo es requerido',
                 (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="users" :options="optionsPeople" label="Seleccione las personas involucradas" lazy-rules
+              <q-select filled v-model="users" :options="optionsPeople" label="Seleccione la persona encargada" lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
@@ -113,7 +123,7 @@
 
               <div class="justify-center flex">
                 <q-btn icon="save_as" label="GUARDAR" type="submit"
-                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-10 text-white"></q-btn>
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-10 bg-green-9 text-white"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px">
                     cancel </span>CERRAR</q-btn>
@@ -134,22 +144,32 @@
         <div class="q-pa-md">
           <q-form ref="myForm" @submit.prevent.stop="putDaily()" @reset.prevent.stop="reset()">
             <div>
-              <q-input filled type="text" v-model="name" label="Nombre del proceso" lazy-rules :rules="[
-                (val) =>
-                  (val && val.trim().length > 0) || 'El campo es requerido',
-              ]" />
+              <q-select filled v-model="labor" :options="optionsLabor" label="Seleccione la labor" lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
+
 
               <q-input filled type="text" v-model="description" label="Descripción del proceso" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
+              <q-select filled v-model="stage" :options="optionsStage" label="Seleccione la etapa" lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.toString().trim().length > 0) ||
+                    'El campo es requerido',
+                ]" />
+
               <q-input filled type="number" v-model="hours" label="Cuántas horas tomó el proceso" lazy-rules :rules="[
-                (val) => val !== '' || 'El campo es requerido',
+                (val) => val != ' ' || 'El campo es requerido',
                 (val) => val > 0 || 'El campo debe ser mayor a 0',
               ]" />
 
-              <q-select filled v-model="users" :options="optionsPeople" label="Seleccione las personas involucradas" lazy-rules
+              <q-select filled v-model="users" :options="optionsPeople" label="Seleccione la persona encargada" lazy-rules
                 :rules="[
                   (val) =>
                     (val && val.toString().trim().length > 0) ||
@@ -168,13 +188,13 @@
                   'El campo es requerido',
               ]" />
 
-              <q-input v-model="date" filled type="date" label="Seleccione la fecha del proceso" :rules="[
+              <q-input v-model="date" filled type="date" label="Seleccione la fecha del proceso" lazy-rules :rules="[
                 (val) =>
                   (val && val.trim().length > 0) || 'El campo es requerido',
               ]" />
 
               <div class="justify-center flex">
-                <q-btn icon="save_as" label="GUARDAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as"></q-btn>
+                <q-btn icon="save_as" label="ACTUALIZAR" type="submit" class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
                 <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" to="" v-close-popup><span
                     class="material-symbols-outlined q-mr-sm" style="font-size: 23px">
                     cancel </span>CERRAR</q-btn>
@@ -193,28 +213,35 @@ import { useDailyStore } from "../../store/Transformation/dailyProcess.js";
 import { usersStore } from "../../store/Maintenance/CreateUsers";
 import { farmRegistryStore } from "../../store/Maintenance/FarmRegistry.js"
 import { lotsStore } from "../../store/Maintenance/Lots.js"
+import {workStore} from "../../store/Maintenance/TypeWork.js"
+import {stagesStore} from "../../store/Maintenance/Stages.js"
 
 
-const useFarms = farmRegistryStore();
-const useDaily = useDailyStore();
-const useUsers = usersStore();
+const useFarms = farmRegistryStore()
+const useDaily = useDailyStore()
+const useUsers = usersStore()
 const useLots = lotsStore()
+const useWork = workStore()
+const useStages = stagesStore()
 
 
 
-let prompt = ref(false);
-let edit = ref(false);
-let name = ref("");
-let description = ref("");
-let hours = ref();
-let users = ref();
-let lot = ref();
-let farm = ref();
-let date = ref();
-let index = ref();
-let optionsPeople = ref([]);
-let optionsFarm = ref([]);
-let optionsLot = ref([]);
+let prompt = ref(false)
+let edit = ref(false)
+let description = ref("")
+let hours = ref()
+let users = ref()
+let lot = ref()
+let farm = ref()
+let date = ref()
+let index = ref()
+let labor = ref()
+let stage= ref()
+let optionsLabor = ref([])
+let optionsStage = ref([])
+let optionsPeople = ref([])
+let optionsFarm = ref([])
+let optionsLot = ref([])
 
 
 let columns = ref([
@@ -227,13 +254,19 @@ let columns = ref([
   {
     name: "name",
     label: "NOMBRE",
-    field: "name",
+    field: (row) => row.labor.name,
     align: "center",
   },
   {
     name: "description",
     label: "DESCRIPCIÓN",
     field: "description",
+    align: "center",
+  },
+  {
+    name: "stage",
+    label: "ETAPA",
+    field: (row) => row.stage.name,
     align: "center",
   },
   {
@@ -282,10 +315,12 @@ let columns = ref([
 let rows = ref([]);
 
 onMounted(() => {
-  getListDaily();
-  getPeople();
-  getFarms();
+  getListDaily()
+  getPeople()
+  getFarms()
   getLots()
+  getLabors()
+  getStages()
 });
 
 
@@ -317,8 +352,9 @@ getListDaily();
 async function postDailyProcess() {
   console.log("hola post");
   await useDaily.postDaily({
-    name: name.value,
+    labor: labor.value.value,
     description: description.value,
+    stage: stage.value.value,
     hours: hours.value,
     people: users.value.value,
     farm: farm.value.value,
@@ -346,8 +382,15 @@ async function activarDesactivar(data) {
 }
 
 async function showInfo(data) {
-  name.value = data.name;
+  labor.value = {
+    label: data.labor.name,
+    value: data.labor._id
+  };
   description.value = data.description;
+  stage.value = {
+    label: data.stage.name,
+    value: data.stage._id
+  };
   hours.value = data.hours;
   users.value = {
     label: data.people.names,
@@ -370,8 +413,9 @@ async function showInfo(data) {
 async function putDaily() {
   console.log(index.value);
   const res = await useDaily.updateDaily(index.value, {
-    name: name.value,
+    labor: labor.value.value,
     description: description.value,
+    stage: stage.value.value,
     hours: hours.value,
     people: users.value.value,
     farm: farm.value.value,
@@ -412,6 +456,45 @@ async function getFarms() {
       optionsFarm.value.push(object);
       console.log(optionsFarm.value);
     }
+    return optionsPeople.value
+  } else {
+    throw new Error("Error al obtener los datos de las fincas")
+  }
+}
+
+async function getLabors() {
+  const res = await useWork.listWorkActive();
+  console.log(res);
+  if (res.status < 299) {
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsLabor.value.push(object);
+
+      console.log(optionsLabor.value);
+    }
+    return optionsLabor.value
+  } else {
+    throw new Error("Error al obtener los datos de las labores")
+  }
+}
+
+
+async function getStages() {
+  const res = await useStages.listStagesActive();
+  console.log(res);
+  if (res.status < 299) {
+    console.log("holis");
+    for (let i in res.data) {
+      console.log(i);
+      let object = { label: res.data[i].name, value: res.data[i]._id };
+      optionsStage.value.push(object);
+
+      console.log(optionsStage.value);
+    }
+    return optionsStage.value
+  } else {
+    throw new Error("Error al obtener los datos de las etapas")
   }
 }
 
@@ -435,9 +518,11 @@ async function getLots() {
 
 
 
+
 function cleanForm() {
-    name.value = "",
+    labor.value = null,
     description.value = "",
+    stage.value = null
     hours.value = "",
     users.value = null,
     farm.value = null,
@@ -451,7 +536,5 @@ function cleanForm() {
 
 
 <style scoped>
-.q-field__control {
-  color: rgb(217, 0, 0) ! important;
-}
+
 </style>

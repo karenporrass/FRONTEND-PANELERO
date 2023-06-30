@@ -216,12 +216,10 @@
 <script setup>
 import { ref, onBeforeMount} from 'vue'
 import { usersStore } from "../../store/Maintenance/CreateUsers.js"
-import { LoginStore } from '../../store/Login/login';
 import { epsStore } from "../../store/Maintenance/Eps.js"
 const epsStores = epsStore()
 
 const userStore = usersStore()
-const loginStore = LoginStore()
 
 let prompt = ref(false)
 let promptEdit = ref(false)
@@ -273,7 +271,7 @@ const postUser = async () => {
     email.value,
     emergencyPersonName.value,
     emergencyPersonPhone.value,
-    // loginStore.token
+    
   )
   console.log(res);
   getUsers()
@@ -309,15 +307,15 @@ async function getUsers() {
   }
 }
 
-// async function getAdmis() {
-//   const res = await userStore.checkAdmi()
-//   console.log(res);
-//   if (res.status < 299) {
-//     optionsRol = [ 'Trabajador']
-//   } else {
-//     optionsRol = ['Administrador', 'Trabajador']
-//   }
-// }
+async function getAdmis() {
+  const res = await userStore.checkAdmi()
+  console.log(res);
+  if (res.status < 299) {
+    optionsRol = [ 'Trabajador']
+  } else {
+    optionsRol = ['Administrador', 'Trabajador']
+  }
+}
 
 const getDocument = async () => {
   const res = await userStore.listDocuments()
@@ -408,7 +406,7 @@ function cleanForm(){
 onBeforeMount(() => {
   getUsers();
   getDocument();
-  // getAdmis();
+  getAdmis();
   getEps();
 })
 

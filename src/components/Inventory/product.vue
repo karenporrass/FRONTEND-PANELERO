@@ -24,7 +24,7 @@
         <q-btn class="bg-green-10 text-white" @click="prompt = true, toEmpty()"><span class="material-symbols-outlined q-mr-sm"
             style="font-size: 20px">
             add_circle
-          </span> Crear nuevo pago</q-btn>
+          </span> Crear nuevo producto</q-btn>
       </div>
       <div class="col-1"></div>
     </div>
@@ -98,7 +98,7 @@
                   icon="save_as"
                   label="Guardar"
                   type="submit"
-                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"
               
                 ></q-btn>
                 <q-btn
@@ -161,7 +161,7 @@
                   icon="save_as"
                   label="Actualizar"
                   type="submit"
-                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"
               
                 ></q-btn>
                 <q-btn

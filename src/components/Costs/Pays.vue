@@ -36,9 +36,8 @@
       <div class="col-1"></div>
     </div>
     <!-- TABLE INFO -->
-    <div class="row q-mt-md">
-      <div class="col-1"></div>
-      <div class="col-10">
+    <div class="row q-mt-md justify-center">
+      <div class="col-11">
         <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index" virtual-scroll
           v-model:pagination="pagination" :rows-per-page-options="[0]">
           <template v-slot:body-cell-options="props">
@@ -60,7 +59,6 @@
           </template>
         </q-table>
       </div>
-      <div class="col-1"></div>
     </div>
 
     <!-- crear  -->
@@ -181,7 +179,7 @@
                   <br />
 
                   <q-btn icon="save_as" label="Actualizar" type="submit"
-                    class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"></q-btn>
+                    class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"></q-btn>
                   <q-btn type="button" class="q-mt-md q-mb-sm q-mx-sm" v-close-popup><span
                       class="material-symbols-outlined q-mr-sm" style="font-size: 23px">
                       cancel </span>CERRAR</q-btn>

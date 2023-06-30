@@ -122,7 +122,7 @@
                 filled
                 v-model="administrator"
                 :options="optionsDNI"
-                label="seleccione el administrador"
+                label="Seleccione el administrador"
                 lazy-rules
                 use-input
                 input-debounce="0"
@@ -160,7 +160,7 @@
                 filled
                 type="text"
                 v-model="extension"
-                label="Digite la extension"
+                label="Digite la extensión"
                 lazy-rules
                 :rules="[
                   (val) =>
@@ -185,7 +185,7 @@
                   icon="save_as"
                   label="Guardar"
                   type="submit"
-                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"
                 ></q-btn>
                 <q-btn
                   type="button"
@@ -219,7 +219,7 @@
                 filled
                 v-model="administrator"
                 :options="optionsDNI"
-                label="seleccione el administrador"
+                label="Seleccione el administrador"
                 lazy-rules
                 use-input
                 input-debounce="0"
@@ -257,7 +257,7 @@
                 filled
                 type="text"
                 v-model="extension"
-                label="Digite la extension"
+                label="Digite la extensión"
                 lazy-rules
                 :rules="[
                   (val) =>
@@ -282,7 +282,7 @@
                   icon="save_as"
                   label="Actualizar"
                   type="submit"
-                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9"
+                  class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-9 text-white"
                 ></q-btn>
                 <q-btn
                   type="button"
@@ -346,7 +346,7 @@ let columns = ref([
   },
   {
     name: "dirrecion",
-    label: "DIRRECION",
+    label: "DIRECCIÓN",
     field: "dirrecion",
     align: "center",
   },

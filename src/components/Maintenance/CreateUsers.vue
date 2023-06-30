@@ -25,8 +25,6 @@
       <div class="col-1"></div>
     </div>
 
-
-
     <div class="row ">
       <div class="col-1"></div>
       <div class="col-10">
@@ -41,10 +39,8 @@
       <div class="col-1"></div>
     </div>
     <!-- TABLE INFO -->
-    <div class="row q-mt-md ">
-      <div class="col-1"></div>
-
-      <div class="col-10">
+    <div class="row q-mt-md justify-center">
+      <div class="col-11">
         <q-table style="height: 50vh" flat bordered  ref="tableRef" :rows="rows" :columns="columns" row-key="index" virtual-scroll  :virtual-scroll-item-size="48"
              >
           <template v-slot:body-cell-options="props">
@@ -66,8 +62,6 @@
           </template>
         </q-table>
       </div>
-      <div class="col-1"></div>
-
     </div>
 
     <q-dialog v-model="prompt">

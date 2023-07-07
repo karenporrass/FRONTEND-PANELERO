@@ -37,9 +37,8 @@
       <div class="col-1"></div>
     </div>
     <!-- TABLE INFO -->
-    <div class="row q-mt-md">
-      <div class="col-1"></div>
-      <div class="col-10 ">
+    <div class="row justify-center q-my-md">
+      <div class="col-10">
         <q-table style="height: 400px" flat bordered :rows="rows" :columns="columns" row-key="index">
           <template v-slot:body-cell-options="props">
             <q-td :props="props">
@@ -61,7 +60,6 @@
 
         </q-table>
       </div>
-      <div class="col-1"></div>
     </div>
 
     <q-dialog v-model="prompt">
@@ -189,10 +187,10 @@ let prompt = ref(false)
 let edit= ref(false)
 let index= ref()
 let totalPanelas = ref();
-let cellar = ref([]);
-let typePacking = ref([]);
-let colorPanela = ref([]);
-let formPanela = ref([]);
+let cellar = ref();
+let typePacking = ref();
+let colorPanela = ref();
+let formPanela = ref();
 let optionsColorPanela = ref([
 { label: "Morena", value: "Morena" },
 { label: "Blanca", value: "Blanca" },
@@ -285,9 +283,9 @@ async function getPacked() {
 //post empaques
 async function postPacked() {
   console.log("hola post");
-  const res = await usePacked.postPacked({
-    cellar: cellar.value, 
-    colorPanela: colorPanela.value.value,
+  const res= await usePacked.postPacked({
+    cellarName: cellar.value.value, 
+    typePanela: colorPanela.value.value,
     formPanela: formPanela.value.value,
     typePacking: typePacking.value.value,
     totalPanelas: totalPanelas.value,
@@ -317,7 +315,7 @@ async function activarDesactivar(data) {
 
 async function showInfo(data) {
   cellar.value = data.cellar;
-  colorPanela.value = data.colorPanela;
+  colorPanela.value = data.typePanela;
   formPanela.value = {
     label: data.formPanela.name,
     value: data.formPanela._id
@@ -332,8 +330,8 @@ async function showInfo(data) {
 // put empaquetados
 async function putPacked(){
   const res= await usePacked.updatePacked(index.value, {    
-    cellar: cellar.value, 
-    colorPanela: colorPanela.value.value,
+    cellarName: cellar.value.value, 
+    typePanela: colorPanela.value.value,
     formPanela: formPanela.value.value,
     typePacking: typePacking.value.value,
     totalPanelas: totalPanelas.value, 
@@ -384,10 +382,9 @@ async function getCellars() {
   const res = await useVault.listVaultActive();
   console.log(res);
   if (res.status < 299) {
-    console.log("holis");
     for (let i in res.data) {
       console.log(i);
-      let object = { label: res.data[i].name, value: res.data[i]._id };
+      let object = { label: res.data[i].name_cellars, value: res.data[i]._id };
       optionsCellar.value.push(object);
       console.log(optionsCellar.value);
     }

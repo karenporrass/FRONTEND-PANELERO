@@ -50,9 +50,8 @@
       <div class="col-1"></div>
     </div>
     <!-- TABLE INFO -->
-    <div class="row">
-      <div class="col-1"></div>
-      <div class="col-10">
+    <div class="row justify-center">
+      <div class="col-10 q-mb-xl">
         <q-table
           style="height: 400px"
           flat
@@ -106,7 +105,6 @@
           </template>
         </q-table>
       </div>
-      <div class="col-1"></div>
     </div>
 
     <q-dialog v-model="prompt">
@@ -139,7 +137,7 @@
                 lazy-rules
                 :rules="[
                   (val) => val !== ' ' || 'El campo es requerido',
-                  val > 0 || 'El campo debe ser mayor a 0',
+                  (val) => val > 0 || 'El campo debe ser mayor a 0',
                 ]"
               />
 
@@ -304,7 +302,7 @@
               <div class="justify-center flex">
                 <q-btn
                   icon="save_as"
-                  label="GUARDAR"
+                  label="ACTUALIZAR"
                   type="submit"
                   class="q-mt-md q-mb-sm q-mx-sm save_as bg-green-10 text-white"
                 ></q-btn>
@@ -367,7 +365,7 @@ let columns = ref([
   {
     name: "process",
     label: "PROCESO DIARIO",
-    field: (row) => row.process.name,
+    field: (row) => row.process.description,
     align: "center",
   },
   {
@@ -431,6 +429,7 @@ async function getTransformed() {
   console.log(res);
   if (res.status < 299) {
     rows.value = res.data;
+    console.log(rows.value);
     rows.value.forEach((row, index) => {
       row.index = index + 1;
     });
@@ -439,7 +438,7 @@ async function getTransformed() {
   }
 }
 
-//post proceso diario
+//post transformacion
 async function postTransformed() {
   await useTransformed.addTransformed({
     process: process.value.value,
@@ -454,7 +453,7 @@ async function postTransformed() {
   getTransformed();
 }
 
-// activar y desactivar proceso diario
+// activar y desactivar transformación
 async function activarDesactivar(data) {
   console.log(data);
   let res = "";
@@ -471,7 +470,7 @@ async function activarDesactivar(data) {
 
 function showInfo(data) {
   process.value = {
-    label: data.process.name,
+    label: data.process.description,
     value: data.process._id,
   },
 
@@ -552,13 +551,15 @@ async function getTypes() {
 }
 
 async function getProcess() {
-  const res = await useDaily.listDailyActive();
+  const res = await useDaily.getDaily();
+  console.log(res);
   console.log(res);
   if (res.status < 299) {
-    console.log("holis");
     for (let i in res.data) {
       console.log(i);
-      let object = { label: res.data[i].name, value: res.data[i]._id };
+      console.log(res.data);
+      let object = { label: res.data[i].description, value: res.data[i]._id };
+      console.log(object);
       optionsProcess.value.push(object);
       console.log(optionsProcess.value);
     }

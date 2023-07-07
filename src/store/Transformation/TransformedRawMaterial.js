@@ -113,10 +113,20 @@ export const storeTransformed = defineStore('storeTransformed', () => {
       }
     }
 
-
+    async function listDailyActive() {
+      try {
+        return await requestAxios.get("/procesoDiario/dailyProcess/active", {
+          headers: {
+            token: useToken.token,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
     
-      return { listTransformed,  addTransformed, active, updateTransformed, listUnitsActive, listFarmsActive,listlotsActive }
+      return { listDailyActive, listTransformed,  addTransformed, active, updateTransformed, listUnitsActive, listFarmsActive,listlotsActive }
     },
     {
       persist: true,

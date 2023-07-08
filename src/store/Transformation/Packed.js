@@ -26,7 +26,7 @@ export const usePackedStore = defineStore('usePackedStore', () => {
     const postPacked = async (infoPacked) => {
       console.log("post");
       try {
-        await requestAxios.post("/empacados/register",infoPacked, {
+        await requestAxios.post("/empacados/register", infoPacked, {
           headers: {
             token: useToken.token,
           },

@@ -309,10 +309,9 @@ async function getUsers() {
 
 async function getAdmis() {
   const res = await userStore.checkAdmi()
-  console.log(res);
-  if (res.status < 299) {
+  if (res.status < 299 && res.data.length == 1) {
     optionsRol = [ 'Trabajador']
-  } else {
+  } else if(res.data.length == 0) {
     optionsRol = ['Administrador', 'Trabajador']
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="fullscreen">
+  <div class="fullscreen" style="background-color: white">
     <div id="imagen-fondo" style="background-image: url(/images/FONDO.jpg)">
       <div class="row" id="contendor-imagen2">
         <div class="col-1"></div>

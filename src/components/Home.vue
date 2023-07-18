@@ -1,15 +1,15 @@
 <template>
     <div>
       <div class="row justify-center" style="margin-top: 40px;">
-        <div class="col-10 text-center text-weight-bold text-h5">
+        <div class="col-10 text-center text-weight-bold text-h4">
           <div>BIENVENIDOS</div>
-          <div>Imagenes corporativas</div>          
-
         </div>
       </div>
-        <div class="row justify-center q-my-xl">
+        <div class="row justify-center q-mt-xl">
           <div class="col-1"></div>
-            <div class="col-10"  style="padding: 0px;  ">
+            <div class="col-10 text-center" style="padding: 0px;  ">
+              <div class="text-subtitle1 text-weight-bold q-mb-sm">Imagenes corporativas</div>          
+
                 <div style="padding: 0px; ">
     <q-carousel 
       animated

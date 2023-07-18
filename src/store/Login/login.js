@@ -29,7 +29,6 @@ export const LoginStore = defineStore('LoginStore', () => {
           notifySuccess('Logeado correctamente');
           return response
 
-
         } catch (error) {
           console.log('errrrr',error);
           notifyError(error.response.data.msg);

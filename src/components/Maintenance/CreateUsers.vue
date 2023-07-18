@@ -236,7 +236,7 @@ let emergencyPersonPhone = ref()
 let eps = ref()
 
 let optionsEps = ref([])
-let optionsRol = ref(['Administrador', 'Trabajador'])
+let optionsRol = ref(['Administrador' ,'Trabajador'])
 let optionsDocument = ref([])
 let columns = ref([
   { name: 'index', label: '#', field: 'index'},

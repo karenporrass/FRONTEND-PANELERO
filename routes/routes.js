@@ -40,38 +40,336 @@ import DailyProcess from "../src/components/Transformation/DailyProcess.vue";
 import TransformedRawMaterial from "../src/components/Transformation/TransformedRawMaterial.vue";
 import Packed from "../src/components/Transformation/Packed.vue";
 
+import { LoginStore } from "../src/store/Login/login.js";
+
+const checkAuth = () => {
+  const userStore = LoginStore();
+  const token = userStore.token;
+
+  if (userStore.dateLogin == "" || userStore.dateLogin == undefined)
+    return false;
+  const dateLogin = userStore.dateLogin.split("T")[0];
+  const dateNow = new Date().toISOString().split("T")[0];
+
+  if (dateLogin !== dateNow || !token) return false;
+  return true;
+};
+
+const auth = (to, from, next) => {
+  if (checkAuth()) {
+    const userStore = LoginStore();
+    const userRole = userStore.rol;
+
+    if (!to.meta.rol.includes(userRole)) {
+      userStore.logoutUser();
+      return next({ name: "login" });
+    }
+    next();
+  } else {
+    next({ name: "login" });
+  }
+};
+
 export const routes = [
-  { path: "/",name: "login" ,component: Login },
-  { path: "/home",name: "home" , component: Home },
-  { path: "/procesoDiario",name: "procesoDiario" , component: DailyProcess },
-  { path: "/homePedidos",name: "homePedidos" , component: orders },
-  { path: "/homeInventory",name: "homeInventory" , component: Inventory },
-  { path: "/vault", name: "vault" ,component: vault },
-  { path: "/brands",name: "brands" , component: brands },
-  { path: "/category",name: "category" , component: category },
-  { path: "/product",name: "product" , component: product },
-  { path: "/pedidosDos", name: "pedidosDos" ,component: tablesOrders },
-  { path: "/factura",name: "factura" , component: Factura },
-  { path: "/homeCostos",name: "homeCostos" , component: homeCosts },
-  { path: "/usuarios",name: "usuarios" , component: users },
-  { path: "/tipoDocumento", name: "tipoDocumento" ,component: typeDocument },
-  { path: "/eps",name: "eps" , component: eps },
-  { path: "/fincas",name: "fincas" , component: farmRegistry },
-  { path: "/homeMantenimiento",name: "homeMantenimiento" , component: homeMaintenance },
-  { path: "/labores",name: "labores" , component: labors },
-  { path: "/lotes",name: "lotes" , component: lots },
-  { path: "/unidadesMedida", name: "unidadesMedida" ,component: measurementUnits },
-  { path: "/metodosPago",name: "metodosPago" , component: paymentMethod },
-  { path: "/tiposPago",name: "tiposPago" , component: paymentType },
-  { path: "/pagos",name: "pagos" , component: pays },
-  { path: "/gastosMensuales",name: "gastosMensuales" , component: mounthlyExpenses },
-  { path: "/gastosOcasionales",name: "gastosOcasionales" , component: occasionalExpenses },
-  { path: "/etapas", name: "etapas" ,component: stages },
-  { path: "/tipoPanela", name: "tipoPanela" ,component: TypePanela },
-  { path: "/tipoEmpaques",name: "tipoEmpaques" , component: typePackaging },
-  { path: "/reports",name: "reportes" , component: report },
-  { path: "/homeTransformacion",name: "homeTransformacion" , component: HomeTranformation },
-  { path: "/procesoDiario",name: "procesoDiario" , component: DailyProcess },
-  { path: "/materiaTransformada",name: "materiaTransformada" , component: TransformedRawMaterial },
-  { path: "/empacado", name: "empacado" , component: Packed },
+  {
+    path: "/",
+    name: "login",
+    component: Login,
+    beforeEnter: (to, from, next) => {
+      if (checkAuth()) {
+        next({ name: "home" });
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: "/home",
+    name: "home",
+    component: Home,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/procesoDiario",
+    name: "procesoDiario",
+    component: DailyProcess,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/homePedidos",
+    name: "homePedidos",
+    component: orders,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/homeInventory",
+    name: "homeInventory",
+    component: Inventory,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/vault",
+    name: "vault",
+    component: vault,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/brands",
+    name: "brands",
+    component: brands,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/category",
+    name: "category",
+    component: category,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/product",
+    name: "product",
+    component: product,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/pedidosDos",
+    name: "pedidosDos",
+    component: tablesOrders,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/factura",
+    name: "factura",
+    component: Factura,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+
+  },
+  {
+    path: "/homeCostos",
+    name: "homeCostos",
+    component: homeCosts,
+    meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/usuarios",
+    name: "usuarios",
+    component: users,
+    meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/tipoDocumento",
+    name: "tipoDocumento",
+    component: typeDocument,
+    meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/eps",
+    name: "eps",
+    component: eps,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/fincas",
+    name: "fincas",
+    component: farmRegistry,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/homeMantenimiento",
+    name: "homeMantenimiento",
+    component: homeMaintenance,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  { 
+    path: "/labores", 
+    name: "labores", 
+    component: labors,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth, 
+  },
+  {
+    path: "/lotes",
+    name: "lotes",
+    component: lots,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/unidadesMedida",
+    name: "unidadesMedida",
+    component: measurementUnits,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  { 
+    path: "/metodosPago", 
+    name: "metodosPago", 
+    component: paymentMethod,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth, 
+  },
+  { 
+    path: "/tiposPago", 
+    name: "tiposPago", 
+    component: paymentType,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth, 
+  },
+  { 
+    path: "/pagos", 
+    name: "pagos", 
+    component: pays,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth, 
+  },
+  {
+    path: "/gastosMensuales",
+    name: "gastosMensuales",
+    component: mounthlyExpenses,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  {
+    path: "/gastosOcasionales",
+    name: "gastosOcasionales",
+    component: occasionalExpenses,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  { 
+    path: "/etapas", 
+    name: "etapas", 
+    component: stages,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth, 
+},
+  { 
+    path: "/tipoPanela",
+    name: "tipoPanela", 
+    component: TypePanela,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth, 
+},
+  { 
+    path: "/tipoEmpaques", 
+    name: "tipoEmpaques", 
+    component: typePackaging,
+        meta: {
+      rol: ["Administrador", "SUPER"],
+    },
+    beforeEnter: auth, 
+},
+  { 
+    path: "/reports", 
+    name: "reportes", 
+    component: report,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth, 
+},
+  {
+    path: "/homeTransformacion",
+    name: "homeTransformacion",
+    component: HomeTranformation,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  { 
+    path: "/procesoDiario", 
+    name: "procesoDiario", 
+    component: DailyProcess,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth, 
+  },
+  {
+    path: "/materiaTransformada",
+    name: "materiaTransformada",
+    component: TransformedRawMaterial,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth,
+  },
+  { 
+    path: "/empacado", 
+    name: "empacado", 
+    component: Packed,
+    meta: {
+      rol: ["Administrador", "Trabajador", "SUPER"],
+    },
+    beforeEnter: auth, 
+  },
 ];

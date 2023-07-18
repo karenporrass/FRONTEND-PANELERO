@@ -186,7 +186,18 @@
         </q-card-section>
         <div class="q-pa-md">
           <div>
-            <q-input filled type="date" label="Fecha"></q-input><br />
+            <q-select
+              filled
+              v-model="fecha"
+              :options="fechas"
+              label="Seleccione la fecha"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val !== null && val !== '' && val !== undefined) ||
+                  'El campo es requerido',
+              ]"
+            />
             <q-select
               filled
               v-model="tipo"
@@ -226,7 +237,19 @@
         </q-card-section>
         <div class="q-pa-md">
           <div>
-            <q-input filled type="date" label="Fecha"></q-input><br />
+            <q-select
+              filled
+              v-model="fecha"
+              :options="fechas"
+              label="Seleccione la fecha"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val !== null && val !== '' && val !== undefined) ||
+                  'El campo es requerido',
+              ]"
+            />
+
             <q-select
               filled
               v-model="tipo"
@@ -266,7 +289,18 @@
         </q-card-section>
         <div class="q-pa-md">
           <div>
-            <q-input filled type="date" label="Fecha"></q-input> <br />
+            <q-select
+              filled
+              v-model="fecha"
+              :options="fechas"
+              label="Seleccione la fecha"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val !== null && val !== '' && val !== undefined) ||
+                  'El campo es requerido',
+              ]"
+            />
             <q-select
               filled
               v-model="tipo"
@@ -306,7 +340,18 @@
         </q-card-section>
         <div class="q-pa-md">
           <div>
-            <q-input filled type="date" label="Fecha"></q-input><br />
+            <q-select
+              filled
+              v-model="fecha"
+              :options="fechas"
+              label="Seleccione la fecha"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val !== null && val !== '' && val !== undefined) ||
+                  'El campo es requerido',
+              ]"
+            />
             <q-select
               filled
               v-model="tipo"
@@ -780,60 +825,7 @@ function descargarPdf() {
   pdf.value.save("Reporte.pdf");
 }
 
-// function descargarPdf() {
-//     if (tipo.value=="Personas") {
-//         downloadPdfPersonas()
-//     }
-// if (tipo.value=="Labores") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Método de pago") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Tipo de pago") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Unidad de medida") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Eps") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Tipo de documento") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Lotes") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Etapas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Fincas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Empaques") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Soporte") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }if (tipo.value=="Personas") {
-//     downloadPdfPersonas()
-// }
-// }
+
 </script>
 
 <style>

@@ -45,7 +45,7 @@
                 </q-item>
               </router-link>
 
-              <router-link to="/homeMantenimiento" style="text-decoration: none;">
+              <router-link to="/homeMantenimiento" style="text-decoration: none;" v-show="privateMol == false">
                 <q-item clickable v-ripple class="bg-green-9 text-white q-mb-md"
                   style="border-radius: 12px; width: 230px;">
 

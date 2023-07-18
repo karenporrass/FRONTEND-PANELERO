@@ -72,8 +72,8 @@ const store = LoginStore();
 
 let router = useRouter();
 let dense = ref(false);
-let user = ref("sandygarcia2105@gmail.com");
-let password = ref("123456789");
+let user = ref("");
+let password = ref("");
 let index = ref(0);
 let loading = ref(false);
 

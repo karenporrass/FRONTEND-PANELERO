@@ -72,8 +72,8 @@ const store = LoginStore();
 
 let router = useRouter();
 let dense = ref(false);
-let user = ref();
-let password = ref();
+let user = ref("");
+let password = ref("");
 let index = ref(0);
 let loading = ref(false);
 
@@ -195,32 +195,5 @@ function pasarHome() {
   font-size: 15px;
   margin-bottom: 30px;
 }
-/* 
-@media (max-height: 1200px) {
-  #contenedor-col2 {
-    height: 620px;
-  }
-  #boton-ingresar {
-    border-radius: 10px;
-    width: 100px;
-    font-size: 15px;
-  }
-  #p-olvido {
-    color: black;
-    font-size: 12px;
-  }
-  #p-usuario {
-    color: black;
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-      sans-serif;
-    font-size: 11px;
-  }
 
-  #p-contraseña {
-    color: black;
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-      sans-serif;
-    font-size: 11px;
-  }
-} */
 </style>

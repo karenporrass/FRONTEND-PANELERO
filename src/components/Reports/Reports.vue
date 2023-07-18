@@ -397,6 +397,9 @@ import { monthlyStore } from "../../store/Costs/MonthlyExpenses.js";
 import { OccasionalStore } from "../../store/Costs/OccasionalExpenses.js";
 import { payStore } from "../../store/Costs/Pays.js";
 
+// mantenimiento
+import {useDailyStore} from "../../store/Transformation/dailyProcess.js"
+
 import { ref } from "vue";
 
 // matenimiento
@@ -417,6 +420,10 @@ const panelasStore = panelaStore();
 const MonthlyStore = monthlyStore();
 const occasionalStore = OccasionalStore();
 const PayStore = payStore();
+
+// transformación
+const transforStore = useDailyStore()
+
 
 let abrirDescargar = ref(false);
 let abrirDescargar3 = ref(false);
@@ -474,6 +481,8 @@ let options5 = ref([
 let options6 = ref(["Marcas", "Categorias", "Productos", "Bodegas"]);
 
 async function validate() {
+
+  // mantenimiento
   console.log(tipo.value);
   if (tipo.value == "Personas") {
     rows = [];
@@ -803,7 +812,50 @@ async function validate() {
     }
     descargarPdf();
   } else console.log("no");
+
+
+
+
+// transformación
+
+  if (tipo.value == "Proceso diario") {
+    rows = [];
+    columns = [];
+    res = await transforStore.listDailyActive();
+    console.log(res.data);
+
+    for (let i in res.data) {
+      let dates = res.data[i].date;
+      now = dates.substring(5, 7);
+      console.log(now);
+      if (now == fecha.value.value) {
+        console.log("si");
+        rows.push([
+          res.data[i].name,
+          res.data[i].rol,
+          res.data[i].CONCEPT,
+          res.data[i].PAYMENT_METHOD,
+          res.data[i].START_WORK,
+          res.data[i].END_WORK,
+          res.data[i].total,
+        ]);
+        columns = [
+          "NOMBRE",
+          "ROL",
+          "CONCEPTO",
+          "METODO DE PAGO",
+          "FECHA INICIO",
+          "FECHA FIN",
+          "TOTAL A PAGAR",
+        ];
+      } else console.log("no");
+    }
+    descargarPdf();
+  } else console.log("no");
+
 }
+
+
 
 function descargarPdf() {
   pdf.value = new jsPDF();

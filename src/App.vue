@@ -140,8 +140,8 @@
             src="/images/IMAGEN_TRAPICHE.png"
             style="height: 170px;">
             <div class="absolute-bottom bg-transparent column items-center text-black">
-              <div class="text-weight-bolder text-center">{{ per }}</div>
-              <div class="text-subtitle2 text-center">Usuario</div>
+              <div class="text-weight-bolder text-center">{{ storelogin.email }}</div>
+              <div class="text-subtitle2 text-center">{{ storelogin.rol }}</div>
             </div>
           </q-img>
         </q-drawer>
@@ -174,6 +174,7 @@ import { useRouter } from 'vue-router';
  const router = useRouter();
  let privateMol = ref();
  let per = ref(storelogin.email)
+ let role= ref(storelogin.rol)
 
 
 

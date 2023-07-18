@@ -32,7 +32,7 @@ export const LoginStore = defineStore('LoginStore', () => {
 
         } catch (error) {
           console.log('errrrr',error);
-          notifyError(error.response.data.errors);
+          notifyError(error.response.data.msg);
           throw new Error(error)
         }
     }

@@ -7,18 +7,20 @@ import { LoginStore } from "../../store/Login/login.js";
 export const usePackedStore = defineStore('usePackedStore', () => {
       const useToken = LoginStore();
 
-    const listPacked = async()=> {
+    const listPacked = async () => {
+      console.log("entre a get");
       try {
-        let r= await requestAxios.get("/empacados/packed" , {
+        return await requestAxios.get("/empacados/packed" , {
           headers: {
             token: useToken.token,
           },
         });
-        console.log(r);
-        return r
+        // console.log(r);
+        // return r
       } catch (error) {
         console.log(error);
         notifyError("No fue posible obtener los empacados")
+        return error
       }
     }
     

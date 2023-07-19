@@ -4,7 +4,7 @@ import { notifyError, notifySuccess } from "../../Global/notify.js";
 import {LoginStore} from "../../store/Login/login.js"
 import {requestAxios} from "../../Global/axios.js"
 
-export const BrandsStore = defineStore("counter", () => {
+export const BrandsStore = defineStore("BrandsStore", () => {
   const brands = ref("");
   const useToken = LoginStore();
 

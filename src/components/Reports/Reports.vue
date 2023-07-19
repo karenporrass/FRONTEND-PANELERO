@@ -161,7 +161,8 @@
             @click="validate()"
             label="Descargar pdf"
             class="text-white bg-green-10"
-          />
+          >
+          </q-btn>
           <q-btn class="q-ml-md" label="cerrar" v-close-popup />
         </div>
       </q-card>
@@ -171,8 +172,6 @@
     <div class="row q-mt-md">
       <div class="col-1"></div>
       <div class="col-10">
-        <!-- <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                  virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" /> -->
       </div>
       <div class="col-1"></div>
     </div>
@@ -207,10 +206,11 @@
             <div>
               <br />
               <q-btn
-                @click="descargarPdf()"
+                @click="validate()"
                 label="Descargar pdf"
                 class="text-white bg-green-10"
-              />
+              >
+              </q-btn>
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
@@ -222,8 +222,7 @@
     <div class="row q-mt-md">
       <div class="col-1"></div>
       <div class="col-10">
-        <!-- <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                  virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" /> -->
+
       </div>
       <div class="col-1"></div>
     </div>
@@ -259,10 +258,11 @@
             <div>
               <br />
               <q-btn
-                @click="descargarPdf()"
+                @click="validate()"
                 label="Descargar pdf"
                 class="text-white bg-green-10"
-              />
+              >
+              </q-btn>
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
@@ -274,8 +274,6 @@
     <div class="row q-mt-md">
       <div class="col-1"></div>
       <div class="col-10">
-        <!-- <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                  virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" /> -->
       </div>
       <div class="col-1"></div>
     </div>
@@ -313,7 +311,8 @@
                 @click="validate()"
                 label="Descargar pdf"
                 class="text-white bg-green-10"
-              />
+              >
+              </q-btn>
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
@@ -325,8 +324,6 @@
     <div class="row q-mt-md">
       <div class="col-1"></div>
       <div class="col-10">
-        <!-- <q-table style="height: 400px" flat bordered  :rows="rows" :columns="columns" row-key="index"
-                  virtual-scroll v-model:pagination = "pagination"  :rows-per-page-options="[0]" /> -->
       </div>
       <div class="col-1"></div>
     </div>
@@ -361,10 +358,11 @@
             <div>
               <br />
               <q-btn
-                @click="descargarPdf()"
+                @click="validate()"
                 label="Descargar pdf"
                 class="text-white bg-green-10"
-              />
+              >
+              </q-btn>
               <q-btn class="q-ml-md" label="cerrar" v-close-popup />
             </div>
           </div>
@@ -398,9 +396,17 @@ import { OccasionalStore } from "../../store/Costs/OccasionalExpenses.js";
 import { payStore } from "../../store/Costs/Pays.js";
 
 // mantenimiento
-import {useDailyStore} from "../../store/Transformation/dailyProcess.js"
+import { useDailyStore } from "../../store/Transformation/dailyProcess.js";
+import { storeTransformed } from "../../store/Transformation/TransformedRawMaterial.js";
+import { usePackedStore } from "../../store/Transformation/Packed.js";
 
-import { ref } from "vue";
+// inventario
+import { BrandsStore } from "../../store/Inventory/Brands.js";
+import { CategoryStore } from "../../store/Inventory/category.js";
+import { productStore } from "../../store/Inventory/Product.js";
+import { vaultStore } from "../../store/Inventory/vault.js";
+
+import { onBeforeMount, ref } from "vue";
 
 // matenimiento
 const useUsers = usersStore();
@@ -422,8 +428,15 @@ const occasionalStore = OccasionalStore();
 const PayStore = payStore();
 
 // transformación
-const transforStore = useDailyStore()
+const transforStore = useDailyStore();
+const useMaterial = storeTransformed();
+const usePacked = usePackedStore();
 
+// inventario
+const useBrands = BrandsStore();
+const useCategory = CategoryStore();
+const useProducts = productStore();
+const useVault = vaultStore();
 
 let abrirDescargar = ref(false);
 let abrirDescargar3 = ref(false);
@@ -480,8 +493,11 @@ let options5 = ref([
 
 let options6 = ref(["Marcas", "Categorias", "Productos", "Bodegas"]);
 
-async function validate() {
+// onBeforeMount(() => {
+// useBrands
+// });
 
+async function validate() {
   // mantenimiento
   console.log(tipo.value);
   if (tipo.value == "Personas") {
@@ -813,10 +829,7 @@ async function validate() {
     descargarPdf();
   } else console.log("no");
 
-
-
-
-// transformación
+  // transformación
 
   if (tipo.value == "Proceso diario") {
     rows = [];
@@ -824,6 +837,40 @@ async function validate() {
     res = await transforStore.listDailyActive();
     console.log(res.data);
 
+    for (let i in res.data.daily) {
+      let dates = res.data.daily[i].date;
+      now = dates.substring(5, 7);
+      console.log(now);
+      if (now == fecha.value.value) {
+        console.log("si");
+        rows.push([
+          res.data.daily[i].description,
+          res.data.daily[i].farm.name,
+          res.data.daily[i].labor.name,
+          res.data.daily[i].lot.name,
+          res.data.daily[i].people.names,
+          res.data.daily[i].stage.name,
+        ]);
+        columns = [
+          "DESCRIPCIÓN",
+          "FINCA",
+          "LABOR",
+          "LOTE",
+          "PERSONA ENCARGADA",
+          "ETAPA DEL PROCESO",
+        ];
+      } else console.log("no");
+    }
+    descargarPdf();
+  } else {
+    console.log("no");
+  }
+
+  if (tipo.value == "Materia prima transformada") {
+    rows = [];
+    columns = [];
+    res = await useMaterial.listTransformed();
+    console.log(res.data);
     for (let i in res.data) {
       let dates = res.data[i].date;
       now = dates.substring(5, 7);
@@ -831,31 +878,186 @@ async function validate() {
       if (now == fecha.value.value) {
         console.log("si");
         rows.push([
-          res.data[i].name,
-          res.data[i].rol,
-          res.data[i].CONCEPT,
-          res.data[i].PAYMENT_METHOD,
-          res.data[i].START_WORK,
-          res.data[i].END_WORK,
-          res.data[i].total,
+          res.data[i].process.description,
+          res.data[i].type.name,
+          res.data[i].quantity,
+          res.data[i].farm.name,
+          res.data[i].lot.name,
         ]);
         columns = [
-          "NOMBRE",
-          "ROL",
-          "CONCEPTO",
-          "METODO DE PAGO",
-          "FECHA INICIO",
-          "FECHA FIN",
-          "TOTAL A PAGAR",
+          "PROCESO",
+          "TIPO DE UNIDAD DE MEDIDA",
+          "CANTIDAD",
+          "FINCA",
+          "LOTE",
         ];
       } else console.log("no");
     }
     descargarPdf();
-  } else console.log("no");
+  } else {
+    console.log("no");
+  }
 
+  if (tipo.value == "Empacados") {
+    rows = [];
+    columns = [];
+    res = await usePacked.listPacked();
+    console.log(res.data);
+    for (let i in res.data) {
+      let dates = res.data[i].date;
+      now = dates.substring(5, 7);
+      console.log(now);
+      if (now == fecha.value.value) {
+        console.log("si");
+        rows.push([
+          res.data[i].cellarName.content,
+          res.data[i].formPanela.name,
+          res.data[i].typePacking.name,
+          res.data[i].typePanela,
+          res.data[i].totalPanelas,
+        ]);
+        columns = [
+          "NOMBRE DE LA BODEGA",
+          "FORMA DE LA PANELA",
+          "TIPO DE EMPAQUE",
+          "TIPO DE PANELA",
+          "TOTAL DE PANELAS",
+        ];
+      } else console.log("no");
+    }
+    descargarPdf();
+  } else {
+    console.log("no");
+  }
+
+  // inventario
+
+  if (tipo.value == "Marcas") {
+    console.log("hola");
+    rows = [];
+    columns = [];
+    res = await useBrands.listPBrands();
+    console.log(res);
+    console.log(res.data);
+    for (let i in res.data) {
+      console.log(i);
+      let dates = res.data[i].Date;
+      console.log(dates);
+      now = dates.substring(5, 7);
+      console.log(now);
+      if (now == fecha.value.value) {
+        console.log("si");
+        rows.push([
+          res.data[i].name_brands,
+          res.data[i].description,
+          res.data[i].creator,
+        ]);
+        columns = ["NOMBRE DE LA MARCA", "DESCRIPCIÓN", "CREADOR"];
+      } else console.log("no");
+    }
+    descargarPdf();
+  } else {
+    console.log("no");
+  }
+
+  if (tipo.value == "Categorias") {
+    console.log("hola");
+    rows = [];
+    columns = [];
+    res = await useCategory.listCategory();
+    console.log(res);
+    console.log(res.data);
+    for (let i in res.data) {
+      console.log(i);
+      let dates = res.data[i].Date;
+      console.log(dates);
+      now = dates.substring(5, 7);
+      console.log(now);
+      if (now == fecha.value.value) {
+        console.log("si");
+        rows.push([res.data[i].name_category, res.data[i].description]);
+        columns = ["NOMBRE DE LA CATEGORIA", "DESCRIPCIÓN"];
+      } else console.log("no");
+    }
+    descargarPdf();
+  } else {
+    console.log("no");
+  }
+
+  if (tipo.value == "Productos") {
+    console.log("hola");
+    rows = [];
+    columns = [];
+    res = await useProducts.listProduct();
+    console.log(res);
+    console.log(res.data);
+    for (let i in res.data) {
+      console.log(i);
+      let dates = res.data[i].Date;
+      console.log(dates);
+      now = dates.substring(5, 7);
+      console.log(now);
+      if (now == fecha.value.value) {
+        console.log("si");
+        rows.push([
+          res.data[i].nameProduct,
+          res.data[i].Cantidad,
+          res.data[i].marca.name_brands,
+          res.data[i].categoria.name_category,
+          res.data[i].timeUsed,
+          res.data[i].timeUseful,
+        ]);
+        columns = [
+          "NOMBRE DEL PRODUCTO",
+          "CANTIDAD",
+          "NOMBRE DE LA MARCA",
+          "NOMBRE DE LA CATEGORIA",
+          "TIEMPO DE USO",
+          "TIEMPO DE VIDA UTIL",
+        ];
+      } else console.log("no");
+    }
+    descargarPdf();
+  } else {
+    console.log("no");
+  }
+
+  if (tipo.value == "Bodegas") {
+    console.log("hola");
+    rows = [];
+    columns = [];
+    res = await useVault.listVault();
+    console.log(res);
+    console.log(res.data);
+    for (let i in res.data) {
+      console.log(i);
+      let dates = res.data[i].Date;
+      console.log(dates);
+      now = dates.substring(5, 7);
+      console.log(now);
+      if (now == fecha.value.value) {
+        console.log("si");
+        rows.push([
+          res.data[i].name_cellars,
+          res.data[i].content,
+          res.data[i].administrator.names,
+          res.data[i].extension,
+          res.data[i].dirrecion,
+        ]);
+        columns = [
+          "NOMBRE DE LA BODEGA",
+          "CONTENIDO",
+          "NOMBRE DEL ADMINISTRADOR",
+          "EXTENSIÓN DE LA BODEGA",
+          "DIRECCIÓN DE LA BODEGA",
+        ];
+      } else console.log("no");
+    }
+    descargarPdf();
+  } else {
+    console.log("no");
+  }
 }
-
-
 
 function descargarPdf() {
   pdf.value = new jsPDF();
@@ -876,8 +1078,6 @@ function descargarPdf() {
   });
   pdf.value.save("Reporte.pdf");
 }
-
-
 </script>
 
 <style>
